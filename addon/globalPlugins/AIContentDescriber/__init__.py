@@ -159,28 +159,26 @@ class GlobalPlugin(GlobalPlugin):
 			# translators: message spoken when grabbing the content of the current window is not possible
 			ui.message(_("Could not get window content"))
 			return
-		ui.message("Took screenshot")
 		file = tempfile.mktemp(suffix=".png")
 		snap.save(file)
-		ui.message("saved")
 		return self.describe_image(file, delete=True)
 
 	def describe_clipboard(self):
 		snap = ImageGrab.grabclipboard()
 		if isinstance(snap, list):
 			if len(snap) == 0:
-				# translators: message spoken when the item copied to the clipboard is not an image
+				# Translators: Message spoken when the item copied to the clipboard is not an image
 				ui.message(_("The item on the clipboard is not an image."))
 				return
 			file = snap[0]
 			if service.supported_formats and not os.path.splitext(file)[1] in service.supported_formats:
-				# translators: message spoken when the image on the clipboard is not a format supported by the current description service
+				# Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
 				unsupported_format_msg = _(f"Unsupported image format. Please copy another file to the clipboard that is {''.join(service.supported_formats)}")
 				ui.message(unsupported_format_msg)
 				return
 			return self.describe_image(file, delete=False)
 		elif not snap:
-			# translators: message spoken when the item copied to the clipboard is not an image
+			# Translators: Message spoken when the item copied to the clipboard is not an image
 			ui.message(_("The item on the clipboard is not an image."))
 			return
 		file = tempfile.mktemp(suffix=".png")
@@ -198,7 +196,8 @@ class GlobalPlugin(GlobalPlugin):
 			ui.message(_("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		tones.beep(300, 200)
-		#ui.message(file)
+		# Translators: Message spoken after the beep - when we have started fetching the description
+		ui.message(_("Retrieving description..."))
 		message = service.process(file, **ch.config[service.name])
 		ui.message(message)
 		if delete:
@@ -243,7 +242,7 @@ class GlobalPlugin(GlobalPlugin):
 		wx.CallAfter(self.describe_screenshot)
 
 	def script_describe_image(self, gesture):
-		"""Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI"""
+		"""Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI."""
 		wx.CallAfter(self.show_area_menu)
 
 	__gestures = {

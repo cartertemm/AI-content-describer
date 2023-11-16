@@ -80,9 +80,6 @@ def post(**kwargs):
 	return response
 
 
-api_key = "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"
-
-
 class BaseDescriptionService:
 	name = "unknown"
 	DEFAULT_PROMPT = None
