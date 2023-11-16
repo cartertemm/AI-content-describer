@@ -32,7 +32,7 @@ service = None
 
 class AIDescriberSettingsPanel(SettingsPanel):
 	# Translators: The label for the category in NVDA settings
-	title = _("AI content describer")
+	title = _("AI Content Describer")
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -44,6 +44,8 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		self.reset_prompt = sHelper.addItem(wx.Button(self, label=_("Reset prompt to default")))
 		# Translators: The label for the maximum tokens chooser in the settings dialog
 		self.max_tokens = sHelper.addLabeledControl(_("Maximum tokens"), nvdaControls.SelectOnFocusSpinCtrl, min=1, max=1000)
+		# Translators: The label for the option to open results in browseable dialogs
+		self.open_in_dialog = sHelper.addItem(wx.CheckBox(self, label=_("Open each result in a browseable dialog")))
 		# Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
 		self.cache_descriptions = sHelper.addItem(wx.CheckBox(self, label=_("Remember/cache descriptions of each item to save API quota")))
 		# Translators: The label for the timeout chooser in the settings dialog
@@ -62,6 +64,7 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		self.max_tokens.SetValue(ch.config[service.name]["max_tokens"])
 		self.cache_descriptions.SetValue(ch.config[service.name]["cache_descriptions"])
 		self.timeout.SetValue(ch.config[service.name]["timeout"])
+		self.open_in_dialog.SetValue(ch.config[service.name]["open_in_dialog"])
 		self.optimize_for_size.SetValue(ch.config[service.name]["optimize_for_size"])
 
 	def onSave(self):
@@ -71,6 +74,7 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		ch.config[service.name]["cache_descriptions"] = self.cache_descriptions.GetValue()
 		ch.config[service.name]["timeout"] = self.timeout.GetValue()
 		ch.config[service.name]["optimize_for_size"] = self.optimize_for_size.GetValue()
+		ch.config[service.name]["open_in_dialog"] = self.open_in_dialog.GetValue()
 		ch.config.write()
 
 	def on_prompt_reset(self, event):
@@ -97,7 +101,7 @@ class AreaMenu(wx.Menu):
 
 
 class GlobalPlugin(GlobalPlugin):
-	scriptCategory = _("Image describer")
+	scriptCategory = _("AI Content Describer")
 
 	def __init__(self, *args, **kwargs):
 		global service
@@ -199,7 +203,11 @@ class GlobalPlugin(GlobalPlugin):
 		# Translators: Message spoken after the beep - when we have started fetching the description
 		ui.message(_("Retrieving description..."))
 		message = service.process(file, **ch.config[service.name])
-		ui.message(message)
+		if ch.config[service.name]["open_in_dialog"]:
+			# Translators: Title of the browseable message
+			ui.browseableMessage(message, _("Image description"))
+		else:
+			ui.message(message)
 		if delete:
 			os.unlink(file)
 
