@@ -236,6 +236,7 @@ class GlobalPlugin(GlobalPlugin):
 
 	def script_describe_focus(self, gesture):
 		"""Describe the contents of the currently focused item using AI."""
+		wx.CallAfter(self.describe_focus_object)
 
 	def script_describe_screenshot(self, gesture):
 		"""Take a screenshot, then describe it using AI."""
