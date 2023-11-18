@@ -31,7 +31,7 @@ Now, the possibilities are almost endless. You might:
 
 ## Getting started
 
-Download the latest release of the add-on from [this link](https://github.com/cartertemm/AIImageDescriber/releases/latest/). Click on the file on a computer with NVDA installed, then follow the instructions below to obtain an API key from OpenAI:
+Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, then follow the instructions below to obtain an API key from OpenAI:
 
 1. Go to https://platform.openai.com/account/api-keys
 2. If you don't yet have an account, create one. If you do, log in.
