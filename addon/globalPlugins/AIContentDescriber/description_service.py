@@ -33,7 +33,14 @@ def get(*args, **kwargs):
 			#translators: message spoken when the connection is refused by our target
 			ui.message(_("error, connection refused by target"))
 		else:
-			ui.message(error+": "+str(i))
+			reason = str(i)
+			if hasattr(i, "fp"):
+				error_text = i.fp.read()
+				error_text = json.loads(error_text)
+				if "error" in error_text:
+					reason += ". "+error_text["error"]["message"]
+			ui.message(error+": "+reason)
+			raise
 		return
 	except Exception as i:
 		tones.beep(150, 200)
@@ -71,7 +78,14 @@ def post(**kwargs):
 			#translators: message spoken when the connection is refused by our target
 			ui.message(_("error, connection refused by target"))
 		else:
-			ui.message(error+": "+str(i))
+			reason = str(i)
+			if hasattr(i, "fp"):
+				error_text = i.fp.read()
+				error_text = json.loads(error_text)
+				if "error" in error_text:
+					reason += ". "+error_text["error"]["message"]
+			ui.message(error+": "+reason)
+			raise
 		return
 	except Exception as i:
 		tones.beep(150, 200)
