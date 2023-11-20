@@ -36,7 +36,8 @@ Download the latest release of the add-on from [this link](https://github.com/ca
 1. Go to https://platform.openai.com/account/api-keys
 2. If you don't yet have an account, create one. If you do, log in.
 3. On the API keys page, click to create a new secret key. Copy it to your clipboard.
-4. In the NVDA settings dialog, scroll down to the AI Content Describer category, then tab into the API key field and paste the item you just generated here.
+4. Fund the account with at least $1
+5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then tab into the API key field and paste the item you just generated here.
 
 At the time of this writing, OpenAI issues credits to new developer accounts that can be used for three months, after which they are lost.
 
