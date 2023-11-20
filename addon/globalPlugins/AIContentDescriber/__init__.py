@@ -109,8 +109,7 @@ class GlobalPlugin(GlobalPlugin):
 		if not globalVars.appArgs.secure:
 			gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(AIDescriberSettingsPanel)
 		ch.load_config()
-		service = GPT4
-		service = GPT4(api_key=ch.config[service.name]["api_key"])
+		service = GPT4()
 		# cache the previous focus and navigator objects globally, as popping up a menu seems to alter them
 		self.prev_focus = None
 		self.prev_navigator = None

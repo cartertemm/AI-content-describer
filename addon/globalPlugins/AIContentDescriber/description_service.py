@@ -100,15 +100,15 @@ class GPT4(BaseDescriptionService):
 		".webp",
 	]
 
-	def __init__(self, api_key):
+	def __init__(self):
 		super().__init__()
-		self.api_key = api_key
 
 	def process(self, image_path, **kw):
 		prompt = kw.get("prompt", self.DEFAULT_PROMPT)
 		max_tokens = kw.get("max_tokens", 250)
 		timeout = kw.get("timeout", 15)
 		cache_descriptions = kw.get("cache_descriptions", True)
+		api_key = kw.get("api_key")
 		base64_image = encode_image(image_path)
 		# have we seen this image before?
 		cache.read_cache()
@@ -117,7 +117,7 @@ class GPT4(BaseDescriptionService):
 			return description
 		headers = {
 			"Content-Type": "application/json",
-			"Authorization": f"Bearer {self.api_key}"
+			"Authorization": f"Bearer {api_key}"
 		}
 		payload = {
 			"model": "gpt-4-vision-preview",
