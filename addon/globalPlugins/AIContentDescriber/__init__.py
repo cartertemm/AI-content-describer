@@ -204,7 +204,7 @@ class GlobalPlugin(GlobalPlugin):
 		message = service.process(file, **ch.config[service.name])
 		if ch.config[service.name]["open_in_dialog"]:
 			# Translators: Title of the browseable message
-			ui.browseableMessage(message, _("Image description"))
+			wx.CallAfter(ui.browseableMessage, message, _("Image description"))
 		else:
 			ui.message(message)
 		if delete:
@@ -235,23 +235,23 @@ class GlobalPlugin(GlobalPlugin):
 
 	def script_describe_clipboard(self, gesture):
 		"""Describe the image (or file path to an image) on the clipboard using AI."""
-		wx.CallAfter(self.describe_clipboard)
+		threading.Thread(target=self.describe_clipboard).start()
 
 	def script_describe_navigator(self, gesture):
 		"""Describe the contents of the current navigator object using AI."""
-		wx.CallAfter(self.describe_navigator_object)
+		threading.Thread(target=self.describe_navigator_object).start()
 
 	def script_describe_focus(self, gesture):
 		"""Describe the contents of the currently focused item using AI."""
-		wx.CallAfter(self.describe_focus_object)
+		threading.Thread(target=self.describe_focus_object).start()
 
 	def script_describe_screenshot(self, gesture):
 		"""Take a screenshot, then describe it using AI."""
-		wx.CallAfter(self.describe_screenshot)
+		threading.Thread(target=self.describe_screenshot).start()
 
 	def script_describe_image(self, gesture):
 		"""Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI."""
-		wx.CallAfter(self.show_area_menu)
+		threading.Thread(target=self.show_area_menu).start()
 
 	__gestures = {
 		"kb:shift+NVDA+i": "describe_image",
