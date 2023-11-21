@@ -39,7 +39,7 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		# Translators: The label for the API key field in in the settings dialog
 		self.api_key = sHelper.addLabeledControl(_("OpenAI API key"), wx.TextCtrl)
 		# Translators: The label for the prompt field in the settings dialog
-		self.prompt = sHelper.addLabeledControl(_("Prompt"), wx.TextCtrl)
+		self.prompt = sHelper.addLabeledControl(_("Prompt"), wx.TextCtrl, style=wx.TE_MULTILINE)
 		# Translators: The label for the button that resets the prompt to its default in the settings dialog
 		self.reset_prompt = sHelper.addItem(wx.Button(self, label=_("Reset prompt to default")))
 		# Translators: The label for the maximum tokens chooser in the settings dialog
