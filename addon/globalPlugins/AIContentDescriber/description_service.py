@@ -65,7 +65,7 @@ def post(**kwargs):
 		timeout = 10
 	try:
 		request = urllib.request.Request(**kwargs)
-		response=urllib.request.urlopen(request, timeout=15).read()
+		response=urllib.request.urlopen(request, timeout=timeout).read()
 	except IOError as i:
 		tones.beep(150, 200)
 		#translators: message spoken when we can't connect (error with connection)
