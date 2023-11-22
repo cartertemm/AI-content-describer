@@ -127,6 +127,10 @@ class GlobalPlugin(GlobalPlugin):
 
 
 	def describe_object(self, focus=False):
+		if self.is_screen_curtain_running():
+			# Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
+			ui.message(_("Please disable windows screen curtain before using AI content describer."))
+			return
 		if focus:
 			if self.prev_focus:
 				nav = self.prev_focus
@@ -154,7 +158,7 @@ class GlobalPlugin(GlobalPlugin):
 			return
 		file = tempfile.mktemp(suffix=".png")
 		snap.save(file)
-		return self.describe_image(file, delete=True)
+		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
 
 	def describe_screenshot(self):
 		snap = ImageGrab.grab()
@@ -164,7 +168,7 @@ class GlobalPlugin(GlobalPlugin):
 			return
 		file = tempfile.mktemp(suffix=".png")
 		snap.save(file)
-		return self.describe_image(file, delete=True)
+		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
 
 	def describe_clipboard(self):
 		snap = ImageGrab.grabclipboard()
@@ -179,14 +183,14 @@ class GlobalPlugin(GlobalPlugin):
 				unsupported_format_msg = _(f"Unsupported image format. Please copy another file to the clipboard that is {''.join(service.supported_formats)}")
 				ui.message(unsupported_format_msg)
 				return
-			return self.describe_image(file, delete=False)
+			return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":False}).start()
 		elif not snap:
 			# Translators: Message spoken when the item copied to the clipboard is not an image
 			ui.message(_("The item on the clipboard is not an image."))
 			return
 		file = tempfile.mktemp(suffix=".png")
 		snap.save(file, optimize=True, )
-		return self.describe_image(file, delete=True)
+		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
 
 	def describe_image(self, file, delete=False):
 		# Few sanity checks before we go ahead with the API request
@@ -224,34 +228,41 @@ class GlobalPlugin(GlobalPlugin):
 		api.setNavigatorObject(self.prev_navigator)
 		api.setFocusObject(self.prev_focus)
 		if menu.selection == menu.focus_item:
-			threading.Thread(target=self.describe_focus_object).start()
+			self.describe_focus_object()
 		elif menu.selection == menu.navigator_item:
-			threading.Thread(target=self.describe_navigator_object).start()
+			self.describe_navigator_object()
 		elif menu.selection == menu.screenshot_item:
-			threading.Thread(target=self.describe_screenshot).start()
+			self.describe_screenshot()
 		else:
 			self.prev_focus = None
 			self.prev_navigator = None
 
 	def script_describe_clipboard(self, gesture):
 		"""Describe the image (or file path to an image) on the clipboard using AI."""
-		threading.Thread(target=self.describe_clipboard).start()
+		self.describe_clipboard()
 
 	def script_describe_navigator(self, gesture):
 		"""Describe the contents of the current navigator object using AI."""
-		threading.Thread(target=self.describe_navigator_object).start()
+		self.describe_navigator_object()
 
 	def script_describe_focus(self, gesture):
 		"""Describe the contents of the currently focused item using AI."""
-		threading.Thread(target=self.describe_focus_object).start()
+		self.describe_focus_object()
 
 	def script_describe_screenshot(self, gesture):
 		"""Take a screenshot, then describe it using AI."""
-		threading.Thread(target=self.describe_screenshot).start()
+		self.describe_screenshot()
 
 	def script_describe_image(self, gesture):
 		"""Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI."""
 		wx.CallAfter(self.show_area_menu)
+
+	def is_screen_curtain_running(self):
+		import vision
+		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
+		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
+		return bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
 
 	__gestures = {
 		"kb:shift+NVDA+i": "describe_image",
