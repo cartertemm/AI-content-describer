@@ -251,7 +251,7 @@ class GlobalPlugin(GlobalPlugin):
 
 	def script_describe_image(self, gesture):
 		"""Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI."""
-		threading.Thread(target=self.show_area_menu).start()
+		wx.CallAfter(self.show_area_menu)
 
 	__gestures = {
 		"kb:shift+NVDA+i": "describe_image",
