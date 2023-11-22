@@ -1,3 +1,9 @@
+# Configuration handling for the AI Content Describer NVDA add-on
+# Copyright (C) 2023, Carter Temm
+# This add-on is free software, licensed under the terms of the GNU General Public License (version 2).
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+
+
 import os
 import logging
 from configobj import ConfigObj, ConfigObjError, flatten_errors

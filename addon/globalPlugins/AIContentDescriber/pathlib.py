@@ -1,3 +1,5 @@
+# copied from the python standard library, because it is not included in some versions of NVDA by default
+
 import fnmatch
 import functools
 import io
