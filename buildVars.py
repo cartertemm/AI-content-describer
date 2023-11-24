@@ -23,7 +23,7 @@ addon_info = {
 	"addon_summary": _("AI Content Describer"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description": _("""This add-on makes it possible to describe the focus object, navigator object, or screen using the popular GPT4 vision artificial intelegence LLM.
+	"addon_description": _("""This add-on makes it possible to describe the focus object, navigator object, or screen using the popular GPT4 vision artificial intelligence LLM.
 Though content descriptions are quite detailed, they may not always be completely accurate or reflect real world information.
 To begin, head to https://platform.openai.com/account/api-keys and create an account, then create a key for interacting with the API. See add-on documentation for more information on this.
 Then, choose the "AI content describer" category from NVDA's settings dialog and enter your API key.
@@ -60,7 +60,10 @@ Press NVDA+shift+i to pop up a menu asking how you wish to describe based on the
 # pythonSources = ["addon/globalPlugins/*.py"]
 # For more information on SCons Glob expressions please take a look at:
 # https://scons.org/doc/production/HTML/scons-user/apd.html
-pythonSources = ["addon/globalPlugins/*.py"]
+pythonSources = [
+	"addon/installTasks.py",
+	"addon/globalPlugins/*/*.py",
+]
 
 # Files that contain strings for translation. Usually your python sources
 i18nSources = pythonSources + ["buildVars.py"]
