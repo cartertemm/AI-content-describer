@@ -191,7 +191,7 @@ class GlobalPlugin(GlobalPlugin):
 				ui.message(_("The item on the clipboard is not an image."))
 				return
 			file = snap[0]
-			if service.supported_formats and not os.path.splitext(file)[1] in service.supported_formats:
+			if service.supported_formats and not os.path.splitext(file)[1].lower() in service.supported_formats:
 				# Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
 				unsupported_format_msg = _(f"Unsupported image format. Please copy another file to the clipboard that is {''.join(service.supported_formats)}")
 				ui.message(unsupported_format_msg)
