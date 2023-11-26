@@ -89,7 +89,7 @@ On a windows machine:
 * download [poedit](https://poedit.net/). This is the software you will use to translate each message from English.
 * download the .pot file with all the strings [here](https://raw.githubusercontent.com/cartertemm/AI-content-describer/main/AIContentDescriber.pot)
 * Open the file you just downloaded in the poedit program. Click "Create new translation" in the window that appears, then select the target language.
-* Go through and convert the contents of the source text into the target language, then paste it into the translation field. For extra help, feel free to right click the list item -> code occurances, then go up a line to read the comment starting with "# Translators: ". These comments are additionally made available in one place in the .pot file.
+* Go through and convert the contents of the source text into the target language, then paste it into the translation field. For extra help, feel free to right click the list item -> code occurrences, then go up a line to read the comment starting with "# Translators: ". These comments are additionally made available in one place in the .pot file.
 * When done, click file -> save or press ctrl+s then choose a location for the new .mo and .po file to be stored. These are the files that should be emailed to me or attached in a pull request.
 * Translate the contents of readme.md (this file). Attach it too!
 
