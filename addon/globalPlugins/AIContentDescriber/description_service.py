@@ -9,6 +9,12 @@ import json
 import tempfile
 import urllib.request
 
+import addonHandler
+try:
+	addonHandler.initTranslation()
+except addonHandler.AddonError:
+	log.warning("Couldn't initialise translations. Is this addon running from NVDA's scratchpad directory?")
+
 import cache
 
 

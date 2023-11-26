@@ -15,7 +15,12 @@ log = logging.getLogger(__name__)
 
 import api
 import addonHandler
-#addonHandler.initTranslation()
+
+try:
+	addonHandler.initTranslation()
+except addonHandler.AddonError:
+	log.warning("Couldn't initialise translations. Is this addon running from NVDA's scratchpad directory?")
+
 import wx
 import globalVars
 import gui
@@ -57,9 +62,9 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		# Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
 		self.cache_descriptions = sHelper.addItem(wx.CheckBox(self, label=_("Remember/cache descriptions of each item to save API quota")))
 		# Translators: The label for the timeout chooser in the settings dialog
-		self.timeout = sHelper.addLabeledControl("Seconds to wait for a response before timing out", nvdaControls.SelectOnFocusSpinCtrl, min=1)
+		self.timeout = sHelper.addLabeledControl(_("Seconds to wait for a response before timing out"), nvdaControls.SelectOnFocusSpinCtrl, min=1)
 		# Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
-		self.optimize_for_size = sHelper.addItem(wx.CheckBox(self, label="Optimize images for size, may speed up detection in some situations (experimental)"))
+		self.optimize_for_size = sHelper.addItem(wx.CheckBox(self, label=_("Optimize images for size, may speed up detection in some situations (experimental)")))
 		self.bind_events()
 		self.populate_values()
 
@@ -95,11 +100,11 @@ class AreaMenu(wx.Menu):
 		super().__init__(*args, **kwargs)
 		self.selection = None
 		# translators: current focus
-		self.focus_item = self.Append(wx.ID_ANY, "Current focus")
+		self.focus_item = self.Append(wx.ID_ANY, _("Current focus"))
 		# translators: navigator object
-		self.navigator_item = self.Append(wx.ID_ANY, "Navigator object")
+		self.navigator_item = self.Append(wx.ID_ANY, _("Navigator object"))
 		# translators: screenshot of entire window menu item
-		self.screenshot_item = self.Append(wx.ID_ANY, "Entire screen")
+		self.screenshot_item = self.Append(wx.ID_ANY, _("Entire screen"))
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
@@ -246,24 +251,24 @@ class GlobalPlugin(GlobalPlugin):
 			self.prev_navigator = None
 
 	def script_describe_clipboard(self, gesture):
-		"""Describe the image (or file path to an image) on the clipboard using AI."""
 		self.describe_clipboard()
+	script_describe_clipboard.__doc__ = _("Describe the image (or file path to an image) on the clipboard using AI.")
 
 	def script_describe_navigator(self, gesture):
-		"""Describe the contents of the current navigator object using AI."""
 		self.describe_navigator_object()
+	script_describe_navigator.__doc__ = _("Describe the contents of the current navigator object using AI.")
 
 	def script_describe_focus(self, gesture):
-		"""Describe the contents of the currently focused item using AI."""
 		self.describe_focus_object()
+	script_describe_focus.__doc__ = _("Describe the contents of the currently focused item using AI.")
 
 	def script_describe_screenshot(self, gesture):
-		"""Take a screenshot, then describe it using AI."""
 		self.describe_screenshot()
+	script_describe_screenshot.__doc__ = _("Take a screenshot, then describe it using AI.")
 
 	def script_describe_image(self, gesture):
-		"""Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI."""
 		wx.CallAfter(self.show_area_menu)
+	script_describe_image.__doc__ = _("Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI.")
 
 	def is_screen_curtain_running(self):
 		import vision
