@@ -70,18 +70,36 @@ Then open your terminal of choice:
 
 ```
 git clone https://github.com/cartertemm/AI-content-describer.git
+cd AI-content-describer
 scons
 ```
 
-After the `scons` command is finished executing, you should see a *.nvda-addon file ready for release.
+After the `scons` command is finished executing, a *.nvda-addon file will be placed in the root of this repository ready for testing and release.
+
+If you add additional strings that need to be translated, it is important to rebuild the .pot file like so:
+
+```
+scons pot
+```
+
+## How to translate?
+
+On a windows machine:
+
+* download [poedit](https://poedit.net/). This is the software you will use to translate each message from English.
+* download the .pot file with all the strings [here](https://raw.githubusercontent.com/cartertemm/AI-content-describer/main/AIContentDescriber.pot)
+* Open the file you just downloaded in the poedit program. Click "Create new translation" in the window that appears, then select the target language.
+* Go through and convert the contents of the source text into the target language, then paste it into the translation field. For extra help, feel free to right click the list item -> code occurances, then go up a line to read the comment starting with "# Translators: ". These comments are additionally made available in one place in the .pot file.
+* When done, click file -> save or press ctrl+s then choose a location for the new .mo and .po file to be stored. These are the files that should be emailed to me or attached in a pull request.
+* Translate the contents of readme.md (this file). Attach it too!
 
 ## Contributions
 
-All are highly appreciated.
+All are highly appreciated and will be credited.
 
-Find an issue? Submit it to the [issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
+Facing a problem? Submit it to the [issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
 
-Have a suggestion for a new feature? Create a ticket for that as well, and we can talk about implementing it. Pull requests without associated issues will be reviewed, but are likely to take up more time for everyone, especially if I decide the new fix or functionality needs to work differently.
+Have a suggestion for a new feature? Create a ticket for that as well, and we can talk about implementing it. Pull requests without associated issues will be reviewed, but are likely to take up more time for everyone, especially if I decide the new fix or functionality needs to work differently than what was proposed.
 
 Translations are welcomed with open arms.
 
