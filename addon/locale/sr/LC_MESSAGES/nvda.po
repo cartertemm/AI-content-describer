@@ -3,19 +3,19 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2023.11.23'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2023-12-03 17:36+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2023-12-03 17:42+0100\n"
+"Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
+"Language-Team: \n"
+"Language: sr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.1\n"
 
 #. Translators: The message displayed if during installation, there is an incompatable version already installed
 #: addon\installTasks.py:18
@@ -24,6 +24,9 @@ msgid ""
 "incompatable with future versions because the name has changed. It will be "
 "removed the next time NVDA is restarted."
 msgstr ""
+"Izgleda da je instalirana starija verzija ovog dodatka koja je "
+"nekompatibilna sa budućim verzijama zato što je ime promenjeno. Ta verzija "
+"će biti uklonjena sledeći put kada se NVDA ponovo pokrene."
 
 #. Translators: The title of the message dialog when the user is installing the add-on
 #. Translators: The label for the category in NVDA settings
@@ -34,42 +37,42 @@ msgstr ""
 #: addon\globalPlugins\AIContentDescriber\__init__.py:48
 #: addon\globalPlugins\AIContentDescriber\__init__.py:117 buildVars.py:23
 msgid "AI Content Describer"
-msgstr ""
+msgstr "AI opisivač sadržaja"
 
 #. Translators: The label for the API key field in in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:53
 msgid "OpenAI API key"
-msgstr ""
+msgstr "OpenAI API kljjuč"
 
 #. Translators: The label for the prompt field in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:55
 msgid "Prompt"
-msgstr ""
+msgstr "Upit"
 
 #. Translators: The label for the button that resets the prompt to its default in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:57
 msgid "Reset prompt to default"
-msgstr ""
+msgstr "Vrati upit na podrazumevani"
 
 #. Translators: The label for the maximum tokens chooser in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:59
 msgid "Maximum tokens"
-msgstr ""
+msgstr "Maksimalan broj tokena"
 
 #. Translators: The label for the option to open results in browseable dialogs
 #: addon\globalPlugins\AIContentDescriber\__init__.py:61
 msgid "Open each result in a browseable dialog"
-msgstr ""
+msgstr "Otvori svaki rezultat u dijalogu koji se može pretraživati"
 
 #. Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:63
 msgid "Remember/cache descriptions of each item to save API quota"
-msgstr ""
+msgstr "Pamti ili keširaj opise svake stavke kako bi se smanjila API potrošnja"
 
 #. Translators: The label for the timeout chooser in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:65
 msgid "Seconds to wait for a response before timing out"
-msgstr ""
+msgstr "Vreme čekanja na odgovor u sekundama pre isteka"
 
 #. Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:67
@@ -77,47 +80,51 @@ msgid ""
 "Optimize images for size, may speed up detection in some situations "
 "(experimental)"
 msgstr ""
+"Optimizuj slike u zavisnosti od veličine, može ubrzati prepoznavanje u nekim "
+"situacijama (eksperimentalno)"
 
 #. translators: current focus
 #: addon\globalPlugins\AIContentDescriber\__init__.py:103
 msgid "Current focus"
-msgstr ""
+msgstr "Trenutni fokus"
 
 #. translators: navigator object
 #: addon\globalPlugins\AIContentDescriber\__init__.py:105
 msgid "Navigator object"
-msgstr ""
+msgstr "Navigacioni objekat"
 
 #. translators: screenshot of entire window menu item
 #: addon\globalPlugins\AIContentDescriber\__init__.py:107
 msgid "Entire screen"
-msgstr ""
+msgstr "Ceo ekran"
 
 #. Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
 #: addon\globalPlugins\AIContentDescriber\__init__.py:145
 msgid ""
 "Please disable windows screen curtain before using AI content describer."
 msgstr ""
+"Molimo onemogućite Windows zatamnjivanje ekrana pre nego što koristite AI "
+"opisivač sadržaja."
 
 #: addon\globalPlugins\AIContentDescriber\__init__.py:159
 msgid "Content is not visible"
-msgstr ""
+msgstr "Sadržaj nije vidljiv"
 
 #. Translators: Message spoken when the attempt to take a picture of an object fails
 #: addon\globalPlugins\AIContentDescriber\__init__.py:170
 msgid "Could not snap an image of the requested object"
-msgstr ""
+msgstr "Nije moguće snimiti sliku zahtevanog objekta"
 
 #. translators: message spoken when grabbing the content of the current window is not possible
 #: addon\globalPlugins\AIContentDescriber\__init__.py:180
 msgid "Could not get window content"
-msgstr ""
+msgstr "Nije moguće preuzeti sadržaj prozora"
 
 #. Translators: Message spoken when the item copied to the clipboard is not an image
 #: addon\globalPlugins\AIContentDescriber\__init__.py:191
 #: addon\globalPlugins\AIContentDescriber\__init__.py:202
 msgid "The item on the clipboard is not an image."
-msgstr ""
+msgstr "Stavka u privremenoj memoriji nije slika."
 
 #. Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
 #: addon\globalPlugins\AIContentDescriber\__init__.py:196
@@ -125,6 +132,8 @@ msgid ""
 "Unsupported image format. Please copy another file to the clipboard that is "
 "{''.join(service.supported_formats)}"
 msgstr ""
+"Format slike nije podržan. Molimo kopirajte drugu datoteku u privremenu "
+"memoriju koja je {''.join(service.supported_formats)}"
 
 #. Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key
 #: addon\globalPlugins\AIContentDescriber\__init__.py:212
@@ -133,6 +142,9 @@ msgid ""
 "category of the NVDA settings dialog. Please consult add-on help for more "
 "information"
 msgstr ""
+"Da biste dobili opise sadržaja, morate da unesete API ključ u kategoriji AI "
+"opisivač sadržaja dijaloga NVDA podešavanja. Molimo pročitajte pomoć dodatka "
+"za više informacija"
 
 #. Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
 #: addon\globalPlugins\AIContentDescriber\__init__.py:216
@@ -141,57 +153,67 @@ msgid ""
 "describer category of the NVDA settings dialog. Please consult add-on help "
 "for more information"
 msgstr ""
+"Da biste dobili opise sadržaja, morate da odredite upit tako što ćete ući u "
+"kategoriju AI opisivač sadržaja dijaloga NVDA podešavanja. Molimo pročitajte "
+"pomoć dodatka za više informacija"
 
 #. Translators: Message spoken after the beep - when we have started fetching the description
 #: addon\globalPlugins\AIContentDescriber\__init__.py:220
 msgid "Retrieving description..."
-msgstr ""
+msgstr "Preuzimanje opisa..."
 
 #. Translators: Title of the browseable message
 #: addon\globalPlugins\AIContentDescriber\__init__.py:224
 msgid "Image description"
-msgstr ""
+msgstr "Opis slike"
 
 #: addon\globalPlugins\AIContentDescriber\__init__.py:255
 msgid ""
 "Describe the image (or file path to an image) on the clipboard using AI."
 msgstr ""
+"Opiši sliku (ili putanju do datoteke sa slikom) u privremenoj memoriji "
+"korišćenjem veštačke inteligencije."
 
 #: addon\globalPlugins\AIContentDescriber\__init__.py:259
 msgid "Describe the contents of the current navigator object using AI."
 msgstr ""
+"Opiši sadržaj trenutnog navigacionog objekta korišćenjem veštačke "
+"inteligencije."
 
 #: addon\globalPlugins\AIContentDescriber\__init__.py:263
 msgid "Describe the contents of the currently focused item using AI."
 msgstr ""
+"Opiši sadržaj trenutno fokusirane stavke korišćenjem veštačke inteligencije."
 
 #: addon\globalPlugins\AIContentDescriber\__init__.py:267
 msgid "Take a screenshot, then describe it using AI."
-msgstr ""
+msgstr "Slikaj ekran, a zatim ga opiši korišćenjem veštačke inteligencije."
 
 #: addon\globalPlugins\AIContentDescriber\__init__.py:271
 msgid ""
 "Pop up a menu asking whether to describe the current focus, navigator "
 "object, or entire screen with AI."
 msgstr ""
+"Prikaži meni koji pita da li opisati trenutni fokus, navigacioni objekat ili "
+"ceo ekran veštačkom inteligencijom."
 
 #. translators: error
 #: addon\globalPlugins\AIContentDescriber\description_service.py:33
 #: addon\globalPlugins\AIContentDescriber\description_service.py:71
 msgid "error"
-msgstr ""
+msgstr "greška"
 
 #. translators: message spoken when we can't connect (error with connection)
 #: addon\globalPlugins\AIContentDescriber\description_service.py:39
 #: addon\globalPlugins\AIContentDescriber\description_service.py:84
 msgid "error making connection"
-msgstr ""
+msgstr "greška pri povezivanju"
 
 #. translators: message spoken when the connection is refused by our target
 #: addon\globalPlugins\AIContentDescriber\description_service.py:46
 #: addon\globalPlugins\AIContentDescriber\description_service.py:91
 msgid "error, connection refused by target"
-msgstr ""
+msgstr "greška, povezivanje odbijeno od strane odredišta"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
@@ -213,3 +235,18 @@ msgid ""
 "windows explorer. Other keystrokes are customizable from the input gestures "
 "dialog."
 msgstr ""
+"Ovaj dodatak omogućava opisivanje fokusiranog objekta, navigacionog objekta, "
+"ili ekrana korišćenjem popularnog LLM modela GPT4 vision veštačke "
+"inteligencije.\n"
+"Iako su opisi sadržaja poprilično detaljni, možda neće uvek biti potpuno "
+"precizni ili bidi u skladu sa informacijama u realnosti.\n"
+"Da biste počeli, posetite https://platform.openai.com/account/api-keys i "
+"napravite nalog, a zatim napravite ključ za API interakciju. Pogledajte "
+"dokumentaciju dodatka za više informacija o ovome.\n"
+"Zatim, izaberite kategoriju \"AI opisivač sadržaja\" u dijalogu NVDA "
+"podešavanja i upišite vaš API ključ.\n"
+"Pritisnite NVDA+šift+i da otvorite meni koji će vas upitati kako želite da "
+"dobijete opis u zavisnosti od trenutne pozicije, ili NVDA+šift+u da dobijete "
+"opis za navigacioni objekat i NVDA+šift+y za sliku koja je kopirana u "
+"privremenu memoriju nna primer iz Windows istraživača datoteka. Druge "
+"prečice se mogu prilagoditi iz dijaloga ulaznih komandi."
