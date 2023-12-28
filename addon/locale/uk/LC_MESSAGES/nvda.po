@@ -1,0 +1,244 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2023-11-25 19:27-0700\n"
+"PO-Revision-Date: 2023-11-27 17:01+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: AI-content-describer-main/addon\n"
+"X-Poedit-SearchPath-0: globalPlugins\n"
+"X-Poedit-SearchPath-1: installTasks.py\n"
+
+#. Translators: The message displayed if during installation, there is an incompatable version already installed
+#: addon\installTasks.py:18
+msgid ""
+"There appears to be an older version of this add-on installed that is "
+"incompatable with future versions because the name has changed. It will be "
+"removed the next time NVDA is restarted."
+msgstr ""
+"Схоже, що встановлено стару версію цього додатка, яка несумісна з наступними "
+"версіями, оскільки назву було змінено. Її буде видалено під час наступного "
+"перезапуску NVDA."
+
+#. Translators: The title of the message dialog when the user is installing the add-on
+#. Translators: The label for the category in NVDA settings
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+#: addon\installTasks.py:20
+#: addon\globalPlugins\AIContentDescriber\__init__.py:48
+#: addon\globalPlugins\AIContentDescriber\__init__.py:117 buildVars.py:23
+msgid "AI Content Describer"
+msgstr "Описувач вмісту за допомогою ШІ"
+
+#. Translators: The label for the API key field in in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:53
+msgid "OpenAI API key"
+msgstr "Ключ API OpenAI"
+
+#. Translators: The label for the prompt field in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:55
+msgid "Prompt"
+msgstr "Підказка"
+
+#. Translators: The label for the button that resets the prompt to its default in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:57
+msgid "Reset prompt to default"
+msgstr "Скинути підказку до початкових"
+
+#. Translators: The label for the maximum tokens chooser in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:59
+msgid "Maximum tokens"
+msgstr "Максимальна кількість токенів"
+
+#. Translators: The label for the option to open results in browseable dialogs
+#: addon\globalPlugins\AIContentDescriber\__init__.py:61
+msgid "Open each result in a browseable dialog"
+msgstr "Відкривати кожен результат у окремому вікні для перегляду"
+
+#. Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:63
+msgid "Remember/cache descriptions of each item to save API quota"
+msgstr "Запам'ятати/кешувати описи кожного елемента, щоб заощадити квоту API"
+
+#. Translators: The label for the timeout chooser in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:65
+msgid "Seconds to wait for a response before timing out"
+msgstr "Секунди на очікування відповіді перед закінченням тайм-ауту"
+
+#. Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:67
+msgid ""
+"Optimize images for size, may speed up detection in some situations "
+"(experimental)"
+msgstr ""
+"Оптимізувати зображення за розміром, може пришвидшити виявлення в деяких "
+"ситуаціях (експериментально)"
+
+#. translators: current focus
+#: addon\globalPlugins\AIContentDescriber\__init__.py:103
+msgid "Current focus"
+msgstr "Поточний фокус"
+
+#. translators: navigator object
+#: addon\globalPlugins\AIContentDescriber\__init__.py:105
+msgid "Navigator object"
+msgstr "Об'єкт Навігатора"
+
+#. translators: screenshot of entire window menu item
+#: addon\globalPlugins\AIContentDescriber\__init__.py:107
+msgid "Entire screen"
+msgstr "Весь екран"
+
+#. Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
+#: addon\globalPlugins\AIContentDescriber\__init__.py:145
+msgid ""
+"Please disable windows screen curtain before using AI content describer."
+msgstr "Будь ласка, вимкніть екранну завісу Windows перед використанням ШІ."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:159
+msgid "Content is not visible"
+msgstr "Вміст не видно"
+
+#. Translators: Message spoken when the attempt to take a picture of an object fails
+#: addon\globalPlugins\AIContentDescriber\__init__.py:170
+msgid "Could not snap an image of the requested object"
+msgstr "Не вдалося зробити зображення потрібного об’єкта"
+
+#. translators: message spoken when grabbing the content of the current window is not possible
+#: addon\globalPlugins\AIContentDescriber\__init__.py:180
+msgid "Could not get window content"
+msgstr "Не вдалося отримати вміст вікна"
+
+#. Translators: Message spoken when the item copied to the clipboard is not an image
+#: addon\globalPlugins\AIContentDescriber\__init__.py:191
+#: addon\globalPlugins\AIContentDescriber\__init__.py:202
+msgid "The item on the clipboard is not an image."
+msgstr "Елемент у буфері обміну не є зображенням."
+
+#. Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
+#: addon\globalPlugins\AIContentDescriber\__init__.py:196
+msgid ""
+"Unsupported image format. Please copy another file to the clipboard that is "
+"{''.join(service.supported_formats)}"
+msgstr ""
+"Непідтримуваний формат зображення. Скопіюйте в буфер обміну інший файл {''."
+"join(service.supported_formats)}"
+
+#. Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key
+#: addon\globalPlugins\AIContentDescriber\__init__.py:212
+msgid ""
+"To describe content, you must provide an API key in the AI image describer "
+"category of the NVDA settings dialog. Please consult add-on help for more "
+"information"
+msgstr ""
+"Щоб описати вміст, вам потрібно вказати ключ API у категорії \"Описувач "
+"вмісту за допомогою ШІ\" у діалозі налаштувань NVDA. Будь ласка, зверніться "
+"до довідки додатка для отримання додаткової інформації"
+
+#. Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
+#: addon\globalPlugins\AIContentDescriber\__init__.py:216
+msgid ""
+"To describe content, you must define a prompt by navigating to the AI image "
+"describer category of the NVDA settings dialog. Please consult add-on help "
+"for more information"
+msgstr ""
+"Щоб описати вміст, ви маєте визначити підказку, перейшовши до категорії "
+"\"Описувач вмісту за допомогою ШІ\" у діалозі налаштувань NVDA. Будь ласка, "
+"зверніться до довідки додатка для отримання додаткової інформації"
+
+#. Translators: Message spoken after the beep - when we have started fetching the description
+#: addon\globalPlugins\AIContentDescriber\__init__.py:220
+msgid "Retrieving description..."
+msgstr "Отримання опису..."
+
+#. Translators: Title of the browseable message
+#: addon\globalPlugins\AIContentDescriber\__init__.py:224
+msgid "Image description"
+msgstr "Опис зображення"
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:255
+msgid ""
+"Describe the image (or file path to an image) on the clipboard using AI."
+msgstr ""
+"Описати зображення (або шлях до файлу зображення) у буфері обміну за "
+"допомогою ШІ."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:259
+msgid "Describe the contents of the current navigator object using AI."
+msgstr "Описати вміст поточного об’єкта навігатора за допомогою ШІ."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:263
+msgid "Describe the contents of the currently focused item using AI."
+msgstr "Описати вміст поточного об’єкта навігатора за допомогою ШІ."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:267
+msgid "Take a screenshot, then describe it using AI."
+msgstr "Зробити знімок екрана, а потім описати його за допомогою ШІ."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:271
+msgid ""
+"Pop up a menu asking whether to describe the current focus, navigator "
+"object, or entire screen with AI."
+msgstr ""
+"Відкриває спливаюче меню із запитом, чи потрібно описати поточний фокус, "
+"об’єкт навігатора чи весь екран за допомогою ШІ."
+
+#. translators: error
+#: addon\globalPlugins\AIContentDescriber\description_service.py:33
+#: addon\globalPlugins\AIContentDescriber\description_service.py:71
+msgid "error"
+msgstr "помилка"
+
+#. translators: message spoken when we can't connect (error with connection)
+#: addon\globalPlugins\AIContentDescriber\description_service.py:39
+#: addon\globalPlugins\AIContentDescriber\description_service.py:84
+msgid "error making connection"
+msgstr "помилка з’єднання"
+
+#. translators: message spoken when the connection is refused by our target
+#: addon\globalPlugins\AIContentDescriber\description_service.py:46
+#: addon\globalPlugins\AIContentDescriber\description_service.py:91
+msgid "error, connection refused by target"
+msgstr "помилка, кінцевий адресат відхилив підключення"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:26
+msgid ""
+"This add-on makes it possible to describe the focus object, navigator "
+"object, or screen using the popular GPT4 vision artificial intelligence "
+"LLM.\n"
+"Though content descriptions are quite detailed, they may not always be "
+"completely accurate or reflect real world information.\n"
+"To begin, head to https://platform.openai.com/account/api-keys and create an "
+"account, then create a key for interacting with the API. See add-on "
+"documentation for more information on this.\n"
+"Then, choose the \"AI content describer\" category from NVDA's settings "
+"dialog and enter your API key.\n"
+"Press NVDA+shift+i to pop up a menu asking how you wish to describe based on "
+"the current position, or NVDA+shift+u to describe the navigator object, or "
+"NVDA+shift+y for an image that has been copied to the clipboard such as in "
+"windows explorer. Other keystrokes are customizable from the input gestures "
+"dialog."
+msgstr ""
+"Цей додаток дає змогу описати об'єкт фокусування, об'єкт навігатора або "
+"екран за допомогою популярного штучного інтелекту GPT4 vision LLM.\n"
+"Хоча описи вмісту є досить детальними, вони не завжди можуть бути повністю "
+"точними або відображати реальну інформацію.\n"
+"Для початку перейдіть на сайт https://platform.openai.com/account/api-keys і "
+"створіть обліковий запис, а потім створіть ключ для взаємодії з API. "
+"Докладнішу інформацію про це можна знайти в документації до додатка.\n"
+"Потім у діалозі налаштувань NVDA виберіть категорію \"Описувач вмісту за "
+"допомогою ШІ\" і введіть свій ключ API.\n"
+"Натисніть NVDA+shift+i, щоб викликати меню із запитом про спосіб опису на "
+"основі поточної позиції, або NVDA+shift+u, щоб описати об'єкт навігатора, "
+"або NVDA+shift+y для зображення, скопійованого до буфера обміну, наприклад, "
+"у провіднику Windows. Інші комбінації клавіш можна налаштувати у діалозі "
+"жести вводу."
