@@ -233,14 +233,11 @@ class GlobalPlugin(GlobalPlugin):
 			# Translators: Title of the browseable message
 			messageTitle = _("Image description")
 			try:
-				htmlMessage = markdown.markdown(message, extensions = [fenced_code.FencedCodeExtension(), tables.TableExtension(), nl2br.Nl2BrExtension(), sane_lists.SaneListExtension()])
+				message = markdown.markdown(message, extensions = [fenced_code.FencedCodeExtension(), tables.TableExtension(), nl2br.Nl2BrExtension(), sane_lists.SaneListExtension()])
 			except Exception as e:
-				log.exception("Exception while converting markdown to html")
-				htmlMessage = None
-			if htmlMessage:
-				wx.CallAfter(ui.browseableMessage, htmlMessage, messageTitle, True)
-			else:
-				wx.CallAfter(ui.browseableMessage, message, messageTitle)
+				log.exception("Exception while converting markdown to html, falling back to a text description")
+			# The browsableMessage dialog uses mshtml, which doesn't appear to care if the text isn't actually markup.
+			wx.CallAfter(ui.browseableMessage, message, messageTitle, True)
 		else:
 			ui.message(message)
 		if delete:
