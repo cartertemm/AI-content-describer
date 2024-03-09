@@ -35,10 +35,20 @@ from globalPluginHandler import GlobalPlugin
 # third party (packaged) modules
 module_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(module_path)
+# stdlib additions to import markdown
+import html
+html.__path__.append(os.path.join(module_path, "html"))
+import xml
+xml.__path__.append(os.path.join(module_path, "xml"))
+
+import markdown
+from markdown.extensions import fenced_code, nl2br, tables, sane_lists
+html.__path__.pop()
+xml.__path__.pop()
 from PIL import ImageGrab
 import config_handler as ch
 from description_service import GPT4
-sys.path.remove(sys.path[-1])
+sys.path.pop()
 
 service = None
 
@@ -58,7 +68,7 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		# Translators: The label for the maximum tokens chooser in the settings dialog
 		self.max_tokens = sHelper.addLabeledControl(_("Maximum tokens"), nvdaControls.SelectOnFocusSpinCtrl, min=1, max=1000)
 		# Translators: The label for the option to open results in browseable dialogs
-		self.open_in_dialog = sHelper.addItem(wx.CheckBox(self, label=_("Open each result in a browseable dialog")))
+		self.open_in_dialog = sHelper.addItem(wx.CheckBox(self, label=_("Open each result in a browseable dialog; Markdown will be rendered if possible")))
 		# Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
 		self.cache_descriptions = sHelper.addItem(wx.CheckBox(self, label=_("Remember/cache descriptions of each item to save API quota")))
 		# Translators: The label for the timeout chooser in the settings dialog
@@ -221,7 +231,13 @@ class GlobalPlugin(GlobalPlugin):
 		message = service.process(file, **ch.config[service.name])
 		if ch.config[service.name]["open_in_dialog"]:
 			# Translators: Title of the browseable message
-			wx.CallAfter(ui.browseableMessage, message, _("Image description"))
+			messageTitle = _("Image description")
+			try:
+				message = markdown.markdown(message, extensions = [fenced_code.FencedCodeExtension(), tables.TableExtension(), nl2br.Nl2BrExtension(), sane_lists.SaneListExtension()])
+			except Exception as e:
+				log.exception("Exception while converting markdown to html, falling back to a text description")
+			# The browsableMessage dialog uses mshtml, which doesn't appear to care if the text isn't actually markup.
+			wx.CallAfter(ui.browseableMessage, message, messageTitle, True)
 		else:
 			ui.message(message)
 		if delete:
