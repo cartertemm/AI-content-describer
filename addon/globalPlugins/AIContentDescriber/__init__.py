@@ -219,15 +219,15 @@ class GlobalPlugin(GlobalPlugin):
 		# Few sanity checks before we go ahead with the API request
 		if not ch.config[service.name]["api_key"]:
 			# Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key
-			ui.message(_("To describe content, you must provide an API key in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
+			wx.CallAfter(ui.message, _("To describe content, you must provide an API key in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		if not ch.config[service.name]["prompt"]:
 			# Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
-			ui.message(_("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
+			wx.CallAfter(ui.message, _("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
-		ui.message(_("Retrieving description..."))
+		wx.CallAfter(ui.message, _("Retrieving description..."))
 		message = service.process(file, **ch.config[service.name])
 		if ch.config[service.name]["open_in_dialog"]:
 			# Translators: Title of the browseable message
@@ -239,7 +239,7 @@ class GlobalPlugin(GlobalPlugin):
 			# The browsableMessage dialog uses mshtml, which doesn't appear to care if the text isn't actually markup.
 			wx.CallAfter(ui.browseableMessage, message, messageTitle, True)
 		else:
-			ui.message(message)
+			wx.CallAfter(ui.message, message)
 		if delete:
 			os.unlink(file)
 
