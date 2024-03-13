@@ -179,3 +179,60 @@ class GPT4(BaseDescriptionService):
 				cache.cache[base64_image] = content
 				cache.write_cache()
 			return content
+
+class Gemini(BaseDescriptionService):
+	name = "Google Gemini Pro Vision"
+	DEFAULT_PROMPT = "Describe this image in detail for someone who is blind."
+	supported_formats = [
+		".jpeg",
+		".jpg",
+		".png",
+	]
+
+	def __init__(self):
+		super().__init__()
+
+	def process(self, image_path, **kw):
+		prompt = kw.get("prompt", self.DEFAULT_PROMPT)
+		max_tokens = kw.get("max_tokens", 250)
+		timeout = kw.get("timeout", 15)
+		cache_descriptions = kw.get("cache_descriptions", True)
+		api_key = kw.get("api_key")
+		base64_image = encode_image(image_path)
+		# have we seen this image before?
+		cache.read_cache()
+		description = cache.cache.get(base64_image)
+		if description is not None:
+			return description
+		headers = {
+			"Content-Type": "application/json"
+		}
+		payload ={"contents":[
+			{
+				"parts":[
+					{"text": prompt},
+					{
+						"inline_data": {
+							"mime_type":"image/jpeg",
+							"data": base64_image
+						}
+					}
+				]
+			}],
+			"generationConfig": {
+				"maxOutputTokens": max_tokens
+			}
+		}
+		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key={API_KEY}", headers=headers, data=json.dumps(payload).encode('utf-8'), timeout=timeout)
+		response = json.loads(response.decode('utf-8'))
+		if "error" in response:
+			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
+			ui.message(_(f"Gemini returned an error: {response['error']['code']}, {response['error']['message']}"))
+			return
+		content = j["candidates"][0]["content"]["parts"][0]["text"]
+		if content:
+			if cache_descriptions:
+				cache.read_cache()
+				cache.cache[base64_image] = content
+				cache.write_cache()
+			return content

@@ -2,12 +2,13 @@
 
 This add-on makes it possible to obtain detailed descriptions for images and other visually inaccessible content.
 
-Leveraging the multimodal capabilities of the GPT-4 large language model, we aim to deliver best-in-class content descriptions. For more information about the underlying model, refer to [GPT-4V](https://openai.com/research/gpt-4v-system-card).
+Leveraging the multimodal capabilities of advanced AI models, we aim to deliver best-in-class content descriptions. For more information about the underlying model, refer to [GPT-4V](https://openai.com/research/gpt-4v-system-card).
 
 ## Features
 
 * Describe the focus object, navigator object, or entire screen
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
+* Supports multiple providers (currently OpenAI's GPT4 and Google's Gemini)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -31,17 +32,26 @@ Now, the possibilities are almost endless. You might:
 
 ## Getting started
 
-Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, then follow the instructions below to obtain an API key from OpenAI:
+Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, then follow the instructions below to obtain an API key from a supported provider.
+If you are unsure about which one to use, the consensus of this addon's developer and testers is that Gemini currently offers more reasonable pricing, while OpenAI seems to provide a higher degree of accuracy. Of course, these results are highly dependent on the task at hand, so we recommend experimentation with different models and prompts to find what works best.
+
+### Obtaining an API key from OpenAI:
 
 1. Go to https://platform.openai.com/account/api-keys
 2. If you don't yet have an account, create one. If you do, log in.
 3. On the API keys page, click to create a new secret key. Copy it to your clipboard.
 4. Fund the account with at least $1
-5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then tab into the API key field and paste the item you just generated here.
+5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "GPT4 Vision" as the provider, tab into the API key field, and paste the key you just generated here.
 
-At the time of this writing, OpenAI issues credits to new developer accounts that can be used for three months, after which they are lost.
+At the time of this writing, OpenAI issues credits to new developer accounts that can be used for three months, after which they are lost. Following this period, you will have to purchase credits. Typical usage shouldn't ever exceed $5.00 per month. For a point of reference, the original version of this add-on was developed for slightly under a dollar. It is always possible to login to your OpenAI account and click on "usage" to get your quota.
 
-Following this period, you will have to purchase credits. Typical usage shouldn't ever exceed $5.00 per month. For a referencepoint, the original version of this add-on was developed for slightly under a dollar. It is always possible to login to your OpenAI account and click on "usage" to get your quota.
+### Obtaining an API key from Google
+
+1. You will first need to create a Google workspace project by following this link. Make sure you are logged in to your account. https://console.cloud.google.com/projectcreate
+2. Create a name between four and thirty characters, like "gemini" or "NVDA add-on"
+3. Navigate to this URL: https://makersuite.google.com/app/apikey
+4. Click "create API key"
+5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "Google Gemini" as your provider, tab into the API key field, and paste the key you just generated here.
 
 ## Using
 
