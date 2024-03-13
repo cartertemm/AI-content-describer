@@ -35,12 +35,13 @@ from globalPluginHandler import GlobalPlugin
 # third party (packaged) modules
 module_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(module_path)
+import numpy
+import cv2
 # stdlib additions to import markdown
 import html
 html.__path__.append(os.path.join(module_path, "html"))
 import xml
 xml.__path__.append(os.path.join(module_path, "xml"))
-
 import markdown
 from markdown.extensions import fenced_code, nl2br, tables, sane_lists
 html.__path__.pop()
@@ -115,9 +116,12 @@ class AreaMenu(wx.Menu):
 		self.navigator_item = self.Append(wx.ID_ANY, _("Navigator object"))
 		# translators: screenshot of entire window menu item
 		self.screenshot_item = self.Append(wx.ID_ANY, _("Entire screen"))
+		# translators: picture from the local camera menu item
+		self.camera_item = self.Append(wx.ID_ANY, _("Take a picture"))
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.camera_item)
 
 	def on_menu_selected(self, event):
 		self.selection = self.FindItemById(event.GetId())
@@ -193,6 +197,25 @@ class GlobalPlugin(GlobalPlugin):
 		snap.save(file)
 		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
 
+	def describe_camera(self):
+		capture = cv2.VideoCapture(0)  # todo: scan for multiple cameras
+		if not capture.isOpened():
+			# Translators: the title of the message spoken when no camera was detected
+			caption = _("Failed to locate a camera on this system.")
+			ui.message(caption)
+			return
+		success , frame = capture.read()
+		if not success:
+			caption = _("The picture could not be taken. Please ensure that your camera is not in use by another application and try again.")
+			ui.message(caption)
+			return
+		file = tempfile.mktemp(suffix=".png")
+		if not cv2.imwrite(file, frame):
+			# Translators: the message spoken when the picture is taken but the file could not be written.
+			ui.message(_("The picture could not be saved."))
+			return
+		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
+
 	def describe_clipboard(self):
 		snap = ImageGrab.grabclipboard()
 		if isinstance(snap, list):
@@ -262,6 +285,8 @@ class GlobalPlugin(GlobalPlugin):
 			self.describe_navigator_object()
 		elif menu.selection == menu.screenshot_item:
 			self.describe_screenshot()
+		elif menu.selection == menu.camera_item:
+			self.describe_camera()
 		else:
 			self.prev_focus = None
 			self.prev_navigator = None
