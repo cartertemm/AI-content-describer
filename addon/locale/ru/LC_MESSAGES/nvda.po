@@ -1,9 +1,15 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2023-11-25 19:27-0700\n"
-"PO-Revision-Date: 2024-03-09 17:19+0300\n"
+"Project-Id-Version: 'AIContentDescriber' '2024.03.13'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2023-12-03 17:36+0100\n"
+"PO-Revision-Date: 2024-03-14 06:24+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -59,8 +65,12 @@ msgstr "Максимальное количество токенов"
 
 #. Translators: The label for the option to open results in browseable dialogs
 #: addon\globalPlugins\AIContentDescriber\__init__.py:61
-msgid "Open each result in a browseable dialog"
-msgstr "Открывать каждый результат в отдельном окне для просмотра"
+msgid ""
+"Open each result in a browseable dialog; Markdown will be rendered if "
+"possible"
+msgstr ""
+"Открывать каждый результат в отдельном окне для просмотра; По возможности "
+"будет отображён Markdown"
 
 #. Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:63
