@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2024.03.13'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2023-12-03 17:36+0100\n"
-"PO-Revision-Date: 2024-03-14 06:24+0300\n"
+"PO-Revision-Date: 2024-03-14 07:18+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -81,7 +81,7 @@ msgstr ""
 #. Translators: The label for the timeout chooser in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:65
 msgid "Seconds to wait for a response before timing out"
-msgstr "Секунды на ожидание ответа перед окончанием тайм-аута"
+msgstr "Ожидание ответа перед окончанием тайм-аута (в секундах)"
 
 #. Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
 #: addon\globalPlugins\AIContentDescriber\__init__.py:67
@@ -89,7 +89,7 @@ msgid ""
 "Optimize images for size, may speed up detection in some situations "
 "(experimental)"
 msgstr ""
-"Оптимизация изображения по размеру может ускорить обнаружение в некоторых "
+"Оптимизация изображений по размеру, может ускорить обнаружение в некоторых "
 "ситуациях (экспериментально)"
 
 #. translators: current focus
@@ -180,8 +180,8 @@ msgstr "Описание изображения"
 msgid ""
 "Describe the image (or file path to an image) on the clipboard using AI."
 msgstr ""
-"Описать изображение (или путь к файлу изображения) в буфере обмена с помощью "
-"ИИ."
+"Описать изображение (или изображение по пути к файлу) в буфере обмена с "
+"помощью ИИ."
 
 #: addon\globalPlugins\AIContentDescriber\__init__.py:259
 msgid "Describe the contents of the current navigator object using AI."
