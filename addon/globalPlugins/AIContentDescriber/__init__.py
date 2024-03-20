@@ -36,15 +36,6 @@ from globalPluginHandler import GlobalPlugin
 module_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(module_path)
 
-# ugly hack: since OpenCV takes time to initialize on some machines, do it in a thread as to prevent intermittent lag elsewhere
-face_view = None
-def threaded_imports():
-	global face_view
-	import cv2
-	import face_view
-	GlobalPlugin.detection_interface = face_view.fd
-threading.Thread(target=threaded_imports).start()
-
 # stdlib additions to import markdown
 import html
 html.__path__.append(os.path.join(module_path, "html"))
@@ -57,7 +48,19 @@ xml.__path__.pop()
 from PIL import ImageGrab
 import config_handler as ch
 from description_service import GPT4
-sys.path.pop()
+
+
+# ugly hack: since OpenCV takes time to initialize on some machines, do it in a thread as to prevent intermittent lag elsewhere
+face_view = None
+cv2 = None
+def threaded_imports():
+	global cv2, face_view
+	import cv2
+	import face_view
+	GlobalPlugin.detection_interface = face_view.fd
+	sys.path.remove(module_path)
+threading.Thread(target=threaded_imports).start()
+
 
 service = None
 
@@ -126,12 +129,21 @@ class AreaMenu(wx.Menu):
 		self.screenshot_item = self.Append(wx.ID_ANY, _("Entire screen"))
 		# translators: picture from the local camera menu item
 		self.camera_item = self.Append(wx.ID_ANY, _("Take a picture"))
-		self.face_item = self.Append(wx.ID_ANY, _("Detect face position (no API required)"))
+		# For the face detection submenu
+		self.face_detection_menu = wx.Menu()
+		self.detect_face_item = self.face_detection_menu.Append(wx.ID_ANY, _("Detect face position"))
+		self.detect_face_realtime_item = self.face_detection_menu.Append(wx.ID_ANY, _("Real-time face guidance"))
+		self.select_camera_item = self.face_detection_menu.Append(wx.ID_ANY, _("Select camera"))
+		self.release_camera_item = self.face_detection_menu.Append(wx.ID_ANY, _("Release the camera to make it usable by other applications"))
+		self.AppendSubMenu(self.face_detection_menu, _("Face Detection (no API required)"))
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.camera_item)
-		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.face_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_realtime_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.select_camera_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.release_camera_item)
 
 	def on_menu_selected(self, event):
 		self.selection = self.FindItemById(event.GetId())
@@ -198,7 +210,7 @@ class GlobalPlugin(GlobalPlugin):
 		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
 
 	def describe_face(self):
-		self.detection_interface.run()
+		return threading.Thread(target=self.detection_interface.run).start()
 
 	def describe_screenshot(self):
 		snap = ImageGrab.grab()
@@ -212,11 +224,11 @@ class GlobalPlugin(GlobalPlugin):
 
 	def describe_camera(self):
 		self.detection_interface.run(process=False)
-		if self.video_capture:
-			success , frame = self.detection_interface.read()
+		if self.detection_interface.video_capture:
+			success , frame = self.detection_interface.read_frame()
 			if not success:
-				caption = _("The picture could not be taken. Please ensure that your camera is not in use by another application and try again.")
-				ui.message(caption)
+			# translators: message spoken when the picture could not be taken due to an unknown error
+				ui.message(_("The picture could not be taken. Please ensure that your camera is not in use by another application and try again."))
 				return
 			file = tempfile.mktemp(suffix=".png")
 			if not cv2.imwrite(file, frame):
@@ -224,6 +236,10 @@ class GlobalPlugin(GlobalPlugin):
 				ui.message(_("The picture could not be saved."))
 				return
 			return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
+		else:
+			# translators: message spoken when the picture could not be taken due to an unknown error
+			ui.message(_("The picture could not be taken. Please ensure that your camera is not in use by another application and try again."))
+
 
 	def describe_clipboard(self):
 		snap = ImageGrab.grabclipboard()
@@ -296,8 +312,14 @@ class GlobalPlugin(GlobalPlugin):
 			self.describe_screenshot()
 		elif menu.selection == menu.camera_item:
 			self.describe_camera()
-		elif menu.selection == menu.face_item:
+		elif menu.selection == menu.detect_face_item:
 			self.describe_face()
+		elif menu.selection == menu.select_camera_item:
+			self.detection_interface.show_device_dialog_if_needed(force=True)
+		elif menu.selection == menu.release_camera_item:
+			self.detection_interface.destroy()
+			# translators: message spoken after the camera has been released successfully
+			ui.message(_("Success"))
 		else:
 			self.prev_focus = None
 			self.prev_navigator = None
@@ -321,6 +343,14 @@ class GlobalPlugin(GlobalPlugin):
 	def script_describe_image(self, gesture):
 		wx.CallAfter(self.show_area_menu)
 	script_describe_image.__doc__ = _("Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI.")
+
+	def script_describe_camera(self, gesture):
+		self.describe_camera()
+	script_describe_camera.__doc__ = _("Snap a picture using the selected camera, then describe it using AI.")
+
+	def script_describe_face(self, gesture):
+		self.describe_face()
+	script_describe_face.__doc__ = _("Describe the position of the face in the frame using the selected camera, if applicable.")
 
 	def is_screen_curtain_running(self):
 		import vision
