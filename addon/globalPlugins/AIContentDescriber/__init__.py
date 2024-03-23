@@ -1,3 +1,5 @@
+# add prompt specific timeout and caching
+
 # *-* coding: utf-8 *-*
 
 # NVDA Add-on: Ai Content Describer
@@ -47,10 +49,23 @@ html.__path__.pop()
 xml.__path__.pop()
 from PIL import ImageGrab
 import config_handler as ch
-from description_service import GPT4
+import description_service
+import model_configuration
 sys.path.pop()
 
 service = None
+
+
+def launch_models_dialog(parent):
+	dialog = model_configuration.build_model_configuration_dialog(parent)
+	gui.mainFrame.popupSettingsDialog(dialog)
+
+
+def set_model_from_config():
+	global service
+	last_used = ch.config["global"]["last_used_model"]
+	if last_used:
+		service = description_service.get_model_by_name(last_used)
 
 
 class AIDescriberSettingsPanel(SettingsPanel):
@@ -59,50 +74,53 @@ class AIDescriberSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: The label for the API key field in in the settings dialog
-		self.api_key = sHelper.addLabeledControl(_("OpenAI API key"), wx.TextCtrl)
-		# Translators: The label for the prompt field in the settings dialog
-		self.prompt = sHelper.addLabeledControl(_("Prompt"), wx.TextCtrl, style=wx.TE_MULTILINE)
-		# Translators: The label for the button that resets the prompt to its default in the settings dialog
-		self.reset_prompt = sHelper.addItem(wx.Button(self, label=_("Reset prompt to default")))
-		# Translators: The label for the maximum tokens chooser in the settings dialog
-		self.max_tokens = sHelper.addLabeledControl(_("Maximum tokens"), nvdaControls.SelectOnFocusSpinCtrl, min=1, max=1000)
+		# translators: the button in the settings dialog to open the model manager
+		self.models_dialog_button = sHelper.addItem(wx.Button(self, label=_("Manage &models")))
+		# translators: the label for the dropdown that lists the currently available models
+		self.available_models = sHelper.addLabeledControl(_("Model (configure more in the manage models dialog, defaults to last used):"), wx.Choice)
 		# Translators: The label for the option to open results in browseable dialogs
 		self.open_in_dialog = sHelper.addItem(wx.CheckBox(self, label=_("Open each result in a browseable dialog; Markdown will be rendered if possible")))
 		# Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
 		self.cache_descriptions = sHelper.addItem(wx.CheckBox(self, label=_("Remember/cache descriptions of each item to save API quota")))
-		# Translators: The label for the timeout chooser in the settings dialog
-		self.timeout = sHelper.addLabeledControl(_("Seconds to wait for a response before timing out"), nvdaControls.SelectOnFocusSpinCtrl, min=1)
 		# Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
 		self.optimize_for_size = sHelper.addItem(wx.CheckBox(self, label=_("Optimize images for size, may speed up detection in some situations (experimental)")))
 		self.bind_events()
 		self.populate_values()
 
 	def bind_events(self):
-		self.Bind(wx.EVT_BUTTON, self.on_prompt_reset, self.reset_prompt)
+		self.Bind(wx.EVT_BUTTON, self.on_models_dialog, self.models_dialog_button)
 
 	def populate_values(self):
-		self.api_key.SetValue(ch.config[service.name]["api_key"])
-		self.prompt.SetValue(ch.config[service.name]["prompt"])
-		self.max_tokens.SetValue(ch.config[service.name]["max_tokens"])
+		available = description_service.list_available_model_names()
+		if len(available) > 0:
+			self.available_models.Clear()
+			self.available_models.Set(available)
+			last_used = ch.config["global"]["last_used_model"]
+			if last_used in available:
+				self.available_models.SetSelection(available.index(last_used))
+			else:  # it became unavailable for some reason, so just go with the first
+				self.available_models.SetSelection(0)
+		else:
+			self.available_models.Clear()
 		self.cache_descriptions.SetValue(ch.config[service.name]["cache_descriptions"])
-		self.timeout.SetValue(ch.config[service.name]["timeout"])
-		self.open_in_dialog.SetValue(ch.config[service.name]["open_in_dialog"])
-		self.optimize_for_size.SetValue(ch.config[service.name]["optimize_for_size"])
+		self.open_in_dialog.SetValue(ch.config["global"]["open_in_dialog"])
+		self.optimize_for_size.SetValue(ch.config["global"]["optimize_for_size"])
+
+	def on_models_dialog(self, event):
+		launch_models_dialog(self)
 
 	def onSave(self):
-		ch.config[service.name]["api_key"] = self.api_key.GetValue()
-		ch.config[service.name]["prompt"] = self.prompt.GetValue()
-		ch.config[service.name]["max_tokens"] = self.max_tokens.GetValue()
+		available = description_service.list_available_model_names()
+		selection = self.available_models.GetSelection()
+		if len(available) > 0:
+			if len(available) > selection:
+				ch.config["global"]["last_used_model"] = available[selection]
+				set_model_from_config()
 		ch.config[service.name]["cache_descriptions"] = self.cache_descriptions.GetValue()
-		ch.config[service.name]["timeout"] = self.timeout.GetValue()
-		ch.config[service.name]["optimize_for_size"] = self.optimize_for_size.GetValue()
-		ch.config[service.name]["open_in_dialog"] = self.open_in_dialog.GetValue()
+		ch.config["global"]["optimize_for_size"] = self.optimize_for_size.GetValue()
+		ch.config["global"]["open_in_dialog"] = self.open_in_dialog.GetValue()
 		ch.config.write()
 
-	def on_prompt_reset(self, event):
-		self.prompt.SetValue(service.DEFAULT_PROMPT)
-		self.prompt.SetFocus()
 
 
 class AreaMenu(wx.Menu):
@@ -132,7 +150,10 @@ class GlobalPlugin(GlobalPlugin):
 		if not globalVars.appArgs.secure:
 			gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(AIDescriberSettingsPanel)
 		ch.load_config()
-		service = GPT4()
+		if ch.migrate_config_if_needed():
+			ch.config.write()
+		set_model_from_config()
+
 		# cache the previous focus and navigator objects globally, as popping up a menu seems to alter them
 		self.prev_focus = None
 		self.prev_navigator = None
@@ -217,19 +238,24 @@ class GlobalPlugin(GlobalPlugin):
 
 	def describe_image(self, file, delete=False):
 		# Few sanity checks before we go ahead with the API request
-		if not ch.config[service.name]["api_key"]:
+		if not service or not ch.config[service.name]["api_key"]:
 			# Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key
-			ui.message(_("To describe content, you must provide an API key in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
+			ui.message(_("To describe content, you must provide an API key for at least one model in the manage models dialog, found in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		if not ch.config[service.name]["prompt"]:
 			# Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
-			ui.message(_("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
+			ui.message(_("To describe content, you must define a prompt by navigating to the chosen model in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
-		ui.message(_("Retrieving description..."))
-		message = service.process(file, **ch.config[service.name])
-		if ch.config[service.name]["open_in_dialog"]:
+		ui.message(_(f"Retrieving description from {service.name}..."))
+		try:
+			message = service.process(file, **ch.config[service.name])
+		except Exception as exc:
+			# translators: message spoken after an uncaught error occurred - after attempting to retrieve information from a model
+			ui.message(_(f"An uncaught error occurred. {exc}\nFor more information, please consult the NVDA log."))
+			raise
+		if ch.config["global"]["open_in_dialog"]:
 			# Translators: Title of the browseable message
 			messageTitle = _("Image description")
 			try:

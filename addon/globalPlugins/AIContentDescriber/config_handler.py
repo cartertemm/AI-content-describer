@@ -17,6 +17,7 @@ config = None
 
 
 def load_config():
+	"""Loads the add-on's configuration."""
 	global config
 	path = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber.conf"))
 	# seek back to the beginning of the spec for every read, in case this is called twice
@@ -38,6 +39,7 @@ def load_config():
 
 
 def report_validation_errors(config, validation_result):
+	"""Return any errors that were detected with the configuration file to display a friendly message."""
 	errors = []
 	for (section_list, key, _) in flatten_errors(config, validation_result):
 		if key:
@@ -48,3 +50,27 @@ def report_validation_errors(config, validation_result):
 		else:
 			errors.append('missing required section "%s"' % (", ".join(section_list)))
 	return errors
+
+def migrate_config_if_needed():
+	"""Fixes any issues with the user's config that may still be present after a version upgrade.
+
+	It is important that we take extra care *not* to remove any settings
+	from the configspec, as this will error out and require manual
+	alteration.
+
+	Returns True if a migration took place, False otherwise.
+	"""
+	# we used to (rather stupidly) store all the settings under the GPT-4 vision model
+	## as this was the first and only one to have been implemented for a while
+	migrated = False
+	old_settings_section = "GPT-4 vision"
+	old_gpt_settings = ["optimize_for_size", "open_in_dialog"]
+	for setting in old_gpt_settings:
+		value = config[old_settings_section].get(setting)
+		if value is not None:
+			if not migrated:
+				migrated = True
+			# port it over
+			config["global"][setting] = value
+			del config[old_settings_section][setting]
+	return migrated

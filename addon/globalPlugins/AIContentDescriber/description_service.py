@@ -15,6 +15,7 @@ try:
 except addonHandler.AddonError:
 	log.warning("Couldn't initialise translations. Is this addon running from NVDA's scratchpad directory?")
 
+import config_handler as ch
 import cache
 
 
@@ -110,6 +111,53 @@ class BaseDescriptionService:
 	name = "unknown"
 	DEFAULT_PROMPT = None
 	supported_formats = []
+	description = "Another vision capable large language model"
+	about_url = ""
+	needs_api_key = True
+	needs_configuration_dialog = True
+	configurationPanel = None
+
+	@property
+	def api_key(self):
+		return ch.config[self.name]["api_key"]
+
+	@api_key.setter
+	def api_key(self, key):
+		ch.config[self.name]["api_key"] = key
+
+	@property
+	def max_tokens(self):
+		return ch.config[self.name]["max_tokens"]
+
+	@max_tokens.setter
+	def max_tokens(self, value):
+		ch.config[self.name]["max_tokens"] = value
+
+	@property
+	def prompt(self):
+		return ch.config[self.name]["prompt"]
+
+	@prompt.setter
+	def prompt(self, value):
+		ch.config[self.name]["prompt"] = value
+
+	@property
+	def timeout(self):
+		return ch.config[self.name]["timeout"]
+
+	@timeout.setter
+	def timeout(self, value):
+		ch.config[self.name]["timeout"] = value
+
+	@property
+	def is_available(self):
+		return (not self.needs_api_key) or (self.needs_api_key and self.api_key)
+
+	def __str__(self):
+		return f"{self.name}: {self.description}"
+
+	def save_config(self):
+		ch.config.write()
 
 	def process(self):
 		pass  # implement in subclasses
@@ -125,16 +173,16 @@ class GPT4(BaseDescriptionService):
 		".png",
 		".webp",
 	]
+	# translators: the description for the GPT4 vision model in the model configuration dialog
+	description = _("The popular GPT4 model from OpenAI, with vision capabilities. This is the default model used by the add-on.")
+	about_url = "https://platform.openai.com/docs/guides/vision"
+	needs_api_key = True
 
 	def __init__(self):
 		super().__init__()
 
 	def process(self, image_path, **kw):
-		prompt = kw.get("prompt", self.DEFAULT_PROMPT)
-		max_tokens = kw.get("max_tokens", 250)
-		timeout = kw.get("timeout", 15)
 		cache_descriptions = kw.get("cache_descriptions", True)
-		api_key = kw.get("api_key")
 		base64_image = encode_image(image_path)
 		# have we seen this image before?
 		cache.read_cache()
@@ -143,7 +191,7 @@ class GPT4(BaseDescriptionService):
 			return description
 		headers = {
 			"Content-Type": "application/json",
-			"Authorization": f"Bearer {api_key}"
+			"Authorization": f"Bearer {self.api_key}"
 		}
 		payload = {
 			"model": "gpt-4-vision-preview",
@@ -153,7 +201,7 @@ class GPT4(BaseDescriptionService):
 					"content": [
 						{
 							"type": "text",
-							"text": prompt
+							"text": self.prompt
 						},
 						{
 							"type": "image_url",
@@ -164,9 +212,9 @@ class GPT4(BaseDescriptionService):
 					]
 				}
 			],
-			"max_tokens": max_tokens
+			"max_tokens": self.max_tokens
 		}
-		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode('utf-8'), timeout=timeout)
+		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode('utf-8'), timeout=self.timeout)
 		response = json.loads(response.decode('utf-8'))
 		# import test_response
 		# response = test_response.response
@@ -181,23 +229,20 @@ class GPT4(BaseDescriptionService):
 			return content
 
 class Gemini(BaseDescriptionService):
-	name = "Google Gemini Pro Vision"
+	name = "Google Gemini pro vision"
 	DEFAULT_PROMPT = "Describe this image in detail for someone who is blind."
 	supported_formats = [
 		".jpeg",
 		".jpg",
 		".png",
 	]
+	description = _("Google's Gemini model with vision capabilities.")
 
 	def __init__(self):
 		super().__init__()
 
 	def process(self, image_path, **kw):
-		prompt = kw.get("prompt", self.DEFAULT_PROMPT)
-		max_tokens = kw.get("max_tokens", 250)
-		timeout = kw.get("timeout", 15)
 		cache_descriptions = kw.get("cache_descriptions", True)
-		api_key = kw.get("api_key")
 		base64_image = encode_image(image_path)
 		# have we seen this image before?
 		cache.read_cache()
@@ -210,7 +255,7 @@ class Gemini(BaseDescriptionService):
 		payload ={"contents":[
 			{
 				"parts":[
-					{"text": prompt},
+					{"text": self.prompt},
 					{
 						"inline_data": {
 							"mime_type":"image/jpeg",
@@ -220,19 +265,37 @@ class Gemini(BaseDescriptionService):
 				]
 			}],
 			"generationConfig": {
-				"maxOutputTokens": max_tokens
+				"maxOutputTokens": self.max_tokens
 			}
 		}
-		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key={API_KEY}", headers=headers, data=json.dumps(payload).encode('utf-8'), timeout=timeout)
+		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key={self.api_key}", headers=headers, data=json.dumps(payload).encode('utf-8'), timeout=self.timeout)
 		response = json.loads(response.decode('utf-8'))
 		if "error" in response:
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
-			ui.message(_(f"Gemini returned an error: {response['error']['code']}, {response['error']['message']}"))
+			ui.message(_(f"Gemini encountered an error: {response['error']['code']}, {response['error']['message']}"))
 			return
-		content = j["candidates"][0]["content"]["parts"][0]["text"]
+		content = response["candidates"][0]["content"]["parts"][0]["text"]
 		if content:
 			if cache_descriptions:
 				cache.read_cache()
 				cache.cache[base64_image] = content
 				cache.write_cache()
 			return content
+
+
+models = [
+	GPT4(),
+	Gemini(),
+]
+
+def list_available_models():
+	return [model for model in models if model.is_available]
+
+def list_available_model_names():
+	return [model.name for model in list_available_models()]
+
+def get_model_by_name(model_name):
+	model_name = model_name.lower()
+	for model in models:
+		if model.name.lower() == model_name:
+			return model
