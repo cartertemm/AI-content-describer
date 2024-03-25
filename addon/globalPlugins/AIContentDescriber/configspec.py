@@ -33,6 +33,27 @@ max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
+[Claude 3 Haiku]
+api_key = string(default="")
+prompt = string(default="Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included.")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Claude 3 Sonnet]
+api_key = string(default="")
+prompt = string(default="Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included.")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Claude 3 Opus]
+api_key = string(default="")
+prompt = string(default="Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included.")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
 [global]
 optimize_for_size = boolean(default=False)
 open_in_dialog = boolean(default=False)

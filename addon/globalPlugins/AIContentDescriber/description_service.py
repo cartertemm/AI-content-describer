@@ -6,6 +6,7 @@
 
 import base64
 import json
+import os.path
 import tempfile
 import urllib.parse
 import urllib.request
@@ -95,6 +96,7 @@ def post(**kwargs):
 			reason = str(i)
 			if hasattr(i, "fp"):
 				error_text = i.fp.read()
+				print(error_text)
 				error_text = json.loads(error_text)
 				if "error" in error_text:
 					reason += ". "+error_text["error"]["message"]
@@ -179,7 +181,7 @@ class BaseDescriptionService:
 
 class GPT4(BaseDescriptionService):
 	name = "GPT-4 vision"
-	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible."
+	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included."
 	supported_formats = [
 		".gif",
 		".jpeg",
@@ -244,7 +246,7 @@ class GPT4(BaseDescriptionService):
 
 class Gemini(BaseDescriptionService):
 	name = "Google Gemini pro vision"
-	DEFAULT_PROMPT = "Describe this image in detail for someone who is blind."
+	DEFAULT_PROMPT = "Describe this image in detail for someone who is blind. If there is text, make sure it is included."
 	supported_formats = [
 		".jpeg",
 		".jpg",
@@ -298,6 +300,89 @@ class Gemini(BaseDescriptionService):
 			return content
 
 
+class Anthropic(BaseDescriptionService):
+	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included."
+	supported_formats = [
+		".jpeg",
+		".jpg",
+		".png",
+		".gif",
+		".webp"
+	]
+
+	def process(self, image_path, model, **kw):
+		# Do not use this function directly, override it in subclasses and call with the model parameter
+		cache_descriptions = kw.get("cache_descriptions", True)
+		base64_image = encode_image(image_path)
+		mimetype = os.path.splitext(image_path)[1].lower()
+		if not mimetype in self.supported_formats:
+			# try falling back to png
+			mimetype = ".png"
+		mimetype = mimetype[1:]  # trim the "."
+		# have we seen this image before?
+		cache.read_cache()
+		description = cache.cache.get(base64_image)
+		if description is not None:
+			return description
+		headers = {
+			"User-Agent": "curl/8.4.0",  # Cloudflare is perplexingly blocking anything that urllib sends with an "error 1010"
+			"Content-Type": "application/json",
+			"x-api-key": self.api_key,
+			"anthropic-version": "2023-06-01"
+		}
+		payload = {
+			"model": model,
+			"messages": [
+				{"role": "user", "content": [
+					{
+						"type": "image",
+						"source": {
+							"type": "base64",
+							"media_type": "image/"+mimetype,
+							"data": base64_image,
+						}
+					},
+					{
+						"type": "text",
+						"text": self.prompt
+					}
+				]}
+			],
+			"max_tokens": self.max_tokens
+		}
+		response = post(url="https://api.anthropic.com/v1/messages", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = json.loads(response.decode('utf-8'))
+		if response["type"] == "error":
+			#translators: message spoken when Claude encounters an error with the format or content of the input.
+			ui.message(_(f"Claude encountered an error. {response['error']['message']}"))
+			return
+		return response["content"][0]["text"]
+
+
+class Claude3Opus(Anthropic):
+	name = "Claude 3 Opus"
+	description = _("Anthropic's most powerful model for highly complex tasks.")
+
+	def process(self, image_path, **kw):
+		return super().process(image_path, "claude-3-opus-20240229", **kw)
+
+
+class Claude3Sonnet(Anthropic):
+	name = "Claude 3 Sonnet"
+	description = _("Anthropic's model with Ideal balance of intelligence and speed, excels for enterprise workloads.")
+
+	def process(self, image_path, **kw):
+		return super().process(image_path, "claude-3-sonnet-20240229", **kw)
+
+
+class Claude3Haiku(Anthropic):
+	name = "Claude 3 Haiku"
+	description = _("Anthropic's fastest and most compact model for near-instant responsiveness")
+
+	def process(self, image_path, **kw):
+		return super().process(image_path, "claude-3-haiku-20240307", **kw)
+
+
 class LlamaCPP(BaseDescriptionService):
 	name = "llama.cpp"
 	needs_api_key = False
@@ -331,6 +416,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 				"data": base64_image,
 				"id": 12
 			}],
+			"temperature": 1.0,
 			"n_predict": self.max_tokens
 		}
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
@@ -343,6 +429,9 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 models = [
 	GPT4(),
 	Gemini(),
+	Claude3Haiku(),
+	Claude3Sonnet(),
+	Claude3Opus(),
 	LlamaCPP(),
 ]
 

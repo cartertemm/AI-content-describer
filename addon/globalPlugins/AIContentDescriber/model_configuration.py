@@ -130,9 +130,38 @@ class LlamaCPPConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class ClaudeConfigurationPanel(BaseModelSettingsPanel):
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_api_key_field(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
+class Claude3OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3Opus()
+	title = model.name
+
+
+class Claude3SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3Sonnet()
+	title = model.name
+
+
+class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3Haiku()
+	title = model.name
+
+
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
+description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel
+description_service.Claude3Sonnet.configurationPanel = Claude3SonnetConfigurationPanel
+description_service.Claude3Opus.configurationPanel = Claude3OpusConfigurationPanel
 models_dialog_parent = None
 
 
