@@ -248,9 +248,9 @@ class GlobalPlugin(GlobalPlugin):
 			return
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
-		wx.CallAfter(ui.message, _("Retrieving description..."))
+		wx.CallAfter(ui.message, _(f"Retrieving description using {service.name}..."))
 		message = service.process(file, **ch.config[service.name])
-		if ch.config[service.name]["open_in_dialog"]:
+		if ch.config["global"]["open_in_dialog"]:
 			# Translators: Title of the browseable message
 			messageTitle = _("Image description")
 			try:
