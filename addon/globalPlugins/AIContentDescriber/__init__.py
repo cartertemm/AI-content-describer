@@ -238,7 +238,7 @@ class GlobalPlugin(GlobalPlugin):
 
 	def describe_image(self, file, delete=False):
 		# Few sanity checks before we go ahead with the API request
-		if not service.is_available():
+		if not service.is_available:
 			# Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key or base URL
 			wx.CallAfter(ui.message, _("To describe content, you must provide an API key or base URL in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
