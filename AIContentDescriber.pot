@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 'AIContentDescriber' '2023.11.23'\n"
+"Project-Id-Version: 'AIContentDescriber' '2024.03.13'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2023-12-03 17:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -58,7 +58,7 @@ msgstr ""
 
 #. Translators: The label for the option to open results in browseable dialogs
 #: addon\globalPlugins\AIContentDescriber\__init__.py:61
-msgid "Open each result in a browseable dialog"
+msgid "Open each result in a browseable dialog; Markdown will be rendered if possible"
 msgstr ""
 
 #. Translators: The label for the checkbox to cash images and their descriptions in the settings dialog

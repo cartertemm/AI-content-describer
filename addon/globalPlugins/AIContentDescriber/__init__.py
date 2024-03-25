@@ -238,24 +238,19 @@ class GlobalPlugin(GlobalPlugin):
 
 	def describe_image(self, file, delete=False):
 		# Few sanity checks before we go ahead with the API request
-		if not service or not service.is_available:
+		if not service.is_available():
 			# Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key or base URL
-			ui.message(_("To describe content, you must provide an API key or base URL for at least one model in the manage models dialog, found in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
+			wx.CallAfter(ui.message, _("To describe content, you must provide an API key or base URL in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		if not ch.config[service.name]["prompt"]:
 			# Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
-			ui.message(_("To describe content, you must define a prompt by navigating to the chosen model in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
+			wx.CallAfter(ui.message, _("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
-		ui.message(_(f"Retrieving description from {service.name}..."))
-		try:
-			message = service.process(file, **ch.config[service.name])
-		except Exception as exc:
-			# translators: message spoken after an uncaught error occurred - after attempting to retrieve information from a model
-			ui.message(_(f"An uncaught error occurred. {exc}\nFor more information, please consult the NVDA log."))
-			raise
-		if ch.config["global"]["open_in_dialog"]:
+		wx.CallAfter(ui.message, _("Retrieving description..."))
+		message = service.process(file, **ch.config[service.name])
+		if ch.config[service.name]["open_in_dialog"]:
 			# Translators: Title of the browseable message
 			messageTitle = _("Image description")
 			try:
@@ -265,7 +260,7 @@ class GlobalPlugin(GlobalPlugin):
 			# The browsableMessage dialog uses mshtml, which doesn't appear to care if the text isn't actually markup.
 			wx.CallAfter(ui.browseableMessage, message, messageTitle, True)
 		else:
-			ui.message(message)
+			wx.CallAfter(ui.message, message)
 		if delete:
 			os.unlink(file)
 
