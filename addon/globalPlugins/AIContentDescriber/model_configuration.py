@@ -27,6 +27,10 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 		# Translators: The label for the API key field in the model configuration dialog
 		self.api_key = sHelper.addLabeledControl(_(f"API key"), wx.TextCtrl)
 
+	def add_base_url_field(self, sHelper):
+		# Translators: The label for the base URL field in the model configuration dialog
+		self.base_url = sHelper.addLabeledControl(_(f"Base URL"), wx.TextCtrl)
+
 	def add_prompt_field(self, sHelper):
 		# Translators: The label for the prompt field in the model configuration dialog
 		self.prompt = sHelper.addLabeledControl(_("Prompt"), wx.TextCtrl, style=wx.TE_MULTILINE)
@@ -44,6 +48,8 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 	def populate_values(self):
 		if hasattr(self, "api_key"):
 			self.api_key.SetValue(self.model.api_key)
+		if hasattr(self, "base_url"):
+			self.base_url.SetValue(self.model.base_url)
 		if hasattr(self, "prompt"):
 			self.prompt.SetValue(self.model.prompt)
 		if hasattr(self, "max_tokens"):
@@ -54,6 +60,8 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 	def onSave(self):
 		if hasattr(self, "api_key"):
 			self.model.api_key = self.api_key.GetValue()
+		if hasattr(self, "base_url"):
+			self.model.base_url = self.base_url.GetValue()
 		if hasattr(self, "prompt"):
 			self.model.prompt = self.prompt.GetValue()
 		if hasattr(self, "max_tokens"):
@@ -92,6 +100,7 @@ class GPT4ConfigurationPanel(BaseModelSettingsPanel):
 		self.add_api_key_field(sHelper)
 		self.add_prompt_field(sHelper)
 		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
 		super().makeSettings(settingsSizer)
 
 
@@ -104,11 +113,26 @@ class GeminiConfigurationPanel(BaseModelSettingsPanel):
 		self.add_api_key_field(sHelper)
 		self.add_prompt_field(sHelper)
 		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
+class LlamaCPPConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.LlamaCPP()
+	title = model.name + " (unstable)"
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_base_url_field(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
 		super().makeSettings(settingsSizer)
 
 
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
+description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 models_dialog_parent = None
 
 

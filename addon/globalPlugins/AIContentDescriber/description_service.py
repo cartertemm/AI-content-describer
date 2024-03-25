@@ -7,6 +7,7 @@
 import base64
 import json
 import tempfile
+import urllib.parse
 import urllib.request
 
 import addonHandler
@@ -114,6 +115,7 @@ class BaseDescriptionService:
 	description = "Another vision capable large language model"
 	about_url = ""
 	needs_api_key = True
+	needs_base_url = False
 	needs_configuration_dialog = True
 	configurationPanel = None
 
@@ -124,6 +126,14 @@ class BaseDescriptionService:
 	@api_key.setter
 	def api_key(self, key):
 		ch.config[self.name]["api_key"] = key
+
+	@property
+	def base_url(self):
+		return ch.config[self.name]["base_url"]
+
+	@base_url.setter
+	def base_url(self, value):
+		ch.config[self.name]["base_url"] = value
 
 	@property
 	def max_tokens(self):
@@ -151,7 +161,11 @@ class BaseDescriptionService:
 
 	@property
 	def is_available(self):
-		return (not self.needs_api_key) or (self.needs_api_key and self.api_key)
+		if not self.needs_api_key and not self.needs_base_url:
+			return True
+		if (self.needs_api_key and self.api_key) or (self.needs_base_url and self.base_url):
+			return True
+		return False
 
 	def __str__(self):
 		return f"{self.name}: {self.description}"
@@ -214,7 +228,7 @@ class GPT4(BaseDescriptionService):
 			],
 			"max_tokens": self.max_tokens
 		}
-		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode('utf-8'), timeout=self.timeout)
+		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		response = json.loads(response.decode('utf-8'))
 		# import test_response
 		# response = test_response.response
@@ -236,6 +250,7 @@ class Gemini(BaseDescriptionService):
 		".jpg",
 		".png",
 	]
+	# translators: the description for the Google Gemini pro vision model in the model configuration dialog
 	description = _("Google's Gemini model with vision capabilities.")
 
 	def __init__(self):
@@ -252,7 +267,7 @@ class Gemini(BaseDescriptionService):
 		headers = {
 			"Content-Type": "application/json"
 		}
-		payload ={"contents":[
+		payload = {"contents":[
 			{
 				"parts":[
 					{"text": self.prompt},
@@ -268,7 +283,7 @@ class Gemini(BaseDescriptionService):
 				"maxOutputTokens": self.max_tokens
 			}
 		}
-		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key={self.api_key}", headers=headers, data=json.dumps(payload).encode('utf-8'), timeout=self.timeout)
+		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro-vision:generateContent?key={self.api_key}", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		response = json.loads(response.decode('utf-8'))
 		if "error" in response:
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
@@ -283,9 +298,52 @@ class Gemini(BaseDescriptionService):
 			return content
 
 
+class LlamaCPP(BaseDescriptionService):
+	name = "llama.cpp"
+	needs_api_key = False
+	needs_base_url = True
+	supported_formats = [
+		".jpeg",
+		".jpg",
+		".png",
+	]
+	# translators: the description for the llama.cpp option in the model configuration dialog
+	description = _("""llama.cpp is a state-of-the-art, open-source solution for running large language models locally and in the cloud.
+This add-on integration assumes that you have obtained llama.cpp from Github and an image capable model from Huggingface or another repository, and that a server is currently running to handle requests. Though the process for getting this working is largely a task for the user that knows what they are doing, you can find the basic steps in the add-on documentation.""")
+
+	def process(self, image_path, **kw):
+		url = kw.get("base_url", "http://localhost:8080")
+		url = urllib.parse.urljoin(url, "completion")
+		cache_descriptions = kw.get("cache_descriptions", True)
+		base64_image = encode_image(image_path)
+		# have we seen this image before?
+		cache.read_cache()
+		description = cache.cache.get(base64_image)
+		if description is not None:
+			return description
+		headers = {
+			"Content-Type": "application/json"
+		}
+		payload = {
+			"prompt": f"USER: [img-12]\n{self.prompt}ASSISTANT:",
+			"stream": False,
+			"image_data": [{
+				"data": base64_image,
+				"id": 12
+			}],
+			"n_predict": self.max_tokens
+		}
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = json.loads(response.decode('utf-8'))
+		if not "content" in response:
+			ui.message(_(f"Image recognition response appears to be malformed.\n{repr(response)}"))
+		return response["content"]
+
+
 models = [
 	GPT4(),
 	Gemini(),
+	LlamaCPP(),
 ]
 
 def list_available_models():
