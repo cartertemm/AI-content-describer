@@ -4,8 +4,10 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 
+import os
 import wx
 import addonHandler
+import globalVars
 import gui
 from gui import addonGui
 addonHandler.initTranslation()
@@ -22,5 +24,6 @@ def onInstall():
 			addon.requestRemove()
 			#addonGui.promptUserForRestart()
 			continue
+	# This file is placed into the root of the NVDA configuration directory to signify that a config migration may be needed
 	with open(os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber_config_migration")), "w") as f:
 		f.write("File generated automatically on installation or update of the AI content describer addon. If you are reading this, you are probably good to delete it.")
