@@ -51,7 +51,6 @@ from PIL import ImageGrab
 import config_handler as ch
 import description_service
 import model_configuration
-sys.path.pop()
 
 
 # ugly hack: since OpenCV takes time to initialize on some machines, do it in a thread as to prevent intermittent lag elsewhere
