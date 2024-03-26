@@ -384,4 +384,5 @@ class GlobalPlugin(GlobalPlugin):
 		"kb:shift+NVDA+i": "describe_image",
 		"kb:shift+NVDA+u": "describe_navigator",
 		"kb:shift+NVDA+y": "describe_clipboard",
+		"kb:shift+NVDA+j": "describe_face",
 	}
