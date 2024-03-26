@@ -51,6 +51,7 @@ def report_validation_errors(config, validation_result):
 			errors.append('missing required section "%s"' % (", ".join(section_list)))
 	return errors
 
+
 def migrate_config_if_needed():
 	"""Fixes any issues with the user's config that may still be present after a version upgrade.
 
@@ -60,17 +61,23 @@ def migrate_config_if_needed():
 
 	Returns True if a migration took place, False otherwise.
 	"""
+	needs_migration = os.path.isfile(os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber_config_migration")))
+	if not needs_migration:
+		return
 	# we used to (rather stupidly) store all the settings under the GPT-4 vision model
 	## as this was the first and only one to have been implemented for a while
 	migrated = False
 	old_settings_section = "GPT-4 vision"
+	new_settings_section = "global"
 	old_gpt_settings = ["optimize_for_size", "open_in_dialog"]
 	for setting in old_gpt_settings:
 		value = config[old_settings_section].get(setting)
-		if value is not None:
+		new_value = config[new_settings_section].get(setting)
+		if value is not None and value != new_value:
 			if not migrated:
 				migrated = True
 			# port it over
 			config["global"][setting] = value
 			del config[old_settings_section][setting]
+	os.remove(os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber_config_migration")))
 	return migrated

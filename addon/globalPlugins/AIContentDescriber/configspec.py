@@ -56,6 +56,6 @@ timeout = integer(default=15, min=1)
 
 [global]
 optimize_for_size = boolean(default=False)
-open_in_dialog = boolean(default=False)
+open_in_dialog = boolean(default=True)
 last_used_model = string(default="GPT-4 vision")
 """)
