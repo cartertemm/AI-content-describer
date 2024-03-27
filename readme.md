@@ -1,19 +1,19 @@
 # AI Content Describer for NVDA
 
-This add-on makes it possible to obtain detailed descriptions for images and other visually inaccessible content.
+This add-on makes it possible to obtain detailed descriptions for images, user interface controls, and other visually inaccessible content.
 
-Leveraging the multimodal capabilities of advanced AI models, we aim to deliver best-in-class content descriptions.
-For more information about the underlying models, refer to the models section of this document.
+Leveraging the multimodal capabilities of advanced AI models and computer vision algorithms, we aim to deliver best-in-class content descriptions and increase independence overall. For more information about the underlying models, refer to the corresponding section of this document.
 
 ## Features
 
-* Describe the focus object, navigator object, or entire screen
+* Describe the focus object, navigator object, entire screen, or snap a photo from the onboard camera
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
+* Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Supports multiple providers (OpenAI's GPT4, Google's Gemini, Anthropic's Claude 3, and llama.cpp)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
-* Markdown rendering to easily access structured information
+* Markdown rendering to easily access structured information (just embed e.g. "respond in Markdown" at the end of your prompts)
 
 ## Use case
 
@@ -75,37 +75,34 @@ At the time of this writing, OpenAI issues credits to new developer accounts tha
 
 ### Setting up llama.cpp
 
-This provider is currently somewhat buggy, and your milage may very. It should really only be attempted by advanced users with an interest in running local self-hosted models, and the hardware to do so.
+This provider is currently somewhat buggy, and your mileage may very. It should really only be attempted by advanced users with an interest in running local self-hosted models, and the hardware to do so.
 
 1. Download llama.cpp. At the time of this writing, this [pull request](https://github.com/ggerganov/llama.cpp/pull/5882) removes multimodal capabilities so you will want to use the [last version with support for this](https://github.com/ggerganov/llama.cpp/releases/tag/b2356).
 If you are running on an Nvidia graphics adapter with CUDA support, download these prebuilt binaries:
-
 [llama-b2356-bin-win-cublas-cu12.2.0-x64.zip](https://github.com/ggerganov/llama.cpp/releases/download/b2356/llama-b2356-bin-win-cublas-cu12.2.0-x64.zip) and [cudart-llama-bin-win-cu12.2.0-x64.zip](https://github.com/ggerganov/llama.cpp/releases/download/b2356/cudart-llama-bin-win-cu12.2.0-x64.zip)
-
 The steps for working with a different graphics adapter are out of scope, but can be found in the llama.cpp readme.
-
 2. Extract both of these files into the same folder.
 3. Locate the quantized formats of the models you'd like to use from Huggingface. For LLaVA 1.6 Vicuna 7B: [llava-v1.6-vicuna-7b.Q4_K_M.gguf](https://huggingface.co/cjpais/llava-v1.6-vicuna-7b-gguf/blob/main/llava-v1.6-vicuna-7b.Q4_K_M.gguf) and [mmproj-model-f16.gguf](https://huggingface.co/cjpais/llava-v1.6-vicuna-7b-gguf/blob/main/mmproj-model-f16.gguf)
 4. Put these files in the folder with the rest of the llama.cpp binaries.
 5. From a command prompt, run the llava.cpp server binary, passing the .gguf files for the model and multimodal projector (as follows):
-
 `server.exe -m llava-v1.6-vicuna-7b.Q4_K_M.gguf --mmproj mmproj-model-f16.gguf`
-
 6. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select "llama.cpp" as your provider, tab into the base URL field, and enter the endpoint shown in the console (defaults to "http://localhost:8080").
 7. Alternatively, you may omit some of these steps and run llama.cpp on a remote server with higher specs than your local machine, then enter that endpoint instead.
 
 ## Usage
 
-Three hotkeys are bound by default:
+Four hotkeys are bound by default:
 
-* NVDA+shift+i: Pops up a menu asking whether to describe the current focus, navigator object, or entire screen with AI.
+* NVDA+shift+i: Pops up a menu asking whether to describe the current focus, navigator object, physical camera, or entire screen with AI.
 * NVDA+shift+u: Describe the contents of the current navigator object using AI.
 * NVDA+shift+y: Describe the image (or file path to an image) on the clipboard using AI.
+* NVDA+shift+j: Describe the position of your face in the frame of the selected camera. If you have multiple cameras connected, navigate to the AI content describer menu (NVDA+shift+i) and choose the one you would like to use with the "select camera" item in the face detection submenu.
 
-Two gestures are unbound:
+Three gestures are unbound:
 
 * Describe the contents of the currently focused item using AI.
 * Take a screenshot, then describe it using AI.
+* Snap a picture using the selected camera, then describe it using AI.
 
 Don't hesitate to customize these at any time from the input gestures dialog.
 
@@ -147,12 +144,18 @@ On a windows machine:
 ## Contributions
 
 All are highly appreciated and will be credited.
+The following people have worked on the addon.
+
+* [Mazen](https://github.com/mzanm)
+* [Kostenkov-2021](https://github.com/Kostenkov-2021)
+* [nidza07](https://github.com/nidza07)
+* [Heorhii Halas](nvda.translation.uk@gmail.com)
 
 Facing a problem? Submit it to the [issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
 
 Have a suggestion for a new feature? Create a ticket for that as well, and we can talk about implementing it. Pull requests without associated issues will be reviewed, but are likely to take up more time for everyone, especially if I decide the new fix or functionality needs to work differently than what was proposed.
 
-Translations are welcomed with open arms.
+Translations are welcomed with open arms. The more people that can access this powerful technology, the better!
 
 If you don't have Github, or prefer not to use it, you can [shoot me an email](mailto:cartertemm@gmail.com) - cartertemm (at) gmail (dot) com.
 
