@@ -150,21 +150,39 @@ class AreaMenu(wx.Menu):
 		# For the face detection submenu
 		self.face_detection_menu = wx.Menu()
 		self.detect_face_item = self.face_detection_menu.Append(wx.ID_ANY, _("Detect face position"))
-		self.detect_face_realtime_item = self.face_detection_menu.Append(wx.ID_ANY, _("Real-time face guidance"))
+		#self.detect_face_realtime_item = self.face_detection_menu.Append(wx.ID_ANY, _("Real-time face guidance"))
 		self.select_camera_item = self.face_detection_menu.Append(wx.ID_ANY, _("Select camera"))
 		self.release_camera_item = self.face_detection_menu.Append(wx.ID_ANY, _("Release the camera to make it usable by other applications"))
+		# translators: the label for the submenu that contains the options for face detection. Also informs the user that this feature does not require API access.
 		self.AppendSubMenu(self.face_detection_menu, _("Face Detection (no API required)"))
+		# For the model selector
+		self.model_menu = wx.Menu()
+		self.available_models = description_service.list_available_model_names()
+		last_used = ch.config["global"]["last_used_model"]
+		for model in self.available_models:
+			item = self.model_menu.AppendRadioItem(wx.ID_ANY, model)
+			if model == last_used:
+				item.Check()
+			gui.mainFrame.Bind(wx.EVT_MENU, self.on_new_model, item)
+		# translators: the name of the submenu used to select a model.
+		self.AppendSubMenu(self.model_menu, _("Model"))
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.camera_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_item)
-		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_realtime_item)
+		#gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_realtime_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.select_camera_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.release_camera_item)
 
 	def on_menu_selected(self, event):
 		self.selection = self.FindItemById(event.GetId())
+
+	def on_new_model(self, event):
+		item = self.model_menu.FindItemById(event.GetId())
+		ch.config["global"]["last_used_model"] = item.GetItemLabelText()
+		ch.config.write()
+		set_model_from_config()
 
 
 class GlobalPlugin(GlobalPlugin):
@@ -176,8 +194,8 @@ class GlobalPlugin(GlobalPlugin):
 		if not globalVars.appArgs.secure:
 			gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(AIDescriberSettingsPanel)
 		ch.load_config()
-		#if ch.migrate_config_if_needed():
-			#ch.config.write()
+		if ch.migrate_config_if_needed():
+			ch.config.write()
 		set_model_from_config()
 
 		# cache the previous focus and navigator objects globally, as popping up a menu seems to alter them
