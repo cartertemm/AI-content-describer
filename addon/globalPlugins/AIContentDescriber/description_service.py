@@ -190,7 +190,7 @@ class GPT4(BaseDescriptionService):
 		".webp",
 	]
 	# translators: the description for the GPT4 vision model in the model configuration dialog
-	description = _("The popular GPT4 model from OpenAI, with vision capabilities. This is the default model used by the add-on.")
+	description = _("The GPT4 model from OpenAI, previewed with vision capabilities. As of April 2024,  this model has been superseded by GPT4 turbo which has consistently achieved better metrics in tasks involving visual understanding.")
 	about_url = "https://platform.openai.com/docs/guides/vision"
 	needs_api_key = True
 
@@ -243,6 +243,73 @@ class GPT4(BaseDescriptionService):
 				cache.cache[base64_image] = content
 				cache.write_cache()
 			return content
+
+
+class GPT4Turbo(BaseDescriptionService):
+	name = "GPT-4 turbo"
+	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included."
+	supported_formats = [
+		".gif",
+		".jpeg",
+		".jpg",
+		".png",
+		".webp",
+	]
+	# translators: the description for the GPT4 turbo model in the model configuration dialog
+	description = _("The next generation of the original GPT4 vision preview, with enhanced quality and understanding.")
+	about_url = "https://help.openai.com/en/articles/8555510-gpt-4-turbo-in-the-openai-api"
+	needs_api_key = True
+
+	def __init__(self):
+		super().__init__()
+
+	def process(self, image_path, **kw):
+		cache_descriptions = kw.get("cache_descriptions", True)
+		base64_image = encode_image(image_path)
+		# have we seen this image before?
+		cache.read_cache()
+		description = cache.cache.get(base64_image)
+		if description is not None:
+			return description
+		headers = {
+			"Content-Type": "application/json",
+			"Authorization": f"Bearer {self.api_key}"
+		}
+		payload = {
+			"model": "gpt-4-turbo",
+			"messages": [
+				{
+					"role": "user",
+					"content": [
+						{
+							"type": "text",
+							"text": self.prompt
+						},
+						{
+							"type": "image_url",
+							"image_url": {
+								"url": f"data:image/jpeg;base64,{base64_image}"
+							}
+						}
+					]
+				}
+			],
+			"max_tokens": self.max_tokens
+		}
+		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = json.loads(response.decode('utf-8'))
+		# import test_response
+		# response = test_response.response
+		content = response["choices"][0]["message"]["content"]
+		if not content:
+			ui.message("content returned none")
+		if content:
+			if cache_descriptions:
+				cache.read_cache()
+				cache.cache[base64_image] = content
+				cache.write_cache()
+			return content
+
 
 class Gemini(BaseDescriptionService):
 	name = "Google Gemini pro vision"
@@ -428,6 +495,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 
 models = [
 	GPT4(),
+	GPT4Turbo(),
 	Gemini(),
 	Claude3Haiku(),
 	Claude3Sonnet(),

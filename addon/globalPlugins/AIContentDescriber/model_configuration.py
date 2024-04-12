@@ -104,6 +104,11 @@ class GPT4ConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class GPT4TurboConfigurationPanel(GPT4ConfigurationPanel):
+	model = description_service.GPT4Turbo()
+	title = model.name
+
+
 class GeminiConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.Gemini()
 	title = model.name
@@ -157,6 +162,7 @@ class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
 
 
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
+description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel

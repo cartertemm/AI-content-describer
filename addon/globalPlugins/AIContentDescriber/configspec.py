@@ -9,7 +9,7 @@ from io import StringIO
 
 configspec = StringIO("""[GPT-4 vision]
 api_key = string(default="")
-prompt = string(default="Describe this image succinctly, but in as much detail as possible.")
+prompt = string(default="")
 max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
@@ -19,9 +19,16 @@ timeout = integer(default=15, min=1)
 optimize_for_size = boolean(default=False)
 open_in_dialog = boolean(default=False)
 
+[GPT-4 turbo]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
 [Google Gemini pro vision]
 api_key = string(default="")
-prompt = string(default="Describe this image succinctly, but in as much detail as possible.")
+prompt = string(default="")
 max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
