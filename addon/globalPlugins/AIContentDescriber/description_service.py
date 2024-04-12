@@ -112,7 +112,7 @@ def post(**kwargs):
 
 class BaseDescriptionService:
 	name = "unknown"
-	DEFAULT_PROMPT = None
+	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included in your response."
 	supported_formats = []
 	description = "Another vision capable large language model"
 	about_url = ""
@@ -147,7 +147,7 @@ class BaseDescriptionService:
 
 	@property
 	def prompt(self):
-		return ch.config[self.name]["prompt"]
+		return ch.config[self.name]["prompt"] or self.DEFAULT_PROMPT
 
 	@prompt.setter
 	def prompt(self, value):
@@ -181,7 +181,6 @@ class BaseDescriptionService:
 
 class GPT4(BaseDescriptionService):
 	name = "GPT-4 vision"
-	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included."
 	supported_formats = [
 		".gif",
 		".jpeg",
@@ -247,7 +246,6 @@ class GPT4(BaseDescriptionService):
 
 class GPT4Turbo(BaseDescriptionService):
 	name = "GPT-4 turbo"
-	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included."
 	supported_formats = [
 		".gif",
 		".jpeg",
@@ -313,7 +311,6 @@ class GPT4Turbo(BaseDescriptionService):
 
 class Gemini(BaseDescriptionService):
 	name = "Google Gemini pro vision"
-	DEFAULT_PROMPT = "Describe this image in detail for someone who is blind. If there is text, make sure it is included."
 	supported_formats = [
 		".jpeg",
 		".jpg",
@@ -368,7 +365,6 @@ class Gemini(BaseDescriptionService):
 
 
 class Anthropic(BaseDescriptionService):
-	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included."
 	supported_formats = [
 		".jpeg",
 		".jpg",
