@@ -29,7 +29,7 @@ To begin, head to https://platform.openai.com/account/api-keys and create an acc
 Then, choose the "AI content describer" category from NVDA's settings dialog and enter your API key.
 Press NVDA+shift+i to pop up a menu asking how you wish to describe based on the current position, or NVDA+shift+u to describe the navigator object, or NVDA+shift+y for an image that has been copied to the clipboard such as in windows explorer. Other keystrokes are customizable from the input gestures dialog."""),
 	# version
-	"addon_version": "2024.03.29",
+	"addon_version": "2024.04.11",
 	# Author(s)
 	"addon_author": "Carter Temm <cartertemm@gmail.com>",
 	# URL for the add-on documentation support
