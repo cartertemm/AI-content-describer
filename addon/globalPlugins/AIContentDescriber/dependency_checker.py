@@ -196,7 +196,9 @@ def unzip_and_move_dependencies(downloaded_file, destination):
 
 
 def expand_path():
-	sys.path.append(get_dependencies_path())
+	path  = get_dependencies_path()
+	sys.path.append(path)
+	return path
 
 
 def collapse_path():

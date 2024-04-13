@@ -42,12 +42,12 @@ import description_service
 import model_configuration
 import dependency_checker
 
-dependency_checker.expand_path()
+third_party_path = dependency_checker.expand_path()
 # stdlib additions to import markdown
 import html
-html.__path__.append(os.path.join(module_path, "html"))
+html.__path__.append(os.path.join(third_party_path, "html"))
 import xml
-xml.__path__.append(os.path.join(module_path, "xml"))
+xml.__path__.append(os.path.join(third_party_path, "xml"))
 import markdown
 from markdown.extensions import fenced_code, nl2br, tables, sane_lists
 html.__path__.pop()
