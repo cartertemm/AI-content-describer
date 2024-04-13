@@ -37,7 +37,12 @@ from globalPluginHandler import GlobalPlugin
 # third party (packaged) modules
 module_path = os.path.abspath(os.path.dirname(__file__))
 sys.path.append(module_path)
+import config_handler as ch
+import description_service
+import model_configuration
+import dependency_checker
 
+dependency_checker.expand_path()
 # stdlib additions to import markdown
 import html
 html.__path__.append(os.path.join(module_path, "html"))
@@ -48,9 +53,6 @@ from markdown.extensions import fenced_code, nl2br, tables, sane_lists
 html.__path__.pop()
 xml.__path__.pop()
 from PIL import ImageGrab
-import config_handler as ch
-import description_service
-import model_configuration
 
 
 # ugly hack: since OpenCV takes time to initialize on some machines, do it in a thread as to prevent intermittent lag elsewhere
@@ -62,6 +64,7 @@ def threaded_imports():
 	import face_view
 	GlobalPlugin.detection_interface = face_view.fd
 	sys.path.remove(module_path)
+	dependency_checker.collapse_path()
 threading.Thread(target=threaded_imports).start()
 
 
