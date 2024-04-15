@@ -60,11 +60,17 @@ face_view = None
 cv2 = None
 def threaded_imports():
 	global cv2, face_view
-	import cv2
-	import face_view
-	GlobalPlugin.detection_interface = face_view.fd
-	sys.path.remove(module_path)
-	dependency_checker.collapse_path()
+	try:
+		import cv2
+		import face_view
+		GlobalPlugin.detection_interface = face_view.fd
+		GlobalPlugin.detection_interface_error = None
+	except Exception as exc:
+		GlobalPlugin.detection_interface_error = str(exc)
+		raise
+	finally:
+		sys.path.remove(module_path)
+		dependency_checker.collapse_path()
 threading.Thread(target=threaded_imports).start()
 
 
@@ -252,6 +258,18 @@ class GlobalPlugin(GlobalPlugin):
 		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
 
 	def describe_face(self):
+		if not hasattr(self, "detection_interface"):
+			error = getattr(self, "detection_interface_error", None)
+			if error is not None:
+				# py-3.11: On some machines, it is rare, but cv2 might not work as expected due to a variety of reasons none of which I can reproduce.
+				## In the meantime, establish a catchall exception and report it to the user so they can file an issue
+				# Translators: The message spoken when there was an error with the face detection interface.
+				ui.message(_("Error initializing the face detection interface. Please consult the NVDA log for more information. "+error))
+				return
+			else:
+				# Translators: Message spoken when the face detection interface is loading
+				ui.message(_("Face detection interface is loading. Please try this command again after a couple seconds."))
+				return
 		return threading.Thread(target=self.detection_interface.run).start()
 
 	def describe_screenshot(self):
@@ -265,6 +283,18 @@ class GlobalPlugin(GlobalPlugin):
 		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
 
 	def describe_camera(self):
+		if not hasattr(self, "detection_interface"):
+			error = getattr(self, "detection_interface_error", None)
+			if error is not None:
+				# py-3.11: On some machines, it is rare, but cv2 might not work as expected due to a variety of reasons none of which I can reproduce.
+				## In the meantime, establish a catchall exception and report it to the user so they can file an issue
+				# Translators: The message spoken when there was an error with the face detection interface.
+				ui.message(_("Error initializing the face detection interface. Please consult the NVDA log for more information. "+error))
+				return
+			else:
+				# Translators: Message spoken when the face detection interface is loading
+				ui.message(_("Face detection interface is loading. Please try this command again after a couple seconds."))
+				return
 		self.detection_interface.run(process=False)
 		if self.detection_interface.video_capture:
 			success , frame = self.detection_interface.read_frame()
