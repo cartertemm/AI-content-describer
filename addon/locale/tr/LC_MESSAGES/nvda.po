@@ -1,0 +1,554 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Yapay Zeka İçerik Betimleyici\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2024-04-15 19:21+0300\n"
+"PO-Revision-Date: 2024-04-15 19:25+0300\n"
+"Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
+"Language-Team: Umut KORKMAZ <umutkork@gmail.com\n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ../../..\n"
+"X-Poedit-SearchPath-0: globalPlugins\n"
+"X-Poedit-SearchPath-1: __pycache__\n"
+"X-Poedit-SearchPath-2: installTasks.py\n"
+
+#: globalPlugins/AIContentDescriber/__init__.py:94
+#: globalPlugins/AIContentDescriber/__init__.py:198
+#: globalPlugins/AIContentDescriber/dependency_checker.py:103
+#: globalPlugins/AIContentDescriber/dependency_checker.py:113
+#: globalPlugins/AIContentDescriber/dependency_checker.py:123
+#: globalPlugins/AIContentDescriber/dependency_checker.py:133
+#: globalPlugins/AIContentDescriber/dependency_checker.py:144
+#: globalPlugins/AIContentDescriber/dependency_checker.py:154
+#: globalPlugins/AIContentDescriber/dependency_checker.py:220
+#: installTasks.py:22
+msgid "AI Content Describer"
+msgstr "Yapay Zeka İçerik Betimleyici"
+
+#: globalPlugins/AIContentDescriber/__init__.py:99
+msgid "Manage &models"
+msgstr "&Modelleri yönet"
+
+#: globalPlugins/AIContentDescriber/__init__.py:101
+msgid ""
+"Model (configure more in the manage models dialog, defaults to last used):"
+msgstr ""
+"Model (Modelleri yönet iletişim kutusunda daha fazlasını yapılandırın; "
+"varsayılanlar en son kullanılandır):"
+
+#: globalPlugins/AIContentDescriber/__init__.py:103
+msgid ""
+"Open each result in a browseable dialog; Markdown will be rendered if "
+"possible"
+msgstr ""
+"Her sonucu göz atılabilir bir iletişim kutusunda aç; Mümkünse işaretleme "
+"gerçekleştirilecek"
+
+#: globalPlugins/AIContentDescriber/__init__.py:105
+msgid "Remember/cache descriptions of each item to save API quota"
+msgstr ""
+"API kotasından tasarruf etmek için her öğenin Betimlemesini hatırla/"
+"önbelleğe al"
+
+#: globalPlugins/AIContentDescriber/__init__.py:107
+msgid ""
+"Optimize images for size, may speed up detection in some situations "
+"(experimental)"
+msgstr ""
+"Görüntüleri boyuta göre optimize et, bazı durumlarda algılamayı "
+"hızlandırabilir (deneysel)"
+
+#: globalPlugins/AIContentDescriber/__init__.py:152
+msgid "Current focus"
+msgstr "Geçerli odak"
+
+#: globalPlugins/AIContentDescriber/__init__.py:154
+msgid "Navigator object"
+msgstr "Gezgin nesnesi"
+
+#: globalPlugins/AIContentDescriber/__init__.py:156
+msgid "Entire screen"
+msgstr "Tüm ekran"
+
+#: globalPlugins/AIContentDescriber/__init__.py:158
+msgid "Take a picture"
+msgstr "Bir Resim çek"
+
+#: globalPlugins/AIContentDescriber/__init__.py:161
+msgid "Detect face position"
+msgstr "Yüz konumunu algıla"
+
+#: globalPlugins/AIContentDescriber/__init__.py:163
+msgid "Select camera"
+msgstr "Kamera seç"
+
+#: globalPlugins/AIContentDescriber/__init__.py:164
+msgid "Release the camera to make it usable by other applications"
+msgstr ""
+"Kamerayı diğer uygulamalar tarafından kullanılabilir hale getirmek için "
+"serbest bıra"
+
+#: globalPlugins/AIContentDescriber/__init__.py:166
+msgid "Face Detection (no API required)"
+msgstr "Yüz Algılama (API gerekmez)"
+
+#: globalPlugins/AIContentDescriber/__init__.py:177
+msgid "Model"
+msgstr "Model"
+
+#: globalPlugins/AIContentDescriber/__init__.py:229
+msgid ""
+"Please disable windows screen curtain before using AI content describer."
+msgstr ""
+"Yapay Zeka içerik betimleyiciyi kullanmadan önce lütfen Windows ekran "
+"perdesini devre dışı bırakın."
+
+#: globalPlugins/AIContentDescriber/__init__.py:243
+msgid "Content is not visible"
+msgstr "İçerik görünür değil"
+
+#: globalPlugins/AIContentDescriber/__init__.py:254
+msgid "Could not snap an image of the requested object"
+msgstr "İstenen nesnenin resmi çekilemedi"
+
+#: globalPlugins/AIContentDescriber/__init__.py:267
+#: globalPlugins/AIContentDescriber/__init__.py:292
+msgid ""
+"Error initializing the face detection interface. Please consult the NVDA log "
+"for more information. "
+msgstr ""
+"Yüz algılama arayüzü başlatılırken hata oluştu. Daha fazla bilgi için lütfen "
+"NVDA günlüğüne bakın. "
+
+#: globalPlugins/AIContentDescriber/__init__.py:271
+#: globalPlugins/AIContentDescriber/__init__.py:296
+msgid ""
+"Face detection interface is loading. Please try this command again after a "
+"couple seconds."
+msgstr ""
+"Yüz algılama arayüzü yükleniyor. Lütfen birkaç saniye sonra bu komutu tekrar "
+"deneyin."
+
+#: globalPlugins/AIContentDescriber/__init__.py:279
+msgid "Could not get window content"
+msgstr "Pencere içeriği alınamadı"
+
+#: globalPlugins/AIContentDescriber/__init__.py:303
+#: globalPlugins/AIContentDescriber/__init__.py:313
+msgid ""
+"The picture could not be taken. Please ensure that your camera is not in use "
+"by another application and try again."
+msgstr ""
+"Resim çekilemedi. Lütfen kameranızın başka bir uygulama tarafından "
+"kullanılmadığından emin olun ve tekrar deneyin."
+
+#: globalPlugins/AIContentDescriber/__init__.py:308
+msgid "The picture could not be saved."
+msgstr "Resim kaydedilemedi."
+
+#: globalPlugins/AIContentDescriber/__init__.py:321
+#: globalPlugins/AIContentDescriber/__init__.py:332
+msgid "The item on the clipboard is not an image."
+msgstr "Panodaki öğe bir resim değil."
+
+#: globalPlugins/AIContentDescriber/__init__.py:326
+msgid ""
+"Unsupported image format. Please copy another file to the clipboard that is "
+"{''.join(service.supported_formats)}"
+msgstr ""
+"Desteklenmeyen resim formatı. Lütfen panoya {''.join(service."
+"supported_formats)} adlı başka bir dosya kopyalayın."
+
+#: globalPlugins/AIContentDescriber/__init__.py:342
+msgid ""
+"To describe content, you must provide an API key or base URL in the AI image "
+"describer category of the NVDA settings dialog. Please consult add-on help "
+"for more information"
+msgstr ""
+"İçeriği Betimlemek için, NVDA ayarları iletişim kutusunun Yapay Zeka İçerik "
+"Betimleyici kategorisinde bir API anahtarı veya Ana URL eklemeniz gerekir. "
+"Daha fazla bilgi için lütfen eklenti yardımına başvurun"
+
+#: globalPlugins/AIContentDescriber/__init__.py:346
+msgid ""
+"To describe content, you must define a prompt by navigating to the AI image "
+"describer category of the NVDA settings dialog. Please consult add-on help "
+"for more information"
+msgstr ""
+"İçeriği betimlemek için, NVDA ayarlar iletişim kutusunun Yapay Zeka İçerik "
+"Betimleyici kategorisine giderek bir İstem tanımlamanız gerekir. Daha fazla "
+"bilgi için lütfen eklenti yardımına başvurun"
+
+#: globalPlugins/AIContentDescriber/__init__.py:350
+#, python-brace-format
+msgid "Retrieving description using {service.name}..."
+msgstr "{service.name} kullanılarak betimleme alınıyor..."
+
+#: globalPlugins/AIContentDescriber/__init__.py:354
+msgid "Image description"
+msgstr "Görüntü betimlemesi"
+
+#: globalPlugins/AIContentDescriber/__init__.py:394
+msgid "Success"
+msgstr "Başarılı"
+
+#: globalPlugins/AIContentDescriber/__init__.py:401
+msgid ""
+"Describe the image (or file path to an image) on the clipboard using AI."
+msgstr ""
+"Yapay zekayı kullanarak panodaki görüntüyü (veya görüntünün dosya yolunu) "
+"Betimle."
+
+#: globalPlugins/AIContentDescriber/__init__.py:405
+msgid "Describe the contents of the current navigator object using AI."
+msgstr "Mevcut gezgin nesnesinin içeriğini yapay zeka kullanarak betimle."
+
+#: globalPlugins/AIContentDescriber/__init__.py:409
+msgid "Describe the contents of the currently focused item using AI."
+msgstr "Şu anda odaklanılan öğenin içeriğini yapay zeka kullanarak betimle."
+
+#: globalPlugins/AIContentDescriber/__init__.py:413
+msgid "Take a screenshot, then describe it using AI."
+msgstr ""
+"Bir ekran görüntüsü al ve ardından bunu Yapay zekayı kullanarak betimle."
+
+#: globalPlugins/AIContentDescriber/__init__.py:417
+msgid ""
+"Pop up a menu asking whether to describe the current focus, navigator "
+"object, or entire screen with AI."
+msgstr ""
+"Geçerli odağın mı, gezgin nesnesinin mi yoksa ekranın tamamının mı yapay "
+"zeka ile betimleneceğini soran bir menü açılır."
+
+#: globalPlugins/AIContentDescriber/__init__.py:421
+msgid "Snap a picture using the selected camera, then describe it using AI."
+msgstr ""
+"Seçilen kamerayı kullanarak bir resim çek ve ardından bunu Yapay Zeka "
+"kullanarak Betimle."
+
+#: globalPlugins/AIContentDescriber/__init__.py:425
+msgid ""
+"Describe the position of the face in the frame using the selected camera, if "
+"applicable."
+msgstr ""
+"Varsa, seçilen kamerayı kullanarak yüzün çerçeve içindeki konumunu betimle."
+
+#: globalPlugins/AIContentDescriber/dependency_checker.py:105
+msgid ""
+"Some of the dependencies required for this NVDA add-on to run are not "
+"available on your computer. Would you like to download them now? NVDA will "
+"need to be restarted when this process completes."
+msgstr ""
+"Bu NVDA eklentisinin çalışması için gereken bağımlılıklardan bazıları "
+"bilgisayarınızda mevcut değil. Bunları şimdi indirmek ister misiniz? Bu "
+"işlem tamamlandığında NVDA'nın yeniden başlatılması gerekecektir."
+
+#: globalPlugins/AIContentDescriber/dependency_checker.py:115
+msgid ""
+"Some of the dependencies required for this NVDA add-on to run are outdated. "
+"Would you like to try to install them now? NVDA will need to be restarted "
+"when complete."
+msgstr ""
+"Bu NVDA eklentisinin çalışması için gereken bağımlılıklardan bazıları güncel "
+"değil. Bunları şimdi yüklemeyi denemek ister misiniz? Tamamlandığında "
+"NVDA'nın yeniden başlatılması gerekecektir."
+
+#: globalPlugins/AIContentDescriber/dependency_checker.py:125
+msgid ""
+"Would you like to delete the old dependencies from the configuration? This "
+"question will be asked once. If you are running multiple versions of NVDA "
+"interchangeably, select no."
+msgstr ""
+"Eski bağımlılıkları yapılandırmadan silmek ister misiniz? Bu soru bir kez "
+"sorulacak. NVDA'nın birden fazla sürümünü birbirinin yerine "
+"çalıştırıyorsanız hayır seçeneğini seçin."
+
+#: globalPlugins/AIContentDescriber/dependency_checker.py:135
+msgid ""
+"The dependencies have been downloaded successfully. NVDA will now restart "
+"for the changes to take affect"
+msgstr ""
+"Bağımlılıklar başarıyla indirildi. Değişikliklerin etkili olması için NVDA "
+"şimdi yeniden başlatılacak"
+
+#: globalPlugins/AIContentDescriber/dependency_checker.py:146
+msgid ""
+"Unfortunately, there doesn't yet seem to be dependencies available for the "
+"running version of NVDA. Please submit an issue in our bug tracker or "
+"contact the developers. In the meantime, you may wish to disable the add-on "
+"to  surpress this  message on startup."
+msgstr ""
+"Maalesef, NVDA'nın çalışan sürümü için henüz bağımlılıklar mevcut "
+"görünmüyor. Lütfen hata izleyicimize bir sorun gönderin veya "
+"geliştiricilerle iletişime geçin. Bu arada, başlangıçta bu mesajı gizlemek "
+"için eklentiyi devre dışı bırakmak isteyebilirsiniz."
+
+#: globalPlugins/AIContentDescriber/dependency_checker.py:156
+msgid ""
+"Unfortunately, there was a problem downloading the dependencies required to "
+"run this add-on. Please consult the NVDA log for more details. "
+msgstr ""
+"Maalesef bu eklentiyi çalıştırmak için gereken bağımlılıklar indirilirken "
+"bir sorun oluştu. Daha fazla ayrıntı için lütfen NVDA günlüğüne bakın. "
+
+#: globalPlugins/AIContentDescriber/description_service.py:36
+#: globalPlugins/AIContentDescriber/description_service.py:74
+msgid "error"
+msgstr "hata"
+
+#: globalPlugins/AIContentDescriber/description_service.py:42
+#: globalPlugins/AIContentDescriber/description_service.py:87
+msgid "error making connection"
+msgstr "bağlantı kurma hatası"
+
+#: globalPlugins/AIContentDescriber/description_service.py:49
+#: globalPlugins/AIContentDescriber/description_service.py:94
+msgid "error, connection refused by target"
+msgstr "hata, bağlantı hedef tarafından reddedildi"
+
+#: globalPlugins/AIContentDescriber/description_service.py:192
+msgid ""
+"The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
+"2024,  this model has been superseded by GPT4 turbo which has consistently "
+"achieved better metrics in tasks involving visual understanding."
+msgstr ""
+"OpenAI'nin GPT4 modelinin görsel yeteneklerle ön izlemesi yapıldı. Nisan "
+"2024 itibarıyla bu modelin yerini, görsel anlayışı içeren görevlerde sürekli "
+"olarak daha iyi ölçümler elde eden GPT4 turbo almıştır."
+
+#: globalPlugins/AIContentDescriber/description_service.py:257
+msgid ""
+"The next generation of the original GPT4 vision preview, with enhanced "
+"quality and understanding."
+msgstr ""
+"Gelişmiş kalite ve anlayışa sahip orijinal GPT4 görüş önizlemesinin yeni "
+"nesli."
+
+#: globalPlugins/AIContentDescriber/description_service.py:320
+msgid "Google's Gemini model with vision capabilities."
+msgstr "Google'ın görme yeteneklerine sahip Gemini modeli."
+
+#: globalPlugins/AIContentDescriber/description_service.py:356
+msgid ""
+"Gemini encountered an error: {response['error']['code']}, {response['error']"
+"['message']}"
+msgstr ""
+"Gemini bir hatayla karşılaştı: {response['error']['code']}, "
+"{response['error']['message']}"
+
+#: globalPlugins/AIContentDescriber/description_service.py:420
+msgid "Claude encountered an error. {response['error']['message']}"
+msgstr "Claude bir hatayla karşılaştı. {response['error']['message']}"
+
+#: globalPlugins/AIContentDescriber/description_service.py:427
+msgid "Anthropic's most powerful model for highly complex tasks."
+msgstr "Son derece karmaşık görevler için Anthropic'in en güçlü modeli."
+
+#: globalPlugins/AIContentDescriber/description_service.py:435
+msgid ""
+"Anthropic's model with Ideal balance of intelligence and speed, excels for "
+"enterprise workloads."
+msgstr ""
+"Anthropic'in ideal zeka ve hız dengesine sahip modeli, kurumsal iş yükleri "
+"için mükemmeldir."
+
+#: globalPlugins/AIContentDescriber/description_service.py:443
+msgid ""
+"Anthropic's fastest and most compact model for near-instant responsiveness"
+msgstr ""
+"Anthropic'in neredeyse anında yanıt veren en hızlı ve en kompakt modeli"
+
+#: globalPlugins/AIContentDescriber/description_service.py:459
+msgid ""
+"llama.cpp is a state-of-the-art, open-source solution for running large "
+"language models locally and in the cloud.\n"
+"This add-on integration assumes that you have obtained llama.cpp from Github "
+"and an image capable model from Huggingface or another repository, and that "
+"a server is currently running to handle requests. Though the process for "
+"getting this working is largely a task for the user that knows what they are "
+"doing, you can find basic steps in the add-on documentation."
+msgstr ""
+"llama.cpp, büyük dil modellerini yerel olarak ve bulutta çalıştırmak için "
+"son teknoloji ürünü, açık kaynaklı bir çözümdür.\n"
+"Bu eklenti entegrasyonu, Github'dan llama.cpp ve Huggingface veya başka bir "
+"depodan görüntü özellikli bir model edindiğinizi ve istekleri işlemek için "
+"bir sunucunun şu anda çalıştığını varsayar. Bunu çalıştırma süreci büyük "
+"ölçüde ne yaptığını bilen kullanıcılar için bir görev olsa da, eklenti "
+"belgelerinde temel adımları bulabilirsiniz."
+
+#: globalPlugins/AIContentDescriber/description_service.py:488
+msgid ""
+"Image recognition response appears to be malformed.\n"
+"{repr(response)}"
+msgstr ""
+"Görüntü tanıma yanıtı hatalı biçimlendirilmiş gibi görünüyor.\n"
+"{repr(response)}"
+
+#: globalPlugins/AIContentDescriber/face_view.py:18
+msgid "Choose a camera"
+msgstr "Bir kamera seçin"
+
+#: globalPlugins/AIContentDescriber/face_view.py:28
+msgid "&Available cameras"
+msgstr "Kull&anılabilir Kameralar"
+
+#: globalPlugins/AIContentDescriber/face_view.py:36
+msgid "Camera selected. You may now trigger the command again."
+msgstr "Kamera seçildi. Artık komutu tekrar tetikleyebilirsiniz."
+
+#: globalPlugins/AIContentDescriber/face_view.py:102
+msgid ""
+"Failed to interface with the camera. Please ensure it is not in use by "
+"another application, then try again."
+msgstr ""
+"Kamera arayüzüne ulaşılamadı. Lütfen başka bir uygulama tarafından "
+"kullanılmadığından emin olun, ardından tekrar deneyin."
+
+#: globalPlugins/AIContentDescriber/face_view.py:116
+msgid ""
+"The footage from the camera is too blurry. Try switching your focus away "
+"from the desktop, then try this command again."
+msgstr ""
+"Kameradan gelen görüntüler çok bulanık. Odağınızı masaüstünden "
+"uzaklaştırmayı deneyin ve ardından bu komutu tekrar deneyin."
+
+#: globalPlugins/AIContentDescriber/face_view.py:119
+msgid ""
+"The footage from the camera is too blurry. Please ensure that it is not "
+"covered up and that your surroundings have proper lighting. "
+"{int(laplacian_variance)}"
+msgstr ""
+"Kameradan gelen görüntüler çok bulanık. Lütfen üzerinin örtülmediğinden ve "
+"çevrenizin yeterli aydınlatmaya sahip olduğundan emin olun. "
+"{int(lalacian_variance)}"
+
+#: globalPlugins/AIContentDescriber/face_view.py:124
+msgid ""
+"No face detected. Please ensure your face is in the frame and that your "
+"camera is not covered up."
+msgstr ""
+"Yüz algılanmadı. Lütfen yüzünüzün çerçevede olduğundan ve kameranızın kapalı "
+"olmadığından emin olun."
+
+#: globalPlugins/AIContentDescriber/face_view.py:127
+msgid ""
+"{len(faces)} faces detected near the frame. Please try for another angle "
+"with fewer background objects."
+msgstr ""
+"Çerçevenin yakınında {len(faces)} yüz algılandı. Lütfen daha az arka plan "
+"nesnesi olan başka bir açı deneyin."
+
+#: globalPlugins/AIContentDescriber/face_view.py:145
+#: globalPlugins/AIContentDescriber/face_view.py:166
+msgid "No camera found on your system. Please connect one and try again."
+msgstr ""
+"Sisteminizde kamera bulunamadı. Lütfen bir tane bağlayıp tekrar deneyin."
+
+#: globalPlugins/AIContentDescriber/face_view.py:156
+msgid " is no longer available. Switching to the other on the system."
+msgstr " artık kullanılabilir değil. Sistemdeki diğerine geçiliyor."
+
+#: globalPlugins/AIContentDescriber/face_view.py:177
+msgid "Camera unavailable. Please try selecting another"
+msgstr "Kamera kullanılamıyor. Lütfen başka bir tane seçmeyi deneyin"
+
+#: globalPlugins/AIContentDescriber/face_view.py:180
+msgid ""
+"Starting the face detection interface. This may take a few seconds. Please "
+"wait."
+msgstr ""
+"Yüz algılama arayüzü başlatılıyor. Bu bir kaç saniye alabilir. Lütfen "
+"bekleyin."
+
+#: globalPlugins/AIContentDescriber/face_view.py:184
+msgid "Failed to interface with the chosen camera"
+msgstr "Seçilen kamera arayüzü açılamadı"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:11
+msgid "Model configuration"
+msgstr "Model Yapılandırma"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:24
+msgid "About this model"
+msgstr "Bu model hakkında"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:28
+msgid "API key"
+msgstr "API anahtarı"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:32
+msgid "Base URL"
+msgstr "Ana URL"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:36
+msgid "Prompt"
+msgstr "İstem"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:38
+msgid "Reset prompt to default"
+msgstr "İstemi varsayılana sıfırla"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:42
+msgid "Maximum tokens"
+msgstr "Maksimum jeton sayısı"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:46
+msgid "Seconds to wait for a response before timing out"
+msgstr "Bekleme Süresi"
+
+#: globalPlugins/AIContentDescriber/model_configuration.py:88
+msgid "About model"
+msgstr "Model hakkında"
+
+#: installTasks.py:20
+msgid ""
+"There appears to be an older version of this add-on installed that is "
+"incompatable with future versions because the name has changed. It will be "
+"removed the next time NVDA is restarted."
+msgstr ""
+"Bu eklentinin, adı değiştiği için gelecekteki sürümlerle uyumlu olmayan eski "
+"bir sürümü yüklü görünüyor. NVDA'nın bir sonraki yeniden başlatılmasında "
+"kaldırılacaktır."
+
+#~ msgid ""
+#~ "The popular GPT4 model from OpenAI, with vision capabilities. This is the "
+#~ "default model used by the add-on."
+#~ msgstr ""
+#~ "OpenAI'nin görme yeteneklerine sahip popüler GPT4 modeli. Bu, eklenti "
+#~ "tarafından kullanılan varsayılan modeldir."
+
+#~ msgid ""
+#~ "This add-on makes it possible to describe the focus object, navigator "
+#~ "object, or screen using the popular GPT4 vision artificial intelligence "
+#~ "LLM.\n"
+#~ "Though content descriptions are quite detailed, they may not always be "
+#~ "completely accurate or reflect real world information.\n"
+#~ "To begin, head to https://platform.openai.com/account/api-keys and create "
+#~ "an account, then create a key for interacting with the API. See add-on "
+#~ "documentation for more information on this.\n"
+#~ "Then, choose the \"AI content describer\" category from NVDA's settings "
+#~ "dialog and enter your API key.\n"
+#~ "Press NVDA+shift+i to pop up a menu asking how you wish to describe based "
+#~ "on the current position, or NVDA+shift+u to describe the navigator "
+#~ "object, or NVDA+shift+y for an image that has been copied to the "
+#~ "clipboard such as in windows explorer. Other keystrokes are customizable "
+#~ "from the input gestures dialog."
+#~ msgstr ""
+#~ "Bu eklenti, popüler GPT4 vizyon yapay zekası LLM'yi kullanarak odak "
+#~ "nesnesini, navigasyon nesnesini veya ekranı betimlemeyi mümkün kılar.\n"
+#~ "İçerik açıklamaları oldukça ayrıntılı olmasına rağmen her zaman tamamen "
+#~ "doğru olmayabilir veya gerçek dünya bilgilerini yansıtmayabilir.\n"
+#~ "Başlamak için https://platform.openai.com/account/api-keys adresine gidin "
+#~ "ve bir hesap oluşturun. Ardından API ile etkileşim kurmak için bir "
+#~ "anahtar oluşturun. Bu konuyla ilgili daha fazla bilgi için eklenti "
+#~ "belgelerine bakın.\n"
+#~ "Daha sonra NVDA'nın ayarlar iletişim kutusundan \"Yapay zeka içerik "
+#~ "betimleyici\" kategorisini seçin ve API anahtarınızı girin.\n"
+#~ "Geçerli konuma göre nasıl betimlemek istediğinizi soran bir menü açmak "
+#~ "için NVDA+shift+i tuşlarına basın. Gezgin nesnesini betimlemek için "
+#~ "NVDA+shift+u tuşlarına veya Windows Gezgini'ndeki gibi panoya. Diğer tuş "
+#~ "vuruşları girdi hareketleri iletişim kutusundan özelleştirilebilir."

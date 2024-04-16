@@ -148,8 +148,9 @@ The following people have worked on the addon.
 
 * [Mazen](https://github.com/mzanm)
 * [Kostenkov-2021](https://github.com/Kostenkov-2021)
-* [nidza07](https://github.com/nidza07)
+* [Nidza07](https://github.com/nidza07)
 * [Heorhii Halas](nvda.translation.uk@gmail.com)
+* [Umut Korkmaz](umutkork@gmail.com)
 
 Facing a problem? Submit it to the [issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
 
