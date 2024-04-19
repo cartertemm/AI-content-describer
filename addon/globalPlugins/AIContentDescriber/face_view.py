@@ -4,6 +4,12 @@ import gui
 from gui import settingsDialogs
 from gui import guiHelper
 
+import addonHandler
+try:
+	addonHandler.initTranslation()
+except addonHandler.AddonError:
+	log.warning("Couldn't initialise translations. Is this addon running from NVDA's scratchpad directory?")
+
 import wx
 import cv2
 from pygrabber import dshow_graph

@@ -2,6 +2,11 @@ import wx
 from gui import guiHelper
 from gui import nvdaControls
 from gui import settingsDialogs
+import addonHandler
+try:
+	addonHandler.initTranslation()
+except addonHandler.AddonError:
+	log.warning("Couldn't initialise translations. Is this addon running from NVDA's scratchpad directory?")
 
 import description_service
 
