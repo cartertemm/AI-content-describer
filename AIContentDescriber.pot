@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AIContentDescriber 2024.04.14\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2024-04-15 14:03-0700\n"
+"POT-Creation-Date: 2024-04-21 10:16-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,38 +378,100 @@ msgid ""
 msgstr ""
 
 #. translators: the title for the dialog that selects the camera
-#: addon\globalPlugins\AIContentDescriber\face_view.py:18
+#: addon\globalPlugins\AIContentDescriber\face_view.py:24
 msgid "Choose a camera"
 msgstr ""
 
 #. translators: the label for the available cameras combo box
-#: addon\globalPlugins\AIContentDescriber\face_view.py:28
+#: addon\globalPlugins\AIContentDescriber\face_view.py:34
 msgid "&Available cameras"
 msgstr ""
 
 #. translators: the message spoken to prompt the user to trigger the command again, after the camera has been chosen
 #. # annoying behavior, this is a limitation of the way we're doing the UI. Yay for rapid prototyping!
 #. release the old capture object (if one exists)
-#: addon\globalPlugins\AIContentDescriber\face_view.py:36
+#: addon\globalPlugins\AIContentDescriber\face_view.py:42
 msgid "Camera selected. You may now trigger the command again."
 msgstr ""
 
+#. Translators: the following messages correspond to the instructions provided to the user for facial detection. They are chosen and then concatinated together based on certain conditions, so please replicate the whitespace.
+#: addon\globalPlugins\AIContentDescriber\face_view.py:79
+msgid "far to the left of "
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:81
+msgid "to the left of "
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:83
+msgid "slightly to the left of "
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:85
+msgid "slightly to the right of "
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:87
+msgid "to the right of "
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:89
+msgid "far to the right of "
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:91
+msgid "far below"
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:93
+msgid "below"
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:95
+msgid "slightly below"
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:97
+msgid "slightly above"
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:99
+msgid "above"
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:101
+msgid "far above"
+msgstr ""
+
+#. Translators: Message spoken when the user's face is clearly in view
+#: addon\globalPlugins\AIContentDescriber\face_view.py:103
+msgid "Face clearly in view"
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:104
+msgid " and "
+msgstr ""
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:104
+msgid "the center"
+msgstr ""
+
 #. translators: the message spoken when footage could not be captured from the camera during facial detection
-#: addon\globalPlugins\AIContentDescriber\face_view.py:102
+#: addon\globalPlugins\AIContentDescriber\face_view.py:110
 msgid ""
 "Failed to interface with the camera. Please ensure it is not in use by "
 "another application, then try again."
 msgstr ""
 
 #. translators: message spoken when the face detection failed because we are on the desktop - a rarely encountered windows bug
-#: addon\globalPlugins\AIContentDescriber\face_view.py:116
+#: addon\globalPlugins\AIContentDescriber\face_view.py:124
 msgid ""
 "The footage from the camera is too blurry. Try switching your focus away "
 "from the desktop, then try this command again."
 msgstr ""
 
 #. translators: message spoken when the face detection fails because the camera encountered a blurry image
-#: addon\globalPlugins\AIContentDescriber\face_view.py:119
+#: addon\globalPlugins\AIContentDescriber\face_view.py:127
 msgid ""
 "The footage from the camera is too blurry. Please ensure that it is not "
 "covered up and that your surroundings have proper lighting. "
@@ -417,88 +479,88 @@ msgid ""
 msgstr ""
 
 #. translators: the message spoken when there was no face found in the frame
-#: addon\globalPlugins\AIContentDescriber\face_view.py:124
+#: addon\globalPlugins\AIContentDescriber\face_view.py:132
 msgid ""
 "No face detected. Please ensure your face is in the frame and that your "
 "camera is not covered up."
 msgstr ""
 
 #. translators: the message spoken when more than one face was detected
-#: addon\globalPlugins\AIContentDescriber\face_view.py:127
+#: addon\globalPlugins\AIContentDescriber\face_view.py:135
 msgid ""
 "{len(faces)} faces detected near the frame. Please try for another angle "
 "with fewer background objects."
 msgstr ""
 
 #. translators: the message that gets spoken when facial detection cannot find any cameras
-#: addon\globalPlugins\AIContentDescriber\face_view.py:145
-#: addon\globalPlugins\AIContentDescriber\face_view.py:166
+#: addon\globalPlugins\AIContentDescriber\face_view.py:153
+#: addon\globalPlugins\AIContentDescriber\face_view.py:174
 msgid "No camera found on your system. Please connect one and try again."
 msgstr ""
 
 #. translators: message spoken when the camera that was being used before has disconnected
-#: addon\globalPlugins\AIContentDescriber\face_view.py:156
+#: addon\globalPlugins\AIContentDescriber\face_view.py:164
 msgid " is no longer available. Switching to the other on the system."
 msgstr ""
 
 #. translators: message spoken when the camera becomes unavailable between the user selecting it and triggering it again
-#: addon\globalPlugins\AIContentDescriber\face_view.py:177
+#: addon\globalPlugins\AIContentDescriber\face_view.py:185
 msgid "Camera unavailable. Please try selecting another"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\face_view.py:180
+#: addon\globalPlugins\AIContentDescriber\face_view.py:188
 msgid ""
 "Starting the face detection interface. This may take a few seconds. Please "
 "wait."
 msgstr ""
 
 #. translators: message spoken when we could not interface with the chosen camera
-#: addon\globalPlugins\AIContentDescriber\face_view.py:184
+#: addon\globalPlugins\AIContentDescriber\face_view.py:192
 msgid "Failed to interface with the chosen camera"
 msgstr ""
 
 #. translators: the title of the model configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:11
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:16
 msgid "Model configuration"
 msgstr ""
 
 #. translators: the button in the model configuration dialog that provides information on the selected model
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:24
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:29
 msgid "About this model"
 msgstr ""
 
 #. Translators: The label for the API key field in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:28
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:33
 msgid "API key"
 msgstr ""
 
 #. Translators: The label for the base URL field in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:32
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:37
 msgid "Base URL"
 msgstr ""
 
 #. Translators: The label for the prompt field in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:36
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:41
 msgid "Prompt"
 msgstr ""
 
 #. Translators: The label for the button that resets the prompt to its default in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:38
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:43
 msgid "Reset prompt to default"
 msgstr ""
 
 #. Translators: The label for the maximum tokens chooser in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:42
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:47
 msgid "Maximum tokens"
 msgstr ""
 
 #. Translators: The label for the timeout chooser in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:46
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:51
 msgid "Seconds to wait for a response before timing out"
 msgstr ""
 
 #. translators: the title for the about model message box
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:88
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:93
 msgid "About model"
 msgstr ""
 
