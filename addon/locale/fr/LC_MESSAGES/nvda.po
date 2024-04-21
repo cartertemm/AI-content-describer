@@ -1,0 +1,644 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the AIContentDescriber package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: AIContentDescriber 2024.04.14\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2024-04-15 14:03-0700\n"
+"PO-Revision-Date: 2024-04-17 16:07+0100\n"
+"Last-Translator: Platinum Hikari <Platinum-Hikari@gmail.com>\n"
+"Language-Team: Platinum-Hikari\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. Translators: The message displayed if during installation, there is an incompatable version already installed
+#: addon\installTasks.py:20
+msgid ""
+"There appears to be an older version of this add-on installed that is "
+"incompatable with future versions because the name has changed. It will be "
+"removed the next time NVDA is restarted."
+msgstr ""
+"Il semble y avoir une ancienne version de ce module complémentaire installée "
+"qui est incompatible avec les versions futures car le nom a changé. Il sera "
+"supprimé au prochain redémarrage de NVDA."
+
+#. Translators: The title of the message dialog when the user is installing the add-on
+#. Translators: The label for the category in NVDA settings
+#. Translators: Summary for this add-on
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+#: addon\installTasks.py:22
+#: addon\globalPlugins\AIContentDescriber\__init__.py:94
+#: addon\globalPlugins\AIContentDescriber\__init__.py:198
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:103
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:113
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:123
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:133
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:144
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:154
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:220
+#: buildVars.py:23
+msgid "AI Content Describer"
+msgstr "Descripteur de contenu IA"
+
+#. translators: the button in the settings dialog to open the model manager
+#: addon\globalPlugins\AIContentDescriber\__init__.py:99
+msgid "Manage &models"
+msgstr "Gérer les &modèles"
+
+#. translators: the label for the dropdown that lists the currently available models
+#: addon\globalPlugins\AIContentDescriber\__init__.py:101
+msgid ""
+"Model (configure more in the manage models dialog, defaults to last used):"
+msgstr ""
+"Modèle (configurez davantage dans la boîte de dialogue de gestion des "
+"modèles, la valeur par défaut est la dernière utilisée) :"
+
+#. Translators: The label for the option to open results in browseable dialogs
+#: addon\globalPlugins\AIContentDescriber\__init__.py:103
+msgid ""
+"Open each result in a browseable dialog; Markdown will be rendered if "
+"possible"
+msgstr ""
+"Ouvrez chaque résultat dans une boîte de dialogue consultable ; Markdown "
+"sera rendu si possible"
+
+#. Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:105
+msgid "Remember/cache descriptions of each item to save API quota"
+msgstr ""
+"Mémoriser/mettre en cache les descriptions de chaque élément pour "
+"enregistrer le quota API"
+
+#. Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\__init__.py:107
+msgid ""
+"Optimize images for size, may speed up detection in some situations "
+"(experimental)"
+msgstr ""
+"Optimiser la taille des images, peut accélérer la détection dans certaines "
+"situations (expérimental)"
+
+#. translators: current focus
+#: addon\globalPlugins\AIContentDescriber\__init__.py:152
+msgid "Current focus"
+msgstr "Focus actuel"
+
+#. translators: navigator object
+#: addon\globalPlugins\AIContentDescriber\__init__.py:154
+msgid "Navigator object"
+msgstr "Objet Navigateur"
+
+#. translators: screenshot of entire window menu item
+#: addon\globalPlugins\AIContentDescriber\__init__.py:156
+msgid "Entire screen"
+msgstr "Écran entier"
+
+#. translators: picture from the local camera menu item
+#: addon\globalPlugins\AIContentDescriber\__init__.py:158
+msgid "Take a picture"
+msgstr "Prendre une photo"
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:161
+msgid "Detect face position"
+msgstr "Détecter la position du visage"
+
+#. self.detect_face_realtime_item = self.face_detection_menu.Append(wx.ID_ANY, _("Real-time face guidance"))
+#: addon\globalPlugins\AIContentDescriber\__init__.py:163
+msgid "Select camera"
+msgstr "Sélectionnez la caméra"
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:164
+msgid "Release the camera to make it usable by other applications"
+msgstr "Relâchez la caméra pour la rendre utilisable par d'autres applications"
+
+#. translators: the label for the submenu that contains the options for face detection. Also informs the user that this feature does not require API access.
+#: addon\globalPlugins\AIContentDescriber\__init__.py:166
+msgid "Face Detection (no API required)"
+msgstr "Détection de visage (aucune API requise)"
+
+#. translators: the name of the submenu used to select a model.
+#: addon\globalPlugins\AIContentDescriber\__init__.py:177
+msgid "Model"
+msgstr "Modèle"
+
+#. Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
+#: addon\globalPlugins\AIContentDescriber\__init__.py:229
+msgid ""
+"Please disable windows screen curtain before using AI content describer."
+msgstr ""
+"Veuillez désactiver le rideau d'écran Windows avant d'utiliser le "
+"descripteur de contenu IA."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:243
+msgid "Content is not visible"
+msgstr "Le contenu n'est pas visible"
+
+#. Translators: Message spoken when the attempt to take a picture of an object fails
+#: addon\globalPlugins\AIContentDescriber\__init__.py:254
+msgid "Could not snap an image of the requested object"
+msgstr "Impossible de prendre une image de l'objet demandé"
+
+#. py-3.11: On some machines, it is rare, but cv2 might not work as expected due to a variety of reasons none of which I can reproduce.
+#. # In the meantime, establish a catchall exception and report it to the user so they can file an issue
+#. Translators: The message spoken when there was an error with the face detection interface.
+#: addon\globalPlugins\AIContentDescriber\__init__.py:267
+#: addon\globalPlugins\AIContentDescriber\__init__.py:292
+msgid ""
+"Error initializing the face detection interface. Please consult the NVDA log "
+"for more information. "
+msgstr ""
+"Erreur lors de l'initialisation de l'interface de détection de visage. "
+"Veuillez consulter le journal NVDA pour plus d'informations."
+
+#. Translators: Message spoken when the face detection interface is loading
+#: addon\globalPlugins\AIContentDescriber\__init__.py:271
+#: addon\globalPlugins\AIContentDescriber\__init__.py:296
+msgid ""
+"Face detection interface is loading. Please try this command again after a "
+"couple seconds."
+msgstr ""
+"L'interface de détection de visage est en cours de chargement. Veuillez "
+"réessayer cette commande après quelques secondes."
+
+#. translators: message spoken when grabbing the content of the current window is not possible
+#: addon\globalPlugins\AIContentDescriber\__init__.py:279
+msgid "Could not get window content"
+msgstr "Impossible d'obtenir le contenu de la fenêtre"
+
+#. translators: message spoken when the picture could not be taken due to an unknown error
+#: addon\globalPlugins\AIContentDescriber\__init__.py:303
+#: addon\globalPlugins\AIContentDescriber\__init__.py:313
+msgid ""
+"The picture could not be taken. Please ensure that your camera is not in use "
+"by another application and try again."
+msgstr ""
+"La photo n'a pas pu être prise. Veuillez vous assurer que votre caméra n'est "
+"pas utilisée par une autre application et réessayez."
+
+#. Translators: the message spoken when the picture is taken but the file could not be written.
+#: addon\globalPlugins\AIContentDescriber\__init__.py:308
+msgid "The picture could not be saved."
+msgstr "L'image n'a pas pu être enregistrée."
+
+#. Translators: Message spoken when the item copied to the clipboard is not an image
+#: addon\globalPlugins\AIContentDescriber\__init__.py:321
+#: addon\globalPlugins\AIContentDescriber\__init__.py:332
+msgid "The item on the clipboard is not an image."
+msgstr "L'élément dans le presse-papiers n'est pas une image."
+
+#. Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
+#: addon\globalPlugins\AIContentDescriber\__init__.py:326
+msgid ""
+"Unsupported image format. Please copy another file to the clipboard that is "
+"{''.join(service.supported_formats)}"
+msgstr ""
+"Format d'image non pris en charge. Veuillez copier un autre fichier dans le "
+"presse-papiers : {''.join(service.supported_formats)}"
+
+#. Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key or base URL
+#: addon\globalPlugins\AIContentDescriber\__init__.py:342
+msgid ""
+"To describe content, you must provide an API key or base URL in the AI image "
+"describer category of the NVDA settings dialog. Please consult add-on help "
+"for more information"
+msgstr ""
+"Pour décrire le contenu, vous devez fournir une clé API ou une URL de base "
+"dans la catégorie descripteur d'image AI de la boîte de dialogue des "
+"paramètres NVDA. Veuillez consulter l'aide du module complémentaire pour "
+"plus d'informations."
+
+#. Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
+#: addon\globalPlugins\AIContentDescriber\__init__.py:346
+msgid ""
+"To describe content, you must define a prompt by navigating to the AI image "
+"describer category of the NVDA settings dialog. Please consult add-on help "
+"for more information"
+msgstr ""
+"Pour décrire le contenu, vous devez définir une invite en accédant à la "
+"catégorie descripteur d'image AI de la boîte de dialogue des paramètres "
+"NVDA. Veuillez consulter l'aide du module complémentaire pour plus "
+"d'informations."
+
+#. Translators: Message spoken after the beep - when we have started fetching the description
+#: addon\globalPlugins\AIContentDescriber\__init__.py:350
+#, python-brace-format
+msgid "Retrieving description using {service.name}..."
+msgstr "Récupération de la description à l'aide de {service.name}..."
+
+#. Translators: Title of the browseable message
+#: addon\globalPlugins\AIContentDescriber\__init__.py:354
+msgid "Image description"
+msgstr "description de l'image"
+
+#. translators: message spoken after the camera has been released successfully
+#: addon\globalPlugins\AIContentDescriber\__init__.py:394
+msgid "Success"
+msgstr "Succès"
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:401
+msgid ""
+"Describe the image (or file path to an image) on the clipboard using AI."
+msgstr ""
+"Décrivez l'image (ou le chemin d'accès à une image) dans le presse-papiers à "
+"l'aide de l'IA."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:405
+msgid "Describe the contents of the current navigator object using AI."
+msgstr "Décrivez le contenu de l'objet navigateur actuel à l'aide de l'IA."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:409
+msgid "Describe the contents of the currently focused item using AI."
+msgstr "Décrivez le contenu de l'élément actuellement ciblé à l'aide de l'IA."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:413
+msgid "Take a screenshot, then describe it using AI."
+msgstr "Prenez une capture d'écran, puis décrivez-la à l'aide de l'IA."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:417
+msgid ""
+"Pop up a menu asking whether to describe the current focus, navigator "
+"object, or entire screen with AI."
+msgstr ""
+"Un menu contextuel vous demande s'il faut décrire le focus actuel, l'objet "
+"de navigation ou l'écran entier avec l'IA."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:421
+msgid "Snap a picture using the selected camera, then describe it using AI."
+msgstr ""
+"Prenez une photo à l'aide de l'appareil photo sélectionné, puis décrivez-la "
+"à l'aide de l'IA."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:425
+msgid ""
+"Describe the position of the face in the frame using the selected camera, if "
+"applicable."
+msgstr ""
+"Décrivez la position du visage dans le cadre à l'aide de la caméra "
+"sélectionnée, le cas échéant."
+
+#. Translators: the message shown when required dependencies were not found
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:105
+msgid ""
+"Some of the dependencies required for this NVDA add-on to run are not "
+"available on your computer. Would you like to download them now? NVDA will "
+"need to be restarted when this process completes."
+msgstr ""
+"Certaines des dépendances requises pour l'exécution de ce module "
+"complémentaire NVDA ne sont pas disponibles sur votre ordinateur. Souhaitez-"
+"vous les télécharger maintenant ? NVDA devra être redémarré une fois ce "
+"processus terminé."
+
+#. Translators: the message shown when the wrong dependency versions were found
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:115
+msgid ""
+"Some of the dependencies required for this NVDA add-on to run are outdated. "
+"Would you like to try to install them now? NVDA will need to be restarted "
+"when complete."
+msgstr ""
+"Certaines des dépendances requises pour l'exécution de ce module "
+"complémentaire NVDA sont obsolètes. Souhaitez-vous essayer de les mettre à "
+"jour maintenant ? NVDA devra être redémarré une fois terminé."
+
+#. Translators: the message shown when the addon has successfully retrieved the new dependencies, asking the user whether they would like to delete the old ones
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:125
+msgid ""
+"Would you like to delete the old dependencies from the configuration? This "
+"question will be asked once. If you are running multiple versions of NVDA "
+"interchangeably, select no."
+msgstr ""
+"Souhaitez-vous supprimer les anciennes dépendances de la configuration ? "
+"Cette question sera posée une seule fois. Si vous exécutez plusieurs "
+"versions de NVDA de manière interchangeable, sélectionnez non."
+
+#. Translators: Message shown when NVDA is about to restart after the dependencies have been downloaded.
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:135
+msgid ""
+"The dependencies have been downloaded successfully. NVDA will now restart "
+"for the changes to take affect"
+msgstr ""
+"Les dépendances ont été téléchargées avec succès. NVDA va maintenant "
+"redémarrer pour que les modifications prennent effet"
+
+#. Translators: Message displayed when there isn't yet libraries to support the running version of NVDA.
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:146
+msgid ""
+"Unfortunately, there doesn't yet seem to be dependencies available for the "
+"running version of NVDA. Please submit an issue in our bug tracker or "
+"contact the developers. In the meantime, you may wish to disable the add-on "
+"to  surpress this  message on startup."
+msgstr ""
+"Malheureusement, il ne semble pas encore y avoir de dépendances disponibles "
+"pour la version en cours d'exécution de NVDA. Veuillez soumettre un problème "
+"dans notre outil de suivi des bogues ou contacter les développeurs. En "
+"attendant, vous souhaiterez peut-être désactiver le module complémentaire "
+"pour supprimer ce message au démarrage."
+
+#. Translators: Message shown when dependencies fail to download.
+#: addon\globalPlugins\AIContentDescriber\dependency_checker.py:156
+msgid ""
+"Unfortunately, there was a problem downloading the dependencies required to "
+"run this add-on. Please consult the NVDA log for more details. "
+msgstr ""
+"Malheureusement, un problème est survenu lors du téléchargement des "
+"dépendances requises pour exécuter ce module complémentaire. Veuillez "
+"consulter le journal NVDA pour plus de détails."
+
+#. translators: error
+#: addon\globalPlugins\AIContentDescriber\description_service.py:36
+#: addon\globalPlugins\AIContentDescriber\description_service.py:74
+msgid "error"
+msgstr "erreur"
+
+#. translators: message spoken when we can't connect (error with connection)
+#: addon\globalPlugins\AIContentDescriber\description_service.py:42
+#: addon\globalPlugins\AIContentDescriber\description_service.py:87
+msgid "error making connection"
+msgstr "erreur lors de la connexion"
+
+#. translators: message spoken when the connection is refused by our target
+#: addon\globalPlugins\AIContentDescriber\description_service.py:49
+#: addon\globalPlugins\AIContentDescriber\description_service.py:94
+msgid "error, connection refused by target"
+msgstr "erreur, connexion refusée par la cible"
+
+#. translators: the description for the GPT4 vision model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:192
+msgid ""
+"The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
+"2024,  this model has been superseded by GPT4 turbo which has consistently "
+"achieved better metrics in tasks involving visual understanding."
+msgstr ""
+"Le modèle GPT4 d'OpenAI, présenté en avant-première avec des capacités de "
+"vision. Depuis avril 2024, ce modèle a été remplacé par le GPT4 turbo, qui a "
+"constamment obtenu de meilleures mesures dans les tâches impliquant une "
+"compréhension visuelle."
+
+#. translators: the description for the GPT4 turbo model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:257
+msgid ""
+"The next generation of the original GPT4 vision preview, with enhanced "
+"quality and understanding."
+msgstr ""
+"La nouvelle génération de l'aperçu de vision GPT4 original, avec une qualité "
+"et une compréhension améliorées."
+
+#. translators: the description for the Google Gemini pro vision model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:320
+msgid "Google's Gemini model with vision capabilities."
+msgstr "Modèle Gemini de Google avec capacités de vision."
+
+#. translators: message spoken when Google gemini encounters an error with the format or content of the input.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:356
+msgid ""
+"Gemini encountered an error: {response['error']['code']}, {response['error']"
+"['message']}"
+msgstr ""
+"Gemini a rencontré une erreur : {response['error']['code']}, "
+"{response['error']['message']}"
+
+#. translators: message spoken when Claude encounters an error with the format or content of the input.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:420
+msgid "Claude encountered an error. {response['error']['message']}"
+msgstr "Claude a rencontré une erreur. {réponse['erreur']['message']}"
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:427
+msgid "Anthropic's most powerful model for highly complex tasks."
+msgstr "Le modèle le plus puissant d'Anthropic pour les tâches très complexes."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:435
+msgid ""
+"Anthropic's model with Ideal balance of intelligence and speed, excels for "
+"enterprise workloads."
+msgstr ""
+"Le modèle d'Anthropic, offrant un équilibre idéal entre intelligence et "
+"vitesse, excelle pour les charges de travail d'entreprise."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:443
+msgid ""
+"Anthropic's fastest and most compact model for near-instant responsiveness"
+msgstr ""
+"Le modèle Anthropic le plus rapide et le plus compact pour une réactivité "
+"quasi instantanée"
+
+#. translators: the description for the llama.cpp option in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:459
+msgid ""
+"llama.cpp is a state-of-the-art, open-source solution for running large "
+"language models locally and in the cloud.\n"
+"This add-on integration assumes that you have obtained llama.cpp from Github "
+"and an image capable model from Huggingface or another repository, and that "
+"a server is currently running to handle requests. Though the process for "
+"getting this working is largely a task for the user that knows what they are "
+"doing, you can find basic steps in the add-on documentation."
+msgstr ""
+"llama.cpp est une solution open source de pointe permettant d'exécuter de "
+"grands modèles de langage localement et dans le cloud.\n"
+"Cette intégration complémentaire suppose que vous avez obtenu llama.cpp "
+"depuis Github et un modèle compatible avec les images depuis Huggingface ou "
+"un autre référentiel, et qu'un serveur est actuellement en cours d'exécution "
+"pour gérer les demandes. Bien que le processus pour que cela fonctionne soit "
+"en grande partie une tâche pour l'utilisateur qui sait ce qu'il fait, vous "
+"pouvez trouver les étapes de base dans la documentation du module "
+"complémentaire."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:488
+msgid ""
+"Image recognition response appears to be malformed.\n"
+"{repr(response)}"
+msgstr ""
+"La réponse de reconnaissance d’image semble mal formée.\n"
+"{repr(réponse)}"
+
+#. translators: the title for the dialog that selects the camera
+#: addon\globalPlugins\AIContentDescriber\face_view.py:18
+msgid "Choose a camera"
+msgstr "Choisissez une caméra"
+
+#. translators: the label for the available cameras combo box
+#: addon\globalPlugins\AIContentDescriber\face_view.py:28
+msgid "&Available cameras"
+msgstr "&Caméras disponibles"
+
+#. translators: the message spoken to prompt the user to trigger the command again, after the camera has been chosen
+#. # annoying behavior, this is a limitation of the way we're doing the UI. Yay for rapid prototyping!
+#. release the old capture object (if one exists)
+#: addon\globalPlugins\AIContentDescriber\face_view.py:36
+msgid "Camera selected. You may now trigger the command again."
+msgstr ""
+"Caméra sélectionnée. Vous pouvez maintenant déclencher à nouveau la commande."
+
+#. translators: the message spoken when footage could not be captured from the camera during facial detection
+#: addon\globalPlugins\AIContentDescriber\face_view.py:102
+msgid ""
+"Failed to interface with the camera. Please ensure it is not in use by "
+"another application, then try again."
+msgstr ""
+"Échec de l'interface avec la caméra. Veuillez vous assurer qu'il n'est pas "
+"utilisé par une autre application, puis réessayez."
+
+#. translators: message spoken when the face detection failed because we are on the desktop - a rarely encountered windows bug
+#: addon\globalPlugins\AIContentDescriber\face_view.py:116
+msgid ""
+"The footage from the camera is too blurry. Try switching your focus away "
+"from the desktop, then try this command again."
+msgstr ""
+"Les images de la caméra sont trop floues. Essayez de détourner votre "
+"attention du bureau, puis réessayez cette commande."
+
+#. translators: message spoken when the face detection fails because the camera encountered a blurry image
+#: addon\globalPlugins\AIContentDescriber\face_view.py:119
+msgid ""
+"The footage from the camera is too blurry. Please ensure that it is not "
+"covered up and that your surroundings have proper lighting. "
+"{int(laplacian_variance)}"
+msgstr ""
+"Les images de la caméra sont trop floues. Veuillez vous assurer qu'il n'est "
+"pas masqué et que votre environnement est correctement éclairé. "
+"{int(laplacian_variance)}"
+
+#. translators: the message spoken when there was no face found in the frame
+#: addon\globalPlugins\AIContentDescriber\face_view.py:124
+msgid ""
+"No face detected. Please ensure your face is in the frame and that your "
+"camera is not covered up."
+msgstr ""
+"Aucun visage détecté. Veuillez vous assurer que votre visage est dans le "
+"cadre et que votre appareil photo n'est pas masqué."
+
+#. translators: the message spoken when more than one face was detected
+#: addon\globalPlugins\AIContentDescriber\face_view.py:127
+msgid ""
+"{len(faces)} faces detected near the frame. Please try for another angle "
+"with fewer background objects."
+msgstr ""
+"{len(faces)} visages détectés à proximité du cadre. Veuillez essayer un "
+"autre angle avec moins d'objets d'arrière-plan."
+
+#. translators: the message that gets spoken when facial detection cannot find any cameras
+#: addon\globalPlugins\AIContentDescriber\face_view.py:145
+#: addon\globalPlugins\AIContentDescriber\face_view.py:166
+msgid "No camera found on your system. Please connect one and try again."
+msgstr ""
+"Aucune caméra trouvée sur votre système. Veuillez en connecter un et "
+"réessayer."
+
+#. translators: message spoken when the camera that was being used before has disconnected
+#: addon\globalPlugins\AIContentDescriber\face_view.py:156
+msgid " is no longer available. Switching to the other on the system."
+msgstr "n'est plus disponible. Passage à l'autre sur le système."
+
+#. translators: message spoken when the camera becomes unavailable between the user selecting it and triggering it again
+#: addon\globalPlugins\AIContentDescriber\face_view.py:177
+msgid "Camera unavailable. Please try selecting another"
+msgstr "Caméra indisponible. Veuillez essayer d'en sélectionner un autre"
+
+#: addon\globalPlugins\AIContentDescriber\face_view.py:180
+msgid ""
+"Starting the face detection interface. This may take a few seconds. Please "
+"wait."
+msgstr ""
+"Démarrage de l'interface de détection de visage. Cela peut prendre quelques "
+"secondes. S'il vous plaît, attendez."
+
+#. translators: message spoken when we could not interface with the chosen camera
+#: addon\globalPlugins\AIContentDescriber\face_view.py:184
+msgid "Failed to interface with the chosen camera"
+msgstr "Échec de l'interface avec la caméra choisie"
+
+#. translators: the title of the model configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:11
+msgid "Model configuration"
+msgstr "Configuration du modèle"
+
+#. translators: the button in the model configuration dialog that provides information on the selected model
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:24
+msgid "About this model"
+msgstr "À propos de ce modèle"
+
+#. Translators: The label for the API key field in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:28
+msgid "API key"
+msgstr "Clé API"
+
+#. Translators: The label for the base URL field in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:32
+msgid "Base URL"
+msgstr "URL de base"
+
+#. Translators: The label for the prompt field in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:36
+msgid "Prompt"
+msgstr "Invite"
+
+#. Translators: The label for the button that resets the prompt to its default in the settings dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:38
+msgid "Reset prompt to default"
+msgstr "Réinitialiser l'invite par défaut"
+
+#. Translators: The label for the maximum tokens chooser in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:42
+msgid "Maximum tokens"
+msgstr "Nombre maximum de jetons"
+
+#. Translators: The label for the timeout chooser in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:46
+msgid "Seconds to wait for a response before timing out"
+msgstr "Quelques secondes pour attendre une réponse avant d'expirer"
+
+#. translators: the title for the about model message box
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:88
+msgid "About model"
+msgstr "À propos du modèle"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:26
+msgid ""
+"This add-on makes it possible to describe the focus object, navigator "
+"object, or screen using popular vision capable AI language models, like "
+"Claude, Gemini, or GPT4.\n"
+"It also lets one understand where their face is positioned in the frame of a "
+"connected camera.\n"
+"Though content descriptions are quite detailed, they may not always be "
+"completely accurate or reflect real world information.\n"
+"To begin with GPT, head to https://platform.openai.com/account/api-keys and "
+"create an account, then create a key for interacting with the API. See add-"
+"on documentation for more information on this.\n"
+"Then, choose the \"AI content describer\" category from NVDA's settings "
+"dialog -> manage models and enter your API key.\n"
+"Press NVDA+shift+i to pop up a menu asking how you wish to describe based on "
+"the current position, or NVDA+shift+u to describe the navigator object, or "
+"NVDA+shift+y for an image that has been copied to the clipboard such as in "
+"windows explorer. Other keystrokes are customizable from the input gestures "
+"dialog."
+msgstr ""
+"Ce module complémentaire permet de décrire l'objet focal, l'objet navigateur "
+"ou l'écran à l'aide de modèles de langage d'IA populaires capables de "
+"vision, comme Claude, Gemini ou GPT4.\n"
+"Il permet également de comprendre où se situe un visage dans le cadre d'une "
+"caméra connectée.\n"
+"Bien que les descriptions de contenu soient assez détaillées, elles peuvent "
+"ne pas toujours être tout à fait exactes ou refléter des informations "
+"réelles.\n"
+"Pour commencer avec GPT, rendez-vous sur https://platform.openai.com/account/"
+"api-keys et créez un compte, puis créez une clé pour interagir avec l'API. "
+"Consultez la documentation du module complémentaire pour plus d’informations "
+"à ce sujet.\n"
+"Ensuite, choisissez la catégorie « Descripteur de contenu AI » dans la boîte "
+"de dialogue des paramètres de NVDA -> gérer les modèles et entrez votre clé "
+"API.\n"
+"Appuyez sur NVDA+shift+i pour faire apparaître un menu vous demandant "
+"comment vous souhaitez décrire en fonction de la position actuelle, ou "
+"NVDA+shift+u pour décrire l'objet navigateur, ou NVDA+shift+y pour une image "
+"qui a été copiée dans le presse-papiers comme dans l'explorateur Windows. "
+"D'autres raccourcis sont personnalisables à partir de la boîte de dialogue "
+"des gestes de saisie."

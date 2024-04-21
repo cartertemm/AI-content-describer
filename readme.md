@@ -151,6 +151,7 @@ The following people have worked on the addon.
 * [Nidza07](https://github.com/nidza07)
 * [Heorhii Halas](nvda.translation.uk@gmail.com)
 * [Umut Korkmaz](umutkork@gmail.com)
+* [Platinum_Hikari](urbain_onces.0r@icloud.com)
 
 Facing a problem? Submit it to the [issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
 
