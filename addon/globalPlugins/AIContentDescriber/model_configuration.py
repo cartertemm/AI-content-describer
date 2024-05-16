@@ -114,6 +114,10 @@ class GPT4TurboConfigurationPanel(GPT4ConfigurationPanel):
 	title = model.name
 
 
+class GPT4OConfigurationPanel(GPT4ConfigurationPanel):
+	model = description_service.GPT4O()
+	title = model.name
+
 class GeminiConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.Gemini()
 	title = model.name
@@ -168,6 +172,7 @@ class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
 
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
+description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel

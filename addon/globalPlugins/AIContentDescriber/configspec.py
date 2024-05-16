@@ -26,6 +26,13 @@ max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[GPT-4 omni]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
 [Google Gemini pro vision]
 api_key = string(default="")
 prompt = string(default="")

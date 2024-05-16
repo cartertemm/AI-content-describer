@@ -309,6 +309,71 @@ class GPT4Turbo(BaseDescriptionService):
 			return content
 
 
+class GPT4O(BaseDescriptionService):
+	name = "GPT-4 omni"
+	supported_formats = [
+		".gif",
+		".jpeg",
+		".jpg",
+		".png",
+		".webp",
+	]
+	# translators: the description for the GPT4 turbo model in the model configuration dialog
+	description = _("OpenAI's first fully multimodal model, released in May 2024. This model has the same high intelligence as GPT4 and GPT4 turbo, but is much more efficient, able to generate text at twice the speed and at half the cost.")
+	about_url = "https://openai.com/index/hello-gpt-4o/"
+	needs_api_key = True
+
+	def __init__(self):
+		super().__init__()
+
+	def process(self, image_path, **kw):
+		cache_descriptions = kw.get("cache_descriptions", True)
+		base64_image = encode_image(image_path)
+		# have we seen this image before?
+		cache.read_cache()
+		description = cache.cache.get(base64_image)
+		if description is not None:
+			return description
+		headers = {
+			"Content-Type": "application/json",
+			"Authorization": f"Bearer {self.api_key}"
+		}
+		payload = {
+			"model": "gpt-4o",
+			"messages": [
+				{
+					"role": "user",
+					"content": [
+						{
+							"type": "text",
+							"text": self.prompt
+						},
+						{
+							"type": "image_url",
+							"image_url": {
+								"url": f"data:image/jpeg;base64,{base64_image}"
+							}
+						}
+					]
+				}
+			],
+			"max_tokens": self.max_tokens
+		}
+		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = json.loads(response.decode('utf-8'))
+		# import test_response
+		# response = test_response.response
+		content = response["choices"][0]["message"]["content"]
+		if not content:
+			ui.message("content returned none")
+		if content:
+			if cache_descriptions:
+				cache.read_cache()
+				cache.cache[base64_image] = content
+				cache.write_cache()
+			return content
+
+
 class Gemini(BaseDescriptionService):
 	name = "Google Gemini pro vision"
 	supported_formats = [
@@ -492,6 +557,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 models = [
 	GPT4(),
 	GPT4Turbo(),
+	GPT4O(),
 	Gemini(),
 	Claude3Haiku(),
 	Claude3Sonnet(),
