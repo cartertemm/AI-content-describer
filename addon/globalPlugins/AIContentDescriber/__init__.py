@@ -323,7 +323,7 @@ class GlobalPlugin(GlobalPlugin):
 			file = snap[0]
 			if service.supported_formats and not os.path.splitext(file)[1].lower() in service.supported_formats:
 				# Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
-				unsupported_format_msg = _(f"Unsupported image format. Please copy another file to the clipboard that is {''.join(service.supported_formats)}")
+				unsupported_format_msg = _("Unsupported image format. Please copy another file to the clipboard that is {formats}").format(formats=', '.join(service.supported_formats))
 				ui.message(unsupported_format_msg)
 				return
 			return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":False}).start()
@@ -347,7 +347,7 @@ class GlobalPlugin(GlobalPlugin):
 			return
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
-		wx.CallAfter(ui.message, _(f"Retrieving description using {service.name}..."))
+		wx.CallAfter(ui.message, _("Retrieving description using {name}...").format(name=service.name))
 		message = service.process(file, **ch.config[service.name])
 		if ch.config["global"]["open_in_dialog"]:
 			# Translators: Title of the browseable message

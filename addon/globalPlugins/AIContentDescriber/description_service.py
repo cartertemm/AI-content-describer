@@ -418,7 +418,7 @@ class Gemini(BaseDescriptionService):
 		response = json.loads(response.decode('utf-8'))
 		if "error" in response:
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
-			ui.message(_(f"Gemini encountered an error: {response['error']['code']}, {response['error']['message']}"))
+			ui.message(_("Gemini encountered an error: {code}, {msg}").format(code=response['error']['code'], msg=response['error']['message']))
 			return
 		content = response["candidates"][0]["content"]["parts"][0]["text"]
 		if content:
@@ -482,7 +482,7 @@ class Anthropic(BaseDescriptionService):
 		response = json.loads(response.decode('utf-8'))
 		if response["type"] == "error":
 			#translators: message spoken when Claude encounters an error with the format or content of the input.
-			ui.message(_(f"Claude encountered an error. {response['error']['message']}"))
+			ui.message(_("Claude encountered an error. {err}").format(err=response['error']['message']))
 			return
 		return response["content"][0]["text"]
 
@@ -550,7 +550,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		response = json.loads(response.decode('utf-8'))
 		if not "content" in response:
-			ui.message(_(f"Image recognition response appears to be malformed.\n{repr(response)}"))
+			ui.message(_("Image recognition response appears to be malformed.\n{response}").format(response=repr(response)))
 		return response["content"]
 
 
