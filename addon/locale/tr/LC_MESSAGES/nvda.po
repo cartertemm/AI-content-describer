@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Yapay Zeka İçerik Betimleyici\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2024-04-15 19:21+0300\n"
-"PO-Revision-Date: 2024-04-15 19:25+0300\n"
+"POT-Creation-Date: 2024-05-17 19:32+0300\n"
+"PO-Revision-Date: 2024-05-17 19:42+0300\n"
 "Last-Translator: Umut KORKMAZ <umutkork@gmail.com>\n"
 "Language-Team: Umut KORKMAZ <umutkork@gmail.com\n"
 "Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: globalPlugins\n"
 "X-Poedit-SearchPath-1: __pycache__\n"
@@ -328,11 +328,21 @@ msgstr ""
 "Gelişmiş kalite ve anlayışa sahip orijinal GPT4 görüş önizlemesinin yeni "
 "nesli."
 
-#: globalPlugins/AIContentDescriber/description_service.py:320
+#: globalPlugins/AIContentDescriber/description_service.py:322
+msgid ""
+"OpenAI's first fully multimodal model, released in May 2024. This model has "
+"the same high intelligence as GPT4 and GPT4 turbo, but is much more "
+"efficient, able to generate text at twice the speed and at half the cost."
+msgstr ""
+"OpenAI'nin ilk tamamen multimodal modeli, Mayıs 2024'te piyasaya sürüldü. Bu "
+"model, GPT4 ve GPT4 turbo ile aynı yüksek zekaya sahiptir ancak çok daha "
+"verimlidir, iki kat daha hızlı ve yarı maliyetle metin üretebilir."
+
+#: globalPlugins/AIContentDescriber/description_service.py:385
 msgid "Google's Gemini model with vision capabilities."
 msgstr "Google'ın görme yeteneklerine sahip Gemini modeli."
 
-#: globalPlugins/AIContentDescriber/description_service.py:356
+#: globalPlugins/AIContentDescriber/description_service.py:421
 msgid ""
 "Gemini encountered an error: {response['error']['code']}, {response['error']"
 "['message']}"
@@ -340,15 +350,15 @@ msgstr ""
 "Gemini bir hatayla karşılaştı: {response['error']['code']}, "
 "{response['error']['message']}"
 
-#: globalPlugins/AIContentDescriber/description_service.py:420
+#: globalPlugins/AIContentDescriber/description_service.py:485
 msgid "Claude encountered an error. {response['error']['message']}"
 msgstr "Claude bir hatayla karşılaştı. {response['error']['message']}"
 
-#: globalPlugins/AIContentDescriber/description_service.py:427
+#: globalPlugins/AIContentDescriber/description_service.py:492
 msgid "Anthropic's most powerful model for highly complex tasks."
 msgstr "Son derece karmaşık görevler için Anthropic'in en güçlü modeli."
 
-#: globalPlugins/AIContentDescriber/description_service.py:435
+#: globalPlugins/AIContentDescriber/description_service.py:500
 msgid ""
 "Anthropic's model with Ideal balance of intelligence and speed, excels for "
 "enterprise workloads."
@@ -356,13 +366,13 @@ msgstr ""
 "Anthropic'in ideal zeka ve hız dengesine sahip modeli, kurumsal iş yükleri "
 "için mükemmeldir."
 
-#: globalPlugins/AIContentDescriber/description_service.py:443
+#: globalPlugins/AIContentDescriber/description_service.py:508
 msgid ""
 "Anthropic's fastest and most compact model for near-instant responsiveness"
 msgstr ""
 "Anthropic'in neredeyse anında yanıt veren en hızlı ve en kompakt modeli"
 
-#: globalPlugins/AIContentDescriber/description_service.py:459
+#: globalPlugins/AIContentDescriber/description_service.py:524
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -380,7 +390,7 @@ msgstr ""
 "ölçüde ne yaptığını bilen kullanıcılar için bir görev olsa da, eklenti "
 "belgelerinde temel adımları bulabilirsiniz."
 
-#: globalPlugins/AIContentDescriber/description_service.py:488
+#: globalPlugins/AIContentDescriber/description_service.py:553
 msgid ""
 "Image recognition response appears to be malformed.\n"
 "{repr(response)}"
@@ -388,19 +398,79 @@ msgstr ""
 "Görüntü tanıma yanıtı hatalı biçimlendirilmiş gibi görünüyor.\n"
 "{repr(response)}"
 
-#: globalPlugins/AIContentDescriber/face_view.py:18
+#: globalPlugins/AIContentDescriber/face_view.py:24
 msgid "Choose a camera"
 msgstr "Bir kamera seçin"
 
-#: globalPlugins/AIContentDescriber/face_view.py:28
+#: globalPlugins/AIContentDescriber/face_view.py:34
 msgid "&Available cameras"
 msgstr "Kull&anılabilir Kameralar"
 
-#: globalPlugins/AIContentDescriber/face_view.py:36
+#: globalPlugins/AIContentDescriber/face_view.py:42
 msgid "Camera selected. You may now trigger the command again."
 msgstr "Kamera seçildi. Artık komutu tekrar tetikleyebilirsiniz."
 
-#: globalPlugins/AIContentDescriber/face_view.py:102
+#: globalPlugins/AIContentDescriber/face_view.py:79
+msgid "far to the left of "
+msgstr "en solunda "
+
+#: globalPlugins/AIContentDescriber/face_view.py:81
+msgid "to the left of "
+msgstr "solundaki "
+
+#: globalPlugins/AIContentDescriber/face_view.py:83
+msgid "slightly to the left of "
+msgstr "biraz solunda "
+
+#: globalPlugins/AIContentDescriber/face_view.py:85
+msgid "slightly to the right of "
+msgstr "biraz sağında "
+
+#: globalPlugins/AIContentDescriber/face_view.py:87
+msgid "to the right of "
+msgstr "sağında ki "
+
+#: globalPlugins/AIContentDescriber/face_view.py:89
+msgid "far to the right of "
+msgstr "en sağında "
+
+#: globalPlugins/AIContentDescriber/face_view.py:91
+msgid "far below"
+msgstr "çok aşağıda"
+
+#: globalPlugins/AIContentDescriber/face_view.py:93
+msgid "below"
+msgstr "aşağıda"
+
+#: globalPlugins/AIContentDescriber/face_view.py:95
+msgid "slightly below"
+msgstr "biraz aşağıda"
+
+#: globalPlugins/AIContentDescriber/face_view.py:97
+msgid "slightly above"
+msgstr "biraz yukarıda"
+
+#: globalPlugins/AIContentDescriber/face_view.py:99
+msgid "above"
+msgstr "yukarıda"
+
+#: globalPlugins/AIContentDescriber/face_view.py:101
+msgid "far above"
+msgstr "çok yukarıda"
+
+#: globalPlugins/AIContentDescriber/face_view.py:103
+msgid "Face clearly in view"
+msgstr "Yüz net bir şekilde görülebiliyor"
+
+#: globalPlugins/AIContentDescriber/face_view.py:104
+msgid " and "
+msgstr " Ve "
+
+#: globalPlugins/AIContentDescriber/face_view.py:104
+msgid "the center"
+msgstr "ortalı"
+
+#: globalPlugins/AIContentDescriber/face_view.py:110
 msgid ""
 "Failed to interface with the camera. Please ensure it is not in use by "
 "another application, then try again."
@@ -408,7 +478,7 @@ msgstr ""
 "Kamera arayüzüne ulaşılamadı. Lütfen başka bir uygulama tarafından "
 "kullanılmadığından emin olun, ardından tekrar deneyin."
 
-#: globalPlugins/AIContentDescriber/face_view.py:116
+#: globalPlugins/AIContentDescriber/face_view.py:124
 msgid ""
 "The footage from the camera is too blurry. Try switching your focus away "
 "from the desktop, then try this command again."
@@ -416,7 +486,7 @@ msgstr ""
 "Kameradan gelen görüntüler çok bulanık. Odağınızı masaüstünden "
 "uzaklaştırmayı deneyin ve ardından bu komutu tekrar deneyin."
 
-#: globalPlugins/AIContentDescriber/face_view.py:119
+#: globalPlugins/AIContentDescriber/face_view.py:127
 msgid ""
 "The footage from the camera is too blurry. Please ensure that it is not "
 "covered up and that your surroundings have proper lighting. "
@@ -426,7 +496,7 @@ msgstr ""
 "çevrenizin yeterli aydınlatmaya sahip olduğundan emin olun. "
 "{int(lalacian_variance)}"
 
-#: globalPlugins/AIContentDescriber/face_view.py:124
+#: globalPlugins/AIContentDescriber/face_view.py:132
 msgid ""
 "No face detected. Please ensure your face is in the frame and that your "
 "camera is not covered up."
@@ -434,7 +504,7 @@ msgstr ""
 "Yüz algılanmadı. Lütfen yüzünüzün çerçevede olduğundan ve kameranızın kapalı "
 "olmadığından emin olun."
 
-#: globalPlugins/AIContentDescriber/face_view.py:127
+#: globalPlugins/AIContentDescriber/face_view.py:135
 msgid ""
 "{len(faces)} faces detected near the frame. Please try for another angle "
 "with fewer background objects."
@@ -442,21 +512,21 @@ msgstr ""
 "Çerçevenin yakınında {len(faces)} yüz algılandı. Lütfen daha az arka plan "
 "nesnesi olan başka bir açı deneyin."
 
-#: globalPlugins/AIContentDescriber/face_view.py:145
-#: globalPlugins/AIContentDescriber/face_view.py:166
+#: globalPlugins/AIContentDescriber/face_view.py:153
+#: globalPlugins/AIContentDescriber/face_view.py:174
 msgid "No camera found on your system. Please connect one and try again."
 msgstr ""
 "Sisteminizde kamera bulunamadı. Lütfen bir tane bağlayıp tekrar deneyin."
 
-#: globalPlugins/AIContentDescriber/face_view.py:156
+#: globalPlugins/AIContentDescriber/face_view.py:164
 msgid " is no longer available. Switching to the other on the system."
 msgstr " artık kullanılabilir değil. Sistemdeki diğerine geçiliyor."
 
-#: globalPlugins/AIContentDescriber/face_view.py:177
+#: globalPlugins/AIContentDescriber/face_view.py:185
 msgid "Camera unavailable. Please try selecting another"
 msgstr "Kamera kullanılamıyor. Lütfen başka bir tane seçmeyi deneyin"
 
-#: globalPlugins/AIContentDescriber/face_view.py:180
+#: globalPlugins/AIContentDescriber/face_view.py:188
 msgid ""
 "Starting the face detection interface. This may take a few seconds. Please "
 "wait."
@@ -464,43 +534,43 @@ msgstr ""
 "Yüz algılama arayüzü başlatılıyor. Bu bir kaç saniye alabilir. Lütfen "
 "bekleyin."
 
-#: globalPlugins/AIContentDescriber/face_view.py:184
+#: globalPlugins/AIContentDescriber/face_view.py:192
 msgid "Failed to interface with the chosen camera"
 msgstr "Seçilen kamera arayüzü açılamadı"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:11
+#: globalPlugins/AIContentDescriber/model_configuration.py:16
 msgid "Model configuration"
 msgstr "Model Yapılandırma"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:24
+#: globalPlugins/AIContentDescriber/model_configuration.py:29
 msgid "About this model"
 msgstr "Bu model hakkında"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:28
+#: globalPlugins/AIContentDescriber/model_configuration.py:33
 msgid "API key"
 msgstr "API anahtarı"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:32
+#: globalPlugins/AIContentDescriber/model_configuration.py:37
 msgid "Base URL"
 msgstr "Ana URL"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:36
+#: globalPlugins/AIContentDescriber/model_configuration.py:41
 msgid "Prompt"
 msgstr "İstem"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:38
+#: globalPlugins/AIContentDescriber/model_configuration.py:43
 msgid "Reset prompt to default"
 msgstr "İstemi varsayılana sıfırla"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:42
+#: globalPlugins/AIContentDescriber/model_configuration.py:47
 msgid "Maximum tokens"
 msgstr "Maksimum jeton sayısı"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:46
+#: globalPlugins/AIContentDescriber/model_configuration.py:51
 msgid "Seconds to wait for a response before timing out"
 msgstr "Bekleme Süresi"
 
-#: globalPlugins/AIContentDescriber/model_configuration.py:88
+#: globalPlugins/AIContentDescriber/model_configuration.py:93
 msgid "About model"
 msgstr "Model hakkında"
 
