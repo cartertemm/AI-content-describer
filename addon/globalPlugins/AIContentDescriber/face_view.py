@@ -124,7 +124,7 @@ class FaceDetectionInterface:
 				wx.CallAfter(ui.message, _("The footage from the camera is too blurry. Try switching your focus away from the desktop, then try this command again."))
 				return
 			# translators: message spoken when the face detection fails because the camera encountered a blurry image
-			wx.CallAfter(ui.message, _(f"The footage from the camera is too blurry. Please ensure that it is not covered up and that your surroundings have proper lighting. {int(laplacian_variance)}"))
+			wx.CallAfter(ui.message, _("The footage from the camera is too blurry. Please ensure that it is not covered up and that your surroundings have proper lighting. {}").format(int(laplacian_variance)))
 			return
 		faces = self.face_cascade.detectMultiScale(gray, 1.1, 6, minSize=(60, 60))
 		if len(faces) == 0:
