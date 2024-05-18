@@ -179,8 +179,7 @@ class BaseDescriptionService:
 		pass  # implement in subclasses
 
 
-class GPT4(BaseDescriptionService):
-	name = "GPT-4 vision"
+class BaseGPT(BaseDescriptionService):
 	supported_formats = [
 		".gif",
 		".jpeg",
@@ -188,190 +187,80 @@ class GPT4(BaseDescriptionService):
 		".png",
 		".webp",
 	]
+	needs_api_key = True
+
+	def __init__(self):
+		super().__init__()
+
+	def process(self, image_path, **kw):
+		cache_descriptions = kw.get("cache_descriptions", True)
+		base64_image = encode_image(image_path)
+		if cache_descriptions:
+			# have we seen this image before?
+			cache.read_cache()
+			description = cache.cache.get(base64_image)
+			if description is not None:
+				return description
+		headers = {
+			"Content-Type": "application/json",
+			"Authorization": f"Bearer {self.api_key}"
+		}
+		payload = {
+			"model": self.internal_model_name,
+			"messages": [
+				{
+					"role": "user",
+					"content": [
+						{
+							"type": "text",
+							"text": self.prompt
+						},
+						{
+							"type": "image_url",
+							"image_url": {
+								"url": f"data:image/jpeg;base64,{base64_image}"
+							}
+						}
+					]
+				}
+			],
+			"max_tokens": self.max_tokens
+		}
+		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = json.loads(response.decode('utf-8'))
+		content = response["choices"][0]["message"]["content"]
+		if not content:
+			ui.message("content returned none")
+		if content:
+			if cache_descriptions:
+				cache.read_cache()
+				cache.cache[base64_image] = content
+				cache.write_cache()
+			return content
+
+
+class GPT4(BaseGPT):
+	name = "GPT-4 vision"
 	# translators: the description for the GPT4 vision model in the model configuration dialog
 	description = _("The GPT4 model from OpenAI, previewed with vision capabilities. As of April 2024,  this model has been superseded by GPT4 turbo which has consistently achieved better metrics in tasks involving visual understanding.")
 	about_url = "https://platform.openai.com/docs/guides/vision"
-	needs_api_key = True
-
-	def __init__(self):
-		super().__init__()
-
-	def process(self, image_path, **kw):
-		cache_descriptions = kw.get("cache_descriptions", True)
-		base64_image = encode_image(image_path)
-		# have we seen this image before?
-		cache.read_cache()
-		description = cache.cache.get(base64_image)
-		if description is not None:
-			return description
-		headers = {
-			"Content-Type": "application/json",
-			"Authorization": f"Bearer {self.api_key}"
-		}
-		payload = {
-			"model": "gpt-4-vision-preview",
-			"messages": [
-				{
-					"role": "user",
-					"content": [
-						{
-							"type": "text",
-							"text": self.prompt
-						},
-						{
-							"type": "image_url",
-							"image_url": {
-								"url": f"data:image/jpeg;base64,{base64_image}"
-							}
-						}
-					]
-				}
-			],
-			"max_tokens": self.max_tokens
-		}
-		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		# import test_response
-		# response = test_response.response
-		content = response["choices"][0]["message"]["content"]
-		if not content:
-			ui.message("content returned none")
-		if content:
-			if cache_descriptions:
-				cache.read_cache()
-				cache.cache[base64_image] = content
-				cache.write_cache()
-			return content
+	internal_model_name = "gpt-4-vision-preview"
 
 
-class GPT4Turbo(BaseDescriptionService):
+class GPT4Turbo(BaseGPT):
 	name = "GPT-4 turbo"
-	supported_formats = [
-		".gif",
-		".jpeg",
-		".jpg",
-		".png",
-		".webp",
-	]
 	# translators: the description for the GPT4 turbo model in the model configuration dialog
 	description = _("The next generation of the original GPT4 vision preview, with enhanced quality and understanding.")
 	about_url = "https://help.openai.com/en/articles/8555510-gpt-4-turbo-in-the-openai-api"
-	needs_api_key = True
-
-	def __init__(self):
-		super().__init__()
-
-	def process(self, image_path, **kw):
-		cache_descriptions = kw.get("cache_descriptions", True)
-		base64_image = encode_image(image_path)
-		# have we seen this image before?
-		cache.read_cache()
-		description = cache.cache.get(base64_image)
-		if description is not None:
-			return description
-		headers = {
-			"Content-Type": "application/json",
-			"Authorization": f"Bearer {self.api_key}"
-		}
-		payload = {
-			"model": "gpt-4-turbo",
-			"messages": [
-				{
-					"role": "user",
-					"content": [
-						{
-							"type": "text",
-							"text": self.prompt
-						},
-						{
-							"type": "image_url",
-							"image_url": {
-								"url": f"data:image/jpeg;base64,{base64_image}"
-							}
-						}
-					]
-				}
-			],
-			"max_tokens": self.max_tokens
-		}
-		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		# import test_response
-		# response = test_response.response
-		content = response["choices"][0]["message"]["content"]
-		if not content:
-			ui.message("content returned none")
-		if content:
-			if cache_descriptions:
-				cache.read_cache()
-				cache.cache[base64_image] = content
-				cache.write_cache()
-			return content
+	internal_model_name = "gpt-4-turbo"
 
 
-class GPT4O(BaseDescriptionService):
+class GPT4O(BaseGPT):
 	name = "GPT-4 omni"
-	supported_formats = [
-		".gif",
-		".jpeg",
-		".jpg",
-		".png",
-		".webp",
-	]
-	# translators: the description for the GPT4 turbo model in the model configuration dialog
+	# translators: the description for the GPT4 omni model in the model configuration dialog
 	description = _("OpenAI's first fully multimodal model, released in May 2024. This model has the same high intelligence as GPT4 and GPT4 turbo, but is much more efficient, able to generate text at twice the speed and at half the cost.")
 	about_url = "https://openai.com/index/hello-gpt-4o/"
-	needs_api_key = True
-
-	def __init__(self):
-		super().__init__()
-
-	def process(self, image_path, **kw):
-		cache_descriptions = kw.get("cache_descriptions", True)
-		base64_image = encode_image(image_path)
-		# have we seen this image before?
-		cache.read_cache()
-		description = cache.cache.get(base64_image)
-		if description is not None:
-			return description
-		headers = {
-			"Content-Type": "application/json",
-			"Authorization": f"Bearer {self.api_key}"
-		}
-		payload = {
-			"model": "gpt-4o",
-			"messages": [
-				{
-					"role": "user",
-					"content": [
-						{
-							"type": "text",
-							"text": self.prompt
-						},
-						{
-							"type": "image_url",
-							"image_url": {
-								"url": f"data:image/jpeg;base64,{base64_image}"
-							}
-						}
-					]
-				}
-			],
-			"max_tokens": self.max_tokens
-		}
-		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		# import test_response
-		# response = test_response.response
-		content = response["choices"][0]["message"]["content"]
-		if not content:
-			ui.message("content returned none")
-		if content:
-			if cache_descriptions:
-				cache.read_cache()
-				cache.cache[base64_image] = content
-				cache.write_cache()
-			return content
+	internal_model_name = "gpt-4o"
 
 
 class Gemini(BaseDescriptionService):
@@ -391,10 +280,11 @@ class Gemini(BaseDescriptionService):
 		cache_descriptions = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
 		# have we seen this image before?
-		cache.read_cache()
-		description = cache.cache.get(base64_image)
-		if description is not None:
-			return description
+		if cache_descriptions:
+			cache.read_cache()
+			description = cache.cache.get(base64_image)
+			if description is not None:
+				return description
 		headers = {
 			"Content-Type": "application/json"
 		}
@@ -438,7 +328,7 @@ class Anthropic(BaseDescriptionService):
 		".webp"
 	]
 
-	def process(self, image_path, model, **kw):
+	def process(self, image_path, **kw):
 		# Do not use this function directly, override it in subclasses and call with the model parameter
 		cache_descriptions = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
@@ -448,10 +338,11 @@ class Anthropic(BaseDescriptionService):
 			mimetype = ".png"
 		mimetype = mimetype[1:]  # trim the "."
 		# have we seen this image before?
-		cache.read_cache()
-		description = cache.cache.get(base64_image)
-		if description is not None:
-			return description
+		if cache_descriptions:
+			cache.read_cache()
+			description = cache.cache.get(base64_image)
+			if description is not None:
+				return description
 		headers = {
 			"User-Agent": "curl/8.4.0",  # Cloudflare is perplexingly blocking anything that urllib sends with an "error 1010"
 			"Content-Type": "application/json",
@@ -459,7 +350,7 @@ class Anthropic(BaseDescriptionService):
 			"anthropic-version": "2023-06-01"
 		}
 		payload = {
-			"model": model,
+			"model": self.internal_model_name,
 			"messages": [
 				{"role": "user", "content": [
 					{
@@ -490,25 +381,19 @@ class Anthropic(BaseDescriptionService):
 class Claude3Opus(Anthropic):
 	name = "Claude 3 Opus"
 	description = _("Anthropic's most powerful model for highly complex tasks.")
-
-	def process(self, image_path, **kw):
-		return super().process(image_path, "claude-3-opus-20240229", **kw)
+	internal_model_name = "claude-3-opus-20240229"
 
 
 class Claude3Sonnet(Anthropic):
 	name = "Claude 3 Sonnet"
 	description = _("Anthropic's model with Ideal balance of intelligence and speed, excels for enterprise workloads.")
-
-	def process(self, image_path, **kw):
-		return super().process(image_path, "claude-3-sonnet-20240229", **kw)
+	internal_model_name = "claude-3-sonnet-20240229"
 
 
 class Claude3Haiku(Anthropic):
 	name = "Claude 3 Haiku"
 	description = _("Anthropic's fastest and most compact model for near-instant responsiveness")
-
-	def process(self, image_path, **kw):
-		return super().process(image_path, "claude-3-haiku-20240307", **kw)
+	internal_model_name = "claude-3-haiku-20240307"
 
 
 class LlamaCPP(BaseDescriptionService):
@@ -530,10 +415,11 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 		cache_descriptions = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
 		# have we seen this image before?
-		cache.read_cache()
-		description = cache.cache.get(base64_image)
-		if description is not None:
-			return description
+		if cache_descriptions:
+			cache.read_cache()
+			description = cache.cache.get(base64_image)
+			if description is not None:
+				return description
 		headers = {
 			"Content-Type": "application/json"
 		}
