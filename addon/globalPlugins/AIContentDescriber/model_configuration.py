@@ -155,6 +155,11 @@ class ClaudeConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class Claude3_5SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3_5Sonnet()
+	title = model.name
+
+
 class Claude3OpusConfigurationPanel(ClaudeConfigurationPanel):
 	model = description_service.Claude3Opus()
 	title = model.name
@@ -175,6 +180,7 @@ description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
+description_service.Claude3_5Sonnet.configurationPanel = Claude3_5SonnetConfigurationPanel
 description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel
 description_service.Claude3Sonnet.configurationPanel = Claude3SonnetConfigurationPanel
 description_service.Claude3Opus.configurationPanel = Claude3OpusConfigurationPanel

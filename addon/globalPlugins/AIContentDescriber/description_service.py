@@ -378,6 +378,12 @@ class Anthropic(BaseDescriptionService):
 		return response["content"][0]["text"]
 
 
+class Claude3_5Sonnet(Anthropic):
+	name = "Claude 3.5 Sonnet"
+	description = _("Anthropic's improvement over Claude 3 sonnet, this model features enhanced reasoning capabilities relative to its predecessor.")
+	internal_model_name = "claude-3-5-sonnet-20240620"
+
+
 class Claude3Opus(Anthropic):
 	name = "Claude 3 Opus"
 	description = _("Anthropic's most powerful model for highly complex tasks.")
@@ -441,6 +447,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 
 
 models = [
+	Claude3_5Sonnet(),
 	GPT4(),
 	GPT4Turbo(),
 	GPT4O(),
