@@ -178,6 +178,44 @@ class BaseDescriptionService:
 	def process(self):
 		pass  # implement in subclasses
 
+class CachedDescriptionService(BaseDescriptionService):
+	"""
+	Wraps a description service to provide caching of descriptions. That way, if the same image is 
+	processed multiple times, the description is only fetched once from the API. 
+
+	Usage:
+	```py
+	description_service = CachedDescriptionService(GPT4())
+	```
+	"""
+	
+	def __init__(self, description_service: BaseDescriptionService):
+		# copy all class variables from the wrapped description service
+		self.__dict__ = description_service.__class__.__dict__.copy()
+		# save the wrapped description service for later use
+		self.description_service = description_service
+	
+	def process(self, image_path, **kw):
+		is_cache_enabled = kw.get("cache_descriptions", True)
+		base64_image = encode_image(image_path)
+
+		# (optionally) read the cache
+		if is_cache_enabled:
+			cache.read_cache()
+			description = cache.cache.get(base64_image)
+			if description is not None:
+				return description
+
+		# delegate to the wrapped description service
+		description = self.description_service.process(image_path, **kw)
+
+		# (optionally) update the cache
+		if is_cache_enabled:
+			cache.read_cache()
+			cache.cache[base64_image] = description
+			cache.write_cache()
+		
+		return description
 
 class BaseGPT(BaseDescriptionService):
 	supported_formats = [
@@ -193,14 +231,7 @@ class BaseGPT(BaseDescriptionService):
 		super().__init__()
 
 	def process(self, image_path, **kw):
-		cache_descriptions = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
-		if cache_descriptions:
-			# have we seen this image before?
-			cache.read_cache()
-			description = cache.cache.get(base64_image)
-			if description is not None:
-				return description
 		headers = {
 			"Content-Type": "application/json",
 			"Authorization": f"Bearer {self.api_key}"
@@ -232,10 +263,6 @@ class BaseGPT(BaseDescriptionService):
 		if not content:
 			ui.message("content returned none")
 		if content:
-			if cache_descriptions:
-				cache.read_cache()
-				cache.cache[base64_image] = content
-				cache.write_cache()
 			return content
 
 
@@ -277,14 +304,7 @@ class Gemini(BaseDescriptionService):
 		super().__init__()
 
 	def process(self, image_path, **kw):
-		cache_descriptions = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
-		# have we seen this image before?
-		if cache_descriptions:
-			cache.read_cache()
-			description = cache.cache.get(base64_image)
-			if description is not None:
-				return description
 		headers = {
 			"Content-Type": "application/json"
 		}
@@ -310,14 +330,7 @@ class Gemini(BaseDescriptionService):
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
 			ui.message(_("Gemini encountered an error: {code}, {msg}").format(code=response['error']['code'], msg=response['error']['message']))
 			return
-		content = response["candidates"][0]["content"]["parts"][0]["text"]
-		if content:
-			if cache_descriptions:
-				cache.read_cache()
-				cache.cache[base64_image] = content
-				cache.write_cache()
-			return content
-
+		return response["candidates"][0]["content"]["parts"][0]["text"]
 
 class Anthropic(BaseDescriptionService):
 	supported_formats = [
@@ -330,19 +343,12 @@ class Anthropic(BaseDescriptionService):
 
 	def process(self, image_path, **kw):
 		# Do not use this function directly, override it in subclasses and call with the model parameter
-		cache_descriptions = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
 		mimetype = os.path.splitext(image_path)[1].lower()
 		if not mimetype in self.supported_formats:
 			# try falling back to png
 			mimetype = ".png"
 		mimetype = mimetype[1:]  # trim the "."
-		# have we seen this image before?
-		if cache_descriptions:
-			cache.read_cache()
-			description = cache.cache.get(base64_image)
-			if description is not None:
-				return description
 		headers = {
 			"User-Agent": "curl/8.4.0",  # Cloudflare is perplexingly blocking anything that urllib sends with an "error 1010"
 			"Content-Type": "application/json",
@@ -418,14 +424,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 	def process(self, image_path, **kw):
 		url = kw.get("base_url", "http://localhost:8080")
 		url = urllib.parse.urljoin(url, "completion")
-		cache_descriptions = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
-		# have we seen this image before?
-		if cache_descriptions:
-			cache.read_cache()
-			description = cache.cache.get(base64_image)
-			if description is not None:
-				return description
 		headers = {
 			"Content-Type": "application/json"
 		}
@@ -457,6 +456,9 @@ models = [
 	Claude3Opus(),
 	LlamaCPP(),
 ]
+
+# add caching ability to all models
+models = [CachedDescriptionService(model) for model in models]
 
 def list_available_models():
 	return [model for model in models if model.is_available]
