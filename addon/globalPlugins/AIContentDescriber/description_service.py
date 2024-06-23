@@ -188,6 +188,9 @@ class CachedDescriptionService(BaseDescriptionService):
 	description_service = CachedDescriptionService(GPT4())
 	```
 	"""
+
+	# TODO: remove fallback cache in later versions
+	FALLBACK_CACHE_NAME = "images"
 	
 	def __init__(self, description_service: BaseDescriptionService):
 		# copy all class variables from the wrapped description service
@@ -201,8 +204,12 @@ class CachedDescriptionService(BaseDescriptionService):
 
 		# (optionally) read the cache
 		if is_cache_enabled:
-			cache.read_cache()
-			description = cache.cache.get(base64_image)
+			cache.read_cache(self.name)
+			description = cache.cache[self.name].get(base64_image)
+			if description is None:
+				# TODO: remove fallback cache in later versions
+				cache.read_cache(self.FALLBACK_CACHE_NAME)
+				description = cache.cache[self.FALLBACK_CACHE_NAME].get(base64_image)
 			if description is not None:
 				return description
 
@@ -211,9 +218,9 @@ class CachedDescriptionService(BaseDescriptionService):
 
 		# (optionally) update the cache
 		if is_cache_enabled:
-			cache.read_cache()
-			cache.cache[base64_image] = description
-			cache.write_cache()
+			cache.read_cache(self.name)
+			cache.cache[self.name][base64_image] = description
+			cache.write_cache(self.name)
 		
 		return description
 
