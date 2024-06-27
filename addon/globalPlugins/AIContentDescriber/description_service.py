@@ -10,6 +10,8 @@ import os.path
 import tempfile
 import urllib.parse
 import urllib.request
+import logHandler
+log = logHandler.log
 
 import addonHandler
 try:
@@ -211,9 +213,11 @@ class CachedDescriptionService(BaseDescriptionService):
 				cache.read_cache(self.FALLBACK_CACHE_NAME)
 				description = cache.cache[self.FALLBACK_CACHE_NAME].get(base64_image)
 			if description is not None:
+				log.debug(f"Cache hit. Using cached description for {image_path} from {self.name}")
 				return description
 
 		# delegate to the wrapped description service
+		log.debug(f"Cache miss. Fetching description for {image_path} from {self.name}")
 		description = self.description_service.process(image_path, **kw)
 
 		# (optionally) update the cache
