@@ -8,30 +8,31 @@ import os
 import json
 import globalVars
 
-
-CACHE_FILE = "images.cache"
-CACHE_PATH = os.path.abspath(os.path.join(globalVars.appArgs.configPath, CACHE_FILE))
 cache = {}
 
+def _get_cache_path(cache_name):
+	return os.path.abspath(os.path.join(globalVars.appArgs.configPath, cache_name + ".cache"))
 
-def create_cache():
+def create_cache(cache_name):
 	global cache
-	cache = {}
-	write_cache()  # create the file
+	cache[cache_name] = {}
+	write_cache(cache_name)  # create the file
 
 
-def read_cache():
+def read_cache(cache_name):
 	global cache
-	if not os.path.isfile(CACHE_PATH):
-		create_cache()
+	cache_path = _get_cache_path(cache_name)
+	if not os.path.isfile(cache_path):
+		create_cache(cache_name)
 		return
 	try:
-		with open(CACHE_PATH, "r") as f:
-			cache = json.load(f)
+		with open(cache_path, "r") as f:
+			cache[cache_name] = json.load(f)
 	except json.decoder.JSONDecodeError:  #  todo: try to fix corrupt files before trashing them
-		create_cache()
+		create_cache(cache_name)
 
 
-def write_cache():
-	with open(CACHE_PATH, "w") as f:
-		json.dump(cache, f, indent="\t")
+def write_cache(cache_name):
+	cache_path = _get_cache_path(cache_name)
+	with open(cache_path, "w") as f:
+		json.dump(cache[cache_name], f, indent="\t")
