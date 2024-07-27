@@ -44,24 +44,24 @@ Follow the instructions provided below to get each of these working.
 ## Getting started
 
 Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, then follow the instructions below to obtain an API key from a supported provider.
-If you are unsure about which one to use, the consensus of this addon's developer and testers is that Gemini currently offers more reasonable pricing, while OpenAI seems to provide a higher degree of accuracy. Claude 3 haiku is the cheapest and fastest option but the quality is hit or miss.
+If you are unsure about which one to use, the consensus of this addon's developer and testers is that Gemini currently offers more reasonable pricing, while Open-AI seems to provide a higher degree of accuracy. Claude 3 haiku is the cheapest and fastest option but the quality is hit or miss.
 Of course, these results are highly dependent on the task at hand, so we recommend experimenting with different models and prompts to find what works best.
 
-### Obtaining an API key from OpenAI:
+### Obtaining an API key from Open-AI:
 
-1. Go to https://platform.openai.com/account/api-keys
+1. Go to [open-AI's API key page](https://platform.openai.com/account/api-keys)
 2. If you don't yet have an account, create one. If you do, log in.
 3. On the API keys page, click to create a new secret key. Copy it to your clipboard.
 4. Fund the account with at least $1
 5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select "GPT4 Vision" as the provider, tab into the API key field, and paste the key you just generated here.
 
-At the time of this writing, OpenAI issues credits to new developer accounts that can be used for three months, after which they are lost. Following this period, you will have to purchase credits. Typical usage shouldn't ever exceed $5.00 per month. For a point of reference, the original version of this add-on was developed for slightly under a dollar. It is always possible to login to your OpenAI account and click on "usage" to get your quota.
+At the time of this writing, Open-AI issues credits to new developer accounts that can be used for three months, after which they are lost. Following this period, you will have to purchase credits. Typical usage shouldn't ever exceed $5.00 per month. For a point of reference, the original version of this add-on was developed for slightly under a dollar. It is always possible to login to your OpenAI account and click on "usage" to get your quota.
 
 ### Obtaining an API key from Google
 
-1. You will first need to create a Google workspace project by following this link. Make sure you are logged in to your account. https://console.cloud.google.com/projectcreate
-2. Create a name between four and thirty characters, like "gemini" or "NVDA add-on"
-3. Navigate to this URL: https://makersuite.google.com/app/apikey
+1. You will first need to create a Google workspace project by going to [Google cloud console](https://console.cloud.google.com/projectcreate). Make sure you are logged in to your google account.
+2. Create a name between four and thirty characters, like "Gemini" or "NVDA add-on"
+3. Navigate to [Google AI studio API keys page](https://makersuite.google.com/app/apikey)
 4. Click "create API key"
 5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select "Google Gemini" as your provider, tab into the API key field, and paste the key you just generated here.
 
@@ -71,7 +71,7 @@ At the time of this writing, OpenAI issues credits to new developer accounts tha
 2. Click on your profile -> API keys.
 3. Click Create Key.
 4. Enter a name for the key, like "AIContentDescriber", then click on "Create Key" and copy the value that shows up. This is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Claude 3.
-5. If you haven't already, purchase at least $5 in credits under the plans page at https://console.anthropic.com/settings/plans.
+5. If you haven't already, purchase at least $5 in credits under the [anthropic plans page](https://console.anthropic.com/settings/plans).
 
 ### Setting up llama.cpp
 
@@ -85,7 +85,9 @@ The steps for working with a different graphics adapter are out of scope, but ca
 3. Locate the quantized formats of the models you'd like to use from Huggingface. For LLaVA 1.6 Vicuna 7B: [llava-v1.6-vicuna-7b.Q4_K_M.gguf](https://huggingface.co/cjpais/llava-v1.6-vicuna-7b-gguf/blob/main/llava-v1.6-vicuna-7b.Q4_K_M.gguf) and [mmproj-model-f16.gguf](https://huggingface.co/cjpais/llava-v1.6-vicuna-7b-gguf/blob/main/mmproj-model-f16.gguf)
 4. Put these files in the folder with the rest of the llama.cpp binaries.
 5. From a command prompt, run the llava.cpp server binary, passing the .gguf files for the model and multimodal projector (as follows):
-`server.exe -m llava-v1.6-vicuna-7b.Q4_K_M.gguf --mmproj mmproj-model-f16.gguf`
+```
+server.exe -m llava-v1.6-vicuna-7b.Q4_K_M.gguf --mmproj mmproj-model-f16.gguf
+```
 6. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select "llama.cpp" as your provider, tab into the base URL field, and enter the endpoint shown in the console (defaults to "http://localhost:8080").
 7. Alternatively, you may omit some of these steps and run llama.cpp on a remote server with higher specs than your local machine, then enter that endpoint instead.
 
