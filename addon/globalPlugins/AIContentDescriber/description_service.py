@@ -180,6 +180,7 @@ class BaseDescriptionService:
 	def process(self):
 		pass  # implement in subclasses
 
+
 class CachedDescriptionService(BaseDescriptionService):
 	"""
 	Wraps a description service to provide caching of descriptions. That way, if the same image is 
@@ -193,17 +194,16 @@ class CachedDescriptionService(BaseDescriptionService):
 
 	# TODO: remove fallback cache in later versions
 	FALLBACK_CACHE_NAME = "images"
-	
+
 	def __init__(self, description_service: BaseDescriptionService):
 		# copy all class variables from the wrapped description service
 		self.__dict__ = description_service.__class__.__dict__.copy()
 		# save the wrapped description service for later use
 		self.description_service = description_service
-	
+
 	def process(self, image_path, **kw):
 		is_cache_enabled = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
-
 		# (optionally) read the cache
 		if is_cache_enabled:
 			cache.read_cache(self.name)
@@ -215,11 +215,9 @@ class CachedDescriptionService(BaseDescriptionService):
 			if description is not None:
 				log.debug(f"Cache hit. Using cached description for {image_path} from {self.name}")
 				return description
-
 		# delegate to the wrapped description service
 		log.debug(f"Cache miss. Fetching description for {image_path} from {self.name}")
 		description = self.description_service.process(image_path, **kw)
-
 		# (optionally) update the cache
 		if is_cache_enabled:
 			cache.read_cache(self.name)
@@ -468,14 +466,18 @@ models = [
 	LlamaCPP(),
 ]
 
+
 # add caching ability to all models
 models = [CachedDescriptionService(model) for model in models]
+
 
 def list_available_models():
 	return [model for model in models if model.is_available]
 
+
 def list_available_model_names():
 	return [model.name for model in list_available_models()]
+
 
 def get_model_by_name(model_name):
 	model_name = model_name.lower()

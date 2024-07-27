@@ -15,7 +15,7 @@ def _get_cache_path(cache_name):
 
 def create_cache(cache_name):
 	global cache
-	cache[cache_name]= {}
+	cache[cache_name] = {}
 	write_cache(cache_name)  # create the file
 
 
