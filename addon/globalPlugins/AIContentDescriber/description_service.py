@@ -315,6 +315,7 @@ class Gemini(BaseDescriptionService):
 	def __init__(self):
 		super().__init__()
 
+	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
 		headers = {
@@ -353,6 +354,7 @@ class Anthropic(BaseDescriptionService):
 		".webp"
 	]
 
+	@cached_description
 	def process(self, image_path, **kw):
 		# Do not use this function directly, override it in subclasses and call with the model parameter
 		base64_image = encode_image(image_path)
@@ -433,6 +435,7 @@ class LlamaCPP(BaseDescriptionService):
 	description = _("""llama.cpp is a state-of-the-art, open-source solution for running large language models locally and in the cloud.
 This add-on integration assumes that you have obtained llama.cpp from Github and an image capable model from Huggingface or another repository, and that a server is currently running to handle requests. Though the process for getting this working is largely a task for the user that knows what they are doing, you can find basic steps in the add-on documentation.""")
 
+	@cached_description
 	def process(self, image_path, **kw):
 		url = kw.get("base_url", "http://localhost:8080")
 		url = urllib.parse.urljoin(url, "completion")
