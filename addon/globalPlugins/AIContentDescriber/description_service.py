@@ -8,6 +8,7 @@ import base64
 import json
 import os.path
 import tempfile
+import functools
 import urllib.parse
 import urllib.request
 import logHandler
@@ -181,27 +182,25 @@ class BaseDescriptionService:
 		pass  # implement in subclasses
 
 
-class CachedDescriptionService(BaseDescriptionService):
+def cached_description(func):
 	"""
 	Wraps a description service to provide caching of descriptions. That way, if the same image is 
 	processed multiple times, the description is only fetched once from the API. 
 
-	Usage:
+	Usage (In a child of `BaseDescription`):
 	```py
-	description_service = CachedDescriptionService(GPT4())
+	@cached_description
+	def process(self, image_path, *args, **kwargs):
+		# your processing logic here
+		# Safely omit anything having to do with caching, as this function does that for you.
+		# note, however, that if there is an image in the cache, your function will never be called.
+		return description
 	```
 	"""
-
 	# TODO: remove fallback cache in later versions
 	FALLBACK_CACHE_NAME = "images"
-
-	def __init__(self, description_service: BaseDescriptionService):
-		# copy all class variables from the wrapped description service
-		self.__dict__ = description_service.__class__.__dict__.copy()
-		# save the wrapped description service for later use
-		self.description_service = description_service
-
-	def process(self, image_path, **kw):
+	@functools.wraps(func)
+	def wrapper(self, image_path, *args, **kw):
 		is_cache_enabled = kw.get("cache_descriptions", True)
 		base64_image = encode_image(image_path)
 		# (optionally) read the cache
@@ -210,14 +209,14 @@ class CachedDescriptionService(BaseDescriptionService):
 			description = cache.cache[self.name].get(base64_image)
 			if description is None:
 				# TODO: remove fallback cache in later versions
-				cache.read_cache(self.FALLBACK_CACHE_NAME)
-				description = cache.cache[self.FALLBACK_CACHE_NAME].get(base64_image)
+				cache.read_cache(FALLBACK_CACHE_NAME)
+				description = cache.cache[FALLBACK_CACHE_NAME].get(base64_image)
 			if description is not None:
 				log.debug(f"Cache hit. Using cached description for {image_path} from {self.name}")
 				return description
 		# delegate to the wrapped description service
 		log.debug(f"Cache miss. Fetching description for {image_path} from {self.name}")
-		description = self.description_service.process(image_path, **kw)
+		description = func(self, image_path, **kw)
 		# (optionally) update the cache
 		if is_cache_enabled:
 			cache.read_cache(self.name)
@@ -225,6 +224,9 @@ class CachedDescriptionService(BaseDescriptionService):
 			cache.write_cache(self.name)
 		
 		return description
+	return wrapper
+
+
 
 class BaseGPT(BaseDescriptionService):
 	supported_formats = [
@@ -239,6 +241,7 @@ class BaseGPT(BaseDescriptionService):
 	def __init__(self):
 		super().__init__()
 
+	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
 		headers = {
@@ -393,6 +396,12 @@ class Anthropic(BaseDescriptionService):
 		return response["content"][0]["text"]
 
 
+class Claude3_5Sonnet(Anthropic):
+	name = "Claude 3.5 Sonnet"
+	description = _("Anthropic's improvement over Claude 3 sonnet, this model features enhanced reasoning capabilities relative to its predecessor.")
+	internal_model_name = "claude-3-5-sonnet-20240620"
+
+
 class Claude3Opus(Anthropic):
 	name = "Claude 3 Opus"
 	description = _("Anthropic's most powerful model for highly complex tasks.")
@@ -456,12 +465,9 @@ models = [
 	Claude3Haiku(),
 	Claude3Sonnet(),
 	Claude3Opus(),
+	Claude3_5Sonnet(),
 	LlamaCPP(),
 ]
-
-
-# add caching ability to all models
-models = [CachedDescriptionService(model) for model in models]
 
 
 def list_available_models():
