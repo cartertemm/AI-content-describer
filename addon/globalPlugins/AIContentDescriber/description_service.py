@@ -461,14 +461,14 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 
 
 models = [
-	GPT4(),
-	GPT4Turbo(),
 	GPT4O(),
-	Gemini(),
-	Claude3Haiku(),
-	Claude3Sonnet(),
-	Claude3Opus(),
+	GPT4Turbo(),
+	GPT4(),
 	Claude3_5Sonnet(),
+	Claude3Haiku(),
+	Claude3Opus(),
+	Claude3Sonnet(),
+	Gemini(),
 	LlamaCPP(),
 ]
 
