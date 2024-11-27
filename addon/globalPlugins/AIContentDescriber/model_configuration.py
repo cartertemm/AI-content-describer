@@ -131,6 +131,16 @@ class GeminiConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class GeminiFlash1_5_8BConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.GeminiFlash1_5_8B()
+	title = model.name
+
+
+class Gemini1_5ProConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini1_5Pro()
+	title = model.name
+
+
 class LlamaCPPConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.LlamaCPP()
 	title = model.name + " (unstable)"
@@ -179,6 +189,8 @@ description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
+description_service.GeminiFlash1_5_8B.configurationPanel = GeminiFlash1_5_8BConfigurationPanel
+description_service.Gemini1_5Pro.configurationPanel = Gemini1_5ProConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 description_service.Claude3_5Sonnet.configurationPanel = Claude3_5SonnetConfigurationPanel
 description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel

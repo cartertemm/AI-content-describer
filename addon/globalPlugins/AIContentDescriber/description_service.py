@@ -302,21 +302,20 @@ class GPT4O(BaseGPT):
 	internal_model_name = "gpt-4o"
 
 
-class Gemini(BaseDescriptionService):
-	name = "Google Gemini pro vision"
+class GoogleGemini(BaseDescriptionService):
 	supported_formats = [
 		".jpeg",
 		".jpg",
 		".png",
 	]
-	# translators: the description for the Google Gemini pro vision model in the model configuration dialog
-	description = _("Google's Gemini model with vision capabilities.")
+	needs_api_key = True
 
 	def __init__(self):
 		super().__init__()
 
 	@cached_description
 	def process(self, image_path, **kw):
+		# Don't call this function directly
 		base64_image = encode_image(image_path)
 		headers = {
 			"Content-Type": "application/json"
@@ -337,13 +336,34 @@ class Gemini(BaseDescriptionService):
 				"maxOutputTokens": self.max_tokens
 			}
 		}
-		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={self.api_key}", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/{self.internal_model_name}:generateContent?key={self.api_key}", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		response = json.loads(response.decode('utf-8'))
 		if "error" in response:
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
 			ui.message(_("Gemini encountered an error: {code}, {msg}").format(code=response['error']['code'], msg=response['error']['message']))
 			return
 		return response["candidates"][0]["content"]["parts"][0]["text"]
+
+class Gemini(GoogleGemini):
+	name = "Google Gemini pro vision"
+	internal_model_name = "gemini-1.5-flash"
+	# translators: the description for the Google Gemini pro vision model in the model configuration dialog
+	description = _("Google's Gemini 1.5 flash model with vision capabilities.")
+	about_url = "https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/#gemini-model-updates"
+
+class GeminiFlash1_5_8B(GoogleGemini):
+	name = "Google Gemini 1.5 Flash-8B"
+	internal_model_name = "gemini-1.5-flash-8b"
+	# translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
+	description = _("Gemini 1.5 Flash-8B is a small model designed for high volume and lower intelligence tasks.")
+	about_url = "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/"
+
+class Gemini1_5Pro(GoogleGemini):
+	name = "Google Gemini 1.5 Pro"
+	internal_model_name = "gemini-1.5-pro"
+	# translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
+	description = _("Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-range of complex reasoning tasks requiring more intelligence. 1.5 Pro can process large amounts of data at once.")
+	about_url = "https://deepmind.google/technologies/gemini/pro/"
 
 class Anthropic(BaseDescriptionService):
 	supported_formats = [
@@ -469,6 +489,8 @@ models = [
 	Claude3Opus(),
 	Claude3Sonnet(),
 	Gemini(),
+	GeminiFlash1_5_8B(),
+	Gemini1_5Pro(),
 	LlamaCPP(),
 ]
 

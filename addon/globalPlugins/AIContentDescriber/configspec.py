@@ -47,6 +47,20 @@ max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[Google Gemini 1.5 Flash-8B]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Google Gemini 1.5 Pro]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
 [llama.cpp]
 base_url = string(default="")
 prompt = string(default="")
