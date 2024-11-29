@@ -442,6 +442,59 @@ class Claude3Haiku(Anthropic):
 	internal_model_name = "claude-3-haiku-20240307"
 
 
+class MistralAI(BaseDescriptionService):
+	supported_formats = [
+		".png",
+		".jpg",
+		".jpeg",
+		".webp",
+		".gif"
+	]
+	needs_api_key = True
+
+	@cached_description
+	def process(self, image_path, **kw):
+		base64_image = encode_image(image_path)
+		mimetype = os.path.splitext(image_path)[1].lower()
+		if not mimetype in self.supported_formats:
+			# try falling back to png
+			mimetype = ".png"
+		mimetype = mimetype[1:]  # trim the "."
+		headers = {
+			"User-Agent": "curl/8.4.0",  # to shut up CloudFlare
+			"Content-Type": "application/json",
+			"Authorization": "Bearer "+self.api_key
+		}
+		payload = {
+			"model": self.internal_model_name,
+			"messages": [
+				{
+					"role": "user",
+					"content": [
+						{"type": "text", "text": self.prompt},
+						{"type": "image_url", "image_url": f"data:image/{mimetype};base64,{base64_image}"}
+					]
+				}
+			],
+			"max_tokens": self.max_tokens
+		}
+		response = post(url="https://api.mistral.ai/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = json.loads(response.decode('utf-8'))
+		content = response["choices"][0]["message"]["content"]
+		if not content:
+			ui.message("content returned none")
+		if content:
+			return content
+
+
+class PixtralLarge(MistralAI):
+	name = "Pixtral Large"
+	# translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
+	description = _("MistralAI's multimodal image LLM, achieving state-of-the-art results on MathVista, DocVQA, VQAv2 and other benchmarks.")
+	internal_model_name = "pixtral-large-latest"
+	about_url = "https://mistral.ai/news/pixtral-large/"
+
+
 class LlamaCPP(BaseDescriptionService):
 	name = "llama.cpp"
 	needs_api_key = False
@@ -491,6 +544,7 @@ models = [
 	Gemini(),
 	GeminiFlash1_5_8B(),
 	Gemini1_5Pro(),
+	PixtralLarge(),
 	LlamaCPP(),
 ]
 

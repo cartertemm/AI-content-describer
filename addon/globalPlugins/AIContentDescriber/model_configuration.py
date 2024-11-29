@@ -141,6 +141,22 @@ class Gemini1_5ProConfigurationPanel(GeminiConfigurationPanel):
 	title = model.name
 
 
+class MistralAIConfigurationPanel(BaseModelSettingsPanel):
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_api_key_field(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
+class PixtralLargeConfigurationPanel(MistralAIConfigurationPanel):
+	model = description_service.PixtralLarge()
+	title = model.name
+
+
 class LlamaCPPConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.LlamaCPP()
 	title = model.name + " (unstable)"
@@ -191,6 +207,7 @@ description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.GeminiFlash1_5_8B.configurationPanel = GeminiFlash1_5_8BConfigurationPanel
 description_service.Gemini1_5Pro.configurationPanel = Gemini1_5ProConfigurationPanel
+description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 description_service.Claude3_5Sonnet.configurationPanel = Claude3_5SonnetConfigurationPanel
 description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel

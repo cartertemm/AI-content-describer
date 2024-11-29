@@ -68,6 +68,13 @@ max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
+[Pixtral Large]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
 [Claude 3 Haiku]
 api_key = string(default="")
 prompt = string(default="")
