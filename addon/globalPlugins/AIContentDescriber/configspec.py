@@ -61,6 +61,14 @@ max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[Ollama]
+base_url = string(default="http://localhost:11434")
+prompt = string(default="")
+chosen_model = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=60, min=1)
+
 [llama.cpp]
 base_url = string(default="")
 prompt = string(default="")

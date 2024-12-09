@@ -1,3 +1,4 @@
+import threading
 import wx
 from gui import guiHelper
 from gui import nvdaControls
@@ -36,6 +37,14 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 		# Translators: The label for the base URL field in the model configuration dialog
 		self.base_url = sHelper.addLabeledControl(_(f"Base URL"), wx.TextCtrl)
 
+	def add_model_name_field(self, sHelper):
+		# Translators: The label for the model name field in the model configuration dialog
+		self.chosen_model = sHelper.addLabeledControl(_(f"Model name"), wx.TextCtrl)
+
+	def add_list_models_button(self, sHelper):
+		# Translators: The label for the list models button in the model configuration dialog
+		self.list_models_button = sHelper.addItem(wx.Button(self, label=_("List models")))
+
 	def add_prompt_field(self, sHelper):
 		# Translators: The label for the prompt field in the model configuration dialog
 		self.prompt = sHelper.addLabeledControl(_("Prompt"), wx.TextCtrl, style=wx.TE_MULTILINE)
@@ -55,6 +64,8 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 			self.api_key.SetValue(self.model.api_key)
 		if hasattr(self, "base_url"):
 			self.base_url.SetValue(self.model.base_url)
+		if hasattr(self, "chosen_model"):
+			self.chosen_model.SetValue(self.model.chosen_model)
 		if hasattr(self, "prompt"):
 			self.prompt.SetValue(self.model.prompt)
 		if hasattr(self, "max_tokens"):
@@ -67,6 +78,8 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 			self.model.api_key = self.api_key.GetValue()
 		if hasattr(self, "base_url"):
 			self.model.base_url = self.base_url.GetValue()
+		if hasattr(self, "chosen_model"):
+			self.model.chosen_model = self.chosen_model.GetValue()
 		if hasattr(self, "prompt"):
 			self.model.prompt = self.prompt.GetValue()
 		if hasattr(self, "max_tokens"):
@@ -82,6 +95,8 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 			self.Bind(wx.EVT_BUTTON, self.on_prompt_reset, self.reset_prompt)
 		if hasattr(self, "about_button"):
 			self.Bind(wx.EVT_BUTTON, self.on_about, self.about_button)
+		if hasattr(self, "list_models_button"):
+			self.Bind(wx.EVT_BUTTON, self.on_list_models, self.list_models_button)
 
 	def on_prompt_reset(self, event):
 		self.prompt.SetValue(self.model.DEFAULT_PROMPT)
@@ -94,6 +109,55 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 			message=self.model.description,
 			style=wx.ICON_INFORMATION|wx.CENTER
 		)
+
+	def on_list_models(self, event):
+		base_url = self.base_url.GetValue()
+		if self.model.needs_base_url and not base_url:
+			self.base_url.SetFocus()
+			return
+		self.models = self.model.list_model_names(self.base_url.GetValue())
+		if len(self.models) == 0:
+			# Translators: The message spoken when there were no models found.
+			import ui
+			ui.message(_("No models were found. Please install one, then try again."))
+			return
+		dlg = ModelListDialog(self)
+		dlg.ShowModal()
+		self.chosen_model.SetFocus()
+
+
+class ModelListDialog(settingsDialogs.SettingsDialog):
+	# Translators: the label for the list models dialog
+	title = _("Select a model")
+	models = []
+	def postInit(self):
+		self.models_list.SetFocus()
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: Label of the model combo box in the choose model dialog
+		label = _("Model:")
+		self.models_list = sHelper.addLabeledControl(label, wx.Choice, choices=[])
+		self.update_models_list()
+
+	def update_models_list(self):
+		self.models_list.Clear()
+		chosen_model = self.Parent.chosen_model.GetValue()
+		self.models_list.AppendItems(self.Parent.models)
+		try:
+			index = self.Parent.models.index(chosen_model)
+			self.models_list.SetSelection(index)
+		except:
+			pass
+
+	def onOk(self, event):
+		if not self.Parent.models:
+			return
+		parent = self.GetParent()
+		model_selection = self.models_list.GetStringSelection()
+		if model_selection:
+			parent.chosen_model.SetValue(model_selection)
+		super().onOk(event)
 
 
 class GPT4ConfigurationPanel(BaseModelSettingsPanel):
@@ -157,6 +221,22 @@ class PixtralLargeConfigurationPanel(MistralAIConfigurationPanel):
 	title = model.name
 
 
+class OllamaConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.Ollama()
+	# Translators: Requires installation
+	title = model.name + _(" (requires installation)")
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_base_url_field(sHelper)
+		self.add_model_name_field(sHelper)
+		self.add_list_models_button(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
 class LlamaCPPConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.LlamaCPP()
 	title = model.name + " (unstable)"
@@ -208,6 +288,7 @@ description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.GeminiFlash1_5_8B.configurationPanel = GeminiFlash1_5_8BConfigurationPanel
 description_service.Gemini1_5Pro.configurationPanel = Gemini1_5ProConfigurationPanel
 description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationPanel
+description_service.Ollama.configurationPanel = OllamaConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 description_service.Claude3_5Sonnet.configurationPanel = Claude3_5SonnetConfigurationPanel
 description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel

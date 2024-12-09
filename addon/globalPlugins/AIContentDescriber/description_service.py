@@ -141,6 +141,15 @@ class BaseDescriptionService:
 		ch.config[self.name]["base_url"] = value
 
 	@property
+	def chosen_model(self):
+		"""When a provider supports more than one model, like Ollama, this is the last one that was selected."""
+		return ch.config[self.name]["chosen_model"]
+
+	@chosen_model.setter
+	def chosen_model(self, value):
+		ch.config[self.name]["chosen_model"] = value
+
+	@property
 	def max_tokens(self):
 		return ch.config[self.name]["max_tokens"]
 
@@ -495,6 +504,61 @@ class PixtralLarge(MistralAI):
 	about_url = "https://mistral.ai/news/pixtral-large/"
 
 
+class Ollama(BaseDescriptionService):
+	name = "Ollama"
+	needs_api_key = False
+	needs_base_url = True
+	# translators: the description for the Ollama model, as shown in the configuration dialog
+	description = _("The quickest way to get up and running with large language models.")
+	supported_formats = [
+		".jpeg",
+		".jpg",
+		".png",
+	]
+	about_url = "https://github.com/ollama/ollama/blob/main/README.md#quickstart"
+
+	def list_model_names(self, base_url):
+		base_url = base_url or self.base_url
+		url = urllib.parse.urljoin(base_url, "api/tags")
+		try:
+			content = urllib.request.urlopen(url=url).read()
+		except Exception as exc:
+			import ui
+			# translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
+			ui.message(_("Could not contact the provided base URL. "+str(exc)))
+			return
+		content = json.loads(content)
+		models = [model["model"] for model in content["models"]]
+		return models
+
+	@cached_description
+	def process(self, image_path, **kw):
+		model_name = kw.get("chosen_model") or self.chosen_model
+		url = kw.get("base_url") or self.base_url
+		url = urllib.parse.urljoin(url, "api/chat")
+		base64_image = encode_image(image_path)
+		headers = {
+			"Content-Type": "application/json"
+		}
+		payload = {
+			"model": model_name,
+			"messages": [
+				{
+					"role": "user",
+					"content": self.prompt,
+					"images": [base64_image]
+				}
+			],
+			"stream": False
+		}
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = json.loads(response.decode('utf-8'))
+		if not "message" in response:
+			ui.message(_("The response appears to be malformed. "+repr(response)))
+			return
+		return response["message"]["content"]\
+
+
 class LlamaCPP(BaseDescriptionService):
 	name = "llama.cpp"
 	needs_api_key = False
@@ -545,6 +609,7 @@ models = [
 	GeminiFlash1_5_8B(),
 	Gemini1_5Pro(),
 	PixtralLarge(),
+	Ollama(),
 	LlamaCPP(),
 ]
 
