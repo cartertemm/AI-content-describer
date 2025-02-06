@@ -374,6 +374,23 @@ class Gemini1_5Pro(GoogleGemini):
 	description = _("Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-range of complex reasoning tasks requiring more intelligence. 1.5 Pro can process large amounts of data at once.")
 	about_url = "https://deepmind.google/technologies/gemini/pro/"
 
+
+class Gemini2_0Flash(GoogleGemini):
+	name = "Google Gemini 2.0 Flash"
+	internal_model_name = "gemini-2.0-flash-001"
+	# translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
+	description = _("Gemini 2.0 Flash delivers next-gen features and improved capabilities, including superior speed, native tool use, multimodal generation, and a 1M token context window.")
+	about_url = "https://deepmind.google/technologies/gemini/flash/"
+
+
+class Gemini2_0FlashLitePreview(GoogleGemini):
+	name = "Google Gemini 2.0 Flash-Lite Preview"
+	internal_model_name = "gemini-2.0-flash-lite-preview-02-05"
+	# translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
+	description = _("Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost efficiency and low latency. Outperforms 1.5 Flash on the majority of benchmarks, at the same speed and cost.")
+	about_url = "https://deepmind.google/technologies/gemini/flash-lite/"
+
+
 class Anthropic(BaseDescriptionService):
 	supported_formats = [
 		".jpeg",
@@ -605,6 +622,8 @@ models = [
 	Claude3Haiku(),
 	Claude3Opus(),
 	Claude3Sonnet(),
+	Gemini2_0FlashLitePreview(),
+	Gemini2_0Flash(),
 	Gemini(),
 	GeminiFlash1_5_8B(),
 	Gemini1_5Pro(),

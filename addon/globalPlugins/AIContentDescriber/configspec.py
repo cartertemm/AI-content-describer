@@ -61,6 +61,20 @@ max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[Google Gemini 2.0 Flash]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Google Gemini 2.0 Flash-Lite Preview]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
 [Ollama]
 base_url = string(default="http://localhost:11434")
 prompt = string(default="")

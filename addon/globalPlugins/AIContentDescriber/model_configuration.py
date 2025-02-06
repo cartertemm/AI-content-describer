@@ -205,6 +205,16 @@ class Gemini1_5ProConfigurationPanel(GeminiConfigurationPanel):
 	title = model.name
 
 
+class Gemini2_0FlashLitePreviewConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini2_0FlashLitePreview()
+	title = model.name
+
+
+class Gemini2_0FlashConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini2_0Flash()
+	title = model.name
+
+
 class MistralAIConfigurationPanel(BaseModelSettingsPanel):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -284,6 +294,8 @@ class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
+description_service.Gemini2_0FlashLitePreview.configurationPanel = Gemini2_0FlashLitePreviewConfigurationPanel
+description_service.Gemini2_0Flash.configurationPanel = Gemini2_0FlashConfigurationPanel
 description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.GeminiFlash1_5_8B.configurationPanel = GeminiFlash1_5_8BConfigurationPanel
 description_service.Gemini1_5Pro.configurationPanel = Gemini1_5ProConfigurationPanel
