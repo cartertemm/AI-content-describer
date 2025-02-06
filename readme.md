@@ -35,8 +35,9 @@ Now, the possibilities are almost endless. You might:
 ## Models
 
 * [GPT4 vision](https://platform.openai.com/docs/guides/vision)
-* [Google Gemini pro vision](https://blog.google/technology/ai/google-gemini-ai/)
+* [Google Gemini pro vision](https://blog.google/technology/ai/google-gemini-ai/), including the latest 1.5 Flash, 1.5 Flash 8B, Flash 2.0, and Flash 2.0 Lite Preview models.
 * [Claude 3 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
+* [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
 
 Follow the instructions provided below to get each of these working.
@@ -72,6 +73,23 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 3. Click Create Key.
 4. Enter a name for the key, like "AIContentDescriber", then click on "Create Key" and copy the value that shows up. This is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Claude 3.
 5. If you haven't already, purchase at least $5 in credits under the [anthropic plans page](https://console.anthropic.com/settings/plans).
+
+### Setting up Ollama
+
+This is currently the preferred option for a local setup.
+
+Though the Ollama integration has been tested more extensively than llama.cpp, it is still less stable than calling out to an API and has been known to behave oddly under some configurations, up to and including crashes on machines that lack the required specifications.
+At bare minimum, when trying this out for the first time, save all documents and anything of importance before continuing in case this happens to you.
+
+Start by ensuring that you are able to interact with your preferred vision-capable model using the commandline interface. The steps for doing so are as follows:
+
+1. Download the Ollama for Windows setup file from the [Ollama downloads](https://ollama.com/download) page.
+2. Run this setup file. It will handle grabbing all the dependencies that your machine will need.
+3. Locate the model you would like to use. A list can be found on ollama.com -> models -> vision, or [here directly](https://ollama.com/search?c=vision).
+4. Download and launch this model by opening a command prompt and typing `ollama run [model_name]`, of course replacing "model_name" with the one you chose in step 3. For example, `ollama run llama3.2-vision`.
+5. Assuming the process completed successfully, you will be placed in an interactive shell wherein it is possible to type queries and get responses from the model, think a localized (and limited) ChatGPT. Type "/bye" to exit this interface.
+6. Back in your console window, type `ollama list`. The first column will provide a name like "llama3.2-vision:latest".
+7. Navigate to AI Content Describer settings -> manage models -> Ollama. In the model name field, enter this value and click OK -> OK. You are all set! Switch to Ollama in the model submenu and it should work after some time.
 
 ### Setting up llama.cpp
 
