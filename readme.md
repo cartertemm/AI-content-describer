@@ -9,7 +9,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Describe the focus object, navigator object, entire screen, or snap a photo from the onboard camera
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
-* Supports multiple providers (OpenAI's GPT4, Google's Gemini, Anthropic's Claude 3, and llama.cpp)
+* Supports multiple providers (OpenAI's GPT4, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude 3, Ollama, and llama.cpp)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -37,6 +37,7 @@ Now, the possibilities are almost endless. You might:
 * [GPT4 vision](https://platform.openai.com/docs/guides/vision)
 * [Google Gemini pro vision](https://blog.google/technology/ai/google-gemini-ai/), including the latest 1.5 Flash, 1.5 Flash 8B, Flash 2.0, and Flash 2.0 Lite Preview models.
 * [Claude 3 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
+* [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
 
@@ -73,6 +74,14 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 3. Click Create Key.
 4. Enter a name for the key, like "AIContentDescriber", then click on "Create Key" and copy the value that shows up. This is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Claude 3.
 5. If you haven't already, purchase at least $5 in credits under the [anthropic plans page](https://console.anthropic.com/settings/plans).
+
+### Obtaining an API key from Mistral
+
+1. Sign into or create a MistralAI account by going to the [MistralAI login page](https://auth.mistral.ai/ui/login).
+2. If you are creating your account for the first time, create a workspace as prompted, supplying a name and accepting the terms and conditions.
+3. Once logged in, select "API keys" from the menu.
+4. Fund your account, if applicable.
+5. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral.
 
 ### Setting up Ollama
 
