@@ -78,10 +78,10 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 ### Obtaining an API key from Mistral
 
 1. Sign into or create a MistralAI account by going to the [MistralAI login page](https://auth.mistral.ai/ui/login).
-2. If you are creating your account for the first time, create a workspace as prompted, supplying a name and accepting the terms and conditions.
+2. If you are creating or logging into an account for the first time, add a workspace as prompted, supplying a name and accepting the terms and conditions.
 3. Once logged in, select "API keys" from the menu.
-4. Fund your account, if applicable.
-5. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral.
+4. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral.
+5. Fund the account, if applicable.
 
 ### Setting up Ollama
 
