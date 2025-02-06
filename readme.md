@@ -86,8 +86,8 @@ Start by ensuring that you are able to interact with your preferred vision-capab
 1. Download the Ollama for Windows setup file from the [Ollama downloads](https://ollama.com/download) page.
 2. Run this setup file. It will handle grabbing all the dependencies that your machine will need.
 3. Locate the model you would like to use. A list can be found on ollama.com -> models -> vision, or [here directly](https://ollama.com/search?c=vision).
-4. Download and launch this model by opening a command prompt and typing `ollama run [model_name]`, of course replacing "model_name" with the one you chose in step 3. For example, `ollama run llama3.2-vision`.
-5. Assuming the process completed successfully, you will be placed in an interactive shell wherein it is possible to type queries and get responses from the model, think a localized (and limited) ChatGPT. Type "/bye" to exit this interface.
+4. Download and launch this model by opening a command prompt and typing `ollama run [model_name]`, of course replacing "[model_name]" with the one you chose in step 3. For example, `ollama run llama3.2-vision`.
+5. Assuming the process completed successfully, you will be placed in an interactive shell wherein it is possible to type queries and get responses from the model, think a localized (and limited) ChatGPT. Test it out by asking something (anything) to see whether it works, then type "/bye" to exit this interface.
 6. Back in your console window, type `ollama list`. The first column will provide a name like "llama3.2-vision:latest".
 7. Navigate to AI Content Describer settings -> manage models -> Ollama. In the model name field, enter this value and click OK -> OK. You are all set! Switch to Ollama in the model submenu and it should work after some time.
 
