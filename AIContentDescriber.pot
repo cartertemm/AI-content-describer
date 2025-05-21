@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AIContentDescriber 2025.02.05\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2025-02-10 14:59-0700\n"
+"POT-Creation-Date: 2025-05-20 20:04-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -314,7 +314,7 @@ msgid "error, connection refused by target"
 msgstr ""
 
 #. translators: the description for the GPT4 vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:293
+#: addon\globalPlugins\AIContentDescriber\description_service.py:294
 msgid ""
 "The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
 "2024,  this model has been superseded by GPT4 turbo which has consistently "
@@ -322,14 +322,14 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the GPT4 turbo model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:301
+#: addon\globalPlugins\AIContentDescriber\description_service.py:302
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
 "quality and understanding."
 msgstr ""
 
 #. translators: the description for the GPT4 omni model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:309
+#: addon\globalPlugins\AIContentDescriber\description_service.py:310
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -337,25 +337,25 @@ msgid ""
 msgstr ""
 
 #. translators: message spoken when Google gemini encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:352
+#: addon\globalPlugins\AIContentDescriber\description_service.py:362
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr ""
 
 #. translators: the description for the Google Gemini pro vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:360
+#: addon\globalPlugins\AIContentDescriber\description_service.py:370
 msgid "Google's Gemini 1.5 flash model with vision capabilities."
 msgstr ""
 
 #. translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:367
+#: addon\globalPlugins\AIContentDescriber\description_service.py:377
 msgid ""
 "Gemini 1.5 Flash-8B is a small model designed for high volume and lower "
 "intelligence tasks."
 msgstr ""
 
 #. translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:374
+#: addon\globalPlugins\AIContentDescriber\description_service.py:384
 msgid ""
 "Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-"
 "range of complex reasoning tasks requiring more intelligence. 1.5 Pro can "
@@ -363,7 +363,7 @@ msgid ""
 msgstr ""
 
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:382
+#: addon\globalPlugins\AIContentDescriber\description_service.py:392
 msgid ""
 "Gemini 2.0 Flash delivers next-gen features and improved capabilities, "
 "including superior speed, native tool use, multimodal generation, and a 1M "
@@ -371,7 +371,7 @@ msgid ""
 msgstr ""
 
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:390
+#: addon\globalPlugins\AIContentDescriber\description_service.py:400
 msgid ""
 "Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost "
 "efficiency and low latency. Outperforms 1.5 Flash on the majority of "
@@ -379,55 +379,55 @@ msgid ""
 msgstr ""
 
 #. translators: message spoken when Claude encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:442
+#: addon\globalPlugins\AIContentDescriber\description_service.py:452
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:449
+#: addon\globalPlugins\AIContentDescriber\description_service.py:459
 msgid ""
 "Anthropic's improvement over Claude 3 sonnet, this model features enhanced "
 "reasoning capabilities relative to its predecessor."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:455
+#: addon\globalPlugins\AIContentDescriber\description_service.py:465
 msgid "Anthropic's most powerful model for highly complex tasks."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:461
+#: addon\globalPlugins\AIContentDescriber\description_service.py:471
 msgid ""
 "Anthropic's model with Ideal balance of intelligence and speed, excels for "
 "enterprise workloads."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:467
+#: addon\globalPlugins\AIContentDescriber\description_service.py:477
 msgid ""
 "Anthropic's fastest and most compact model for near-instant responsiveness"
 msgstr ""
 
 #. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:519
+#: addon\globalPlugins\AIContentDescriber\description_service.py:529
 msgid ""
 "MistralAI's multimodal image LLM, achieving state-of-the-art results on "
 "MathVista, DocVQA, VQAv2 and other benchmarks."
 msgstr ""
 
 #. translators: the description for the Ollama model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:529
+#: addon\globalPlugins\AIContentDescriber\description_service.py:539
 msgid "The quickest way to get up and running with large language models."
 msgstr ""
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:545
+#: addon\globalPlugins\AIContentDescriber\description_service.py:555
 msgid "Could not contact the provided base URL. "
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:574
+#: addon\globalPlugins\AIContentDescriber\description_service.py:584
 msgid "The response appears to be malformed. "
 msgstr ""
 
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:589
+#: addon\globalPlugins\AIContentDescriber\description_service.py:599
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -438,7 +438,7 @@ msgid ""
 "doing, you can find basic steps in the add-on documentation."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:613
+#: addon\globalPlugins\AIContentDescriber\description_service.py:623
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -656,7 +656,7 @@ msgid "Model:"
 msgstr ""
 
 #. Translators: Requires installation
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:237
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:250
 msgid " (requires installation)"
 msgstr ""
 

@@ -182,6 +182,19 @@ class GPT4OConfigurationPanel(GPT4ConfigurationPanel):
 	model = description_service.GPT4O()
 	title = model.name
 
+
+class PollinationsAIConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.PollinationsAI()
+	title = model.name
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
 class GeminiConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.Gemini()
 	title = model.name
@@ -291,6 +304,7 @@ class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
 	title = model.name
 
 
+description_service.PollinationsAI.configurationPanel = PollinationsAIConfigurationPanel
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel

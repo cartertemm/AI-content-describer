@@ -126,7 +126,7 @@ class BaseDescriptionService:
 
 	@property
 	def api_key(self):
-		return ch.config[self.name]["api_key"]
+		return ch.config[self.name].get("api_key")
 
 	@api_key.setter
 	def api_key(self, key):
@@ -245,6 +245,7 @@ class BaseGPT(BaseDescriptionService):
 		".png",
 		".webp",
 	]
+	openai_url = "https://api.openai.com/v1/chat/completions"
 	needs_api_key = True
 
 	def __init__(self):
@@ -255,8 +256,10 @@ class BaseGPT(BaseDescriptionService):
 		base64_image = encode_image(image_path)
 		headers = {
 			"Content-Type": "application/json",
-			"Authorization": f"Bearer {self.api_key}"
+			"User-Agent": "curl/8.4.0"
 		}
+		if self.needs_api_key:
+			headers["Authorization"] = f"Bearer {self.api_key}"
 		payload = {
 			"model": self.internal_model_name,
 			"messages": [
@@ -278,7 +281,7 @@ class BaseGPT(BaseDescriptionService):
 			],
 			"max_tokens": self.max_tokens
 		}
-		response = post(url="https://api.openai.com/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response = post(url=self.openai_url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		response = json.loads(response.decode('utf-8'))
 		content = response["choices"][0]["message"]["content"]
 		if not content:
@@ -309,6 +312,15 @@ class GPT4O(BaseGPT):
 	description = _("OpenAI's first fully multimodal model, released in May 2024. This model has the same high intelligence as GPT4 and GPT4 turbo, but is much more efficient, able to generate text at twice the speed and at half the cost.")
 	about_url = "https://openai.com/index/hello-gpt-4o/"
 	internal_model_name = "gpt-4o"
+
+
+class PollinationsAI(BaseGPT):
+	name = "Pollinations (OpenAI)"
+	# translators: The description for the PollinationsAI model with OpenAI support in the model selection dialog.
+	description = "Pollinations.AI is an open-source gen AI startup based in Berlin, providing the most easy-to-use, free text and image generation API available. It integrates with state-of-the-art models, no signups or API keys required."
+	needs_api_key = False
+	openai_url = "https://text.pollinations.ai/openai"
+	internal_model_name = "openai"
 
 
 class GoogleGemini(BaseDescriptionService):
@@ -615,6 +627,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 
 
 models = [
+	PollinationsAI(),
 	GPT4O(),
 	GPT4Turbo(),
 	GPT4(),
