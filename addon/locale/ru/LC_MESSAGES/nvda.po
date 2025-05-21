@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2024-05-24 10:24+0300\n"
-"PO-Revision-Date: 2024-06-04 15:10+0300\n"
+"Project-Id-Version: 'AIContentDescriber' '2025.02.05'\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2025-02-10 14:59-0700\n"
+"PO-Revision-Date: 2025-03-03 03:32+0500\n"
 "Last-Translator: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
-"Language-Team: \n"
+"Language-Team: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: AI-content-describer-main/addon\n"
 "X-Poedit-SearchPath-0: globalPlugins\n"
 "X-Poedit-SearchPath-1: installTasks.py\n"
@@ -344,25 +344,25 @@ msgstr ""
 "запуска этого дополнения. Чтобы узнать больше, обратитесь к журналу NVDA. "
 
 #. translators: error
-#: addon\globalPlugins\AIContentDescriber\description_service.py:36
-#: addon\globalPlugins\AIContentDescriber\description_service.py:74
+#: addon\globalPlugins\AIContentDescriber\description_service.py:39
+#: addon\globalPlugins\AIContentDescriber\description_service.py:77
 msgid "error"
 msgstr "ошибка"
 
 #. translators: message spoken when we can't connect (error with connection)
-#: addon\globalPlugins\AIContentDescriber\description_service.py:42
-#: addon\globalPlugins\AIContentDescriber\description_service.py:87
+#: addon\globalPlugins\AIContentDescriber\description_service.py:45
+#: addon\globalPlugins\AIContentDescriber\description_service.py:90
 msgid "error making connection"
 msgstr "ошибка соединения"
 
 #. translators: message spoken when the connection is refused by our target
-#: addon\globalPlugins\AIContentDescriber\description_service.py:49
-#: addon\globalPlugins\AIContentDescriber\description_service.py:94
+#: addon\globalPlugins\AIContentDescriber\description_service.py:52
+#: addon\globalPlugins\AIContentDescriber\description_service.py:97
 msgid "error, connection refused by target"
 msgstr "ошибка, конечный адресат отклонил соединение"
 
 #. translators: the description for the GPT4 vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:245
+#: addon\globalPlugins\AIContentDescriber\description_service.py:293
 msgid ""
 "The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
 "2024,  this model has been superseded by GPT4 turbo which has consistently "
@@ -374,7 +374,7 @@ msgstr ""
 "информации."
 
 #. translators: the description for the GPT4 turbo model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:253
+#: addon\globalPlugins\AIContentDescriber\description_service.py:301
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
 "quality and understanding."
@@ -383,7 +383,7 @@ msgstr ""
 "улучшенным качеством и пониманием."
 
 #. translators: the description for the GPT4 omni model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:261
+#: addon\globalPlugins\AIContentDescriber\description_service.py:309
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -394,28 +394,82 @@ msgstr ""
 "гораздо более эффективна, способна генерировать текст вдвое быстрее и вдвое "
 "дешевле."
 
-#. translators: the description for the Google Gemini pro vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:274
-msgid "Google's Gemini model with vision capabilities."
-msgstr "Модель Gemini от Google с возможностями восприятия образов."
-
 #. translators: message spoken when Google gemini encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:311
+#: addon\globalPlugins\AIContentDescriber\description_service.py:352
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "В Gemini произошла ошибка: {code}, {msg}"
 
+#. translators: the description for the Google Gemini pro vision model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:360
+msgid "Google's Gemini 1.5 flash model with vision capabilities."
+msgstr "Модель Gemini 1.5 flash от Google с возможностями восприятия образов."
+
+#. translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:367
+msgid ""
+"Gemini 1.5 Flash-8B is a small model designed for high volume and lower "
+"intelligence tasks."
+msgstr ""
+"Gemini 1.5 Flash-8B - это компактная модель, предназначенная для решения "
+"задач с большим объёмом данных и низким уровнем интеллекта."
+
+#. translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:374
+msgid ""
+"Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-"
+"range of complex reasoning tasks requiring more intelligence. 1.5 Pro can "
+"process large amounts of data at once."
+msgstr ""
+"Gemini 1.5 Pro - это мультимодальная модель среднего размера, "
+"оптимизированная для решения широкого спектра сложных логических задач, "
+"требующих повышенного интеллекта. 1.5 Pro может обрабатывать большие объёмы "
+"данных одновременно."
+
+#. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:382
+msgid ""
+"Gemini 2.0 Flash delivers next-gen features and improved capabilities, "
+"including superior speed, native tool use, multimodal generation, and a 1M "
+"token context window."
+msgstr ""
+"Gemini 2.0 Flash предоставляет функции нового поколения и улучшенные "
+"возможности, включая превосходную скорость, использование встроенных "
+"инструментов, мультимодальную генерацию и контекстное окно с токенами "
+"размером 1 м."
+
+#. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:390
+msgid ""
+"Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost "
+"efficiency and low latency. Outperforms 1.5 Flash on the majority of "
+"benchmarks, at the same speed and cost."
+msgstr ""
+"Gemini 2.0 Flash lite preview - это модель Gemini 2.0 Flash , "
+"оптимизированная для обеспечения экономичности и низкой задержки. "
+"Превосходит 1.5 Flash по большинству показателей при той же скорости и "
+"стоимости."
+
 #. translators: message spoken when Claude encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:376
+#: addon\globalPlugins\AIContentDescriber\description_service.py:442
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr "В Claude произошла ошибка. {err}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:383
+#: addon\globalPlugins\AIContentDescriber\description_service.py:449
+msgid ""
+"Anthropic's improvement over Claude 3 sonnet, this model features enhanced "
+"reasoning capabilities relative to its predecessor."
+msgstr ""
+"Усовершенствованная Anthropic по сравнению с Claude 3 sonnet, эта модель "
+"обладает расширенными возможностями мышления по сравнению со своей "
+"предшественницей."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:455
 msgid "Anthropic's most powerful model for highly complex tasks."
 msgstr "Самая мощная модель Anthropic для решения очень сложных задач."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:389
+#: addon\globalPlugins\AIContentDescriber\description_service.py:461
 msgid ""
 "Anthropic's model with Ideal balance of intelligence and speed, excels for "
 "enterprise workloads."
@@ -423,15 +477,38 @@ msgstr ""
 "Модель Anthropic с идеальным балансом интеллекта и скорости отлично подходит "
 "для корпоративных рабочих нагрузок."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:395
+#: addon\globalPlugins\AIContentDescriber\description_service.py:467
 msgid ""
 "Anthropic's fastest and most compact model for near-instant responsiveness"
 msgstr ""
 "Самая быстрая и компактная модель Anthropic, обеспечивающая практически "
 "мгновенное реагирование"
 
+#. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:519
+msgid ""
+"MistralAI's multimodal image LLM, achieving state-of-the-art results on "
+"MathVista, DocVQA, VQAv2 and other benchmarks."
+msgstr ""
+"MistralAI's multimodal image LLM, достигает самых современных результатов в "
+"MathVista, DocVQA, VQAv2 и других тестах."
+
+#. translators: the description for the Ollama model, as shown in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:529
+msgid "The quickest way to get up and running with large language models."
+msgstr "Это самый быстрый способ начать работу с большими языковыми моделями."
+
+#. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:545
+msgid "Could not contact the provided base URL. "
+msgstr "Не удалось связаться с указанным базовым URL-адресом. "
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:574
+msgid "The response appears to be malformed. "
+msgstr "Ответ, по-видимому, был неправильно сформирован. "
+
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:409
+#: addon\globalPlugins\AIContentDescriber\description_service.py:589
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -450,7 +527,7 @@ msgstr ""
 "задачей для пользователя, который знает, что делает, вы можете найти "
 "основные шаги в документации по дополнению."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:439
+#: addon\globalPlugins\AIContentDescriber\description_service.py:613
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -615,49 +692,80 @@ msgid "Failed to interface with the chosen camera"
 msgstr "Не удалось подключиться к выбранной камере"
 
 #. translators: the title of the model configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:16
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:17
 msgid "Model configuration"
 msgstr "Параметры модели"
 
 #. translators: the button in the model configuration dialog that provides information on the selected model
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:29
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:30
 msgid "About this model"
 msgstr "Информация о модели"
 
 #. Translators: The label for the API key field in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:33
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:34
 msgid "API key"
 msgstr "Ключ API"
 
 #. Translators: The label for the base URL field in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:37
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:38
 msgid "Base URL"
 msgstr "Базовый URL-адрес"
 
+#. Translators: The label for the model name field in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:42
+msgid "Model name"
+msgstr "Название модели"
+
+#. Translators: The label for the list models button in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:46
+msgid "List models"
+msgstr "Список моделей"
+
 #. Translators: The label for the prompt field in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:41
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:50
 msgid "Prompt"
 msgstr "Подсказка"
 
 #. Translators: The label for the button that resets the prompt to its default in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:43
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:52
 msgid "Reset prompt to default"
 msgstr "Восстановить подсказку по умолчанию"
 
 #. Translators: The label for the maximum tokens chooser in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:47
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:56
 msgid "Maximum tokens"
 msgstr "Максимальное количество токенов"
 
 #. Translators: The label for the timeout chooser in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:51
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:60
 msgid "Seconds to wait for a response before timing out"
 msgstr "Время ожидания ответа в секундах"
 
 #. translators: the title for the about model message box
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:93
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:108
 msgid "About model"
 msgstr "О модели"
+
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:122
+msgid "No models were found. Please install one, then try again."
+msgstr ""
+"Не найдено ни одной модели. Пожалуйста, установите модель и повторите "
+"попытку."
+
+#. Translators: the label for the list models dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:131
+msgid "Select a model"
+msgstr "Выберите модель"
+
+#. Translators: Label of the model combo box in the choose model dialog
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:139
+msgid "Model:"
+msgstr "Модель:"
+
+#. Translators: Requires installation
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:237
+msgid " (requires installation)"
+msgstr " (требуется установка)"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
