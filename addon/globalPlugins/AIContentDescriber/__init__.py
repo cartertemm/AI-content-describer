@@ -353,9 +353,9 @@ class GlobalPlugin(GlobalPlugin):
 			wx.CallAfter(ui.message, _("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
 		# Check whether an existing conversation dialog is open
-		## If this returns True the work has been done for us, so we just clean up the file.
-		if offer_image_attachment(file) and delete:
-			os.unlink(file)
+		# If a conversation dialog is open, prompt to add the image and bring it to front
+		# If delete is True, the file will automatically be cleaned up when the dialog is closed
+		if offer_image_attachment(file, delete=delete):
 			return
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
@@ -373,6 +373,7 @@ class GlobalPlugin(GlobalPlugin):
 		else:
 			wx.CallAfter(ui.message, message)
 		if delete:
+			log.debug("Cleaning up image: "+file)
 			os.unlink(file)
 
 	def show_area_menu(self):

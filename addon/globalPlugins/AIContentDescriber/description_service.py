@@ -122,7 +122,7 @@ def post(**kwargs):
 
 class BaseDescriptionService:
 	name = "unknown"
-	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included in your response."
+	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible. If there is text, ensure it is included in your response exactly as shown."
 	supported_formats = []
 	description = "Another vision capable large language model"
 	about_url = ""
