@@ -9,11 +9,13 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Describe the focus object, navigator object, entire screen, or snap a photo from the onboard camera
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
+* Free to use by default, optionally add your own API key for more models
 * Supports multiple providers (OpenAI's GPT4, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude 3, Ollama, and llama.cpp)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
-* Markdown rendering to easily access structured information (just embed e.g. "respond in Markdown" at the end of your prompts)
+* Ask follow-up questions and attach additional images
+* Markdown rendering to easily access structured information (just enable the "open results in a browsable dialog" setting and embed e.g. "respond in Markdown" at the end of your prompts)
 
 ## Use case
 
@@ -45,7 +47,13 @@ Follow the instructions provided below to get each of these working.
 
 ## Getting started
 
-Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, then follow the instructions below to obtain an API key from a supported provider.
+Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, and proceed with the installation as prompted.
+
+As of version 2025.06.05, usage of GPT4 is free thanks to the generocity of the community behind PollinationsAI.
+
+If you have the resources and interest in exploring additional models, you can always use your own API key and reduce requests to their servers. If you don't, feel free to skip down to the `usage` section of this document.
+
+Follow the instructions below to obtain an API key from a supported provider.
 If you are unsure about which one to use, the consensus of this addon's developer and testers is that Gemini currently offers more reasonable pricing, while Open-AI seems to provide a higher degree of accuracy. Claude 3 haiku is the cheapest and fastest option but the quality is hit or miss.
 Of course, these results are highly dependent on the task at hand, so we recommend experimenting with different models and prompts to find what works best.
 
@@ -120,12 +128,13 @@ server.exe -m llava-v1.6-vicuna-7b.Q4_K_M.gguf --mmproj mmproj-model-f16.gguf
 
 ## Usage
 
-Four hotkeys are bound by default:
+Five hotkeys are bound by default:
 
 * NVDA+shift+i: Pops up a menu asking whether to describe the current focus, navigator object, physical camera, or entire screen with AI.
 * NVDA+shift+u: Describe the contents of the current navigator object using AI.
 * NVDA+shift+y: Describe the image (or file path to an image) on the clipboard using AI.
 * NVDA+shift+j: Describe the position of your face in the frame of the selected camera. If you have multiple cameras connected, navigate to the AI content describer menu (NVDA+shift+i) and choose the one you would like to use with the "select camera" item in the face detection submenu.
+* NVDA+shift+c: Open the AI conversation dialog to ask follow-up questions.
 
 Three gestures are unbound:
 
@@ -134,6 +143,12 @@ Three gestures are unbound:
 * Snap a picture using the selected camera, then describe it using AI.
 
 Don't hesitate to customize these at any time from the input gestures dialog.
+
+### Following-up on a description
+
+Sometimes, the response you get back from an AI is insufficient. Perhaps the image is low quality, incomplete, or includes unwanted details. Maybe you want to hone in on just a certain section or take a clearer photo without losing context.
+After receiving a description, you can press NVDA+shift+c, or select "Follow-up on previous description" from the AI Content Describer context menu (NVDA+shift+i). By default, the focus is set at the message field.
+To add an additional image, just keep the conversation window open and use the add-on as you normally would. When a picture is taken (be it from the camera, system control, screenshot, etc.) you will be asked if you want to attach it to the current session or start a new one.
 
 ## Building the add-on
 

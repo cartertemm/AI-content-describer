@@ -40,6 +40,7 @@ sys.path.append(module_path)
 import config_handler as ch
 import description_service
 import model_configuration
+from multimodal_input import launch_conversation_dialog, offer_image_attachment
 import dependency_checker
 
 third_party_path = dependency_checker.expand_path()
@@ -175,6 +176,12 @@ class AreaMenu(wx.Menu):
 			gui.mainFrame.Bind(wx.EVT_MENU, self.on_new_model, item)
 		# translators: the name of the submenu used to select a model.
 		self.AppendSubMenu(self.model_menu, _("Model"))
+		if service and service.has_conversation():
+			# translators: the label for the item to follow-up on the last description
+			self.followup_item = self.Append(wx.ID_ANY, _("Follow-up on previous description"))
+			gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.followup_item)
+		else:
+			self.followup_item = None
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
@@ -341,9 +348,14 @@ class GlobalPlugin(GlobalPlugin):
 			# Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key or base URL
 			wx.CallAfter(ui.message, _("To describe content, you must provide an API key or base URL in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
-		if not ch.config[service.name]["prompt"]:
+		if not service.prompt:
 			# Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
 			wx.CallAfter(ui.message, _("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
+			return
+		# Check whether an existing conversation dialog is open
+		# If a conversation dialog is open, prompt to add the image and bring it to front
+		# If delete is True, the file will automatically be cleaned up when the dialog is closed
+		if offer_image_attachment(file, delete=delete):
 			return
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
@@ -361,6 +373,7 @@ class GlobalPlugin(GlobalPlugin):
 		else:
 			wx.CallAfter(ui.message, message)
 		if delete:
+			log.debug("Cleaning up image: "+file)
 			os.unlink(file)
 
 	def show_area_menu(self):
@@ -392,9 +405,23 @@ class GlobalPlugin(GlobalPlugin):
 			self.detection_interface.destroy()
 			# translators: message spoken after the camera has been released successfully
 			ui.message(_("Success"))
+		elif menu.selection == menu.followup_item and menu.followup_item is not None:
+			self.show_conversation_dialog()
 		else:
 			self.prev_focus = None
 			self.prev_navigator = None
+
+	def show_conversation_dialog(self):
+		"""Show the conversation dialog for multi-modal interaction."""
+		if not service or not service.has_conversation():
+			# translators: The message spoken when the user attempts to show the conversation dialog, but no service is available.
+			ui.message(_("No AI service or conversation available."))
+			return
+		return launch_conversation_dialog(service, gui.mainFrame)
+
+	def script_show_conversation(self, gesture):
+		return self.show_conversation_dialog()
+	script_show_conversation.__doc__ = _("Open the AI conversation dialog for follow-up questions and multimodal chat.")
 
 	def script_describe_clipboard(self, gesture):
 		self.describe_clipboard()
@@ -436,4 +463,5 @@ class GlobalPlugin(GlobalPlugin):
 		"kb:shift+NVDA+u": "describe_navigator",
 		"kb:shift+NVDA+y": "describe_clipboard",
 		"kb:shift+NVDA+j": "describe_face",
+		"kb:shift+NVDA+c": "show_conversation",
 	}

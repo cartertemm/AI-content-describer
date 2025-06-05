@@ -11,6 +11,7 @@ import tempfile
 import functools
 import urllib.parse
 import urllib.request
+import hashlib
 import logHandler
 log = logHandler.log
 
@@ -27,6 +28,12 @@ import cache
 def encode_image(image_path):
 	with open(image_path, "rb") as image_file:
 		return base64.b64encode(image_file.read()).decode('utf-8')
+
+
+def get_image_hash(image_path):
+	"""Generate a consistent hash for an image file to use as conversation key"""
+	with open(image_path, "rb") as f:
+		return hashlib.md5(f.read()).hexdigest()
 
 
 def get(*args, **kwargs):
@@ -115,7 +122,7 @@ def post(**kwargs):
 
 class BaseDescriptionService:
 	name = "unknown"
-	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible to someone who is blind. If there is text, ensure it is included in your response."
+	DEFAULT_PROMPT = "Describe this image succinctly, but in as much detail as possible. If there is text, ensure it is included in your response exactly as shown."
 	supported_formats = []
 	description = "Another vision capable large language model"
 	about_url = ""
@@ -123,6 +130,10 @@ class BaseDescriptionService:
 	needs_base_url = False
 	needs_configuration_dialog = True
 	configurationPanel = None
+
+	# Conversation management
+	_active_conversation = None
+	_conversations = {}  # image_hash: messages list
 
 	@property
 	def api_key(self):
@@ -187,6 +198,133 @@ class BaseDescriptionService:
 	def save_config(self):
 		ch.config.write()
 
+	def build_conversation_payload(self, messages, **kw):
+		"""
+		Convert a list of messages into the format this provider expects.
+		The format of the messages parameter is:
+		[
+			{"role": "user", "content": "describe this image", "image": base64_data},
+			{"role": "assistant", "content": "I see a cat..."},
+			{"role": "user", "content": "what color is the cat?"},
+		]
+		This default implementation works for OpenAI-compatible APIs.
+		You will need to override this method in child classes for providers with different formats.
+		"""
+		formatted_messages = []
+		for msg in messages:
+			if msg["role"] == "user" and msg.get("image"):
+				# This is a user message with an image attached
+				formatted_msg = {
+					"role": "user",
+					"content": [
+						{"type": "text", "text": msg["content"]},
+						{"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{msg['image']}"}}
+					]
+				}
+			else:
+				# a text-only message
+				formatted_msg = {
+					"role": msg["role"],
+					"content": msg["content"]
+				}
+			formatted_messages.append(formatted_msg)
+		return {
+			"model": getattr(self, 'internal_model_name', self.name),
+			"messages": formatted_messages,
+			"max_tokens": self.max_tokens
+		}
+
+	def _get_conversation_headers(self):
+		"""Get headers for API requests. Override if needed."""
+		headers = {"Content-Type": "application/json"}
+		if self.needs_api_key and self.api_key:
+			headers["Authorization"] = f"Bearer {self.api_key}"
+		return headers
+
+	def _get_conversation_url(self):
+		"""Get URL for API requests. Override if needed."""
+		return "https://api.openai.com/v1/chat/completions"
+
+	def _extract_conversation_response(self, response_json):
+		"""Extract the assistant's response from API response. Override if needed."""
+		return response_json["choices"][0]["message"]["content"]
+
+	def start_conversation(self, image_path=None, initial_prompt=None, initial_response=None):
+		"""Start a new conversation, optionally with an image"""
+		messages = []
+		if image_path and initial_prompt and initial_response:
+			# We have an image/initial prompt and response i.e. a description
+			image_hash = get_image_hash(image_path)
+			base64_image = encode_image(image_path)
+			messages = [
+				{"role": "user", "content": initial_prompt, "image": base64_image},
+				{"role": "assistant", "content": initial_response}
+			]
+			self._conversations[image_hash] = messages
+			self._active_conversation = image_hash
+		elif initial_prompt and initial_response:
+			# Text only
+			conversation_id = "text_chat_" + str(len(self._conversations))
+			messages = [
+				{"role": "user", "content": initial_prompt},
+				{"role": "assistant", "content": initial_response}
+			]
+			self._conversations[conversation_id] = messages
+			self._active_conversation = conversation_id
+		else:
+			# Empty conversation: edge case
+			conversation_id = "empty_chat_" + str(len(self._conversations))
+			self._conversations[conversation_id] = []
+			self._active_conversation = conversation_id
+
+	def add_to_conversation(self, user_message, image_path=None, include_original_image=True):
+		"""Add user message and get AI response. Returns the AI's response."""
+		if not self._active_conversation or self._active_conversation not in self._conversations:
+			raise ValueError("No active conversation. Start one first.")
+		messages = self._conversations[self._active_conversation].copy()
+		new_message = {"role": "user", "content": user_message}
+		if image_path:
+			new_message["image"] = encode_image(image_path)
+		elif include_original_image and messages:
+			for msg in messages:
+				if msg["role"] == "user" and msg.get("image"):
+					new_message["image"] = msg["image"]
+					break
+		messages.append(new_message)
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response_json = json.loads(response.decode('utf-8'))
+		ai_response = self._extract_conversation_response(response_json)
+		messages.append({"role": "assistant", "content": ai_response})
+		self._conversations[self._active_conversation] = messages
+		return ai_response
+
+	def has_conversation(self):
+		"""Check if there's an active conversation for follow-ups"""
+		return (self._active_conversation is not None and 
+				self._active_conversation in self._conversations and 
+				len(self._conversations[self._active_conversation]) > 0)
+
+	def get_conversation_summary(self):
+		"""Get a simple summary of the current conversation (for debugging)"""
+		if not self.has_conversation():
+			return "No active conversation"
+		messages = self._conversations[self._active_conversation]
+		return f"Conversation with {len(messages)} messages (last: {messages[-1]['role']})"
+
+	def clear_conversation(self, conversation_id=None):
+		"""Clear conversation state"""
+		if conversation_id:
+			if conversation_id in self._conversations:
+				del self._conversations[conversation_id]
+			if self._active_conversation == conversation_id:
+				self._active_conversation = None
+		else:
+			self._conversations.clear()
+			self._active_conversation = None
+
 	def process(self):
 		pass  # implement in subclasses
 
@@ -222,6 +360,8 @@ def cached_description(func):
 				description = cache.cache[FALLBACK_CACHE_NAME].get(base64_image)
 			if description is not None:
 				log.debug(f"Cache hit. Using cached description for {image_path} from {self.name}")
+				# Start a conversation in case the user wishes to follow-up
+				self.start_conversation(image_path, self.prompt, description)
 				return description
 		# delegate to the wrapped description service
 		log.debug(f"Cache miss. Fetching description for {image_path} from {self.name}")
@@ -231,10 +371,8 @@ def cached_description(func):
 			cache.read_cache(self.name)
 			cache.cache[self.name][base64_image] = description
 			cache.write_cache(self.name)
-		
 		return description
 	return wrapper
-
 
 
 class BaseGPT(BaseDescriptionService):
@@ -245,49 +383,40 @@ class BaseGPT(BaseDescriptionService):
 		".png",
 		".webp",
 	]
-	openai_url = "https://api.openai.com/v1/chat/completions"
 	needs_api_key = True
 
-	def __init__(self):
-		super().__init__()
-
-	@cached_description
-	def process(self, image_path, **kw):
-		base64_image = encode_image(image_path)
+	def _get_conversation_headers(self):
 		headers = {
 			"Content-Type": "application/json",
 			"User-Agent": "curl/8.4.0"
 		}
 		if self.needs_api_key:
 			headers["Authorization"] = f"Bearer {self.api_key}"
-		payload = {
-			"model": self.internal_model_name,
-			"messages": [
-				{
-					"role": "user",
-					"content": [
-						{
-							"type": "text",
-							"text": self.prompt
-						},
-						{
-							"type": "image_url",
-							"image_url": {
-								"url": f"data:image/jpeg;base64,{base64_image}"
-							}
-						}
-					]
-				}
-			],
-			"max_tokens": self.max_tokens
-		}
-		response = post(url=self.openai_url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		content = response["choices"][0]["message"]["content"]
+		return headers
+
+	def _get_conversation_url(self):
+		return getattr(self, 'openai_url', "https://api.openai.com/v1/chat/completions")
+
+	@cached_description
+	def process(self, image_path, **kw):
+		base64_image = encode_image(image_path)
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
 		if not content:
+			import ui
 			ui.message("content returned none")
-		if content:
-			return content
+			return
+		self.start_conversation(image_path, self.prompt, content)
+		return content
 
 
 class GPT4(BaseGPT):
@@ -296,6 +425,7 @@ class GPT4(BaseGPT):
 	description = _("The GPT4 model from OpenAI, previewed with vision capabilities. As of April 2024,  this model has been superseded by GPT4 turbo which has consistently achieved better metrics in tasks involving visual understanding.")
 	about_url = "https://platform.openai.com/docs/guides/vision"
 	internal_model_name = "gpt-4-vision-preview"
+	openai_url = "https://api.openai.com/v1/chat/completions"
 
 
 class GPT4Turbo(BaseGPT):
@@ -304,6 +434,7 @@ class GPT4Turbo(BaseGPT):
 	description = _("The next generation of the original GPT4 vision preview, with enhanced quality and understanding.")
 	about_url = "https://help.openai.com/en/articles/8555510-gpt-4-turbo-in-the-openai-api"
 	internal_model_name = "gpt-4-turbo"
+	openai_url = "https://api.openai.com/v1/chat/completions"
 
 
 class GPT4O(BaseGPT):
@@ -312,6 +443,7 @@ class GPT4O(BaseGPT):
 	description = _("OpenAI's first fully multimodal model, released in May 2024. This model has the same high intelligence as GPT4 and GPT4 turbo, but is much more efficient, able to generate text at twice the speed and at half the cost.")
 	about_url = "https://openai.com/index/hello-gpt-4o/"
 	internal_model_name = "gpt-4o"
+	openai_url = "https://api.openai.com/v1/chat/completions"
 
 
 class PollinationsAI(BaseGPT):
@@ -331,39 +463,61 @@ class GoogleGemini(BaseDescriptionService):
 	]
 	needs_api_key = True
 
-	def __init__(self):
-		super().__init__()
-
-	@cached_description
-	def process(self, image_path, **kw):
-		# Don't call this function directly
-		base64_image = encode_image(image_path)
-		headers = {
-			"Content-Type": "application/json"
-		}
-		payload = {"contents":[
-			{
-				"parts":[
-					{"text": self.prompt},
-					{
-						"inline_data": {
-							"mime_type":"image/jpeg",
-							"data": base64_image
-						}
+	def build_conversation_payload(self, messages, **kw):
+		"""Override for Gemini's contents/parts format"""
+		contents = []
+		for msg in messages:
+			parts = [{"text": msg["content"]}]
+			if msg.get("image"):
+				parts.insert(0, {
+					"inline_data": {
+						"mime_type": "image/jpeg",
+						"data": msg["image"]
 					}
-				]
-			}],
+				})
+			role = msg["role"]
+			if role == "assistant":
+				role = "model"  # Google refers to the assistant role as "model"
+			contents.append({"role": role, "parts": parts})
+		return {
+			"contents": contents,
 			"generationConfig": {
 				"maxOutputTokens": self.max_tokens
 			}
 		}
-		response = post(url=f"https://generativelanguage.googleapis.com/v1beta/models/{self.internal_model_name}:generateContent?key={self.api_key}", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		if "error" in response:
+
+	def _get_conversation_url(self):
+		return f"https://generativelanguage.googleapis.com/v1beta/models/{self.internal_model_name}:generateContent?key={self.api_key}"
+
+	def _get_conversation_headers(self):
+		return {"Content-Type": "application/json"}
+
+	def _extract_conversation_response(self, response_json):
+		if "error" in response_json:
+			import ui
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
-			ui.message(_("Gemini encountered an error: {code}, {msg}").format(code=response['error']['code'], msg=response['error']['message']))
+			ui.message(_("Gemini encountered an error: {code}, {msg}").format(code=response_json['error']['code'], msg=response_json['error']['message']))
+			return ""
+		return response_json["candidates"][0]["content"]["parts"][0]["text"]
+
+	@cached_description
+	def process(self, image_path, **kw):
+		base64_image = encode_image(image_path)
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
+		if not content:
 			return
-		return response["candidates"][0]["content"]["parts"][0]["text"]
+		self.start_conversation(image_path, self.prompt, content)
+		return content
 
 class Gemini(GoogleGemini):
 	name = "Google Gemini pro vision"
@@ -412,48 +566,64 @@ class Anthropic(BaseDescriptionService):
 		".webp"
 	]
 
-	@cached_description
-	def process(self, image_path, **kw):
-		# Do not use this function directly, override it in subclasses and call with the model parameter
-		base64_image = encode_image(image_path)
-		mimetype = os.path.splitext(image_path)[1].lower()
-		if not mimetype in self.supported_formats:
-			# try falling back to png
-			mimetype = ".png"
-		mimetype = mimetype[1:]  # trim the "."
-		headers = {
-			"User-Agent": "curl/8.4.0",  # Cloudflare is perplexingly blocking anything that urllib sends with an "error 1010"
+	def build_conversation_payload(self, messages, **kw):
+		"""Override for Anthropic's message format with content arrays"""
+		formatted_messages = []
+		for msg in messages:
+			content = [{"type": "text", "text": msg["content"]}]
+			if msg.get("image"):
+				content.insert(0, {
+					"type": "image",
+					"source": {
+						"type": "base64",
+						"media_type": "image/jpeg",
+						"data": msg["image"]
+					}
+				})
+			formatted_messages.append({"role": msg["role"], "content": content})
+		return {
+			"model": self.internal_model_name,
+			"messages": formatted_messages,
+			"max_tokens": self.max_tokens
+		}
+
+	def _get_conversation_url(self):
+		return "https://api.anthropic.com/v1/messages"
+
+	def _get_conversation_headers(self):
+		return {
+			"User-Agent": "curl/8.4.0",
 			"Content-Type": "application/json",
 			"x-api-key": self.api_key,
 			"anthropic-version": "2023-06-01"
 		}
-		payload = {
-			"model": self.internal_model_name,
-			"messages": [
-				{"role": "user", "content": [
-					{
-						"type": "image",
-						"source": {
-							"type": "base64",
-							"media_type": "image/"+mimetype,
-							"data": base64_image,
-						}
-					},
-					{
-						"type": "text",
-						"text": self.prompt
-					}
-				]}
-			],
-			"max_tokens": self.max_tokens
-		}
-		response = post(url="https://api.anthropic.com/v1/messages", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		if response["type"] == "error":
+
+	def _extract_conversation_response(self, response_json):
+		if response_json.get("type") == "error":
+			import ui
 			#translators: message spoken when Claude encounters an error with the format or content of the input.
-			ui.message(_("Claude encountered an error. {err}").format(err=response['error']['message']))
+			ui.message(_("Claude encountered an error. {err}").format(err=response_json['error']['message']))
+			return ""
+		return response_json["content"][0]["text"]
+
+	@cached_description
+	def process(self, image_path, **kw):
+		base64_image = encode_image(image_path)
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
+		if not content:
 			return
-		return response["content"][0]["text"]
+		self.start_conversation(image_path, self.prompt, content)
+		return content
 
 
 class Claude3_5Sonnet(Anthropic):
@@ -490,39 +660,62 @@ class MistralAI(BaseDescriptionService):
 	]
 	needs_api_key = True
 
+	def _get_conversation_url(self):
+		return "https://api.mistral.ai/v1/chat/completions"
+
+	def _get_conversation_headers(self):
+		return {
+			"User-Agent": "curl/8.4.0",
+			"Content-Type": "application/json",
+			"Authorization": "Bearer " + self.api_key
+		}
+
+	def build_conversation_payload(self, messages, **kw):
+		"""Override for MistralAI's OpenAI-compatible format with image_url"""
+		formatted_messages = []
+		for msg in messages:
+			if msg["role"] == "user" and msg.get("image"):
+				# Message with an image
+				formatted_msg = {
+					"role": "user",
+					"content": [
+						{"type": "text", "text": msg["content"]},
+						{"type": "image_url", "image_url": f"data:image/jpeg;base64,{msg['image']}"}
+					]
+				}
+			else:
+				# Text-only message
+				formatted_msg = {
+					"role": msg["role"],
+					"content": msg["content"]
+				}
+			formatted_messages.append(formatted_msg)
+		return {
+			"model": self.internal_model_name,
+			"messages": formatted_messages,
+			"max_tokens": self.max_tokens
+		}
+
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
-		mimetype = os.path.splitext(image_path)[1].lower()
-		if not mimetype in self.supported_formats:
-			# try falling back to png
-			mimetype = ".png"
-		mimetype = mimetype[1:]  # trim the "."
-		headers = {
-			"User-Agent": "curl/8.4.0",  # to shut up CloudFlare
-			"Content-Type": "application/json",
-			"Authorization": "Bearer "+self.api_key
-		}
-		payload = {
-			"model": self.internal_model_name,
-			"messages": [
-				{
-					"role": "user",
-					"content": [
-						{"type": "text", "text": self.prompt},
-						{"type": "image_url", "image_url": f"data:image/{mimetype};base64,{base64_image}"}
-					]
-				}
-			],
-			"max_tokens": self.max_tokens
-		}
-		response = post(url="https://api.mistral.ai/v1/chat/completions", headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		content = response["choices"][0]["message"]["content"]
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
 		if not content:
+			import ui
 			ui.message("content returned none")
-		if content:
-			return content
+			return
+		self.start_conversation(image_path, self.prompt, content)
+		return content
 
 
 class PixtralLarge(MistralAI):
@@ -560,32 +753,56 @@ class Ollama(BaseDescriptionService):
 		models = [model["model"] for model in content["models"]]
 		return models
 
-	@cached_description
-	def process(self, image_path, **kw):
-		model_name = kw.get("chosen_model") or self.chosen_model
-		url = kw.get("base_url") or self.base_url
-		url = urllib.parse.urljoin(url, "api/chat")
-		base64_image = encode_image(image_path)
-		headers = {
-			"Content-Type": "application/json"
-		}
-		payload = {
-			"model": model_name,
-			"messages": [
-				{
-					"role": "user",
-					"content": self.prompt,
-					"images": [base64_image]
-				}
-			],
+	def build_conversation_payload(self, messages, **kw):
+		"""Override for Ollama's chat format with images array"""
+		formatted_messages = []
+		for msg in messages:
+			formatted_msg = {
+				"role": msg["role"],
+				"content": msg["content"]
+			}
+			if msg.get("image"):
+				formatted_msg["images"] = [msg["image"]]
+			formatted_messages.append(formatted_msg)
+		return {
+			"model": self.chosen_model,
+			"messages": formatted_messages,
 			"stream": False
 		}
+
+	def _get_conversation_url(self):
+		return urllib.parse.urljoin(self.base_url, "api/chat")
+
+	def _get_conversation_headers(self):
+		return {"Content-Type": "application/json"}
+
+	def _extract_conversation_response(self, response_json):
+		if not "message" in response_json:
+			import ui
+			ui.message(_("The response appears to be malformed. "+repr(response_json)))
+			return ""
+		return response_json["message"]["content"]
+
+	@cached_description
+	def process(self, image_path, **kw):
+		# Build single-image conversation
+		base64_image = encode_image(image_path)
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		# Use conversation methods for consistency
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		if not "message" in response:
-			ui.message(_("The response appears to be malformed. "+repr(response)))
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
+		if not content:
 			return
-		return response["message"]["content"]\
+		self.start_conversation(image_path, self.prompt, content)
+		return content
 
 
 class LlamaCPP(BaseDescriptionService):
@@ -601,29 +818,64 @@ class LlamaCPP(BaseDescriptionService):
 	description = _("""llama.cpp is a state-of-the-art, open-source solution for running large language models locally and in the cloud.
 This add-on integration assumes that you have obtained llama.cpp from Github and an image capable model from Huggingface or another repository, and that a server is currently running to handle requests. Though the process for getting this working is largely a task for the user that knows what they are doing, you can find basic steps in the add-on documentation.""")
 
-	@cached_description
-	def process(self, image_path, **kw):
-		url = kw.get("base_url", "http://localhost:8080")
-		url = urllib.parse.urljoin(url, "completion")
-		base64_image = encode_image(image_path)
-		headers = {
-			"Content-Type": "application/json"
-		}
+	def build_conversation_payload(self, messages, **kw):
+		"""Override for llama.cpp's completion format with image_data"""
+		# Build conversation context as a single prompt
+		prompt_parts = []
+		image_data = []
+		image_id = 1
+		for msg in messages:
+			if msg["role"] == "user":
+				if msg.get("image"):
+					prompt_parts.append(f"USER: [img-{image_id}]\n{msg['content']}")
+					image_data.append({"data": msg["image"], "id": image_id})
+					image_id += 1
+				else:
+					prompt_parts.append(f"USER: {msg['content']}")
+			else:
+				prompt_parts.append(f"ASSISTANT: {msg['content']}")
+		prompt_parts.append("ASSISTANT:")
 		payload = {
-			"prompt": f"USER: [img-12]\n{self.prompt}ASSISTANT:",
+			"prompt": "\n".join(prompt_parts),
 			"stream": False,
-			"image_data": [{
-				"data": base64_image,
-				"id": 12
-			}],
 			"temperature": 1.0,
 			"n_predict": self.max_tokens
 		}
+		if image_data:
+			payload["image_data"] = image_data
+		return payload
+
+	def _get_conversation_url(self):
+		return urllib.parse.urljoin(self.base_url or "http://localhost:8080", "completion")
+
+	def _get_conversation_headers(self):
+		return {"Content-Type": "application/json"}
+
+	def _extract_conversation_response(self, response_json):
+		if not "content" in response_json:
+			import ui
+			ui.message(_("Image recognition response appears to be malformed.\n{response}").format(response=repr(response_json)))
+			return ""
+		return response_json["content"]
+
+	@cached_description
+	def process(self, image_path, **kw):
+		base64_image = encode_image(image_path)
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-		response = json.loads(response.decode('utf-8'))
-		if not "content" in response:
-			ui.message(_("Image recognition response appears to be malformed.\n{response}").format(response=repr(response)))
-		return response["content"]
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
+		if not content:
+			return
+		self.start_conversation(image_path, self.prompt, content)
+		return content
 
 
 models = [
