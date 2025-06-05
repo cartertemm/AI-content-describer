@@ -99,8 +99,8 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		self.models_dialog_button = sHelper.addItem(wx.Button(self, label=_("Manage &models")))
 		# translators: the label for the dropdown that lists the currently available models
 		self.available_models = sHelper.addLabeledControl(_("Model (configure more in the manage models dialog, defaults to last used):"), wx.Choice)
-		# Translators: The label for the option to open results in browseable dialogs
-		self.open_in_dialog = sHelper.addItem(wx.CheckBox(self, label=_("Open each result in a browseable dialog; Markdown will be rendered if possible")))
+		# Translators: The label for the option to open results in browsable dialogs
+		self.open_in_dialog = sHelper.addItem(wx.CheckBox(self, label=_("Open each result in a browsable dialog; Markdown will be rendered if possible")))
 		# Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
 		self.cache_descriptions = sHelper.addItem(wx.CheckBox(self, label=_("Remember/cache descriptions of each item to save API quota")))
 		# Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
