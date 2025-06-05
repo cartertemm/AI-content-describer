@@ -348,7 +348,7 @@ class GlobalPlugin(GlobalPlugin):
 			# Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key or base URL
 			wx.CallAfter(ui.message, _("To describe content, you must provide an API key or base URL in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
-		if not ch.config[service.name]["prompt"]:
+		if not service.prompt:
 			# Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
 			wx.CallAfter(ui.message, _("To describe content, you must define a prompt by navigating to the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
 			return
