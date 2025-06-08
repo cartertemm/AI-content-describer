@@ -2,15 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2025.02.05'\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2025-02-10 14:59-0700\n"
-"PO-Revision-Date: 2025-03-03 03:32+0500\n"
+"POT-Creation-Date: 2025-06-05 14:16-0700\n"
+"PO-Revision-Date: 2025-06-08 13:01+0500\n"
 "Last-Translator: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
 "Language-Team: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: AI-content-describer-main/addon\n"
 "X-Poedit-SearchPath-0: globalPlugins\n"
 "X-Poedit-SearchPath-1: installTasks.py\n"
@@ -33,8 +33,8 @@ msgstr ""
 #. Translators: Summary for this add-on
 #. to be shown on installation and add-on information found in Add-ons Manager.
 #: addon\installTasks.py:22
-#: addon\globalPlugins\AIContentDescriber\__init__.py:94
-#: addon\globalPlugins\AIContentDescriber\__init__.py:198
+#: addon\globalPlugins\AIContentDescriber\__init__.py:95
+#: addon\globalPlugins\AIContentDescriber\__init__.py:205
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:103
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:113
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:123
@@ -47,34 +47,33 @@ msgid "AI Content Describer"
 msgstr "Описатель контента с помощью ИИ"
 
 #. translators: the button in the settings dialog to open the model manager
-#: addon\globalPlugins\AIContentDescriber\__init__.py:99
+#: addon\globalPlugins\AIContentDescriber\__init__.py:100
 msgid "Manage &models"
 msgstr "Управление &моделями"
 
 #. translators: the label for the dropdown that lists the currently available models
-#: addon\globalPlugins\AIContentDescriber\__init__.py:101
+#: addon\globalPlugins\AIContentDescriber\__init__.py:102
 msgid ""
 "Model (configure more in the manage models dialog, defaults to last used):"
 msgstr ""
 "Модель (дополнительные настройки в диалоге \"Управление моделями\", по "
 "умолчанию используется последняя используемая модель):"
 
-#. Translators: The label for the option to open results in browseable dialogs
-#: addon\globalPlugins\AIContentDescriber\__init__.py:103
+#. Translators: The label for the option to open results in browsable dialogs
+#: addon\globalPlugins\AIContentDescriber\__init__.py:104
 msgid ""
-"Open each result in a browseable dialog; Markdown will be rendered if "
-"possible"
+"Open each result in a browsable dialog; Markdown will be rendered if possible"
 msgstr ""
-"Открывать каждый результат в диалоге, доступном для просмотра; Markdown "
-"будет показан, если это возможно"
+"Открывать каждый результат в виртуальном просмотрщике; Markdown будет "
+"показан, если это возможно"
 
 #. Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:105
+#: addon\globalPlugins\AIContentDescriber\__init__.py:106
 msgid "Remember/cache descriptions of each item to save API quota"
 msgstr "Запоминать описания каждого элемента, чтобы сэкономить квоту API"
 
 #. Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:107
+#: addon\globalPlugins\AIContentDescriber\__init__.py:108
 msgid ""
 "Optimize images for size, may speed up detection in some situations "
 "(experimental)"
@@ -83,71 +82,76 @@ msgstr ""
 "некоторых ситуациях (экспериментально)"
 
 #. translators: current focus
-#: addon\globalPlugins\AIContentDescriber\__init__.py:152
+#: addon\globalPlugins\AIContentDescriber\__init__.py:153
 msgid "Current focus"
 msgstr "Текущий фокус"
 
 #. translators: navigator object
-#: addon\globalPlugins\AIContentDescriber\__init__.py:154
+#: addon\globalPlugins\AIContentDescriber\__init__.py:155
 msgid "Navigator object"
 msgstr "Объект Навигатора"
 
 #. translators: screenshot of entire window menu item
-#: addon\globalPlugins\AIContentDescriber\__init__.py:156
+#: addon\globalPlugins\AIContentDescriber\__init__.py:157
 msgid "Entire screen"
 msgstr "Весь экран"
 
 #. translators: picture from the local camera menu item
-#: addon\globalPlugins\AIContentDescriber\__init__.py:158
+#: addon\globalPlugins\AIContentDescriber\__init__.py:159
 msgid "Take a picture"
 msgstr "Сделать снимок"
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:161
+#: addon\globalPlugins\AIContentDescriber\__init__.py:162
 msgid "Detect face position"
 msgstr "Определить положение лица"
 
 #. self.detect_face_realtime_item = self.face_detection_menu.Append(wx.ID_ANY, _("Real-time face guidance"))
-#: addon\globalPlugins\AIContentDescriber\__init__.py:163
+#: addon\globalPlugins\AIContentDescriber\__init__.py:164
 msgid "Select camera"
 msgstr "Выберите камеру"
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:164
+#: addon\globalPlugins\AIContentDescriber\__init__.py:165
 msgid "Release the camera to make it usable by other applications"
 msgstr ""
 "Отключите камеру, чтобы её можно было использовать в других приложениях"
 
 #. translators: the label for the submenu that contains the options for face detection. Also informs the user that this feature does not require API access.
-#: addon\globalPlugins\AIContentDescriber\__init__.py:166
+#: addon\globalPlugins\AIContentDescriber\__init__.py:167
 msgid "Face Detection (no API required)"
 msgstr "Распознавание лиц (API не требуется)"
 
 #. translators: the name of the submenu used to select a model.
-#: addon\globalPlugins\AIContentDescriber\__init__.py:177
+#: addon\globalPlugins\AIContentDescriber\__init__.py:178
 msgid "Model"
 msgstr "Модель"
 
+#. translators: the label for the item to follow-up on the last description
+#: addon\globalPlugins\AIContentDescriber\__init__.py:181
+msgid "Follow-up on previous description"
+msgstr "Продолжение предыдущего описания"
+
 #. Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
-#: addon\globalPlugins\AIContentDescriber\__init__.py:229
+#: addon\globalPlugins\AIContentDescriber\__init__.py:236
 msgid ""
 "Please disable windows screen curtain before using AI content describer."
 msgstr ""
 "Пожалуйста, отключите затемнение экрана Windows перед использованием AI "
 "content describer."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:243
+#: addon\globalPlugins\AIContentDescriber\__init__.py:250
 msgid "Content is not visible"
 msgstr "Содержимое не видно"
 
 #. Translators: Message spoken when the attempt to take a picture of an object fails
-#: addon\globalPlugins\AIContentDescriber\__init__.py:254
+#: addon\globalPlugins\AIContentDescriber\__init__.py:261
 msgid "Could not snap an image of the requested object"
 msgstr "Не удалось сделать изображение нужного объекта"
 
 #. py-3.11: On some machines, it is rare, but cv2 might not work as expected due to a variety of reasons none of which I can reproduce.
 #. # In the meantime, establish a catchall exception and report it to the user so they can file an issue
 #. Translators: The message spoken when there was an error with the face detection interface.
-#: addon\globalPlugins\AIContentDescriber\__init__.py:267
-#: addon\globalPlugins\AIContentDescriber\__init__.py:292
+#: addon\globalPlugins\AIContentDescriber\__init__.py:274
+#: addon\globalPlugins\AIContentDescriber\__init__.py:299
 msgid ""
 "Error initializing the face detection interface. Please consult the NVDA log "
 "for more information. "
@@ -156,8 +160,8 @@ msgstr ""
 "журналу NVDA для получения дополнительной информации. "
 
 #. Translators: Message spoken when the face detection interface is loading
-#: addon\globalPlugins\AIContentDescriber\__init__.py:271
-#: addon\globalPlugins\AIContentDescriber\__init__.py:296
+#: addon\globalPlugins\AIContentDescriber\__init__.py:278
+#: addon\globalPlugins\AIContentDescriber\__init__.py:303
 msgid ""
 "Face detection interface is loading. Please try this command again after a "
 "couple seconds."
@@ -166,13 +170,13 @@ msgstr ""
 "через несколько секунд."
 
 #. translators: message spoken when grabbing the content of the current window is not possible
-#: addon\globalPlugins\AIContentDescriber\__init__.py:279
+#: addon\globalPlugins\AIContentDescriber\__init__.py:286
 msgid "Could not get window content"
 msgstr "Не удалось получить содержимое окна"
 
 #. translators: message spoken when the picture could not be taken due to an unknown error
-#: addon\globalPlugins\AIContentDescriber\__init__.py:303
-#: addon\globalPlugins\AIContentDescriber\__init__.py:313
+#: addon\globalPlugins\AIContentDescriber\__init__.py:310
+#: addon\globalPlugins\AIContentDescriber\__init__.py:320
 msgid ""
 "The picture could not be taken. Please ensure that your camera is not in use "
 "by another application and try again."
@@ -181,18 +185,18 @@ msgstr ""
 "используется другим приложением и повторите попытку."
 
 #. Translators: the message spoken when the picture is taken but the file could not be written.
-#: addon\globalPlugins\AIContentDescriber\__init__.py:308
+#: addon\globalPlugins\AIContentDescriber\__init__.py:315
 msgid "The picture could not be saved."
 msgstr "Не удалось сохранить изображение."
 
 #. Translators: Message spoken when the item copied to the clipboard is not an image
-#: addon\globalPlugins\AIContentDescriber\__init__.py:321
-#: addon\globalPlugins\AIContentDescriber\__init__.py:332
+#: addon\globalPlugins\AIContentDescriber\__init__.py:328
+#: addon\globalPlugins\AIContentDescriber\__init__.py:339
 msgid "The item on the clipboard is not an image."
 msgstr "Элемент в буфере обмена не является изображением."
 
 #. Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
-#: addon\globalPlugins\AIContentDescriber\__init__.py:326
+#: addon\globalPlugins\AIContentDescriber\__init__.py:333
 #, python-brace-format
 msgid ""
 "Unsupported image format. Please copy another file to the clipboard that is "
@@ -202,7 +206,7 @@ msgstr ""
 "формате {formats}"
 
 #. Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key or base URL
-#: addon\globalPlugins\AIContentDescriber\__init__.py:342
+#: addon\globalPlugins\AIContentDescriber\__init__.py:349
 msgid ""
 "To describe content, you must provide an API key or base URL in the AI image "
 "describer category of the NVDA settings dialog. Please consult add-on help "
@@ -214,7 +218,7 @@ msgstr ""
 "информации"
 
 #. Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
-#: addon\globalPlugins\AIContentDescriber\__init__.py:346
+#: addon\globalPlugins\AIContentDescriber\__init__.py:353
 msgid ""
 "To describe content, you must define a prompt by navigating to the AI image "
 "describer category of the NVDA settings dialog. Please consult add-on help "
@@ -225,41 +229,53 @@ msgstr ""
 "обратитесь к справке дополнения для получения подробной информации"
 
 #. Translators: Message spoken after the beep - when we have started fetching the description
-#: addon\globalPlugins\AIContentDescriber\__init__.py:350
+#: addon\globalPlugins\AIContentDescriber\__init__.py:362
 #, python-brace-format
 msgid "Retrieving description using {name}..."
 msgstr "Получение описания с помощью {name}..."
 
 #. Translators: Title of the browseable message
-#: addon\globalPlugins\AIContentDescriber\__init__.py:354
+#: addon\globalPlugins\AIContentDescriber\__init__.py:366
 msgid "Image description"
 msgstr "Описание изображения"
 
 #. translators: message spoken after the camera has been released successfully
-#: addon\globalPlugins\AIContentDescriber\__init__.py:394
+#: addon\globalPlugins\AIContentDescriber\__init__.py:407
 msgid "Success"
 msgstr "Успешно"
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:401
+#. translators: The message spoken when the user attempts to show the conversation dialog, but no service is available.
+#: addon\globalPlugins\AIContentDescriber\__init__.py:418
+msgid "No AI service or conversation available."
+msgstr "Нет доступных сервисов искусственного интеллекта или бесед."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:424
+msgid ""
+"Open the AI conversation dialog for follow-up questions and multimodal chat."
+msgstr ""
+"Открыввает диалог Беседа с искусственным интеллектом для последующих "
+"вопросов и мультимодального чата."
+
+#: addon\globalPlugins\AIContentDescriber\__init__.py:428
 msgid ""
 "Describe the image (or file path to an image) on the clipboard using AI."
 msgstr ""
-"Описать изображение (или изображение по пути к файлу) в буфере обмена с "
+"Описывает изображение (или изображение по пути к файлу) в буфере обмена с "
 "помощью ИИ."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:405
+#: addon\globalPlugins\AIContentDescriber\__init__.py:432
 msgid "Describe the contents of the current navigator object using AI."
 msgstr "Описывает содержимое текущего объекта навигатора с помощью ИИ."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:409
+#: addon\globalPlugins\AIContentDescriber\__init__.py:436
 msgid "Describe the contents of the currently focused item using AI."
 msgstr "Описывает содержимое элемента в фокусе с помощью ИИ."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:413
+#: addon\globalPlugins\AIContentDescriber\__init__.py:440
 msgid "Take a screenshot, then describe it using AI."
 msgstr "Делает снимок экрана, а затем описывает его с помощью ИИ."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:417
+#: addon\globalPlugins\AIContentDescriber\__init__.py:444
 msgid ""
 "Pop up a menu asking whether to describe the current focus, navigator "
 "object, or entire screen with AI."
@@ -267,11 +283,11 @@ msgstr ""
 "Открывает всплывающее меню с вопросом, Хотите ли вы описать текущий фокус, "
 "объект навигатора или весь экран с помощью ИИ."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:421
+#: addon\globalPlugins\AIContentDescriber\__init__.py:448
 msgid "Snap a picture using the selected camera, then describe it using AI."
 msgstr "Делает снимок экрана, а затем описывает его с помощью ИИ."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:425
+#: addon\globalPlugins\AIContentDescriber\__init__.py:452
 msgid ""
 "Describe the position of the face in the frame using the selected camera, if "
 "applicable."
@@ -287,8 +303,8 @@ msgid ""
 "need to be restarted when this process completes."
 msgstr ""
 "Некоторые зависимости, необходимые для запуска этого дополнения NVDA, "
-"отсутствуют на вашем компьютере. Хотите установить их сейчас? После "
-"завершения этого процесса вам нужно будет перезапустить NVDA."
+"отсутствуют на вашем компьютере. Хотите установить их сейчас? По завершении "
+"этого процесса вам нужно будет перезапустить NVDA."
 
 #. Translators: the message shown when the wrong dependency versions were found
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:115
@@ -298,7 +314,7 @@ msgid ""
 "when complete."
 msgstr ""
 "Некоторые зависимости, необходимые для запуска этого дополнения, устарели. "
-"Хотите попробовать обновить их сейчас? После завершения установки необходимо "
+"Хотите попробовать обновить их сейчас? По завершении установки необходимо "
 "будет перезапустить NVDA."
 
 #. Translators: the message shown when the addon has successfully retrieved the new dependencies, asking the user whether they would like to delete the old ones
@@ -331,8 +347,8 @@ msgid ""
 msgstr ""
 "К сожалению, для текущей версии NVDA пока нет доступных зависимостей. "
 "Пожалуйста, сообщите о проблеме в нашем баг-трекере или свяжитесь с "
-"разработчиком. Между тем, вы можете отключить приложение, чтобы убрать это "
-"сообщение при запуске."
+"разработчиком. Между тем, вы можете отключить дополнение, чтобы убрать это "
+"сообщение при запуске NVDA."
 
 #. Translators: Message shown when dependencies fail to download.
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:156
@@ -344,25 +360,25 @@ msgstr ""
 "запуска этого дополнения. Чтобы узнать больше, обратитесь к журналу NVDA. "
 
 #. translators: error
-#: addon\globalPlugins\AIContentDescriber\description_service.py:39
-#: addon\globalPlugins\AIContentDescriber\description_service.py:77
+#: addon\globalPlugins\AIContentDescriber\description_service.py:46
+#: addon\globalPlugins\AIContentDescriber\description_service.py:84
 msgid "error"
 msgstr "ошибка"
 
 #. translators: message spoken when we can't connect (error with connection)
-#: addon\globalPlugins\AIContentDescriber\description_service.py:45
-#: addon\globalPlugins\AIContentDescriber\description_service.py:90
+#: addon\globalPlugins\AIContentDescriber\description_service.py:52
+#: addon\globalPlugins\AIContentDescriber\description_service.py:97
 msgid "error making connection"
 msgstr "ошибка соединения"
 
 #. translators: message spoken when the connection is refused by our target
-#: addon\globalPlugins\AIContentDescriber\description_service.py:52
-#: addon\globalPlugins\AIContentDescriber\description_service.py:97
+#: addon\globalPlugins\AIContentDescriber\description_service.py:59
+#: addon\globalPlugins\AIContentDescriber\description_service.py:104
 msgid "error, connection refused by target"
 msgstr "ошибка, конечный адресат отклонил соединение"
 
 #. translators: the description for the GPT4 vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:293
+#: addon\globalPlugins\AIContentDescriber\description_service.py:425
 msgid ""
 "The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
 "2024,  this model has been superseded by GPT4 turbo which has consistently "
@@ -374,7 +390,7 @@ msgstr ""
 "информации."
 
 #. translators: the description for the GPT4 turbo model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:301
+#: addon\globalPlugins\AIContentDescriber\description_service.py:434
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
 "quality and understanding."
@@ -383,7 +399,7 @@ msgstr ""
 "улучшенным качеством и пониманием."
 
 #. translators: the description for the GPT4 omni model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:309
+#: addon\globalPlugins\AIContentDescriber\description_service.py:443
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -395,18 +411,18 @@ msgstr ""
 "дешевле."
 
 #. translators: message spoken when Google gemini encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:352
+#: addon\globalPlugins\AIContentDescriber\description_service.py:499
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "В Gemini произошла ошибка: {code}, {msg}"
 
 #. translators: the description for the Google Gemini pro vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:360
+#: addon\globalPlugins\AIContentDescriber\description_service.py:526
 msgid "Google's Gemini 1.5 flash model with vision capabilities."
 msgstr "Модель Gemini 1.5 flash от Google с возможностями восприятия образов."
 
 #. translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:367
+#: addon\globalPlugins\AIContentDescriber\description_service.py:533
 msgid ""
 "Gemini 1.5 Flash-8B is a small model designed for high volume and lower "
 "intelligence tasks."
@@ -415,7 +431,7 @@ msgstr ""
 "задач с большим объёмом данных и низким уровнем интеллекта."
 
 #. translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:374
+#: addon\globalPlugins\AIContentDescriber\description_service.py:540
 msgid ""
 "Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-"
 "range of complex reasoning tasks requiring more intelligence. 1.5 Pro can "
@@ -427,7 +443,7 @@ msgstr ""
 "данных одновременно."
 
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:382
+#: addon\globalPlugins\AIContentDescriber\description_service.py:548
 msgid ""
 "Gemini 2.0 Flash delivers next-gen features and improved capabilities, "
 "including superior speed, native tool use, multimodal generation, and a 1M "
@@ -439,7 +455,7 @@ msgstr ""
 "размером 1 м."
 
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:390
+#: addon\globalPlugins\AIContentDescriber\description_service.py:556
 msgid ""
 "Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost "
 "efficiency and low latency. Outperforms 1.5 Flash on the majority of "
@@ -451,12 +467,12 @@ msgstr ""
 "стоимости."
 
 #. translators: message spoken when Claude encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:442
+#: addon\globalPlugins\AIContentDescriber\description_service.py:605
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr "В Claude произошла ошибка. {err}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:449
+#: addon\globalPlugins\AIContentDescriber\description_service.py:631
 msgid ""
 "Anthropic's improvement over Claude 3 sonnet, this model features enhanced "
 "reasoning capabilities relative to its predecessor."
@@ -465,11 +481,11 @@ msgstr ""
 "обладает расширенными возможностями мышления по сравнению со своей "
 "предшественницей."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:455
+#: addon\globalPlugins\AIContentDescriber\description_service.py:637
 msgid "Anthropic's most powerful model for highly complex tasks."
 msgstr "Самая мощная модель Anthropic для решения очень сложных задач."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:461
+#: addon\globalPlugins\AIContentDescriber\description_service.py:643
 msgid ""
 "Anthropic's model with Ideal balance of intelligence and speed, excels for "
 "enterprise workloads."
@@ -477,7 +493,7 @@ msgstr ""
 "Модель Anthropic с идеальным балансом интеллекта и скорости отлично подходит "
 "для корпоративных рабочих нагрузок."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:467
+#: addon\globalPlugins\AIContentDescriber\description_service.py:649
 msgid ""
 "Anthropic's fastest and most compact model for near-instant responsiveness"
 msgstr ""
@@ -485,7 +501,7 @@ msgstr ""
 "мгновенное реагирование"
 
 #. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:519
+#: addon\globalPlugins\AIContentDescriber\description_service.py:724
 msgid ""
 "MistralAI's multimodal image LLM, achieving state-of-the-art results on "
 "MathVista, DocVQA, VQAv2 and other benchmarks."
@@ -494,21 +510,21 @@ msgstr ""
 "MathVista, DocVQA, VQAv2 и других тестах."
 
 #. translators: the description for the Ollama model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:529
+#: addon\globalPlugins\AIContentDescriber\description_service.py:734
 msgid "The quickest way to get up and running with large language models."
 msgstr "Это самый быстрый способ начать работу с большими языковыми моделями."
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:545
+#: addon\globalPlugins\AIContentDescriber\description_service.py:750
 msgid "Could not contact the provided base URL. "
 msgstr "Не удалось связаться с указанным базовым URL-адресом. "
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:574
+#: addon\globalPlugins\AIContentDescriber\description_service.py:782
 msgid "The response appears to be malformed. "
 msgstr "Ответ, по-видимому, был неправильно сформирован. "
 
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:589
+#: addon\globalPlugins\AIContentDescriber\description_service.py:818
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -527,7 +543,7 @@ msgstr ""
 "задачей для пользователя, который знает, что делает, вы можете найти "
 "основные шаги в документации по дополнению."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:613
+#: addon\globalPlugins\AIContentDescriber\description_service.py:857
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -763,9 +779,156 @@ msgid "Model:"
 msgstr "Модель:"
 
 #. Translators: Requires installation
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:237
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:250
 msgid " (requires installation)"
 msgstr " (требуется установка)"
+
+#. Translators: Default title for the multimodal conversation dialog
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:22
+#, python-brace-format
+msgid "AI Conversation - {model}"
+msgstr "Беседа с искусственным интеллектом - {model}"
+
+#. translators: The label of the read-only image field in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:37
+msgid "Image:"
+msgstr "Изображение:"
+
+#. translators: The label of the Browse button in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:46
+msgid "&Browse"
+msgstr "&Обзор"
+
+#. translators: The label of the Delete button in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:50
+msgid "&Delete"
+msgstr "&Удалить"
+
+#. Translators: the include original image checkbox in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:55
+msgid "Include original image in context"
+msgstr "Включать исходное изображение в контекст"
+
+#. translators: The label of the read-only multi-line history field in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:60
+msgid "&History:"
+msgstr "&История:"
+
+#. translators: The label of the message field in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:65
+msgid "Enter Your Message:"
+msgstr "Введите Своё сообщение:"
+
+#. translators: The label of the options button in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:74
+msgid "&Options"
+msgstr "&Параметры"
+
+#. translators: The label of the Send button in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:78
+msgid "&Send"
+msgstr "&Отправить"
+
+#. Translators: The label of the Close button in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:82
+msgid "Close"
+msgstr "Закрыть"
+
+#. translators: The text placed before a message sent by you in the conversation dialog's history buffer. This is also spoken upon receipt of a new message.
+#. Show user message immediately
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:101
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:151
+msgid "You: "
+msgstr "Вы: "
+
+#. translators: Value placed in the read-only image field when the original image has been added to the chat in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:107
+msgid "Original image (from initial description)"
+msgstr "Исходное изображение (из первоначального описания)"
+
+#. translators: Value placed in the read-only image field of the conversation dialog when a new image has been attached.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:110
+msgid "Image attached"
+msgstr "Изображение прикреплено"
+
+#. translators: The text placed before a message from the AI in the conversation dialog's history buffer. This is also spoken upon receipt of a new message.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:113
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:187
+msgid "AI: "
+msgstr "Искусственный интеллект: "
+
+#. translators: The prompt to choose an image in the file dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:123
+msgid "Choose an image"
+msgstr "Выберите изображение"
+
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:124
+msgid ""
+"Image files (*.jpg;*.jpeg;*.png;*.gif;*.webp)|*.jpg;*.jpeg;*.png;*.gif;*.webp"
+msgstr ""
+"Файлы изображений (*.jpg;*.jpeg;*.png;*.gif;*.webp)|"
+"*.jpg;*.jpeg;*.png;*.gif;*.webp"
+
+#. Show thinking indicator
+#. translators: The message shown in the multi-line read-only history field when the AI is processing the user's input.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:156
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:183
+msgid "AI: (thinking...)"
+msgstr "Искусственный интеллект: (размышляет...)"
+
+#. This shouldn't happen, but handle gracefully
+#. translators: Message spoken when there is no active conversation in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:168
+msgid "No active conversation. Please restart the dialog."
+msgstr "Активного диалога нет. Пожалуйста, перезапустите диалог."
+
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:197
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:198
+msgid "Error: "
+msgstr "Ошибка: "
+
+#. translators: The clear conversation option under options in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:206
+msgid "&Clear Conversation"
+msgstr "&Очистить беседу"
+
+#. translators: The save output to file option under options in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:209
+msgid "&Save Output to File"
+msgstr "&Сохранить вывод в файл"
+
+#. translators: Message spoken when the conversation has been cleared in the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:220
+msgid "Conversation cleared"
+msgstr "Беседа очищена"
+
+#. translators: The prompt in the save file dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:227
+msgid "Save conversation"
+msgstr "Сохранить беседу"
+
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:228
+msgid "Text files (*.txt)|*.txt"
+msgstr "Текстовые файлы (*.txt)|*.txt"
+
+#. translators: The message spoken when a conversation has been saved to disk from the conversation dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:238
+msgid "Conversation saved"
+msgstr "Беседа сохранена"
+
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:240
+msgid "Error saving file"
+msgstr "Ошибка при сохранении файла"
+
+#. translators: The body of the yes/no dialog asking the user whether they would like to attach the image they just described to the open conversation.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:260
+msgid "Would you like to attach this image to the current conversation?"
+msgstr "Хотели бы вы прикрепить это изображение к текущей беседе?"
+
+#. translators: The title of the attach image yes/no dialog.
+#: addon\globalPlugins\AIContentDescriber\multimodal_input.py:262
+msgid "Attach Image"
+msgstr "Прикрепить изображение"
 
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
@@ -778,32 +941,41 @@ msgid ""
 "connected camera.\n"
 "Though content descriptions are quite detailed, they may not always be "
 "completely accurate or reflect real world information.\n"
-"To begin with GPT, head to https://platform.openai.com/account/api-keys and "
-"create an account, then create a key for interacting with the API. See add-"
-"on documentation for more information on this.\n"
-"Then, choose the \"AI content describer\" category from NVDA's settings "
-"dialog -> manage models and enter your API key.\n"
 "Press NVDA+shift+i to pop up a menu asking how you wish to describe based on "
 "the current position, or NVDA+shift+u to describe the navigator object, or "
 "NVDA+shift+y for an image that has been copied to the clipboard such as in "
-"windows explorer. Other keystrokes are customizable from the input gestures "
-"dialog."
+"windows explorer, or NVDA+shift+c to ask additional questions about a "
+"description. Other keystrokes are customizable from the input gestures "
+"dialog.\n"
+"By default, usage of GPT4 is free, thanks to the generocity of the team at "
+"PollinationsAI.\n"
+"If you would like to use other models from OpenAI, head to https://"
+"platform.openai.com/account/api-keys and create an account, then create a "
+"key for interacting with the API.\n"
+"Then, choose the \"AI content describer\" category from NVDA's settings "
+"dialog -> manage models and enter your API key.\n"
+"The process is similar for other model providers, see add-on documentation "
+"for more information on this."
 msgstr ""
 "Это дополнение позволяет описать объект в фокусе, объект навигатора или "
-"экран с помощью популярных языковых моделей искусственного интеллекта с "
-"поддержкой компьютерного зрения, таких как Claude, Gemini или GPT4.\n"
-"Оно также позволяет вам понять, где находится лицо в кадре, с помощью "
+"экран с помощью популярных языковых моделей ИИ с поддержкой зрения, таких "
+"как Claude, Gemini или GPT4.\n"
+"Оно также позволяет понять, где находится лицо в кадре с помощью "
 "подключённой камеры.\n"
 "Хотя описания контента довольно подробны, они не всегда могут быть полностью "
-"точными или отражать реальную информацию.\n"
-"Для начала работы с GPT перейдите на страницу https://platform.openai.com/"
-"account/api-keys и создайте учётную запись, а затем создайте ключ для "
-"взаимодействия с API. Дополнительную информацию об этом см. В документации "
-"дополнения. \n"
-"Затем в диалоге настроек NVDA выберите категорию \"описатель контента с "
-"помощью ИИ\" и введите свой ключ API.\n"
-"Нажмите NVDA + shift + i, чтобы вызвать меню с запросом о способе описания "
-"объекта в фокусе, или NVDA+shift+u, чтобы описать объект навигатора, или "
-"NVDA+shift+y для изображения, скопированного в буфер обмена, например, в "
-"проводнике Windows.\n"
-"Другие сочетания клавиш можно настроить в диалоге жесты ввода."
+"точными или отражать информацию из реального мира.\n"
+"Нажмите NVDA+shift+i, чтобы вызвать меню с вопросом о том, как вы хотите "
+"описать, основываясь на текущей позиции, или NVDA+shift+u, чтобы описать "
+"объект навигатора, или NVDA+shift+y для изображения, которое было "
+"скопировано в буфер обмена, например в проводнике Windows, или NVDA+shift+c, "
+"чтобы задать дополнительные вопросы об описании. Другие сочетания клавиш "
+"настраиваются в диалоге жесты ввода.\n"
+"По умолчанию GPT4 используется бесплатно, благодаря щедрости команды "
+"PollinationsAI.\n"
+"Если вы хотите использовать другие модели от OpenAI, зайдите на сайт https://"
+"platform.openai.com/account/api-keys и создайте учётную запись, затем "
+"создайте ключ для взаимодействия с API.\n"
+"Затем в диалоге настроек NVDA -> Управление моделями выберите категорию "
+"«Описатель содержимого AI» и введите свой ключ API.\n"
+"Для других поставщиков моделей процесс аналогичен, подробнее об этом читайте "
+"в документации к дополнению."
