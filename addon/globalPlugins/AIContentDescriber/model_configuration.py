@@ -324,6 +324,19 @@ class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
 	title = model.name
 
 
+class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.Grok2Vision()
+	title = model.name
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_api_key_field(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
 description_service.PollinationsAI.configurationPanel = PollinationsAIConfigurationPanel
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.O4Mini.configurationPanel = O4MiniConfigurationPanel
@@ -344,6 +357,7 @@ description_service.Claude3_5Sonnet.configurationPanel = Claude3_5SonnetConfigur
 description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel
 description_service.Claude3Sonnet.configurationPanel = Claude3SonnetConfigurationPanel
 description_service.Claude3Opus.configurationPanel = Claude3OpusConfigurationPanel
+description_service.Grok2Vision.configurationPanel = Grok2VisionConfigurationPanel
 models_dialog_parent = None
 
 

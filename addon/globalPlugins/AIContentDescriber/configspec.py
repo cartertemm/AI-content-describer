@@ -125,33 +125,35 @@ cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [OpenAI O3]
-api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [OpenAI O3 pro]
-api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [OpenAI O3 mini]
-api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
 [OpenAI O4 mini]
-api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[Grok 2 vision]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=250)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
 
 [global]
 optimize_for_size = boolean(default=False)

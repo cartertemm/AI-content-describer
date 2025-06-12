@@ -756,6 +756,22 @@ class PixtralLarge(MistralAI):
 	about_url = "https://mistral.ai/news/pixtral-large/"
 
 
+class Grok2Vision(BaseGPT):
+	name = "Grok 2 vision"
+	# translators: the description for the xAI Grok 2 model in the model configuration dialog
+	description = _("xAI's flagship multimodal model with advanced reasoning capabilities. Excels at enterprise tasks like data extraction, programming, and text summarization with superior domain knowledge in finance, healthcare, law, and science.")
+	about_url = "https://x.ai/news/grok-2"
+	internal_model_name = "grok-2-vision-latest"
+	openai_url = "https://api.x.ai/v1/chat/completions"
+	supported_formats = [
+		".gif",
+		".jpeg",
+		".jpg",
+		".png",
+		".webp",
+	]
+
+
 class Ollama(BaseDescriptionService):
 	name = "Ollama"
 	needs_api_key = False
@@ -917,6 +933,7 @@ models = [
 	O3Pro(),
 	GPT4Turbo(),
 	GPT4(),
+	Grok2Vision(),
 	Claude3_5Sonnet(),
 	Claude3Haiku(),
 	Claude3Opus(),
