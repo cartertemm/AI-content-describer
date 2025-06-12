@@ -183,6 +183,26 @@ class GPT4OConfigurationPanel(GPT4ConfigurationPanel):
 	title = model.name
 
 
+class O4MiniConfigurationPanel(GPT4ConfigurationPanel):
+	model = description_service.O4Mini()
+	title = model.name
+
+
+class O3ConfigurationPanel(GPT4ConfigurationPanel):
+	model = description_service.O3()
+	title = model.name
+
+
+class O3MiniConfigurationPanel(GPT4ConfigurationPanel):
+	model = description_service.O3Mini()
+	title = model.name
+
+
+class O3ProConfigurationPanel(GPT4ConfigurationPanel):
+	model = description_service.O3Pro()
+	title = model.name
+
+
 class PollinationsAIConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.PollinationsAI()
 	title = model.name
@@ -306,6 +326,10 @@ class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
 
 description_service.PollinationsAI.configurationPanel = PollinationsAIConfigurationPanel
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
+description_service.O4Mini.configurationPanel = O4MiniConfigurationPanel
+description_service.O3.configurationPanel = O3ConfigurationPanel
+description_service.O3Mini.configurationPanel = O3MiniConfigurationPanel
+description_service.O3Pro.configurationPanel = O3ProConfigurationPanel
 description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
 description_service.Gemini2_0FlashLitePreview.configurationPanel = Gemini2_0FlashLitePreviewConfigurationPanel
