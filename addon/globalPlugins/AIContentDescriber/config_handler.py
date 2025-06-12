@@ -24,7 +24,7 @@ def load_config():
 	configspec.seek(0)
 	try:
 		config = ConfigObj(
-			infile=path, configspec=configspec, encoding="UTF8", create_empty=True
+			infile=path, configspec=configspec, default_encoding="UTF8", create_empty=True
 		)
 	except ConfigObjError as exc:
 		log.exception("While loading the configuration file")

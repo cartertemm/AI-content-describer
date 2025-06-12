@@ -32,7 +32,7 @@ If you would like to use other models from OpenAI, head to https://platform.open
 Then, choose the "AI content describer" category from NVDA's settings dialog -> manage models and enter your API key.
 The process is similar for other model providers, see add-on documentation for more information on this."""),
 	# version
-	"addon_version": "2025.06.05",
+	"addon_version": "2025.06.09",
 	# Author(s)
 	"addon_author": "Carter Temm <cartertemm@gmail.com> and various translators",
 	# URL for the add-on documentation support
@@ -44,7 +44,7 @@ The process is similar for other model providers, see add-on documentation for m
 	# Minimum NVDA version supported (e.g. "2018.3.0", minor version is optional)
 	"addon_minimumNVDAVersion": "2023.1",
 	# Last NVDA version supported/tested (e.g. "2018.4.0", ideally more recent than minimum version)
-	"addon_lastTestedNVDAVersion": "2024.1",
+	"addon_lastTestedNVDAVersion": "2024.4",
 	# Add-on update channel (default is None, denoting stable releases,
 	# and for development releases, use "dev".)
 	# Do not change unless you know what you are doing!

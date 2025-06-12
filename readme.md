@@ -193,7 +193,7 @@ The following people have worked on the addon.
 * [Mazen](https://github.com/mzanm): markdown implementation, other code contributions
 * [Kostenkov-2021](https://github.com/Kostenkov-2021): Russian translation
 * [Nidza07](https://github.com/nidza07): Serbian translation
-* [Heorhii Halas](nvda.translation.uk@gmail.com): Ukrainian translation
+* [Heorhii Halas](nvda.translation.uk@gmail.com) and [George-br](https://github.com/George-br): Ukrainian translation
 * [Umut Korkmaz](umutkork@gmail.com): Turkish translation
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): French translation
 * [Lukas](https://4sensegaming.cz): Czech translation
