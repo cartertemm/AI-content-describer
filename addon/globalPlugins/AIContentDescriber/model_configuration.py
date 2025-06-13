@@ -314,11 +314,6 @@ class ClaudeConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
-class Claude3_5SonnetConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3_5Sonnet()
-	title = model.name
-
-
 class Claude3OpusConfigurationPanel(ClaudeConfigurationPanel):
 	model = description_service.Claude3Opus()
 	title = model.name
@@ -332,6 +327,37 @@ class Claude3SonnetConfigurationPanel(ClaudeConfigurationPanel):
 class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
 	model = description_service.Claude3Haiku()
 	title = model.name
+
+
+class Claude3_5SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3_5Sonnet()
+	title = model.name
+
+class Claude3_5HaikuConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3_5Haiku()
+	title = model.name
+
+
+class Claude3_5SonnetV2ConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3_5SonnetV2()
+	title = model.name
+
+
+class Claude3_7SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude3_7Sonnet()
+	title = model.name
+
+
+class Claude4OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4Opus()
+	title = model.name
+
+
+class Claude4SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4Sonnet()
+	title = model.name
+
+
 
 
 class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
@@ -370,6 +396,11 @@ description_service.Claude3Opus.configurationPanel = Claude3OpusConfigurationPan
 description_service.Grok2Vision.configurationPanel = Grok2VisionConfigurationPanel
 description_service.Gemini2_5FlashPreview.configurationPanel = Gemini2_5FlashPreviewConfigurationPanel
 description_service.Gemini2_5ProPreview.configurationPanel = Gemini2_5ProPreviewConfigurationPanel
+description_service.Claude4Opus.configurationPanel = Claude4OpusConfigurationPanel
+description_service.Claude4Sonnet.configurationPanel = Claude4SonnetConfigurationPanel
+description_service.Claude3_7Sonnet.configurationPanel = Claude3_7SonnetConfigurationPanel
+description_service.Claude3_5Haiku.configurationPanel = Claude3_5HaikuConfigurationPanel
+description_service.Claude3_5SonnetV2.configurationPanel = Claude3_5SonnetV2ConfigurationPanel
 models_dialog_parent = None
 
 
