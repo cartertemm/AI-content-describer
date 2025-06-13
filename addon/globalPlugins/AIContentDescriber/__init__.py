@@ -463,5 +463,5 @@ class GlobalPlugin(GlobalPlugin):
 		"kb:shift+NVDA+u": "describe_navigator",
 		"kb:shift+NVDA+y": "describe_clipboard",
 		"kb:shift+NVDA+j": "describe_face",
-		"kb:shift+NVDA+c": "show_conversation",
+		"kb:alt+NVDA+c": "show_conversation",
 	}

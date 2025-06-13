@@ -134,7 +134,7 @@ Five hotkeys are bound by default:
 * NVDA+shift+u: Describe the contents of the current navigator object using AI.
 * NVDA+shift+y: Describe the image (or file path to an image) on the clipboard using AI.
 * NVDA+shift+j: Describe the position of your face in the frame of the selected camera. If you have multiple cameras connected, navigate to the AI content describer menu (NVDA+shift+i) and choose the one you would like to use with the "select camera" item in the face detection submenu.
-* NVDA+shift+c: Open the AI conversation dialog to ask follow-up questions.
+* NVDA+alt+i: Open the AI conversation dialog to ask follow-up questions.
 
 Three gestures are unbound:
 
