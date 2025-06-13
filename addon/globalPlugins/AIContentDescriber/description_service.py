@@ -624,7 +624,7 @@ class Anthropic(BaseDescriptionService):
 					"type": "image",
 					"source": {
 						"type": "base64",
-						"media_type": "image/jpeg",
+						"media_type": "image/png",
 						"data": msg["image"]
 					}
 				})
@@ -674,12 +674,6 @@ class Anthropic(BaseDescriptionService):
 		return content
 
 
-class Claude3_5Sonnet(Anthropic):
-	name = "Claude 3.5 Sonnet"
-	description = _("Anthropic's improvement over Claude 3 sonnet, this model features enhanced reasoning capabilities relative to its predecessor.")
-	internal_model_name = "claude-3-5-sonnet-20240620"
-
-
 class Claude3Opus(Anthropic):
 	name = "Claude 3 Opus"
 	description = _("Anthropic's most powerful model for highly complex tasks.")
@@ -696,6 +690,52 @@ class Claude3Haiku(Anthropic):
 	name = "Claude 3 Haiku"
 	description = _("Anthropic's fastest and most compact model for near-instant responsiveness")
 	internal_model_name = "claude-3-haiku-20240307"
+
+
+class Claude3_5Sonnet(Anthropic):
+	name = "Claude 3.5 Sonnet"
+	description = _("Anthropic's improvement over Claude 3 sonnet, this model features enhanced reasoning capabilities relative to its predecessor.")
+	internal_model_name = "claude-3-5-sonnet-20240620"
+
+
+class Claude3_5Haiku(Anthropic):
+	name = "Claude 3.5 Haiku"
+	# translators: the description for the Claude 3.5 Haiku model in the model configuration dialog
+	description = _("Anthropic's next generation fastest model with improved reasoning across every skill set. Surpasses Claude 3 Opus on many benchmarks while maintaining speed and cost-effectiveness.")
+	about_url = "https://www.anthropic.com/claude/haiku"
+	internal_model_name = "claude-3-5-haiku-20241022"
+
+
+class Claude3_5SonnetV2(Anthropic):
+	name = "Claude 3.5 Sonnet v2"
+	# translators: the description for the Claude 3.5 Sonnet v2 model in the model configuration dialog
+	description = _("Anthropic's upgraded Claude 3.5 Sonnet with significant improvements in coding and computer use capabilities. Features enhanced reasoning and the ability to interact with computer interfaces.")
+	about_url = "https://www.anthropic.com/news/3-5-models-and-computer-use"
+	internal_model_name = "claude-3-5-sonnet-20241022"
+
+
+class Claude3_7Sonnet(Anthropic):
+	name = "Claude 3.7 Sonnet"
+	# translators: the description for the Claude 3.7 Sonnet model in the model configuration dialog
+	description = _("Anthropic's most intelligent model to date and the first hybrid reasoning model. Features extended thinking capabilities for complex problem-solving with step-by-step reasoning.")
+	about_url = "https://docs.anthropic.com/en/docs/about-claude/models"
+	internal_model_name = "claude-3-7-sonnet-20250219"
+
+
+class Claude4Sonnet(Anthropic):
+	name = "Claude 4 Sonnet"
+	# translators: the description for the Claude 4 Sonnet model in the model configuration dialog
+	description = _("Anthropic's high-performance model with exceptional reasoning and efficiency. Significant upgrade to Claude Sonnet 3.7 with superior coding and enhanced instruction following.")
+	about_url = "https://www.anthropic.com/claude/sonnet"
+	internal_model_name = "claude-sonnet-4-20250514"
+
+
+class Claude4Opus(Anthropic):
+	name = "Claude 4 Opus"
+	# translators: the description for the Claude 4 Opus model in the model configuration dialog
+	description = _("Anthropic's most capable and intelligent model yet. Sets new standards in complex reasoning and advanced coding with sustained performance on long-running tasks requiring focused effort.")
+	about_url = "https://www.anthropic.com/claude/opus"
+	internal_model_name = "claude-opus-4-20250514"
 
 
 class MistralAI(BaseDescriptionService):
@@ -952,10 +992,15 @@ models = [
 	GPT4Turbo(),
 	GPT4(),
 	Grok2Vision(),
+	Claude4Sonnet(),
+	Claude4Opus(),
+	Claude3_7Sonnet(),
+	Claude3_5SonnetV2(),
 	Claude3_5Sonnet(),
+	Claude3_5Haiku(),
 	Claude3Haiku(),
-	Claude3Opus(),
 	Claude3Sonnet(),
+	Claude3Opus(),
 	Gemini2_5FlashPreview(),
 	Gemini2_5ProPreview(),
 	Gemini2_0FlashLitePreview(),
