@@ -10,7 +10,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT4, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude 3, Ollama, and llama.cpp)
+* Supports multiple providers (OpenAI's GPT, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude 3, XAI's Grok, Ollama, and llama.cpp)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -36,10 +36,11 @@ Now, the possibilities are almost endless. You might:
 
 ## Models
 
-* [GPT4 vision](https://platform.openai.com/docs/guides/vision)
-* [Google Gemini pro vision](https://blog.google/technology/ai/google-gemini-ai/), including the latest 1.5 Flash, 1.5 Flash 8B, Flash 2.0, and Flash 2.0 Lite Preview models.
-* [Claude 3 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
+* [GPT4 vision](https://platform.openai.com/docs/guides/vision), including 4O, O1, O3, and derivatives
+* [Google Gemini pro vision](https://blog.google/technology/ai/google-gemini-ai/), including the latest 1.5 Flash, 1.5 Flash 8B, Flash 2.0,  Flash 2.0 Lite Preview, 2.5 Flash, and 2.5 Pro models.
+* [Claude 3 and 4 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
+* [Grok-2](https://x.ai/news/grok-2)
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
 
