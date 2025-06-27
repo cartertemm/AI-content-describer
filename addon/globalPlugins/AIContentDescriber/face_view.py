@@ -132,7 +132,7 @@ class FaceDetectionInterface:
 			wx.CallAfter(ui.message, _("No face detected. Please ensure your face is in the frame and that your camera is not covered up."))
 		elif len(faces) > 1:
 			# translators: the message spoken when more than one face was detected
-			wx.CallAfter(ui.message, _(f"{len(faces)} faces detected near the frame. Please try for another angle with fewer background objects."))
+			wx.CallAfter(ui.message, _("{} faces detected near the frame. Please try for another angle with fewer background objects.".format(len(faces))))
 		else:
 			for face in faces:
 				direction = self.get_direction(frame, face)
