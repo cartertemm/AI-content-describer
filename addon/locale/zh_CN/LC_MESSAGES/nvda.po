@@ -148,7 +148,7 @@ msgstr "无法截取当前对象"
 msgid ""
 "Error initializing the face detection interface. Please consult the NVDA log "
 "for more information. "
-msgstr "初始化面部检测接口时出错。请查阅 NVDA 日志以获取更多信息。"
+msgstr "初始化摄像头接口时出错。请查阅 NVDA 日志以获取更多信息。"
 
 #. Translators: Message spoken when the face detection interface is loading
 #: addon\globalPlugins\AIContentDescriber\__init__.py:278
@@ -156,7 +156,7 @@ msgstr "初始化面部检测接口时出错。请查阅 NVDA 日志以获取更
 msgid ""
 "Face detection interface is loading. Please try this command again after a "
 "couple seconds."
-msgstr "面部检测正在加载。请稍后重试。"
+msgstr "正在加载摄像头接口。请稍后重试。"
 
 #. translators: message spoken when grabbing the content of the current window is not possible
 #: addon\globalPlugins\AIContentDescriber\__init__.py:286
@@ -767,7 +767,7 @@ msgstr "摄像头不可用。请选择另一个并再次尝试"
 msgid ""
 "Starting the face detection interface. This may take a few seconds. Please "
 "wait."
-msgstr "正在启动面部检测接口。这可能需要几秒钟。请稍候。"
+msgstr "正在启动摄像头接口。这可能需要几秒钟。请稍候。"
 
 #. translators: message spoken when we could not interface with the chosen camera
 #: addon\globalPlugins\AIContentDescriber\face_view.py:192
@@ -882,7 +882,7 @@ msgstr "历史记录(&H)："
 #. translators: The label of the message field in the conversation dialog.
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:65
 msgid "Enter Your Message:"
-msgstr "输入消息："
+msgstr "输入消息(&E)："
 
 #. translators: The label of the options button in the conversation dialog.
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:74
@@ -897,7 +897,7 @@ msgstr "发送(&S)"
 #. Translators: The label of the Close button in the conversation dialog.
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:82
 msgid "Close"
-msgstr "关闭"
+msgstr "关闭(&C)"
 
 #. translators: The text placed before a message sent by you in the conversation dialog's history buffer. This is also spoken upon receipt of a new message.
 #. Show user message immediately
