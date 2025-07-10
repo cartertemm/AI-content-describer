@@ -55,8 +55,14 @@ As of version 2025.06.05, usage of GPT4 is free thanks to the generocity of the 
 If you have the resources and interest in exploring additional models, you can always use your own API key and reduce requests to their servers. If you don't, feel free to skip down to the `usage` section of this document.
 
 Follow the instructions below to obtain an API key from a supported provider.
-If you are unsure about which one to use, the consensus of this addon's developer and testers is that Gemini currently offers more reasonable pricing, while Open-AI seems to provide a higher degree of accuracy. Claude 3 haiku is the cheapest and fastest option but the quality is hit or miss.
-Of course, these results are highly dependent on the task at hand, so we recommend experimenting with different models and prompts to find what works best.
+
+### Which model should I use?
+
+We used to provide recommendations on the cheapest and highest quality options, but the landscape is changing so rapidly that it isn't possible to keep this up-to-date.
+
+The short answer is that most of the state-of-the-art models have gotten to a point where they are accurate for most every-day use cases, so choose the provider that you are familiar with.
+
+Most people want to strike a balance between accuracy and cost. The [LLM arena leaderboard](https://lmarena.ai/leaderboard) (specifically the vision category) measures correctness, while [LLM pricing calculator](https://www.llm-prices.com/) outlines pricing.
 
 ### Obtaining an API key from Open-AI:
 
