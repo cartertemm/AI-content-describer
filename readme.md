@@ -92,6 +92,27 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 4. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral.
 5. Fund the account, if applicable.
 
+
+### Activating the VIVO BlueLM Vision Model via NVDA-CN
+
+This service is made available free of charge through a partnership between VIVO (vivo.com.cn) and the NVDA Chinese Community (NVDACN). It provides high-quality multimodal recognition and is the recommended model for all users, especially those getting started.
+
+To use this model, you only need a free NVDA-CN account.
+
+1.  Create an Account: Go to the NVDA-CN registration page: [https://nvdacn.com/admin/register.php](https://nvdacn.com/admin/register.php).
+    * **Note**: The page is currently in Chinese. We recommend using your browser's built-in translation feature to complete the form.
+    * You will be asked for a username, password, and a valid email address. Be sure to store your password securely, as automated password recovery is not yet implemented.
+2.  Verify Your Email: Check your inbox for a verification email and click the link inside to activate your account.
+3.  Configure the Add-on:
+    * Open the NVDA settings dialog and navigate to the "AI Content Describer" category.
+    * Select the "Manage models" button.
+    * From the list of providers, choose "vivo BlueLM Vision (NVDA-CN)".
+    * Enter your NVDA-CN username and password into the corresponding fields.
+    * Click OK to save your credentials.
+
+You are now set up to use the VIVO model. For any account-related issues, you can contact the NVDA-CN team at `support@nvdacn.com`.
+
+
 ### Setting up Ollama
 
 This is currently the preferred option for a local setup.
