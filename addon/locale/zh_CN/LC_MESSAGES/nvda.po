@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2025.06.17'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2025-06-27 10:52+0800\n"
-"PO-Revision-Date: 2025-06-27 12:15+0800\n"
+"POT-Creation-Date: 2025-07-12 18:03+0800\n"
+"PO-Revision-Date: 2025-07-12 18:09+0800\n"
 "Last-Translator: \n"
 "Language-Team: Cary-rowen\n"
 "Language: zh_CN\n"
@@ -325,25 +325,25 @@ msgstr ""
 "信息。"
 
 #. translators: error
-#: addon\globalPlugins\AIContentDescriber\description_service.py:46
-#: addon\globalPlugins\AIContentDescriber\description_service.py:84
+#: addon\globalPlugins\AIContentDescriber\description_service.py:48
+#: addon\globalPlugins\AIContentDescriber\description_service.py:86
 msgid "error"
 msgstr "错误"
 
 #. translators: message spoken when we can't connect (error with connection)
-#: addon\globalPlugins\AIContentDescriber\description_service.py:52
-#: addon\globalPlugins\AIContentDescriber\description_service.py:97
+#: addon\globalPlugins\AIContentDescriber\description_service.py:54
+#: addon\globalPlugins\AIContentDescriber\description_service.py:99
 msgid "error making connection"
 msgstr "连接时出错"
 
 #. translators: message spoken when the connection is refused by our target
-#: addon\globalPlugins\AIContentDescriber\description_service.py:59
-#: addon\globalPlugins\AIContentDescriber\description_service.py:104
+#: addon\globalPlugins\AIContentDescriber\description_service.py:61
+#: addon\globalPlugins\AIContentDescriber\description_service.py:106
 msgid "error, connection refused by target"
 msgstr "错误，连接被目标拒绝"
 
 #. translators: the description for the GPT4 vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:426
+#: addon\globalPlugins\AIContentDescriber\description_service.py:428
 msgid ""
 "The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
 "2024,  this model has been superseded by GPT4 turbo which has consistently "
@@ -353,7 +353,7 @@ msgstr ""
 "被 GPT-4 Turbo 取代，后者在涉及视觉理解的任务中一直取得更好的指标。"
 
 #. translators: the description for the GPT4 turbo model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:434
+#: addon\globalPlugins\AIContentDescriber\description_service.py:436
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
 "quality and understanding. This model will soon be deprecated so we "
@@ -363,7 +363,7 @@ msgstr ""
 "议切换到 GPT-4o。"
 
 #. translators: the description for the GPT4 omni model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:442
+#: addon\globalPlugins\AIContentDescriber\description_service.py:444
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -373,7 +373,7 @@ msgstr ""
 "Turbo 相同的高智能，但效率更高，能够以两倍的速度和一半的成本生成文本。"
 
 #. translators: the description for the OpenAI O3 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:450
+#: addon\globalPlugins\AIContentDescriber\description_service.py:452
 msgid ""
 "Released in April 2025, o3 is a well-rounded and powerful model across "
 "domains. It sets a new standard for math, science, coding, and visual "
@@ -386,7 +386,7 @@ msgstr ""
 "及文本、代码和图像分析的多步骤问题。"
 
 #. translators: the description for the OpenAI O3 pro model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:458
+#: addon\globalPlugins\AIContentDescriber\description_service.py:460
 msgid ""
 "Released in June 2025, O3 pro is an upgraded version of O3. It is designed "
 "to think longer and provide the most reliable responses. Because o3-pro has "
@@ -401,7 +401,7 @@ msgstr ""
 "值得的。请不要忘记调整超时设置。"
 
 #. translators: the description for the OpenAI O3 mini model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:466
+#: addon\globalPlugins\AIContentDescriber\description_service.py:468
 msgid ""
 "Released in January 2025, this powerful and fast model advances the "
 "boundaries of what small models can achieve, delivering exceptional STEM "
@@ -413,7 +413,7 @@ msgstr ""
 "迟。"
 
 #. translators: the description for the OpenAI O4 mini model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:474
+#: addon\globalPlugins\AIContentDescriber\description_service.py:476
 msgid ""
 "Released in April 2025, o4-mini is a smaller model optimized for fast, cost-"
 "efficient reasoning. It achieves remarkable performance for its size and "
@@ -428,25 +428,25 @@ msgstr ""
 "的大批量、高吞吐量问题的有力选择。请不要忘记调整超时设置。"
 
 #. translators: message spoken when Google gemini encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:529
+#: addon\globalPlugins\AIContentDescriber\description_service.py:531
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "Gemini 遇到错误：{code}，{msg}"
 
 #. translators: the description for the Google Gemini pro vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:556
+#: addon\globalPlugins\AIContentDescriber\description_service.py:558
 msgid "Google's Gemini 1.5 flash model with vision capabilities."
 msgstr "Google Gemini 1.5 Flash 模型，具备视觉能力。"
 
 #. translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:564
+#: addon\globalPlugins\AIContentDescriber\description_service.py:566
 msgid ""
 "Gemini 1.5 Flash-8B is a small model designed for high volume and lower "
 "intelligence tasks."
 msgstr "Gemini 1.5 Flash-8B 是一款专为大批量和较低智能需求任务设计的小型模型。"
 
 #. translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:572
+#: addon\globalPlugins\AIContentDescriber\description_service.py:574
 msgid ""
 "Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-"
 "range of complex reasoning tasks requiring more intelligence. 1.5 Pro can "
@@ -456,7 +456,7 @@ msgstr ""
 "化。1.5 Pro 可以一次性处理大量数据。"
 
 #. translators: the description for Google's Gemini 2.5 Flash Preview model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:580
+#: addon\globalPlugins\AIContentDescriber\description_service.py:582
 msgid ""
 "Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for "
 "tasks like summarization, chat applications, data extraction, and captioning."
@@ -465,7 +465,7 @@ msgstr ""
 "取和字幕生成等任务。"
 
 #. translators: the description for Google's Gemini 2.5 Pro Preview model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:588
+#: addon\globalPlugins\AIContentDescriber\description_service.py:590
 msgid ""
 "Gemini 2.5 Pro models are capable of reasoning through their thoughts before "
 "responding, resulting in enhanced performance and improved accuracy. Best "
@@ -475,7 +475,7 @@ msgstr ""
 "和复杂任务。"
 
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:596
+#: addon\globalPlugins\AIContentDescriber\description_service.py:598
 msgid ""
 "Gemini 2.0 Flash delivers next-gen features and improved capabilities, "
 "including superior speed, native tool use, multimodal generation, and a 1M "
@@ -485,7 +485,7 @@ msgstr ""
 "态生成以及 100 万 token 的上下文窗口。"
 
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:604
+#: addon\globalPlugins\AIContentDescriber\description_service.py:606
 msgid ""
 "Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost "
 "efficiency and low latency. Outperforms 1.5 Flash on the majority of "
@@ -495,28 +495,28 @@ msgstr ""
 "Flash 模型。在大多数基准测试中，它以相同的速度和成本超越了 1.5 Flash。"
 
 #. translators: message spoken when Claude encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:653
+#: addon\globalPlugins\AIContentDescriber\description_service.py:655
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr "Claude 遇到错误。{err}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:679
+#: addon\globalPlugins\AIContentDescriber\description_service.py:681
 msgid "Anthropic's most powerful model for highly complex tasks."
 msgstr "Anthropic 最强大的模型，适用于高度复杂的任务。"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:685
+#: addon\globalPlugins\AIContentDescriber\description_service.py:687
 msgid ""
 "Anthropic's model with Ideal balance of intelligence and speed, excels for "
 "enterprise workloads."
 msgstr ""
 "Anthropic 的模型，在智能和速度之间达到理想的平衡，非常适合企业级工作负载。"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:691
+#: addon\globalPlugins\AIContentDescriber\description_service.py:693
 msgid ""
 "Anthropic's fastest and most compact model for near-instant responsiveness"
 msgstr "Anthropic 最快、最扎实的模型，可实现近乎即时响应"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:697
+#: addon\globalPlugins\AIContentDescriber\description_service.py:699
 msgid ""
 "Anthropic's improvement over Claude 3 sonnet, this model features enhanced "
 "reasoning capabilities relative to its predecessor."
@@ -525,7 +525,7 @@ msgstr ""
 "力。"
 
 #. translators: the description for the Claude 3.5 Haiku model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:704
+#: addon\globalPlugins\AIContentDescriber\description_service.py:706
 msgid ""
 "Anthropic's next generation fastest model with improved reasoning across "
 "every skill set. Surpasses Claude 3 Opus on many benchmarks while "
@@ -535,7 +535,7 @@ msgstr ""
 "试中超越了 Claude 3 Opus，同时保持了速度和成本效益。"
 
 #. translators: the description for the Claude 3.5 Sonnet v2 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:712
+#: addon\globalPlugins\AIContentDescriber\description_service.py:714
 msgid ""
 "Anthropic's upgraded Claude 3.5 Sonnet with significant improvements in "
 "coding and computer use capabilities. Features enhanced reasoning and the "
@@ -545,7 +545,7 @@ msgstr ""
 "具有增强的推理能力和与计算机界面交互的能力。"
 
 #. translators: the description for the Claude 3.7 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:720
+#: addon\globalPlugins\AIContentDescriber\description_service.py:722
 msgid ""
 "Anthropic's most intelligent model to date and the first hybrid reasoning "
 "model. Features extended thinking capabilities for complex problem-solving "
@@ -555,7 +555,7 @@ msgstr ""
 "通过分步推理解决复杂问题。"
 
 #. translators: the description for the Claude 4 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:728
+#: addon\globalPlugins\AIContentDescriber\description_service.py:730
 msgid ""
 "Anthropic's high-performance model with exceptional reasoning and "
 "efficiency. Significant upgrade to Claude Sonnet 3.7 with superior coding "
@@ -565,7 +565,7 @@ msgstr ""
 "升级，编码能力更强，指令遵循能力更优。"
 
 #. translators: the description for the Claude 4 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:736
+#: addon\globalPlugins\AIContentDescriber\description_service.py:738
 msgid ""
 "Anthropic's most capable and intelligent model yet. Sets new standards in "
 "complex reasoning and advanced coding with sustained performance on long-"
@@ -575,7 +575,7 @@ msgstr ""
 "标准，并在需要专注努力的长时间运行任务中保持持续性能。"
 
 #. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:812
+#: addon\globalPlugins\AIContentDescriber\description_service.py:814
 msgid ""
 "MistralAI's multimodal image LLM, achieving state-of-the-art results on "
 "MathVista, DocVQA, VQAv2 and other benchmarks."
@@ -584,7 +584,7 @@ msgstr ""
 "得了最先进的成果。"
 
 #. translators: the description for the xAI Grok 2 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:820
+#: addon\globalPlugins\AIContentDescriber\description_service.py:822
 msgid ""
 "xAI's flagship multimodal model with advanced reasoning capabilities. Excels "
 "at enterprise tasks like data extraction, programming, and text "
@@ -595,21 +595,21 @@ msgstr ""
 "越的领域知识，擅长数据提取、编程和文本摘要等企业任务。"
 
 #. translators: the description for the Ollama model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:838
+#: addon\globalPlugins\AIContentDescriber\description_service.py:840
 msgid "The quickest way to get up and running with large language models."
 msgstr "开始和运行大语言模型的最快方式。"
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:854
+#: addon\globalPlugins\AIContentDescriber\description_service.py:856
 msgid "Could not contact the provided base URL. "
 msgstr "无法连接到提供的基础 URL。"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:886
+#: addon\globalPlugins\AIContentDescriber\description_service.py:888
 msgid "The response appears to be malformed. "
 msgstr "响应格式似乎有误。"
 
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:922
+#: addon\globalPlugins\AIContentDescriber\description_service.py:924
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -624,7 +624,7 @@ msgstr ""
 "取了支持图像的模型，且当前有一个服务器正在运行以处理请求。尽管让其正常工作与"
 "否主要取决于用户的动手能力，但您可以在插件文档中找到基本步骤。"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:961
+#: addon\globalPlugins\AIContentDescriber\description_service.py:963
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -632,6 +632,33 @@ msgid ""
 msgstr ""
 "图像识别响应格式似乎有误。\n"
 "{response}"
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:988
+msgid ""
+"A multimodal model from vivo, accessed via NVDA-CN account. This service is "
+"provided by the NVDA Chinese community and requires your nvdacn.com "
+"credentials."
+msgstr ""
+"来自 Vivo 的多模态大语言模型，可通过NVDA-CN帐户访问。此服务由 NVDA 中文社区提"
+"供，需要您的 nvdacn.com 登录凭据。"
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1056
+#, python-brace-format
+msgid "API Error: {error}"
+msgstr "API错误： {error}"
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1065
+msgid "The model returned an empty response."
+msgstr "模型返回了空响应。"
+
+#. This case is a safeguard; post() should raise an exception on failure.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1100
+msgid "Network request failed unexpectedly."
+msgstr "网络请求意外中断。"
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1138
+msgid "No active conversation. Please describe an image first."
+msgstr "未激活对话。请先描述一张图片。"
 
 #. translators: the title for the dialog that selects the camera
 #: addon\globalPlugins\AIContentDescriber\face_view.py:24
@@ -843,8 +870,18 @@ msgstr "选择一个模型"
 msgid "Model:"
 msgstr "模型："
 
+#. Translators: The label for the NVDA-CN username field.
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:286
+msgid "NVDA-CN Username"
+msgstr "NVDA 中文站用户名"
+
+#. Translators: The label for the NVDA-CN password field.
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:288
+msgid "NVDA-CN Password"
+msgstr "NVDA 中文站密码"
+
 #. Translators: Requires installation
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:280
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:306
 msgid " (requires installation)"
 msgstr "（需要安装）"
 

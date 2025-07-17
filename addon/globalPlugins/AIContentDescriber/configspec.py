@@ -208,6 +208,13 @@ max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[vivo BlueLM Vision (NVDA-CN)]
+nvdacn_user = string(default="")
+nvdacn_pass = string(default="")
+prompt = string(default="")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
 [global]
 optimize_for_size = boolean(default=False)
 open_in_dialog = boolean(default=True)

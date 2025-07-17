@@ -274,6 +274,32 @@ class PixtralLargeConfigurationPanel(MistralAIConfigurationPanel):
 	title = model.name
 
 
+class VivoBlueLMVisionConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.VivoBlueLMVision()
+	title = model.name
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		
+		# Translators: The label for the NVDA-CN username field.
+		self.nvdacn_user = sHelper.addLabeledControl(_("NVDA-CN Username"), wx.TextCtrl)
+		# Translators: The label for the NVDA-CN password field.
+		self.nvdacn_pass = sHelper.addLabeledControl(_("NVDA-CN Password"), wx.TextCtrl, style=wx.TE_PASSWORD)
+		self.add_prompt_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+	def populate_values(self):
+		self.nvdacn_user.SetValue(self.model.nvdacn_user or "")
+		self.nvdacn_pass.SetValue(self.model.nvdacn_pass or "")
+		super().populate_values()
+
+	def onSave(self):
+		self.model.nvdacn_user = self.nvdacn_user.GetValue()
+		self.model.nvdacn_pass = self.nvdacn_pass.GetValue()
+		super().onSave()
+
 class OllamaConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.Ollama()
 	# Translators: Requires installation
@@ -387,6 +413,7 @@ description_service.Gemini.configurationPanel = GeminiConfigurationPanel
 description_service.GeminiFlash1_5_8B.configurationPanel = GeminiFlash1_5_8BConfigurationPanel
 description_service.Gemini1_5Pro.configurationPanel = Gemini1_5ProConfigurationPanel
 description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationPanel
+description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfigurationPanel # <-- 在这里添加
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 description_service.Claude3_5Sonnet.configurationPanel = Claude3_5SonnetConfigurationPanel
