@@ -137,6 +137,16 @@ def prompt_restart():
 	core.restart()
 
 
+def prompt_use_mirror():
+	return show_question(
+		None,
+		# Translators: Summary for this add-on
+		_("AI Content Describer"),
+		# Translators: Message displayed when the dependency download from the default location failed and we are asking whether to try the mirror.
+		_("There was an error downloading the dependencies required for this add-on to function. Would you like to try again using the mirror provided by the Chinese NVDA community?")
+	)
+
+
 def dependencies_not_available():
 	return show_error(
 		None,
@@ -177,8 +187,11 @@ def get_dependencies_path():
 	return path
 
 
-def get_dependencies_url():
-	return f"https://github.com/cartertemm/AI-content-describer/releases/download/libs-release/aic-py-{sys.version_info.major}.{sys.version_info.minor}.zip"
+def get_dependencies_url(mirror=False):
+	if mirror:
+		return f"https://github.mirror.nvdadr.com/cartertemm/AI-content-describer/releases/download/libs-release/aic-py-{sys.version_info.major}.{sys.version_info.minor}.zip"
+	else:
+		return f"https://github.com/cartertemm/AI-content-describer/releases/download/libs-release/aic-py-{sys.version_info.major}.{sys.version_info.minor}.zip"
 
 
 def  get_all_dependencies():
@@ -210,10 +223,15 @@ def check_versions():
 	if os.path.isdir(dependencies) and len(os.listdir(dependencies)) > 0:
 		return True
 	if prompt_not_found():
-		url = get_dependencies_url()
+		url = get_dependencies_url(mirror=False)
 		if not check_url(url):
-			dependencies_not_available()
-			return False
+			if prompt_use_mirror():
+				url = get_dependencies_url(mirror=True)
+				if not check_url(url):
+					dependencies_not_available()
+					return False
+			else:
+				return False
 		dlg = DownloadProgressDialog(
 			None,
 			# Translators: Summary for this add-on
