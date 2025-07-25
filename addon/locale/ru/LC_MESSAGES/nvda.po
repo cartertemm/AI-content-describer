@@ -1,19 +1,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2025.02.05'\n"
-"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2025-06-05 14:16-0700\n"
-"PO-Revision-Date: 2025-06-08 13:01+0500\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2025-06-27 10:52+0800\n"
+"PO-Revision-Date: 2025-07-25 14:20+0500\n"
 "Last-Translator: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
-"Language-Team: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
-"Language: ru\n"
+"Language-Team: Russian team <nvda.ru>, Danil Kostenkov "
+"<danilkostenkov38@gmail.com>\n"
+"Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
-"X-Poedit-Basepath: AI-content-describer-main/addon\n"
-"X-Poedit-SearchPath-0: globalPlugins\n"
-"X-Poedit-SearchPath-1: installTasks.py\n"
+"X-Poedit-Basepath: ../../../..\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: other stuff\n"
+"X-Poedit-SearchPath-2: addon\n"
+"X-Poedit-SearchPath-3: addon/globalPlugins/AIContentDescriber\n"
 
 #. Translators: The message displayed if during installation, there is an incompatable version already installed
 #: addon\installTasks.py:20
@@ -44,7 +47,7 @@ msgstr ""
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:220
 #: buildVars.py:23
 msgid "AI Content Describer"
-msgstr "Описатель контента с помощью ИИ"
+msgstr "AI Content Describer (Описатель контента с помощью ИИ)"
 
 #. translators: the button in the settings dialog to open the model manager
 #: addon\globalPlugins\AIContentDescriber\__init__.py:100
@@ -378,7 +381,7 @@ msgid "error, connection refused by target"
 msgstr "ошибка, конечный адресат отклонил соединение"
 
 #. translators: the description for the GPT4 vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:425
+#: addon\globalPlugins\AIContentDescriber\description_service.py:426
 msgid ""
 "The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
 "2024,  this model has been superseded by GPT4 turbo which has consistently "
@@ -393,13 +396,15 @@ msgstr ""
 #: addon\globalPlugins\AIContentDescriber\description_service.py:434
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
-"quality and understanding."
+"quality and understanding. This model will soon be deprecated so we "
+"recommend switching to GPT-4o."
 msgstr ""
 "Следующее поколение оригинального GPT4 Vision с возможностями восприятия, с "
-"улучшенным качеством и пониманием."
+"улучшенным качеством и пониманием. Эта модель скоро выйдет из употребления, "
+"поэтому мы рекомендуем перейти на GPT-4o."
 
 #. translators: the description for the GPT4 omni model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:443
+#: addon\globalPlugins\AIContentDescriber\description_service.py:442
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -410,19 +415,85 @@ msgstr ""
 "гораздо более эффективна, способна генерировать текст вдвое быстрее и вдвое "
 "дешевле."
 
+#. translators: the description for the OpenAI O3 model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:450
+msgid ""
+"Released in April 2025, o3 is a well-rounded and powerful model across "
+"domains. It sets a new standard for math, science, coding, and visual "
+"reasoning tasks. It also excels at technical writing and instruction-"
+"following. Use it to think through multi-step problems that involve analysis "
+"across text, code, and images."
+msgstr ""
+"Выпущенная в апреле 2025 года, o3 представляет собой универсальную и мощную "
+"модель для различных областей знаний. Она устанавливает новый стандарт для "
+"задач по математике, естественным наукам, программированию и визуальному "
+"мышлению. Эта модель также превосходна в написании технических текстов и "
+"выполнении инструкций. Используйте её для решения многоэтапных задач, "
+"связанных с анализом текста, кода и изображений."
+
+#. translators: the description for the OpenAI O3 pro model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:458
+msgid ""
+"Released in June 2025, O3 pro is an upgraded version of O3. It is designed "
+"to think longer and provide the most reliable responses. Because o3-pro has "
+"access to tools, responses typically take longer than o1-pro to complete. We "
+"recommend using it for challenging questions where reliability matters more "
+"than speed, and waiting a few minutes is worth the tradeoff. Do not forget "
+"to tweak the timeout setting."
+msgstr ""
+"O3 pro, выпущенная в июне 2025 года, является обновленной версией O3. Она "
+"разработана таким образом, чтобы дольше думать и предоставлять наиболее "
+"надёжные ответы. Поскольку o3-pro имеет доступ к инструментам, для получения "
+"ответов обычно требуется больше времени, чем o1-pro. Мы рекомендуем "
+"использовать её в сложных случаях, когда надёжность важнее скорости, а "
+"ожидание в течение нескольких минут стоит того, чтобы пойти на компромисс. "
+"Не забудьте настроить время ожидания."
+
+#. translators: the description for the OpenAI O3 mini model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:466
+msgid ""
+"Released in January 2025, this powerful and fast model advances the "
+"boundaries of what small models can achieve, delivering exceptional STEM "
+"capabilities with particular strength in science, math, and coding all while "
+"maintaining the low cost and reduced latency of OpenAI o1-mini."
+msgstr ""
+"Выпущенная в январе 2025 года, эта мощная и быстрая модель расширяет "
+"возможности компактных моделей, обеспечивая исключительные возможности STEM, "
+"особенно в области науки, математики и программирования, при сохранении "
+"низкой стоимости и низкой задержки OpenAI o1-mini."
+
+#. translators: the description for the OpenAI O4 mini model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:474
+msgid ""
+"Released in April 2025, o4-mini is a smaller model optimized for fast, cost-"
+"efficient reasoning. It achieves remarkable performance for its size and "
+"cost, particularly in math, coding, and visual tasks. It has been shown to "
+"outperform O3 mini and supports significantly higher usage limits than o3, "
+"making it a strong high-volume, high-throughput option for questions that "
+"benefit from reasoning. Do not forget to tweak the timeout setting."
+msgstr ""
+"O4-mini, выпущенная в апреле 2025 года, представляет собой уменьшенную "
+"модель, оптимизированную для быстрого и экономичного мышления. Для своих "
+"размеров и стоимости она обеспечивает замечательную производительность, "
+"особенно в математических задачах, программировании и визуализации. Было "
+"доказано, что она превосходит O3 mini по производительности и поддерживает "
+"значительно более высокие ограничения по использованию, чем o3, что делает "
+"её эффективным средством для решения вопросов с большим объёмом информации и "
+"высокой пропускной способностью. Не забудьте настроить время ожидания."
+
 #. translators: message spoken when Google gemini encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:499
+#: addon\globalPlugins\AIContentDescriber\description_service.py:529
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "В Gemini произошла ошибка: {code}, {msg}"
 
 #. translators: the description for the Google Gemini pro vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:526
+#: addon\globalPlugins\AIContentDescriber\description_service.py:556
 msgid "Google's Gemini 1.5 flash model with vision capabilities."
 msgstr "Модель Gemini 1.5 flash от Google с возможностями восприятия образов."
 
 #. translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:533
+#: addon\globalPlugins\AIContentDescriber\description_service.py:564
 msgid ""
 "Gemini 1.5 Flash-8B is a small model designed for high volume and lower "
 "intelligence tasks."
@@ -431,7 +502,7 @@ msgstr ""
 "задач с большим объёмом данных и низким уровнем интеллекта."
 
 #. translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:540
+#: addon\globalPlugins\AIContentDescriber\description_service.py:572
 msgid ""
 "Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-"
 "range of complex reasoning tasks requiring more intelligence. 1.5 Pro can "
@@ -442,8 +513,29 @@ msgstr ""
 "требующих повышенного интеллекта. 1.5 Pro может обрабатывать большие объёмы "
 "данных одновременно."
 
+#. translators: the description for Google's Gemini 2.5 Flash Preview model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:580
+msgid ""
+"Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for "
+"tasks like summarization, chat applications, data extraction, and captioning."
+msgstr ""
+"Gemini 2.5 Flash обеспечивает высокую производительность при выполнении "
+"сложных задач. Идеально подходит для таких задач, как подведение итогов, "
+"приложения для чата, извлечение данных и создание субтитров."
+
+#. translators: the description for Google's Gemini 2.5 Pro Preview model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:588
+msgid ""
+"Gemini 2.5 Pro models are capable of reasoning through their thoughts before "
+"responding, resulting in enhanced performance and improved accuracy. Best "
+"for coding and complex tasks."
+msgstr ""
+"Модели Gemini 2.5 Pro способны обдумывать свои действия, прежде чем "
+"реагировать, что повышает производительность и точность. Лучше всего "
+"подходит для программирования и решения сложных задач."
+
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:548
+#: addon\globalPlugins\AIContentDescriber\description_service.py:596
 msgid ""
 "Gemini 2.0 Flash delivers next-gen features and improved capabilities, "
 "including superior speed, native tool use, multimodal generation, and a 1M "
@@ -455,7 +547,7 @@ msgstr ""
 "размером 1 м."
 
 #. translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:556
+#: addon\globalPlugins\AIContentDescriber\description_service.py:604
 msgid ""
 "Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost "
 "efficiency and low latency. Outperforms 1.5 Flash on the majority of "
@@ -467,12 +559,31 @@ msgstr ""
 "стоимости."
 
 #. translators: message spoken when Claude encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:605
+#: addon\globalPlugins\AIContentDescriber\description_service.py:653
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr "В Claude произошла ошибка. {err}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:631
+#: addon\globalPlugins\AIContentDescriber\description_service.py:679
+msgid "Anthropic's most powerful model for highly complex tasks."
+msgstr "Самая мощная модель Anthropic для решения очень сложных задач."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:685
+msgid ""
+"Anthropic's model with Ideal balance of intelligence and speed, excels for "
+"enterprise workloads."
+msgstr ""
+"Модель Anthropic с идеальным балансом интеллекта и скорости отлично подходит "
+"для корпоративных рабочих нагрузок."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:691
+msgid ""
+"Anthropic's fastest and most compact model for near-instant responsiveness"
+msgstr ""
+"Самая быстрая и компактная модель Anthropic, обеспечивающая практически "
+"мгновенное реагирование"
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:697
 msgid ""
 "Anthropic's improvement over Claude 3 sonnet, this model features enhanced "
 "reasoning capabilities relative to its predecessor."
@@ -481,27 +592,64 @@ msgstr ""
 "обладает расширенными возможностями мышления по сравнению со своей "
 "предшественницей."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:637
-msgid "Anthropic's most powerful model for highly complex tasks."
-msgstr "Самая мощная модель Anthropic для решения очень сложных задач."
-
-#: addon\globalPlugins\AIContentDescriber\description_service.py:643
+#. translators: the description for the Claude 3.5 Haiku model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:704
 msgid ""
-"Anthropic's model with Ideal balance of intelligence and speed, excels for "
-"enterprise workloads."
+"Anthropic's next generation fastest model with improved reasoning across "
+"every skill set. Surpasses Claude 3 Opus on many benchmarks while "
+"maintaining speed and cost-effectiveness."
 msgstr ""
-"Модель Anthropic с идеальным балансом интеллекта и скорости отлично подходит "
-"для корпоративных рабочих нагрузок."
+"Самая быстрая модель следующего поколения от Anthropic с улучшенной логикой "
+"для каждого набора навыков. Превосходит Claude 3 Opus по многим показателям, "
+"сохраняя при этом скорость и экономическую эффективность."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:649
+#. translators: the description for the Claude 3.5 Sonnet v2 model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:712
 msgid ""
-"Anthropic's fastest and most compact model for near-instant responsiveness"
+"Anthropic's upgraded Claude 3.5 Sonnet with significant improvements in "
+"coding and computer use capabilities. Features enhanced reasoning and the "
+"ability to interact with computer interfaces."
 msgstr ""
-"Самая быстрая и компактная модель Anthropic, обеспечивающая практически "
-"мгновенное реагирование"
+"Компания Anthropic обновила Claude 3.5 Sonnet, значительно улучшив "
+"возможности программирования и использования компьютера. В ней расширены "
+"возможности мышления и взаимодействия с компьютерными интерфейсами."
+
+#. translators: the description for the Claude 3.7 Sonnet model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:720
+msgid ""
+"Anthropic's most intelligent model to date and the first hybrid reasoning "
+"model. Features extended thinking capabilities for complex problem-solving "
+"with step-by-step reasoning."
+msgstr ""
+"Самая интеллектуальная модель Anthropic на сегодняшний день и первая "
+"гибридная модель мышления. Расширяет возможности мышления для решения "
+"сложных задач с помощью пошаговых рассуждений."
+
+#. translators: the description for the Claude 4 Sonnet model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:728
+msgid ""
+"Anthropic's high-performance model with exceptional reasoning and "
+"efficiency. Significant upgrade to Claude Sonnet 3.7 with superior coding "
+"and enhanced instruction following."
+msgstr ""
+"Высокопроизводительная модель Anthropic с исключительной логикой и "
+"эффективностью. Значительное обновление до версии Claude Sonnet 3.7 с "
+"улучшенным пониманием задач по программированию и следованием инструкциям."
+
+#. translators: the description for the Claude 4 Opus model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:736
+msgid ""
+"Anthropic's most capable and intelligent model yet. Sets new standards in "
+"complex reasoning and advanced coding with sustained performance on long-"
+"running tasks requiring focused effort."
+msgstr ""
+"Самая эффективная и интеллектуальная модель Anthropic на сегодняшний день. "
+"Устанавливает новые стандарты в области сложных рассуждений и продвинутого "
+"программирования, обеспечивая стабильную производительность при выполнении "
+"длительных задач, требующих целенаправленных усилий."
 
 #. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:724
+#: addon\globalPlugins\AIContentDescriber\description_service.py:812
 msgid ""
 "MistralAI's multimodal image LLM, achieving state-of-the-art results on "
 "MathVista, DocVQA, VQAv2 and other benchmarks."
@@ -509,22 +657,36 @@ msgstr ""
 "MistralAI's multimodal image LLM, достигает самых современных результатов в "
 "MathVista, DocVQA, VQAv2 и других тестах."
 
+#. translators: the description for the xAI Grok 2 model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:820
+msgid ""
+"xAI's flagship multimodal model with advanced reasoning capabilities. Excels "
+"at enterprise tasks like data extraction, programming, and text "
+"summarization with superior domain knowledge in finance, healthcare, law, "
+"and science."
+msgstr ""
+"флагманская мультимодальная модель xAI с расширенными возможностями "
+"логического анализа. Отлично справляется с корпоративными задачами, такими "
+"как извлечение данных, программирование и составление текстовых отчетов, "
+"благодаря превосходному знанию предметной области в области финансов, "
+"здравоохранения, права и науки."
+
 #. translators: the description for the Ollama model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:734
+#: addon\globalPlugins\AIContentDescriber\description_service.py:838
 msgid "The quickest way to get up and running with large language models."
 msgstr "Это самый быстрый способ начать работу с большими языковыми моделями."
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:750
+#: addon\globalPlugins\AIContentDescriber\description_service.py:854
 msgid "Could not contact the provided base URL. "
 msgstr "Не удалось связаться с указанным базовым URL-адресом. "
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:782
+#: addon\globalPlugins\AIContentDescriber\description_service.py:886
 msgid "The response appears to be malformed. "
 msgstr "Ответ, по-видимому, был неправильно сформирован. "
 
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:818
+#: addon\globalPlugins\AIContentDescriber\description_service.py:922
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -543,7 +705,7 @@ msgstr ""
 "задачей для пользователя, который знает, что делает, вы можете найти "
 "основные шаги в документации по дополнению."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:857
+#: addon\globalPlugins\AIContentDescriber\description_service.py:961
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -670,11 +832,11 @@ msgstr ""
 #. translators: the message spoken when more than one face was detected
 #: addon\globalPlugins\AIContentDescriber\face_view.py:135
 msgid ""
-"{len(faces)} faces detected near the frame. Please try for another angle "
-"with fewer background objects."
+"{} faces detected near the frame. Please try for another angle with fewer "
+"background objects."
 msgstr ""
-"В кадре обнаружено {len(faces)} лиц. Пожалуйста, попробуйте выбрать другой "
-"ракурс с меньшим количеством объектов на заднем плане."
+"В кадре обнаружено {} лиц. Пожалуйста, попробуйте выбрать другой ракурс с "
+"меньшим количеством объектов на заднем плане."
 
 #. translators: the message that gets spoken when facial detection cannot find any cameras
 #: addon\globalPlugins\AIContentDescriber\face_view.py:153
@@ -779,7 +941,7 @@ msgid "Model:"
 msgstr "Модель:"
 
 #. Translators: Requires installation
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:250
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:280
 msgid " (requires installation)"
 msgstr " (требуется установка)"
 
@@ -944,7 +1106,7 @@ msgid ""
 "Press NVDA+shift+i to pop up a menu asking how you wish to describe based on "
 "the current position, or NVDA+shift+u to describe the navigator object, or "
 "NVDA+shift+y for an image that has been copied to the clipboard such as in "
-"windows explorer, or NVDA+shift+c to ask additional questions about a "
+"windows explorer, or NVDA+alt+i to ask additional questions about a "
 "description. Other keystrokes are customizable from the input gestures "
 "dialog.\n"
 "By default, usage of GPT4 is free, thanks to the generocity of the team at "
@@ -957,7 +1119,7 @@ msgid ""
 "The process is similar for other model providers, see add-on documentation "
 "for more information on this."
 msgstr ""
-"Это дополнение позволяет описать объект в фокусе, объект навигатора или "
+"Это дополнение позволяет описывать объект в фокусе, объект навигатора или "
 "экран с помощью популярных языковых моделей ИИ с поддержкой зрения, таких "
 "как Claude, Gemini или GPT4.\n"
 "Оно также позволяет понять, где находится лицо в кадре с помощью "
@@ -967,7 +1129,7 @@ msgstr ""
 "Нажмите NVDA+shift+i, чтобы вызвать меню с вопросом о том, как вы хотите "
 "описать, основываясь на текущей позиции, или NVDA+shift+u, чтобы описать "
 "объект навигатора, или NVDA+shift+y для изображения, которое было "
-"скопировано в буфер обмена, например в проводнике Windows, или NVDA+shift+c, "
+"скопировано в буфер обмена, например в проводнике Windows, или NVDA+alt+c, "
 "чтобы задать дополнительные вопросы об описании. Другие сочетания клавиш "
 "настраиваются в диалоге жесты ввода.\n"
 "По умолчанию GPT4 используется бесплатно, благодаря щедрости команды "
