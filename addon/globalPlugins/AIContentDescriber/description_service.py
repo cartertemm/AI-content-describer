@@ -12,6 +12,8 @@ import functools
 import urllib.parse
 import urllib.request
 import hashlib
+import uuid 
+import vivo_auth
 import logHandler
 log = logHandler.log
 
@@ -982,6 +984,166 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 		return content
 
 
+class VivoBlueLMVision(BaseDescriptionService):
+	name = "vivo BlueLM Vision (NVDA-CN)"
+	description = _("A multimodal model from vivo, accessed via NVDA-CN account. This service is provided by the NVDA Chinese community and requires your nvdacn.com credentials.")
+	about_url = "https://nvdacn.com/"
+	internal_model_name = "vivo-BlueLM-Vision-Aid"
+	needs_api_key = False
+	supported_formats = [".jpeg", ".jpg", ".png", ".webp"]
+
+	# Custom properties to manage NVDA-CN credentials from the config file.
+	@property
+	def nvdacn_user(self):
+		return ch.config[self.name].get("nvdacn_user")
+
+	@nvdacn_user.setter
+	def nvdacn_user(self, value):
+		ch.config[self.name]["nvdacn_user"] = value
+
+	@property
+	def nvdacn_pass(self):
+		return ch.config[self.name].get("nvdacn_pass")
+
+	@nvdacn_pass.setter
+	def nvdacn_pass(self, value):
+		ch.config[self.name]["nvdacn_pass"] = value
+
+	@property
+	def is_available(self):
+		"""Determines if the service is ready based on the presence of both user credentials."""
+		return bool(self.nvdacn_user and self.nvdacn_pass)
+
+	def build_conversation_payload(self, messages, **kw):
+		"""
+		Translates the addon's internal message format to the specific format required by the VIVO API.
+		The VIVO API requires image and text to be sent as separate, consecutive user messages.
+		"""
+		vivo_messages = []
+		for msg in messages:
+			if msg["role"] == "user":
+				if msg.get("image"):
+					vivo_messages.append({
+						"role": "user",
+						"content": f"data:image/jpeg;base64,{msg['image']}",
+						"contentType": "image"
+					})
+				vivo_messages.append({
+					"role": "user",
+					"content": msg["content"],
+					"contentType": "text"
+				})
+			else: # Assistant messages are straightforward.
+				vivo_messages.append({
+					"role": "assistant",
+					"content": msg["content"],
+					"contentType": "text"
+				})
+		return {
+			'model': self.internal_model_name,
+			'sessionId': str(uuid.uuid4()),
+			"messages": vivo_messages
+		}
+
+	def _extract_conversation_response(self, response_json):
+		"""
+		Extracts content from a successful response or raises an exception for business errors.
+		This approach prevents caching of failed API calls.
+		"""
+		import ui
+		if response_json.get("code") != 0:
+			error_msg = response_json.get("msg", "Unknown error from vivo API")
+			log.warning(f"VIVO API returned a business error. Code: {response_json.get('code')}, Message: {error_msg}")
+			formatted_error = _("API Error: {error}").format(error=error_msg)
+			ui.message(formatted_error)
+			raise IOError(formatted_error)
+		data_obj = response_json.get("data", {})
+		content_str = data_obj.get("content")
+		if not content_str:
+			log.info("VIVO API returned a successful response with empty content.")
+			return _("The model returned an empty response.")
+		try:
+			inner_data = json.loads(content_str)
+			if isinstance(inner_data, list) and len(inner_data) > 0 and "text" in inner_data[0]:
+				return inner_data[0]["text"]
+			return content_str
+		except (json.JSONDecodeError, TypeError):
+			return content_str
+
+	def _perform_vivo_request(self, messages):
+		"""
+		A centralized helper to handle the VIVO request lifecycle.
+		It catches specific, un-messaged errors to provide feedback,
+		while letting already-messaged errors from post() propagate.
+		"""
+		try:
+			request_id = str(uuid.uuid4())
+			uri = "/vivogpt/completions"
+			params = {'requestId': request_id}
+			log.debug(f"Preparing VIVO request with ID: {request_id}")
+			# This is the only place that might raise an error without a prior ui.message() call.
+			headers = vivo_auth.gen_sign_headers(self.nvdacn_user, self.nvdacn_pass, "POST", uri, params)
+			headers['Content-Type'] = 'application/json'
+			payload = self.build_conversation_payload(messages)
+			full_url = f"https://api-ai.vivo.com.cn{uri}?{urllib.parse.urlencode(params)}"
+			log.info(f"Sending request to VIVO API endpoint for request ID: {request_id}")
+			# The global post() function handles its own UI messaging for network errors and will raise IOError.
+			response_bytes = post(url=full_url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+			if not response_bytes:
+				# This case is a safeguard; post() should raise an exception on failure.
+				raise IOError(_("Network request failed unexpectedly."))
+			response_json = json.loads(response_bytes.decode('utf-8'))
+			# This method also handles its own UI messaging and will raise IOError on VIVO business errors.
+			return self._extract_conversation_response(response_json)
+		except (ValueError, ConnectionError, json.JSONDecodeError) as e:
+			# This includes auth errors from vivo_auth, or malformed JSON responses.
+			import ui
+			log.error(f"An error occurred during VIVO request preparation or parsing: {e}", exc_info=True)
+			ui.message(str(e))
+			# Re-throw the exception to ensure the operation fails correctly.
+			raise
+
+	@cached_description
+	def process(self, image_path, **kw):
+		"""
+		Handles the initial image description request.
+		It is wrapped by @cached_description, so any exception thrown will prevent
+		the failed result from being cached.
+		"""
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": encode_image(image_path)
+		}]
+		content = self._perform_vivo_request(messages)
+		self.start_conversation(image_path, self.prompt, content)
+		return content
+
+	def add_to_conversation(self, user_message, image_path=None, include_original_image=True):
+		"""
+		Handles follow-up questions in a multimodal conversation.
+		"""
+		import ui
+		if not self.has_conversation():
+			error_msg = _("No active conversation. Please describe an image first.")
+			ui.message(error_msg)
+			return error_msg
+		messages = self._conversations[self._active_conversation].copy()
+		new_message = {"role": "user", "content": user_message}
+		if image_path:
+			new_message["image"] = encode_image(image_path)
+		messages.append(new_message)
+		try:
+			ai_response = self._perform_vivo_request(messages)
+			messages.append({"role": "assistant", "content": ai_response})
+			self._conversations[self._active_conversation] = messages
+			return ai_response
+		except Exception as e:
+			# The user has already heard the specific error, so we just return the string
+			# for display in the dialog's history. No new ui.message() is needed here.
+			return str(e)
+
+
 models = [
 	PollinationsAI(),
 	GPT4O(),
@@ -1009,6 +1171,7 @@ models = [
 	GeminiFlash1_5_8B(),
 	Gemini1_5Pro(),
 	PixtralLarge(),
+	VivoBlueLMVision(),
 	Ollama(),
 	LlamaCPP(),
 ]
