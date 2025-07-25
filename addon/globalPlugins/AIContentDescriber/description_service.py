@@ -983,6 +983,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 		self.start_conversation(image_path, self.prompt, content)
 		return content
 
+
 class VivoBlueLMVision(BaseDescriptionService):
 	name = "vivo BlueLM Vision (NVDA-CN)"
 	description = _("A multimodal model from vivo, accessed via NVDA-CN account. This service is provided by the NVDA Chinese community and requires your nvdacn.com credentials.")
@@ -1056,14 +1057,11 @@ class VivoBlueLMVision(BaseDescriptionService):
 			formatted_error = _("API Error: {error}").format(error=error_msg)
 			ui.message(formatted_error)
 			raise IOError(formatted_error)
-		
 		data_obj = response_json.get("data", {})
 		content_str = data_obj.get("content")
-
 		if not content_str:
 			log.info("VIVO API returned a successful response with empty content.")
 			return _("The model returned an empty response.")
-		
 		try:
 			inner_data = json.loads(content_str)
 			if isinstance(inner_data, list) and len(inner_data) > 0 and "text" in inner_data[0]:
@@ -1082,27 +1080,21 @@ class VivoBlueLMVision(BaseDescriptionService):
 			request_id = str(uuid.uuid4())
 			uri = "/vivogpt/completions"
 			params = {'requestId': request_id}
-			
 			log.debug(f"Preparing VIVO request with ID: {request_id}")
 			# This is the only place that might raise an error without a prior ui.message() call.
 			headers = vivo_auth.gen_sign_headers(self.nvdacn_user, self.nvdacn_pass, "POST", uri, params)
 			headers['Content-Type'] = 'application/json'
-
 			payload = self.build_conversation_payload(messages)
 			full_url = f"https://api-ai.vivo.com.cn{uri}?{urllib.parse.urlencode(params)}"
-			
 			log.info(f"Sending request to VIVO API endpoint for request ID: {request_id}")
 			# The global post() function handles its own UI messaging for network errors and will raise IOError.
 			response_bytes = post(url=full_url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
-			
 			if not response_bytes:
 				# This case is a safeguard; post() should raise an exception on failure.
 				raise IOError(_("Network request failed unexpectedly."))
-
 			response_json = json.loads(response_bytes.decode('utf-8'))
 			# This method also handles its own UI messaging and will raise IOError on VIVO business errors.
 			return self._extract_conversation_response(response_json)
-		
 		except (ValueError, ConnectionError, json.JSONDecodeError) as e:
 			# This includes auth errors from vivo_auth, or malformed JSON responses.
 			import ui
@@ -1123,9 +1115,7 @@ class VivoBlueLMVision(BaseDescriptionService):
 			"content": self.prompt,
 			"image": encode_image(image_path)
 		}]
-		
 		content = self._perform_vivo_request(messages)
-		
 		self.start_conversation(image_path, self.prompt, content)
 		return content
 
@@ -1138,18 +1128,13 @@ class VivoBlueLMVision(BaseDescriptionService):
 			error_msg = _("No active conversation. Please describe an image first.")
 			ui.message(error_msg)
 			return error_msg
-		
 		messages = self._conversations[self._active_conversation].copy()
-		
 		new_message = {"role": "user", "content": user_message}
 		if image_path:
 			new_message["image"] = encode_image(image_path)
-		
 		messages.append(new_message)
-		
 		try:
 			ai_response = self._perform_vivo_request(messages)
-			
 			messages.append({"role": "assistant", "content": ai_response})
 			self._conversations[self._active_conversation] = messages
 			return ai_response
@@ -1157,6 +1142,7 @@ class VivoBlueLMVision(BaseDescriptionService):
 			# The user has already heard the specific error, so we just return the string
 			# for display in the dialog's history. No new ui.message() is needed here.
 			return str(e)
+
 
 models = [
 	PollinationsAI(),

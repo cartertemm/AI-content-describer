@@ -43,9 +43,7 @@ def gen_signature(nvdacn_user, nvdacn_pass, signing_string_bytes):
 		'name': 'vivo',
 		'action': 'signature'
 	}
-	
 	url = f"{NVDACN_API_URL}?{urllib.parse.urlencode(api_params)}"
-	
 	last_exception = None
 	# Retry up to 3 times for transient network issues.
 	for attempt in range(3):
@@ -54,14 +52,12 @@ def gen_signature(nvdacn_user, nvdacn_pass, signing_string_bytes):
 			with urllib.request.urlopen(req, timeout=10) as response:
 				response_body = response.read()
 				result = json.loads(response_body)
-
 			if result.get('code') == 200 and 'data' in result:
 				return result['data']  # Success
 			else:
 				# Business logic errors (e.g., invalid credentials) should not be retried.
 				error_message = result.get('data', 'Unknown API error')
 				raise ValueError(f"NVDACN API Error: {error_message} (Code: {result.get('code')})")
-
 		except (ConnectionError, urllib.error.URLError) as e:
 			# Catch retryable network errors, including handshake timeouts.
 			last_exception = e
@@ -71,7 +67,6 @@ def gen_signature(nvdacn_user, nvdacn_pass, signing_string_bytes):
 		except (ValueError, json.JSONDecodeError, KeyError, TypeError) as e:
 			# Non-retryable errors.
 			raise e
-
 	# If all attempts fail, raise the last captured network exception.
 	raise ConnectionError("NVDACN API connection failed after 3 attempts") from last_exception
 
@@ -80,7 +75,6 @@ def gen_sign_headers(nvdacn_user, nvdacn_pass, method, uri, query):
 	method = str(method).upper()
 	timestamp = str(int(time.time()))
 	nonce = gen_nonce()
-	
 	# Step 1: Prepare the canonical string to be signed.
 	canonical_query_string = gen_canonical_query_string(query)
 	signed_headers_string = (
@@ -97,10 +91,8 @@ def gen_sign_headers(nvdacn_user, nvdacn_pass, method, uri, query):
 		f'{signed_headers_string}'
 	)
 	signing_string_bytes = signing_string.encode('utf-8')
-
 	# Step 2: Fetch the signature from the remote service.
 	signature = gen_signature(nvdacn_user, nvdacn_pass, signing_string_bytes)
-	
 	# Step 3: Assemble the final headers dictionary.
 	return {
 		'X-AI-GATEWAY-APP-ID': VIVO_APP_ID,

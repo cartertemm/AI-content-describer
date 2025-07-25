@@ -281,7 +281,6 @@ class VivoBlueLMVisionConfigurationPanel(BaseModelSettingsPanel):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.add_about_button(sHelper)
-		
 		# Translators: The label for the NVDA-CN username field.
 		self.nvdacn_user = sHelper.addLabeledControl(_("NVDA-CN Username"), wx.TextCtrl)
 		# Translators: The label for the NVDA-CN password field.
@@ -299,6 +298,7 @@ class VivoBlueLMVisionConfigurationPanel(BaseModelSettingsPanel):
 		self.model.nvdacn_user = self.nvdacn_user.GetValue()
 		self.model.nvdacn_pass = self.nvdacn_pass.GetValue()
 		super().onSave()
+
 
 class OllamaConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.Ollama()
