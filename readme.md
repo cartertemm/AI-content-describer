@@ -218,6 +218,7 @@ On a windows machine:
 All are highly appreciated and will be credited.
 The following people have worked on the addon.
 
+* [Cary Rowen](https://github.com/cary-rowen): made the add-on function for Chinese users via dependency mirroring, added support for the Vivo Blue provider
 * [Mazen](https://github.com/mzanm): markdown implementation, other code contributions
 * [Kostenkov-2021](https://github.com/Kostenkov-2021): Russian translation
 * [Nidza07](https://github.com/nidza07): Serbian translation
