@@ -280,6 +280,10 @@ class GlobalPlugin(GlobalPlugin):
 		return threading.Thread(target=self.detection_interface.run).start()
 
 	def describe_screenshot(self):
+		if self.is_screen_curtain_running():
+			# Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
+			ui.message(_("Please disable windows screen curtain before using AI content describer."))
+			return
 		snap = ImageGrab.grab()
 		if not snap:
 			# translators: message spoken when grabbing the content of the current window is not possible
