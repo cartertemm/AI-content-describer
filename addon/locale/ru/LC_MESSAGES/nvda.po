@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2025.02.05'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
 "POT-Creation-Date: 2025-09-22 21:48+0300\n"
-"PO-Revision-Date: 2025-09-22 21:54+0300\n"
+"PO-Revision-Date: 2025-09-22 21:57+0300\n"
 "Last-Translator: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
 "Language-Team: Russian team <nvda.ru>, Danil Kostenkov "
 "<danilkostenkov38@gmail.com>\n"
@@ -651,7 +651,7 @@ msgid ""
 msgstr ""
 "Мультимодальная модель от vivo, доступ к которой осуществляется через "
 "учетную запись NVDA-CN. Эта сервис предоставляется китайским сообществом "
-"NVDA и требует ваших учетных данных nvdacn.com."
+"пользователей NVDA и требует ваших учетных данных nvdacn.com."
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1057
 #, python-brace-format
