@@ -445,6 +445,13 @@ class GPT4O(BaseGPT):
 	about_url = "https://openai.com/index/hello-gpt-4o/"
 	internal_model_name = "gpt-4o"
 
+class GPT41(BaseGPT):
+	name = "GPT-4.1"
+	# translators: the description for the GPT-4.1 model in the configuration dialog
+	description = _("GPT-4.1 excels at instruction following and tool calling, with broad knowledge across domains. It features a 1M token context window, and low latency without a reasoning step.")
+	about_url = "https://platform.openai.com/docs/models/gpt-4.1"
+	internal_model_name = "gpt-4.1"
+
 class GPT5Chat(BaseGPT):
 	name = "GPT-5 chat"
 	# translators: the description for the GPT‑5 chat model in the configuration dialog
@@ -1154,6 +1161,7 @@ class VivoBlueLMVision(BaseDescriptionService):
 models = [
 	PollinationsAI(),
 	GPT4O(),
+	GPT41(),
 	GPT5Chat(),
 	O4Mini(),
 	O3(),

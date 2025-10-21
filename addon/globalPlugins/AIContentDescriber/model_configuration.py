@@ -185,6 +185,10 @@ class GPT4OConfigurationPanel(GPT4ConfigurationPanel):
 	model = description_service.GPT4O()
 	title = model.name
 
+class GPT41ConfigurationPanel(GPT4ConfigurationPanel):
+	model = description_service.GPT41()
+	title = model.name
+
 class GPT5ChatConfigurationPanel(GPT4ConfigurationPanel):
 	model = description_service.GPT5Chat()
 	title = model.name
@@ -414,6 +418,7 @@ description_service.O3Mini.configurationPanel = O3MiniConfigurationPanel
 description_service.O3Pro.configurationPanel = O3ProConfigurationPanel
 description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
+description_service.GPT41.configurationPanel = GPT41ConfigurationPanel
 description_service.GPT5Chat.configurationPanel = GPT5ChatConfigurationPanel
 description_service.Gemini2_0FlashLitePreview.configurationPanel = Gemini2_0FlashLitePreviewConfigurationPanel
 description_service.Gemini2_0Flash.configurationPanel = Gemini2_0FlashConfigurationPanel

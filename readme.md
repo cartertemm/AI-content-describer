@@ -36,7 +36,8 @@ Now, the possibilities are almost endless. You might:
 
 ## Models
 
-* [GPT-5 chat](https://platform.openai.com/docs/models/gpt-5-chat-latest): OpenAI’s latest multimodal model, supporting image and text input via the Chat Completions API. Requires an OpenAI API key. Appears as “GPT-5 chat” in the model configuration dialog. Leave the prompt field empty to use the default prompt, or supply your own. Supports follow-up questions and all formats supported by GPT-4o.
+* [GPT-4.1](https://platform.openai.com/docs/models/gpt-4.1): GPT-4.1 excels at instruction following and tool calling, with broad knowledge across domains. It features a 1M token context window, and low latency without a reasoning step. Requires an OpenAI API key. Appears as "GPT-4.1" in the model configuration dialog. Supports follow-up questions and all formats supported by GPT-4o.
+* [GPT-5 chat](https://platform.openai.com/docs/models/gpt-5-chat-latest): OpenAI's latest multimodal model, supporting image and text input via the Chat Completions API. Requires an OpenAI API key. Appears as "GPT-5 chat" in the model configuration dialog. Leave the prompt field empty to use the default prompt, or supply your own. Supports follow-up questions and all formats supported by GPT-4o.
 * [GPT4 vision](https://platform.openai.com/docs/guides/vision), including 4O, O1, O3, and derivatives
 * [Google Gemini pro vision](https://blog.google/technology/ai/google-gemini-ai/), including the latest 1.5 Flash, 1.5 Flash 8B, Flash 2.0,  Flash 2.0 Lite Preview, 2.5 Flash, and 2.5 Pro models.
 * [Claude 3 and 4 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
