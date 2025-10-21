@@ -445,6 +445,13 @@ class GPT4O(BaseGPT):
 	about_url = "https://openai.com/index/hello-gpt-4o/"
 	internal_model_name = "gpt-4o"
 
+class GPT5Chat(BaseGPT):
+	name = "GPT-5 chat"
+	# translators: the description for the GPT‑5 chat model in the configuration dialog
+	description = _("GPT-5 model used in ChatGPT")
+	about_url = "https://platform.openai.com/docs/models/gpt-5-chat-latest"
+	internal_model_name = "gpt-5-chat-latest"
+
 
 class O3(BaseGPT):
 	name = "OpenAI O3"
@@ -1147,6 +1154,7 @@ class VivoBlueLMVision(BaseDescriptionService):
 models = [
 	PollinationsAI(),
 	GPT4O(),
+	GPT5Chat(),
 	O4Mini(),
 	O3(),
 	O3Mini(),
