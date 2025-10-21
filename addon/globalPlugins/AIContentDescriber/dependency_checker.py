@@ -8,6 +8,9 @@ import zipfile
 import wx
 
 import addonHandler
+import logHandler
+log = logHandler.log
+
 try:
 	addonHandler.initTranslation()
 except addonHandler.AddonError:
