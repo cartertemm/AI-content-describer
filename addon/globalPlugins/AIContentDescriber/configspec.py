@@ -152,6 +152,20 @@ max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[GPT-4.1]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[GPT-5 chat]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
 [Grok 2 vision]
 api_key = string(default="")
 prompt = string(default="")
