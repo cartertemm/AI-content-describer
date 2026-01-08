@@ -903,24 +903,131 @@ class Ollama(BaseDescriptionService):
 			return ""
 		return response_json["message"]["content"]
 
+
+class LiteLLMProxy(BaseDescriptionService):
+	name = "LiteLLM Proxy"
+	needs_api_key = False
+	needs_base_url = True
+	# translators: the description for the LiteLLM Proxy model, as shown in the configuration dialog
+	description = _("Access multiple AI models through a unified LiteLLM proxy server.")
+	supported_formats = [
+		".gif",
+		".jpeg",
+		".jpg",
+		".png",
+		".webp",
+	]
+	about_url = "https://docs.litellm.ai/docs/proxy/quick_start"
+
+	def list_model_names(self, base_url, api_key=None):
+		base_url = base_url or self.base_url
+		api_key = api_key or self.api_key
+		if not base_url:
+			import ui
+			# translators: the message spoken in the LiteLLM configuration dialog when no base URL is provided
+			ui.message(_("Please provide a base URL first."))
+			return
+		
+		url = urllib.parse.urljoin(base_url, "v1/models")
+		headers = {
+			"Content-Type": "application/json",
+			"User-Agent": "curl/8.4.0"
+		}
+		if api_key:
+			headers["Authorization"] = f"Bearer {api_key}"
+		
+		try:
+			request = urllib.request.Request(url, headers=headers)
+			content = urllib.request.urlopen(request).read()
+		except Exception as exc:
+			import ui
+			# translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
+			ui.message(_("Could not contact the LiteLLM proxy server. "+str(exc)))
+			return
+		
+		try:
+			content = json.loads(content)
+			models = [model["id"] for model in content.get("data", [])]
+			return models
+		except (json.JSONDecodeError, KeyError) as exc:
+			import ui
+			# translators: the message spoken when the LiteLLM proxy returns an unexpected response format
+			ui.message(_("Unexpected response format from LiteLLM proxy. "+str(exc)))
+			return
+
+	def build_conversation_payload(self, messages, **kw):
+		"""Build OpenAI-compatible payload for LiteLLM proxy"""
+		formatted_messages = []
+		for msg in messages:
+			formatted_msg = {
+				"role": msg["role"],
+				"content": []
+			}
+			
+			# Add text content
+			if msg.get("content"):
+				formatted_msg["content"].append({
+					"type": "text",
+					"text": msg["content"]
+				})
+			
+			# Add image content if present
+			if msg.get("image"):
+				formatted_msg["content"].append({
+					"type": "image_url",
+					"image_url": {
+						"url": f"data:image/jpeg;base64,{msg['image']}"
+					}
+				})
+			
+			formatted_messages.append(formatted_msg)
+		
+		payload = {
+			"messages": formatted_messages,
+			"max_tokens": self.max_tokens,
+			"stream": False
+		}
+		
+		# Add model if specified
+		if self.chosen_model:
+			payload["model"] = self.chosen_model
+		
+		return payload
+
+	def _get_conversation_url(self):
+		return urllib.parse.urljoin(self.base_url, "v1/chat/completions")
+
+	def _get_conversation_headers(self):
+		headers = {
+			"Content-Type": "application/json",
+			"User-Agent": "curl/8.4.0"
+		}
+		if self.api_key:
+			headers["Authorization"] = f"Bearer {self.api_key}"
+		return headers
+
+	def _extract_conversation_response(self, response_json):
+		if not "choices" in response_json or not response_json["choices"] or "message" not in response_json["choices"][0]:
+			import ui
+			ui.message(_("The response appears to be malformed. "+repr(response_json)))
+			return ""
+		return response_json["choices"][0]["message"]["content"]
+
 	@cached_description
 	def process(self, image_path, **kw):
-		# Build single-image conversation
+		"""Process an image through the LiteLLM proxy and return a description"""
 		base64_image = encode_image(image_path)
 		messages = [{
 			"role": "user",
 			"content": self.prompt,
 			"image": base64_image
 		}]
-		# Use conversation methods for consistency
 		payload = self.build_conversation_payload(messages)
 		headers = self._get_conversation_headers()
 		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		response_json = json.loads(response.decode('utf-8'))
 		content = self._extract_conversation_response(response_json)
-		if not content:
-			return
 		self.start_conversation(image_path, self.prompt, content)
 		return content
 
@@ -1190,6 +1297,7 @@ models = [
 	VivoBlueLMVision(),
 	Ollama(),
 	LlamaCPP(),
+	LiteLLMProxy(),
 ]
 
 
