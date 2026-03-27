@@ -1056,7 +1056,8 @@ class VivoBlueLMVision(BaseDescriptionService):
 		return {
 			'model': self.internal_model_name,
 			'sessionId': str(uuid.uuid4()),
-			"messages": vivo_messages
+			"messages": vivo_messages,
+			"provider": "vivo"
 		}
 
 	def _extract_conversation_response(self, response_json):
