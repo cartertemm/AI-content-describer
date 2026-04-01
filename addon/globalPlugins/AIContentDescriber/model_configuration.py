@@ -118,8 +118,10 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 		if self.model.needs_base_url and not base_url:
 			self.base_url.SetFocus()
 			return
-		api_key = self.api_key.GetValue() if hasattr(self, 'api_key') else None
-		self.models = self.model.list_model_names(self.base_url.GetValue(), api_key)
+		kwargs = {}
+		if hasattr(self, 'api_key'):
+			kwargs['api_key'] = self.api_key.GetValue()
+		self.models = self.model.list_model_names(self.base_url.GetValue(), **kwargs)
 		if len(self.models) == 0:
 			# Translators: The message spoken when there were no models found.
 			import ui

@@ -903,6 +903,27 @@ class Ollama(BaseDescriptionService):
 			return ""
 		return response_json["message"]["content"]
 
+	@cached_description
+	def process(self, image_path, **kw):
+		# Build single-image conversation
+		base64_image = encode_image(image_path)
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		# Use conversation methods for consistency
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
+		if not content:
+			return
+		self.start_conversation(image_path, self.prompt, content)
+		return content
+
 
 class LiteLLMProxy(BaseDescriptionService):
 	name = "LiteLLM Proxy"
