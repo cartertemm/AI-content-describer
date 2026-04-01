@@ -65,7 +65,11 @@ def get(*args, **kwargs):
 				error_text = i.fp.read()
 				error_text = json.loads(error_text)
 				if "error" in error_text:
-					reason += ". "+error_text["error"]["message"]
+					err = error_text["error"]
+					if isinstance(err, dict) and "message" in err:
+						reason += ". "+err["message"]
+					elif isinstance(err, str):
+						reason += ". "+err
 			ui.message(error+": "+reason)
 			raise
 		return
@@ -111,7 +115,11 @@ def post(**kwargs):
 				print(error_text)
 				error_text = json.loads(error_text)
 				if "error" in error_text:
-					reason += ". "+error_text["error"]["message"]
+					err = error_text["error"]
+					if isinstance(err, dict) and "message" in err:
+						reason += ". "+err["message"]
+					elif isinstance(err, str):
+						reason += ". "+err
 			ui.message(error+": "+reason)
 			raise
 		return
