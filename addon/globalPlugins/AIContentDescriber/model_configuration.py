@@ -118,7 +118,10 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 		if self.model.needs_base_url and not base_url:
 			self.base_url.SetFocus()
 			return
-		self.models = self.model.list_model_names(self.base_url.GetValue())
+		kwargs = {}
+		if hasattr(self, 'api_key'):
+			kwargs['api_key'] = self.api_key.GetValue()
+		self.models = self.model.list_model_names(self.base_url.GetValue(), **kwargs)
 		if len(self.models) == 0:
 			# Translators: The message spoken when there were no models found.
 			import ui
@@ -410,6 +413,22 @@ class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class LiteLLMProxyConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.LiteLLMProxy()
+	title = model.name
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_base_url_field(sHelper)
+		self.add_api_key_field(sHelper)
+		self.add_model_name_field(sHelper)
+		self.add_list_models_button(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
 description_service.PollinationsAI.configurationPanel = PollinationsAIConfigurationPanel
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.O4Mini.configurationPanel = O4MiniConfigurationPanel
@@ -441,6 +460,7 @@ description_service.Claude4Sonnet.configurationPanel = Claude4SonnetConfiguratio
 description_service.Claude3_7Sonnet.configurationPanel = Claude3_7SonnetConfigurationPanel
 description_service.Claude3_5Haiku.configurationPanel = Claude3_5HaikuConfigurationPanel
 description_service.Claude3_5SonnetV2.configurationPanel = Claude3_5SonnetV2ConfigurationPanel
+description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
 models_dialog_parent = None
 
 
