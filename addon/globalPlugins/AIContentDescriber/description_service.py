@@ -552,7 +552,13 @@ class GoogleGemini(BaseDescriptionService):
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
 			ui.message(_("Gemini encountered an error: {code}, {msg}").format(code=response_json['error']['code'], msg=response_json['error']['message']))
 			return ""
-		return response_json["candidates"][0]["content"]["parts"][0]["text"]
+		try:
+			return response_json["candidates"][0]["content"]["parts"][0]["text"]
+		except (KeyError, IndexError):
+			import ui
+			# translators: message spoken when a Gemini thinking model uses all its tokens for reasoning, leaving nothing for the visible response. The user should increase max tokens in settings.
+			ui.message(_("The model used all available tokens for reasoning and returned no visible response. Try increasing the max tokens setting."))
+			return ""
 
 	@cached_description
 	def process(self, image_path, **kw):
