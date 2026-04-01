@@ -457,10 +457,20 @@ class GlobalPlugin(GlobalPlugin):
 
 	def is_screen_curtain_running(self):
 		import vision
-		from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
-		screenCurtainId = ScreenCurtainProvider.getSettings().getId()
-		screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
-		return bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
+		# Prior to NVDA 2026.1, Screen Curtain was a visionEnhancementProvider. We need to account for this
+		legacy_api = False
+		try:
+			from visionEnhancementProviders.screenCurtain import ScreenCurtainProvider
+			legacy_api = True
+		except ModuleNotFoundError:
+			from screenCurtain import screenCurtain
+		if legacy_api:
+			screenCurtainId = ScreenCurtainProvider.getSettings().getId()
+			screenCurtainProviderInfo = vision.handler.getProviderInfo(screenCurtainId)
+			return bool(vision.handler.getProviderInstance(screenCurtainProviderInfo))
+		return screenCurtain is not None and screenCurtain.enabled
+
+
 
 	__gestures = {
 		"kb:shift+NVDA+i": "describe_image",
