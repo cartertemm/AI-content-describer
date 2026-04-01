@@ -573,60 +573,52 @@ class GoogleGemini(BaseDescriptionService):
 		self.start_conversation(image_path, self.prompt, content)
 		return content
 
-class Gemini(GoogleGemini):
-	name = "Google Gemini pro vision"
-	internal_model_name = "gemini-1.5-flash"
-	# translators: the description for the Google Gemini pro vision model in the model configuration dialog
-	description = _("Google's Gemini 1.5 flash model with vision capabilities.")
-	about_url = "https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/#gemini-model-updates"
-
-
-class GeminiFlash1_5_8B(GoogleGemini):
-	name = "Google Gemini 1.5 Flash-8B"
-	internal_model_name = "gemini-1.5-flash-8b"
-	# translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
-	description = _("Gemini 1.5 Flash-8B is a small model designed for high volume and lower intelligence tasks.")
-	about_url = "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/"
-
-
-class Gemini1_5Pro(GoogleGemini):
-	name = "Google Gemini 1.5 Pro"
-	internal_model_name = "gemini-1.5-pro"
-	# translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
-	description = _("Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-range of complex reasoning tasks requiring more intelligence. 1.5 Pro can process large amounts of data at once.")
-	about_url = "https://deepmind.google/technologies/gemini/pro/"
-
-
-class Gemini2_5FlashPreview(GoogleGemini):
-	name = "Google Gemini 2.5 Flash Preview"
-	internal_model_name = "gemini-2.5-flash-preview-05-20"
-	# translators: the description for Google's Gemini 2.5 Flash Preview model, as shown in the configuration dialog.
+class Gemini2_5Flash(GoogleGemini):
+	name = "Google Gemini 2.5 Flash"
+	internal_model_name = "gemini-2.5-flash"
+	# translators: the description for Google's Gemini 2.5 Flash model, as shown in the configuration dialog.
 	description = _("Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for tasks like summarization, chat applications, data extraction, and captioning.")
 	about_url = "https://deepmind.google/models/gemini/flash/"
 
 
-class Gemini2_5ProPreview(GoogleGemini):
-	name = "Google Gemini 2.5 Pro Preview"
-	internal_model_name = "gemini-2.5-pro-preview-06-05"
-	# translators: the description for Google's Gemini 2.5 Pro Preview model, as shown in the configuration dialog.
+class Gemini2_5FlashLite(GoogleGemini):
+	name = "Google Gemini 2.5 Flash-Lite"
+	internal_model_name = "gemini-2.5-flash-lite"
+	# translators: the description for Google's Gemini 2.5 Flash-Lite model, as shown in the configuration dialog.
+	description = _("Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while maintaining strong performance.")
+	about_url = "https://deepmind.google/models/gemini/flash-lite/"
+
+
+class Gemini2_5Pro(GoogleGemini):
+	name = "Google Gemini 2.5 Pro"
+	internal_model_name = "gemini-2.5-pro"
+	# translators: the description for Google's Gemini 2.5 Pro model, as shown in the configuration dialog.
 	description = _("Gemini 2.5 Pro models are capable of reasoning through their thoughts before responding, resulting in enhanced performance and improved accuracy. Best for coding and complex tasks.")
 	about_url = "https://deepmind.google/models/gemini/pro/"
 
 
-class Gemini2_0Flash(GoogleGemini):
-	name = "Google Gemini 2.0 Flash"
-	internal_model_name = "gemini-2.0-flash-001"
-	# translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-	description = _("Gemini 2.0 Flash delivers next-gen features and improved capabilities, including superior speed, native tool use, multimodal generation, and a 1M token context window.")
-	about_url = "https://deepmind.google/technologies/gemini/flash/"
+class Gemini3FlashPreview(GoogleGemini):
+	name = "Google Gemini 3 Flash Preview"
+	internal_model_name = "gemini-3-flash-preview"
+	# translators: the description for Google's Gemini 3 Flash Preview model, as shown in the configuration dialog.
+	description = _("Gemini 3 Flash is Google's latest multimodal model with strong vision and agentic capabilities. Supports text, image, video, audio, and PDF input with a 1M token context window.")
+	about_url = "https://deepmind.google/models/gemini/flash/"
 
 
-class Gemini2_0FlashLitePreview(GoogleGemini):
-	name = "Google Gemini 2.0 Flash-Lite Preview"
-	internal_model_name = "gemini-2.0-flash-lite-preview-02-05"
-	# translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-	description = _("Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost efficiency and low latency. Outperforms 1.5 Flash on the majority of benchmarks, at the same speed and cost.")
-	about_url = "https://deepmind.google/technologies/gemini/flash-lite/"
+class Gemini3_1FlashLitePreview(GoogleGemini):
+	name = "Google Gemini 3.1 Flash-Lite Preview"
+	internal_model_name = "gemini-3.1-flash-lite-preview"
+	# translators: the description for Google's Gemini 3.1 Flash-Lite Preview model, as shown in the configuration dialog.
+	description = _("Gemini 3.1 Flash-Lite is the most cost-efficient model in the Gemini 3 series, designed for high volume tasks.")
+	about_url = "https://deepmind.google/models/gemini/flash-lite/"
+
+
+class Gemini3_1ProPreview(GoogleGemini):
+	name = "Google Gemini 3.1 Pro Preview"
+	internal_model_name = "gemini-3.1-pro-preview"
+	# translators: the description for Google's Gemini 3.1 Pro Preview model, as shown in the configuration dialog.
+	description = _("Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic workflows, with enhanced performance and accuracy.")
+	about_url = "https://deepmind.google/models/gemini/pro/"
 
 
 class Anthropic(BaseDescriptionService):
@@ -1316,13 +1308,12 @@ models = [
 	Claude3Haiku(),
 	Claude3Sonnet(),
 	Claude3Opus(),
-	Gemini2_5FlashPreview(),
-	Gemini2_5ProPreview(),
-	Gemini2_0FlashLitePreview(),
-	Gemini2_0Flash(),
-	Gemini(),
-	GeminiFlash1_5_8B(),
-	Gemini1_5Pro(),
+	Gemini3FlashPreview(),
+	Gemini3_1ProPreview(),
+	Gemini3_1FlashLitePreview(),
+	Gemini2_5Flash(),
+	Gemini2_5FlashLite(),
+	Gemini2_5Pro(),
 	PixtralLarge(),
 	VivoBlueLMVision(),
 	Ollama(),
