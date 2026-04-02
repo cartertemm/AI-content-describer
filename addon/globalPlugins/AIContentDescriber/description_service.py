@@ -65,7 +65,11 @@ def get(*args, **kwargs):
 				error_text = i.fp.read()
 				error_text = json.loads(error_text)
 				if "error" in error_text:
-					reason += ". "+error_text["error"]["message"]
+					err = error_text["error"]
+					if isinstance(err, dict) and "message" in err:
+						reason += ". "+err["message"]
+					elif isinstance(err, str):
+						reason += ". "+err
 			ui.message(error+": "+reason)
 			raise
 		return
@@ -111,7 +115,11 @@ def post(**kwargs):
 				print(error_text)
 				error_text = json.loads(error_text)
 				if "error" in error_text:
-					reason += ". "+error_text["error"]["message"]
+					err = error_text["error"]
+					if isinstance(err, dict) and "message" in err:
+						reason += ". "+err["message"]
+					elif isinstance(err, str):
+						reason += ". "+err
 			ui.message(error+": "+reason)
 			raise
 		return
@@ -544,7 +552,13 @@ class GoogleGemini(BaseDescriptionService):
 			#translators: message spoken when Google gemini encounters an error with the format or content of the input.
 			ui.message(_("Gemini encountered an error: {code}, {msg}").format(code=response_json['error']['code'], msg=response_json['error']['message']))
 			return ""
-		return response_json["candidates"][0]["content"]["parts"][0]["text"]
+		try:
+			return response_json["candidates"][0]["content"]["parts"][0]["text"]
+		except (KeyError, IndexError):
+			import ui
+			# translators: message spoken when a Gemini thinking model uses all its tokens for reasoning, leaving nothing for the visible response. The user should increase max tokens in settings.
+			ui.message(_("The model used all available tokens for reasoning and returned no visible response. Try increasing the max tokens setting."))
+			return ""
 
 	@cached_description
 	def process(self, image_path, **kw):
@@ -565,60 +579,52 @@ class GoogleGemini(BaseDescriptionService):
 		self.start_conversation(image_path, self.prompt, content)
 		return content
 
-class Gemini(GoogleGemini):
-	name = "Google Gemini pro vision"
-	internal_model_name = "gemini-1.5-flash"
-	# translators: the description for the Google Gemini pro vision model in the model configuration dialog
-	description = _("Google's Gemini 1.5 flash model with vision capabilities.")
-	about_url = "https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/#gemini-model-updates"
-
-
-class GeminiFlash1_5_8B(GoogleGemini):
-	name = "Google Gemini 1.5 Flash-8B"
-	internal_model_name = "gemini-1.5-flash-8b"
-	# translators: the description for Google's Gemini 1.5 Flash-8B model, as shown in the configuration dialog.
-	description = _("Gemini 1.5 Flash-8B is a small model designed for high volume and lower intelligence tasks.")
-	about_url = "https://developers.googleblog.com/en/gemini-15-flash-8b-is-now-generally-available-for-use/"
-
-
-class Gemini1_5Pro(GoogleGemini):
-	name = "Google Gemini 1.5 Pro"
-	internal_model_name = "gemini-1.5-pro"
-	# translators: the description for Google's Gemini 1.5 pro model, as shown in the configuration dialog.
-	description = _("Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-range of complex reasoning tasks requiring more intelligence. 1.5 Pro can process large amounts of data at once.")
-	about_url = "https://deepmind.google/technologies/gemini/pro/"
-
-
-class Gemini2_5FlashPreview(GoogleGemini):
-	name = "Google Gemini 2.5 Flash Preview"
-	internal_model_name = "gemini-2.5-flash-preview-05-20"
-	# translators: the description for Google's Gemini 2.5 Flash Preview model, as shown in the configuration dialog.
+class Gemini2_5Flash(GoogleGemini):
+	name = "Google Gemini 2.5 Flash"
+	internal_model_name = "gemini-2.5-flash"
+	# translators: the description for Google's Gemini 2.5 Flash model, as shown in the configuration dialog.
 	description = _("Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for tasks like summarization, chat applications, data extraction, and captioning.")
 	about_url = "https://deepmind.google/models/gemini/flash/"
 
 
-class Gemini2_5ProPreview(GoogleGemini):
-	name = "Google Gemini 2.5 Pro Preview"
-	internal_model_name = "gemini-2.5-pro-preview-06-05"
-	# translators: the description for Google's Gemini 2.5 Pro Preview model, as shown in the configuration dialog.
+class Gemini2_5FlashLite(GoogleGemini):
+	name = "Google Gemini 2.5 Flash-Lite"
+	internal_model_name = "gemini-2.5-flash-lite"
+	# translators: the description for Google's Gemini 2.5 Flash-Lite model, as shown in the configuration dialog.
+	description = _("Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while maintaining strong performance.")
+	about_url = "https://deepmind.google/models/gemini/flash-lite/"
+
+
+class Gemini2_5Pro(GoogleGemini):
+	name = "Google Gemini 2.5 Pro"
+	internal_model_name = "gemini-2.5-pro"
+	# translators: the description for Google's Gemini 2.5 Pro model, as shown in the configuration dialog.
 	description = _("Gemini 2.5 Pro models are capable of reasoning through their thoughts before responding, resulting in enhanced performance and improved accuracy. Best for coding and complex tasks.")
 	about_url = "https://deepmind.google/models/gemini/pro/"
 
 
-class Gemini2_0Flash(GoogleGemini):
-	name = "Google Gemini 2.0 Flash"
-	internal_model_name = "gemini-2.0-flash-001"
-	# translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-	description = _("Gemini 2.0 Flash delivers next-gen features and improved capabilities, including superior speed, native tool use, multimodal generation, and a 1M token context window.")
-	about_url = "https://deepmind.google/technologies/gemini/flash/"
+class Gemini3FlashPreview(GoogleGemini):
+	name = "Google Gemini 3 Flash Preview"
+	internal_model_name = "gemini-3-flash-preview"
+	# translators: the description for Google's Gemini 3 Flash Preview model, as shown in the configuration dialog.
+	description = _("Gemini 3 Flash is Google's latest multimodal model with strong vision and agentic capabilities. Supports text, image, video, audio, and PDF input with a 1M token context window.")
+	about_url = "https://deepmind.google/models/gemini/flash/"
 
 
-class Gemini2_0FlashLitePreview(GoogleGemini):
-	name = "Google Gemini 2.0 Flash-Lite Preview"
-	internal_model_name = "gemini-2.0-flash-lite-preview-02-05"
-	# translators: the description for Google's Gemini 2.0 Flash model, as shown in the configuration dialog.
-	description = _("Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost efficiency and low latency. Outperforms 1.5 Flash on the majority of benchmarks, at the same speed and cost.")
-	about_url = "https://deepmind.google/technologies/gemini/flash-lite/"
+class Gemini3_1FlashLitePreview(GoogleGemini):
+	name = "Google Gemini 3.1 Flash-Lite Preview"
+	internal_model_name = "gemini-3.1-flash-lite-preview"
+	# translators: the description for Google's Gemini 3.1 Flash-Lite Preview model, as shown in the configuration dialog.
+	description = _("Gemini 3.1 Flash-Lite is the most cost-efficient model in the Gemini 3 series, designed for high volume tasks.")
+	about_url = "https://deepmind.google/models/gemini/flash-lite/"
+
+
+class Gemini3_1ProPreview(GoogleGemini):
+	name = "Google Gemini 3.1 Pro Preview"
+	internal_model_name = "gemini-3.1-pro-preview"
+	# translators: the description for Google's Gemini 3.1 Pro Preview model, as shown in the configuration dialog.
+	description = _("Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic workflows, with enhanced performance and accuracy.")
+	about_url = "https://deepmind.google/models/gemini/pro/"
 
 
 class Anthropic(BaseDescriptionService):
@@ -925,6 +931,134 @@ class Ollama(BaseDescriptionService):
 		return content
 
 
+class LiteLLMProxy(BaseDescriptionService):
+	name = "LiteLLM Proxy"
+	needs_api_key = False
+	needs_base_url = True
+	# translators: the description for the LiteLLM Proxy model, as shown in the configuration dialog
+	description = _("Access multiple AI models through a unified LiteLLM proxy server.")
+	supported_formats = [
+		".gif",
+		".jpeg",
+		".jpg",
+		".png",
+		".webp",
+	]
+	about_url = "https://docs.litellm.ai/docs/proxy/quick_start"
+
+	def list_model_names(self, base_url, api_key=None):
+		base_url = base_url or self.base_url
+		api_key = api_key or self.api_key
+		if not base_url:
+			import ui
+			# translators: the message spoken in the LiteLLM configuration dialog when no base URL is provided
+			ui.message(_("Please provide a base URL first."))
+			return
+		
+		url = urllib.parse.urljoin(base_url, "v1/models")
+		headers = {
+			"Content-Type": "application/json",
+			"User-Agent": "curl/8.4.0"
+		}
+		if api_key:
+			headers["Authorization"] = f"Bearer {api_key}"
+		
+		try:
+			request = urllib.request.Request(url, headers=headers)
+			content = urllib.request.urlopen(request).read()
+		except Exception as exc:
+			import ui
+			# translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
+			ui.message(_("Could not contact the LiteLLM proxy server. "+str(exc)))
+			return
+		
+		try:
+			content = json.loads(content)
+			models = [model["id"] for model in content.get("data", [])]
+			return models
+		except (json.JSONDecodeError, KeyError) as exc:
+			import ui
+			# translators: the message spoken when the LiteLLM proxy returns an unexpected response format
+			ui.message(_("Unexpected response format from LiteLLM proxy. "+str(exc)))
+			return
+
+	def build_conversation_payload(self, messages, **kw):
+		"""Build OpenAI-compatible payload for LiteLLM proxy"""
+		formatted_messages = []
+		for msg in messages:
+			formatted_msg = {
+				"role": msg["role"],
+				"content": []
+			}
+			
+			# Add text content
+			if msg.get("content"):
+				formatted_msg["content"].append({
+					"type": "text",
+					"text": msg["content"]
+				})
+			
+			# Add image content if present
+			if msg.get("image"):
+				formatted_msg["content"].append({
+					"type": "image_url",
+					"image_url": {
+						"url": f"data:image/jpeg;base64,{msg['image']}"
+					}
+				})
+			
+			formatted_messages.append(formatted_msg)
+		
+		payload = {
+			"messages": formatted_messages,
+			"max_tokens": self.max_tokens,
+			"stream": False
+		}
+		
+		# Add model if specified
+		if self.chosen_model:
+			payload["model"] = self.chosen_model
+		
+		return payload
+
+	def _get_conversation_url(self):
+		return urllib.parse.urljoin(self.base_url, "v1/chat/completions")
+
+	def _get_conversation_headers(self):
+		headers = {
+			"Content-Type": "application/json",
+			"User-Agent": "curl/8.4.0"
+		}
+		if self.api_key:
+			headers["Authorization"] = f"Bearer {self.api_key}"
+		return headers
+
+	def _extract_conversation_response(self, response_json):
+		if not "choices" in response_json or not response_json["choices"] or "message" not in response_json["choices"][0]:
+			import ui
+			ui.message(_("The response appears to be malformed. "+repr(response_json)))
+			return ""
+		return response_json["choices"][0]["message"]["content"]
+
+	@cached_description
+	def process(self, image_path, **kw):
+		"""Process an image through the LiteLLM proxy and return a description"""
+		base64_image = encode_image(image_path)
+		messages = [{
+			"role": "user",
+			"content": self.prompt,
+			"image": base64_image
+		}]
+		payload = self.build_conversation_payload(messages)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		response_json = json.loads(response.decode('utf-8'))
+		content = self._extract_conversation_response(response_json)
+		self.start_conversation(image_path, self.prompt, content)
+		return content
+
+
 class LlamaCPP(BaseDescriptionService):
 	name = "llama.cpp"
 	needs_api_key = False
@@ -1056,7 +1190,8 @@ class VivoBlueLMVision(BaseDescriptionService):
 		return {
 			'model': self.internal_model_name,
 			'sessionId': str(uuid.uuid4()),
-			"messages": vivo_messages
+			"messages": vivo_messages,
+			"provider": "vivo"
 		}
 
 	def _extract_conversation_response(self, response_json):
@@ -1179,17 +1314,17 @@ models = [
 	Claude3Haiku(),
 	Claude3Sonnet(),
 	Claude3Opus(),
-	Gemini2_5FlashPreview(),
-	Gemini2_5ProPreview(),
-	Gemini2_0FlashLitePreview(),
-	Gemini2_0Flash(),
-	Gemini(),
-	GeminiFlash1_5_8B(),
-	Gemini1_5Pro(),
+	Gemini3FlashPreview(),
+	Gemini3_1ProPreview(),
+	Gemini3_1FlashLitePreview(),
+	Gemini2_5Flash(),
+	Gemini2_5FlashLite(),
+	Gemini2_5Pro(),
 	PixtralLarge(),
 	VivoBlueLMVision(),
 	Ollama(),
 	LlamaCPP(),
+	LiteLLMProxy(),
 ]
 
 

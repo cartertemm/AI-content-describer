@@ -10,7 +10,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude 3, XAI's Grok, Ollama, and llama.cpp)
+* Supports multiple providers (OpenAI's GPT, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude 3, XAI's Grok, Ollama, llama.cpp, and LiteLLM Proxy)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -39,12 +39,13 @@ Now, the possibilities are almost endless. You might:
 * [GPT-4.1](https://platform.openai.com/docs/models/gpt-4.1): GPT-4.1 excels at instruction following and tool calling, with broad knowledge across domains. It features a 1M token context window, and low latency without a reasoning step. Requires an OpenAI API key. Appears as "GPT-4.1" in the model configuration dialog. Supports follow-up questions and all formats supported by GPT-4o.
 * [GPT-5 chat](https://platform.openai.com/docs/models/gpt-5-chat-latest): OpenAI's latest multimodal model, supporting image and text input via the Chat Completions API. Requires an OpenAI API key. Appears as "GPT-5 chat" in the model configuration dialog. Leave the prompt field empty to use the default prompt, or supply your own. Supports follow-up questions and all formats supported by GPT-4o.
 * [GPT4 vision](https://platform.openai.com/docs/guides/vision), including 4O, O1, O3, and derivatives
-* [Google Gemini pro vision](https://blog.google/technology/ai/google-gemini-ai/), including the latest 1.5 Flash, 1.5 Flash 8B, Flash 2.0,  Flash 2.0 Lite Preview, 2.5 Flash, and 2.5 Pro models.
+* [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3 Flash Preview, 3.1 Flash-Lite Preview, and 3.1 Pro Preview models.
 * [Claude 3 and 4 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [Grok-2](https://x.ai/news/grok-2)
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
+* [LiteLLM Proxy](https://docs.litellm.ai/docs/proxy/quick_start): Access multiple AI models through a unified proxy server. Requires a LiteLLM proxy server URL, optionally an API key depending on your proxy configuration. Appears as "LiteLLM Proxy" in the model configuration dialog. Supports dynamic model selection and follow-up questions. Compatible with all formats (PNG, JPEG, WEBP, GIF).
 
 Follow the instructions provided below to get each of these working.
 
@@ -155,6 +156,26 @@ server.exe -m llava-v1.6-vicuna-7b.Q4_K_M.gguf --mmproj mmproj-model-f16.gguf
 ```
 6. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select "llama.cpp" as your provider, tab into the base URL field, and enter the endpoint shown in the console (defaults to "http://localhost:8080").
 7. Alternatively, you may omit some of these steps and run llama.cpp on a remote server with higher specs than your local machine, then enter that endpoint instead.
+
+### Setting up LiteLLM Proxy
+
+LiteLLM Proxy provides a unified interface to access multiple AI models through a single endpoint, simplifying model management and allowing easy switching between providers.
+
+1. Set up a LiteLLM proxy server following the [LiteLLM proxy documentation](https://docs.litellm.ai/docs/proxy/quick_start). You can run the proxy locally or use a remote server.
+2. If running locally, the quickest way to get started is:
+```
+pip install 'litellm[proxy]'
+litellm --model gpt-4o
+```
+This will start a proxy server at `http://localhost:4000` that forwards requests to OpenAI's GPT-4o.
+3. For production use, create a `config.yaml` file to configure multiple models and authentication. See the [LiteLLM configuration guide](https://docs.litellm.ai/docs/proxy/configs) for details.
+4. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select "LiteLLM Proxy" as your provider.
+5. Enter your proxy server URL in the base URL field (e.g., "http://localhost:4000" for local or your remote server URL).
+6. If your proxy requires authentication, enter the API key in the API key field. If not, leave it blank.
+7. Click the "List models" button to fetch available models from your proxy, then select the model you want to use from the dropdown.
+8. Adjust other settings like prompt, max tokens, and timeout as needed, then click OK.
+
+Note: The models available and their capabilities depend on your LiteLLM proxy configuration. Ensure your proxy is configured with vision-capable models for image description.
 
 ## Usage
 

@@ -118,7 +118,10 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 		if self.model.needs_base_url and not base_url:
 			self.base_url.SetFocus()
 			return
-		self.models = self.model.list_model_names(self.base_url.GetValue())
+		kwargs = {}
+		if hasattr(self, 'api_key'):
+			kwargs['api_key'] = self.api_key.GetValue()
+		self.models = self.model.list_model_names(self.base_url.GetValue(), **kwargs)
 		if len(self.models) == 0:
 			# Translators: The message spoken when there were no models found.
 			import ui
@@ -227,7 +230,10 @@ class PollinationsAIConfigurationPanel(BaseModelSettingsPanel):
 
 
 class GeminiConfigurationPanel(BaseModelSettingsPanel):
-	model = description_service.Gemini()
+	# This used to reference the now-removed Gemini 1.5 Flash (description_service.Gemini).
+	# Any current GoogleGemini subclass works here since all child panels override model/title.
+	# When Gemini 2.5 Flash is discontinued, swap this for whatever replaces it.
+	model = description_service.Gemini2_5Flash()
 	title = model.name
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -239,33 +245,33 @@ class GeminiConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
-class GeminiFlash1_5_8BConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.GeminiFlash1_5_8B()
+class Gemini2_5FlashConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini2_5Flash()
 	title = model.name
 
 
-class Gemini1_5ProConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.Gemini1_5Pro()
+class Gemini2_5FlashLiteConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini2_5FlashLite()
 	title = model.name
 
 
-class Gemini2_0FlashLitePreviewConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.Gemini2_0FlashLitePreview()
+class Gemini2_5ProConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini2_5Pro()
 	title = model.name
 
 
-class Gemini2_0FlashConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.Gemini2_0Flash()
+class Gemini3FlashPreviewConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3FlashPreview()
 	title = model.name
 
 
-class Gemini2_5FlashPreviewConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.Gemini2_5FlashPreview()
+class Gemini3_1FlashLitePreviewConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3_1FlashLitePreview()
 	title = model.name
 
 
-class Gemini2_5ProPreviewConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.Gemini2_5ProPreview()
+class Gemini3_1ProPreviewConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3_1ProPreview()
 	title = model.name
 
 
@@ -410,6 +416,22 @@ class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class LiteLLMProxyConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.LiteLLMProxy()
+	title = model.name
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_base_url_field(sHelper)
+		self.add_api_key_field(sHelper)
+		self.add_model_name_field(sHelper)
+		self.add_list_models_button(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
 description_service.PollinationsAI.configurationPanel = PollinationsAIConfigurationPanel
 description_service.GPT4.configurationPanel = GPT4ConfigurationPanel
 description_service.O4Mini.configurationPanel = O4MiniConfigurationPanel
@@ -420,11 +442,12 @@ description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
 description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
 description_service.GPT41.configurationPanel = GPT41ConfigurationPanel
 description_service.GPT5Chat.configurationPanel = GPT5ChatConfigurationPanel
-description_service.Gemini2_0FlashLitePreview.configurationPanel = Gemini2_0FlashLitePreviewConfigurationPanel
-description_service.Gemini2_0Flash.configurationPanel = Gemini2_0FlashConfigurationPanel
-description_service.Gemini.configurationPanel = GeminiConfigurationPanel
-description_service.GeminiFlash1_5_8B.configurationPanel = GeminiFlash1_5_8BConfigurationPanel
-description_service.Gemini1_5Pro.configurationPanel = Gemini1_5ProConfigurationPanel
+description_service.Gemini2_5Flash.configurationPanel = Gemini2_5FlashConfigurationPanel
+description_service.Gemini2_5FlashLite.configurationPanel = Gemini2_5FlashLiteConfigurationPanel
+description_service.Gemini2_5Pro.configurationPanel = Gemini2_5ProConfigurationPanel
+description_service.Gemini3FlashPreview.configurationPanel = Gemini3FlashPreviewConfigurationPanel
+description_service.Gemini3_1FlashLitePreview.configurationPanel = Gemini3_1FlashLitePreviewConfigurationPanel
+description_service.Gemini3_1ProPreview.configurationPanel = Gemini3_1ProPreviewConfigurationPanel
 description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationPanel
 description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfigurationPanel # <-- 在这里添加
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel
@@ -434,13 +457,12 @@ description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationP
 description_service.Claude3Sonnet.configurationPanel = Claude3SonnetConfigurationPanel
 description_service.Claude3Opus.configurationPanel = Claude3OpusConfigurationPanel
 description_service.Grok2Vision.configurationPanel = Grok2VisionConfigurationPanel
-description_service.Gemini2_5FlashPreview.configurationPanel = Gemini2_5FlashPreviewConfigurationPanel
-description_service.Gemini2_5ProPreview.configurationPanel = Gemini2_5ProPreviewConfigurationPanel
 description_service.Claude4Opus.configurationPanel = Claude4OpusConfigurationPanel
 description_service.Claude4Sonnet.configurationPanel = Claude4SonnetConfigurationPanel
 description_service.Claude3_7Sonnet.configurationPanel = Claude3_7SonnetConfigurationPanel
 description_service.Claude3_5Haiku.configurationPanel = Claude3_5HaikuConfigurationPanel
 description_service.Claude3_5SonnetV2.configurationPanel = Claude3_5SonnetV2ConfigurationPanel
+description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
 models_dialog_parent = None
 
 
