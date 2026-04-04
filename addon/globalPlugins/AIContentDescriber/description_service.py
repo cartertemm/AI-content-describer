@@ -430,14 +430,6 @@ class BaseGPT(BaseDescriptionService):
 		return content
 
 
-class GPT4(BaseGPT):
-	name = "GPT-4 vision"
-	# translators: the description for the GPT4 vision model in the model configuration dialog
-	description = _("The GPT4 model from OpenAI, previewed with vision capabilities. As of April 2024,  this model has been superseded by GPT4 turbo which has consistently achieved better metrics in tasks involving visual understanding.")
-	about_url = "https://platform.openai.com/docs/guides/vision"
-	internal_model_name = "gpt-4-vision-preview"
-
-
 class GPT4Turbo(BaseGPT):
 	name = "GPT-4 turbo"
 	# translators: the description for the GPT4 turbo model in the model configuration dialog
@@ -460,12 +452,77 @@ class GPT41(BaseGPT):
 	about_url = "https://platform.openai.com/docs/models/gpt-4.1"
 	internal_model_name = "gpt-4.1"
 
+
+class GPT41Mini(BaseGPT):
+	name = "GPT-4.1 mini"
+	# translators: the description for the GPT-4.1 mini model in the configuration dialog
+	description = _("A smaller, faster variant of GPT-4.1 with strong instruction following and a 1M token context window at reduced cost.")
+	about_url = "https://platform.openai.com/docs/models/gpt-4.1-mini"
+	internal_model_name = "gpt-4.1-mini"
+
+
+class GPT41Nano(BaseGPT):
+	name = "GPT-4.1 nano"
+	# translators: the description for the GPT-4.1 nano model in the configuration dialog
+	description = _("The smallest and most affordable GPT-4.1 variant, optimized for fast responses with a 1M token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-4.1-nano"
+	internal_model_name = "gpt-4.1-nano"
+
+
+class GPT5(BaseGPT):
+	name = "GPT-5"
+	# translators: the description for the GPT-5 model in the configuration dialog
+	description = _("OpenAI's frontier model with advanced reasoning, vision, and a 400k token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5"
+	internal_model_name = "gpt-5"
+
+
+class GPT5Mini(BaseGPT):
+	name = "GPT-5 mini"
+	# translators: the description for the GPT-5 mini model in the configuration dialog
+	description = _("A fast, cost-efficient variant of GPT-5 with vision support and a 400k token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5-mini"
+	internal_model_name = "gpt-5-mini"
+
+
+class GPT5Nano(BaseGPT):
+	name = "GPT-5 nano"
+	# translators: the description for the GPT-5 nano model in the configuration dialog
+	description = _("The smallest GPT-5 variant, offering vision capabilities at the lowest cost.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5-nano"
+	internal_model_name = "gpt-5-nano"
+
+
 class GPT5Chat(BaseGPT):
 	name = "GPT-5 chat"
 	# translators: the description for the GPT‑5 chat model in the configuration dialog
 	description = _("GPT-5 model used in ChatGPT")
 	about_url = "https://platform.openai.com/docs/models/gpt-5-chat-latest"
 	internal_model_name = "gpt-5-chat-latest"
+
+
+class GPT54(BaseGPT):
+	name = "GPT-5.4"
+	# translators: the description for the GPT-5.4 model in the configuration dialog
+	description = _("OpenAI's latest flagship model with advanced reasoning, vision, and a 400k token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5.4"
+	internal_model_name = "gpt-5.4"
+
+
+class GPT54Mini(BaseGPT):
+	name = "GPT-5.4 mini"
+	# translators: the description for the GPT-5.4 mini model in the configuration dialog
+	description = _("A fast, affordable variant of GPT-5.4 with vision support and a 400k token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5.4-mini"
+	internal_model_name = "gpt-5.4-mini"
+
+
+class GPT54Nano(BaseGPT):
+	name = "GPT-5.4 nano"
+	# translators: the description for the GPT-5.4 nano model in the configuration dialog
+	description = _("The smallest and cheapest GPT-5.4 variant with vision capabilities and a 400k token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5.4-nano"
+	internal_model_name = "gpt-5.4-nano"
 
 
 class O3(BaseGPT):
@@ -1296,14 +1353,21 @@ class VivoBlueLMVision(BaseDescriptionService):
 models = [
 	PollinationsAI(),
 	GPT4O(),
-	GPT41(),
+	GPT54(),
+	GPT54Mini(),
+	GPT54Nano(),
+	GPT5(),
+	GPT5Mini(),
+	GPT5Nano(),
 	GPT5Chat(),
+	GPT41(),
+	GPT41Mini(),
+	GPT41Nano(),
 	O4Mini(),
 	O3(),
 	O3Mini(),
 	O3Pro(),
 	GPT4Turbo(),
-	GPT4(),
 	Grok2Vision(),
 	Claude4_6Opus(),
 	Claude4_6Sonnet(),

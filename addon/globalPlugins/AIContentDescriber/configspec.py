@@ -7,19 +7,7 @@
 from io import StringIO
 
 
-configspec = StringIO("""[GPT-4 vision]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=250)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-# these values are only maintained for backward compatibility and in case a downgrade is necessary
-# changing them will do nothing on versions later than 2024.x.x.
-# For that, please see the same options under the [global] section.
-optimize_for_size = boolean(default=False)
-open_in_dialog = boolean(default=False)
-
-[Claude 4.6 Opus]
+configspec = StringIO("""[Claude 4.6 Opus]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=300)
@@ -180,12 +168,68 @@ max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
+[GPT-4.1 mini]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=20, min=1)
+
+[GPT-4.1 nano]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[GPT-5]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[GPT-5 mini]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=20, min=1)
+
+[GPT-5 nano]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
 [GPT-5 chat]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
+
+[GPT-5.4]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[GPT-5.4 mini]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=20, min=1)
+
+[GPT-5.4 nano]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
 
 [Grok 2 vision]
 api_key = string(default="")
