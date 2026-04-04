@@ -357,37 +357,8 @@ class ClaudeConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
-class Claude3OpusConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3Opus()
-	title = model.name
-
-
-class Claude3SonnetConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3Sonnet()
-	title = model.name
-
-
-class Claude3HaikuConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3Haiku()
-	title = model.name
-
-
-class Claude3_5SonnetConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3_5Sonnet()
-	title = model.name
-
-class Claude3_5HaikuConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3_5Haiku()
-	title = model.name
-
-
-class Claude3_5SonnetV2ConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3_5SonnetV2()
-	title = model.name
-
-
-class Claude3_7SonnetConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude3_7Sonnet()
+class Claude4SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4Sonnet()
 	title = model.name
 
 
@@ -396,8 +367,33 @@ class Claude4OpusConfigurationPanel(ClaudeConfigurationPanel):
 	title = model.name
 
 
-class Claude4SonnetConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude4Sonnet()
+class Claude4_1OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_1Opus()
+	title = model.name
+
+
+class Claude4_5SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_5Sonnet()
+	title = model.name
+
+
+class Claude4_5OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_5Opus()
+	title = model.name
+
+
+class Claude4_5HaikuConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_5Haiku()
+	title = model.name
+
+
+class Claude4_6SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_6Sonnet()
+	title = model.name
+
+
+class Claude4_6OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_6Opus()
 	title = model.name
 
 
@@ -452,16 +448,15 @@ description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationP
 description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfigurationPanel # <-- 在这里添加
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
-description_service.Claude3_5Sonnet.configurationPanel = Claude3_5SonnetConfigurationPanel
-description_service.Claude3Haiku.configurationPanel = Claude3HaikuConfigurationPanel
-description_service.Claude3Sonnet.configurationPanel = Claude3SonnetConfigurationPanel
-description_service.Claude3Opus.configurationPanel = Claude3OpusConfigurationPanel
 description_service.Grok2Vision.configurationPanel = Grok2VisionConfigurationPanel
-description_service.Claude4Opus.configurationPanel = Claude4OpusConfigurationPanel
 description_service.Claude4Sonnet.configurationPanel = Claude4SonnetConfigurationPanel
-description_service.Claude3_7Sonnet.configurationPanel = Claude3_7SonnetConfigurationPanel
-description_service.Claude3_5Haiku.configurationPanel = Claude3_5HaikuConfigurationPanel
-description_service.Claude3_5SonnetV2.configurationPanel = Claude3_5SonnetV2ConfigurationPanel
+description_service.Claude4Opus.configurationPanel = Claude4OpusConfigurationPanel
+description_service.Claude4_1Opus.configurationPanel = Claude4_1OpusConfigurationPanel
+description_service.Claude4_5Sonnet.configurationPanel = Claude4_5SonnetConfigurationPanel
+description_service.Claude4_5Opus.configurationPanel = Claude4_5OpusConfigurationPanel
+description_service.Claude4_5Haiku.configurationPanel = Claude4_5HaikuConfigurationPanel
+description_service.Claude4_6Sonnet.configurationPanel = Claude4_6SonnetConfigurationPanel
+description_service.Claude4_6Opus.configurationPanel = Claude4_6OpusConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
 models_dialog_parent = None
 

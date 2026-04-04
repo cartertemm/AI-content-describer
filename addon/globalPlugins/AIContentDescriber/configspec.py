@@ -19,12 +19,47 @@ timeout = integer(default=15, min=1)
 optimize_for_size = boolean(default=False)
 open_in_dialog = boolean(default=False)
 
-[Claude 3.5 Sonnet]
+[Claude 4.6 Opus]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Claude 4.6 Sonnet]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=20, min=1)
+
+[Claude 4.5 Opus]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Claude 4.5 Sonnet]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=20, min=1)
+
+[Claude 4.5 Haiku]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
+
+[Claude 4.1 Opus]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
 
 [GPT-4 turbo]
 api_key = string(default="")
@@ -104,27 +139,6 @@ max_tokens = integer(default=250)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
-[Claude 3 Haiku]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=300)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[Claude 3 Sonnet]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=300)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[Claude 3 Opus]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=300)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
 [Pollinations (OpenAI)]
 prompt = string(default="")
 max_tokens = integer(default=300)
@@ -194,27 +208,6 @@ prompt = string(default="")
 max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
-
-[Claude 3.7 Sonnet]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=300)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=20, min=1)
-
-[Claude 3.5 Haiku]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=300)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[Claude 3.5 Sonnet v2]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=300)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
 
 [vivo BlueLM Vision (NVDA-CN)]
 nvdacn_user = string(default="")
