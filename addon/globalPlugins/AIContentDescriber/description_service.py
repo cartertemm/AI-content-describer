@@ -32,6 +32,25 @@ def encode_image(image_path):
 		return base64.b64encode(image_file.read()).decode('utf-8')
 
 
+def detect_image_media_type(base64_data):
+	"""Detect the media type of an image from its base64-encoded data.
+
+	Examines magic bytes to determine the actual image format rather than
+	relying on file extensions, which may not match the image content
+	(e.g. clipboard images).
+	"""
+	header = base64.b64decode(base64_data[:32])
+	if header[:3] == b'\xff\xd8\xff':
+		return "image/jpeg"
+	if header[:8] == b'\x89PNG\r\n\x1a\n':
+		return "image/png"
+	if header[:4] == b'GIF8':
+		return "image/gif"
+	if header[:4] == b'RIFF' and header[8:12] == b'WEBP':
+		return "image/webp"
+	return "image/png"
+
+
 def get_image_hash(image_path):
 	"""Generate a consistent hash for an image file to use as conversation key"""
 	with open(image_path, "rb") as f:
@@ -703,7 +722,7 @@ class Anthropic(BaseDescriptionService):
 					"type": "image",
 					"source": {
 						"type": "base64",
-						"media_type": "image/png",
+						"media_type": detect_image_media_type(msg["image"]),
 						"data": msg["image"]
 					}
 				})
