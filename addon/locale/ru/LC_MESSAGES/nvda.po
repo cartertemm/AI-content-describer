@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2025.06.17'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2025-11-13 12:21+0300\n"
-"PO-Revision-Date: 2025-11-13 12:26+0300\n"
+"POT-Creation-Date: 2026-04-02 11:16+0300\n"
+"PO-Revision-Date: 2026-04-02 11:21+0300\n"
 "Last-Translator: Danil Kostenkov <danilkostenkov38@gmail.com>\n"
 "Language-Team: Russian team <nvda.ru>, Danil Kostenkov "
 "<danilkostenkov38@gmail.com>\n"
@@ -11,7 +11,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../../..\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPath-1: other stuff\n"
@@ -321,21 +323,21 @@ msgstr ""
 "запуска этого дополнения. Чтобы узнать больше, обратитесь к журналу NVDA. "
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:48
-#: addon/globalPlugins/AIContentDescriber/description_service.py:86
+#: addon/globalPlugins/AIContentDescriber/description_service.py:90
 msgid "error"
 msgstr "ошибка"
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:54
-#: addon/globalPlugins/AIContentDescriber/description_service.py:99
+#: addon/globalPlugins/AIContentDescriber/description_service.py:103
 msgid "error making connection"
 msgstr "ошибка соединения"
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:61
-#: addon/globalPlugins/AIContentDescriber/description_service.py:106
+#: addon/globalPlugins/AIContentDescriber/description_service.py:110
 msgid "error, connection refused by target"
 msgstr "ошибка, конечный адресат отклонил соединение"
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:428
+#: addon/globalPlugins/AIContentDescriber/description_service.py:436
 msgid ""
 "The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
 "2024,  this model has been superseded by GPT4 turbo which has consistently "
@@ -346,7 +348,7 @@ msgstr ""
 "которая показала лучшие результаты в задачах, требующих понимания визуальной "
 "информации."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:436
+#: addon/globalPlugins/AIContentDescriber/description_service.py:444
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
 "quality and understanding. This model will soon be deprecated so we "
@@ -356,7 +358,7 @@ msgstr ""
 "улучшенным качеством и пониманием. Эта модель скоро выйдет из употребления, "
 "поэтому мы рекомендуем перейти на GPT-4o."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:444
+#: addon/globalPlugins/AIContentDescriber/description_service.py:452
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -367,7 +369,7 @@ msgstr ""
 "гораздо более эффективна, способна генерировать текст вдвое быстрее и вдвое "
 "дешевле."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:451
+#: addon/globalPlugins/AIContentDescriber/description_service.py:459
 msgid ""
 "GPT-4.1 excels at instruction following and tool calling, with broad "
 "knowledge across domains. It features a 1M token context window, and low "
@@ -377,11 +379,11 @@ msgstr ""
 "обширными знаниями в различных областях. Модель характеризуется контекстным "
 "окном в 1 миллион токенов и низкой задержкой при отсутствии шага рассуждения."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:458
+#: addon/globalPlugins/AIContentDescriber/description_service.py:466
 msgid "GPT-5 model used in ChatGPT"
 msgstr "Модель GPT-5, используемая в ChatGPT"
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:466
+#: addon/globalPlugins/AIContentDescriber/description_service.py:474
 msgid ""
 "Released in April 2025, o3 is a well-rounded and powerful model across "
 "domains. It sets a new standard for math, science, coding, and visual "
@@ -396,7 +398,7 @@ msgstr ""
 "выполнении инструкций. Используйте её для решения многоэтапных задач, "
 "связанных с анализом текста, кода и изображений."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:474
+#: addon/globalPlugins/AIContentDescriber/description_service.py:482
 msgid ""
 "Released in June 2025, O3 pro is an upgraded version of O3. It is designed "
 "to think longer and provide the most reliable responses. Because o3-pro has "
@@ -413,7 +415,7 @@ msgstr ""
 "ожидание в течение нескольких минут стоит того, чтобы пойти на компромисс. "
 "Не забудьте настроить время ожидания."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:482
+#: addon/globalPlugins/AIContentDescriber/description_service.py:490
 msgid ""
 "Released in January 2025, this powerful and fast model advances the "
 "boundaries of what small models can achieve, delivering exceptional STEM "
@@ -425,7 +427,7 @@ msgstr ""
 "особенно в области науки, математики и программирования, при сохранении "
 "низкой стоимости и низкой задержки OpenAI o1-mini."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:490
+#: addon/globalPlugins/AIContentDescriber/description_service.py:498
 msgid ""
 "Released in April 2025, o4-mini is a smaller model optimized for fast, cost-"
 "efficient reasoning. It achieves remarkable performance for its size and "
@@ -443,35 +445,21 @@ msgstr ""
 "её эффективным средством для решения вопросов с большим объёмом информации и "
 "высокой пропускной способностью. Не забудьте настроить время ожидания."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:545
+#: addon/globalPlugins/AIContentDescriber/description_service.py:553
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "В Gemini произошла ошибка: {code}, {msg}"
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:572
-msgid "Google's Gemini 1.5 flash model with vision capabilities."
-msgstr "Модель Gemini 1.5 flash от Google с возможностями восприятия образов."
-
-#: addon/globalPlugins/AIContentDescriber/description_service.py:580
+#: addon/globalPlugins/AIContentDescriber/description_service.py:560
 msgid ""
-"Gemini 1.5 Flash-8B is a small model designed for high volume and lower "
-"intelligence tasks."
+"The model used all available tokens for reasoning and returned no visible "
+"response. Try increasing the max tokens setting."
 msgstr ""
-"Gemini 1.5 Flash-8B - это компактная модель, предназначенная для решения "
-"задач с большим объёмом данных и низким уровнем интеллекта."
+"Модель использовала все доступные токены для анализа и не выдала никакого "
+"видимого ответа. Попробуйте увеличить значение максимального количества "
+"токенов."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:588
-msgid ""
-"Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a wide-"
-"range of complex reasoning tasks requiring more intelligence. 1.5 Pro can "
-"process large amounts of data at once."
-msgstr ""
-"Gemini 1.5 Pro - это мультимодальная модель среднего размера, "
-"оптимизированная для решения широкого спектра сложных логических задач, "
-"требующих повышенного интеллекта. 1.5 Pro может обрабатывать большие объёмы "
-"данных одновременно."
-
-#: addon/globalPlugins/AIContentDescriber/description_service.py:596
+#: addon/globalPlugins/AIContentDescriber/description_service.py:586
 msgid ""
 "Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for "
 "tasks like summarization, chat applications, data extraction, and captioning."
@@ -480,7 +468,15 @@ msgstr ""
 "сложных задач. Идеально подходит для таких задач, как подведение итогов, "
 "приложения для чата, извлечение данных и создание субтитров."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:604
+#: addon/globalPlugins/AIContentDescriber/description_service.py:594
+msgid ""
+"Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while "
+"maintaining strong performance."
+msgstr ""
+"Модель Gemini 2.5 Flash-Lite оптимизирована для обеспечения экономичности и "
+"низкой задержки при сохранении высокой производительности."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:602
 msgid ""
 "Gemini 2.5 Pro models are capable of reasoning through their thoughts before "
 "responding, resulting in enhanced performance and improved accuracy. Best "
@@ -490,38 +486,44 @@ msgstr ""
 "реагировать, что повышает производительность и точность. Лучше всего "
 "подходит для программирования и решения сложных задач."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:612
+#: addon/globalPlugins/AIContentDescriber/description_service.py:610
 msgid ""
-"Gemini 2.0 Flash delivers next-gen features and improved capabilities, "
-"including superior speed, native tool use, multimodal generation, and a 1M "
-"token context window."
+"Gemini 3 Flash is Google's latest multimodal model with strong vision and "
+"agentic capabilities. Supports text, image, video, audio, and PDF input with "
+"a 1M token context window."
 msgstr ""
-"Gemini 2.0 Flash предоставляет функции нового поколения и улучшенные "
-"возможности, включая превосходную скорость, использование встроенных "
-"инструментов, мультимодальную генерацию и контекстное окно с токенами "
-"размером 1 м."
+"Gemini 3 Flash - это новейшая мультимодальная модель Google, обладающая "
+"мощным зрением и возможностями агента. Поддерживает ввод текста, "
+"изображений, видео, аудио и PDF с помощью контекстного окна размером 1м "
+"токенов."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:620
+#: addon/globalPlugins/AIContentDescriber/description_service.py:618
 msgid ""
-"Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for cost "
-"efficiency and low latency. Outperforms 1.5 Flash on the majority of "
-"benchmarks, at the same speed and cost."
+"Gemini 3.1 Flash-Lite is the most cost-efficient model in the Gemini 3 "
+"series, designed for high volume tasks."
 msgstr ""
-"Gemini 2.0 Flash lite preview - это модель Gemini 2.0 Flash , "
-"оптимизированная для обеспечения экономичности и низкой задержки. "
-"Превосходит 1.5 Flash по большинству показателей при той же скорости и "
-"стоимости."
+"Gemini 3.1 Flash-Lite - это самая экономичная модель в серии Gemini 3, "
+"предназначенная для выполнения задач большого объёма."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:669
+#: addon/globalPlugins/AIContentDescriber/description_service.py:626
+msgid ""
+"Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic "
+"workflows, with enhanced performance and accuracy."
+msgstr ""
+"Gemini 3.1 Pro - это новейшая, впервые разработанная Google модель для "
+"сложных агентных рабочих процессов с повышенной производительностью и "
+"точностью."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:675
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr "В Claude произошла ошибка. {err}"
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:695
+#: addon/globalPlugins/AIContentDescriber/description_service.py:701
 msgid "Anthropic's most powerful model for highly complex tasks."
 msgstr "Самая мощная модель Anthropic для решения очень сложных задач."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:701
+#: addon/globalPlugins/AIContentDescriber/description_service.py:707
 msgid ""
 "Anthropic's model with Ideal balance of intelligence and speed, excels for "
 "enterprise workloads."
@@ -529,14 +531,14 @@ msgstr ""
 "Модель Anthropic с идеальным балансом интеллекта и скорости отлично подходит "
 "для корпоративных рабочих нагрузок."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:707
+#: addon/globalPlugins/AIContentDescriber/description_service.py:713
 msgid ""
 "Anthropic's fastest and most compact model for near-instant responsiveness"
 msgstr ""
 "Самая быстрая и компактная модель Anthropic, обеспечивающая практически "
 "мгновенное реагирование"
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:713
+#: addon/globalPlugins/AIContentDescriber/description_service.py:719
 msgid ""
 "Anthropic's improvement over Claude 3 sonnet, this model features enhanced "
 "reasoning capabilities relative to its predecessor."
@@ -545,7 +547,7 @@ msgstr ""
 "обладает расширенными возможностями мышления по сравнению со своей "
 "предшественницей."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:720
+#: addon/globalPlugins/AIContentDescriber/description_service.py:726
 msgid ""
 "Anthropic's next generation fastest model with improved reasoning across "
 "every skill set. Surpasses Claude 3 Opus on many benchmarks while "
@@ -555,7 +557,7 @@ msgstr ""
 "для каждого набора навыков. Превосходит Claude 3 Opus по многим показателям, "
 "сохраняя при этом скорость и экономическую эффективность."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:728
+#: addon/globalPlugins/AIContentDescriber/description_service.py:734
 msgid ""
 "Anthropic's upgraded Claude 3.5 Sonnet with significant improvements in "
 "coding and computer use capabilities. Features enhanced reasoning and the "
@@ -565,7 +567,7 @@ msgstr ""
 "возможности программирования и использования компьютера. В ней расширены "
 "возможности мышления и взаимодействия с компьютерными интерфейсами."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:736
+#: addon/globalPlugins/AIContentDescriber/description_service.py:742
 msgid ""
 "Anthropic's most intelligent model to date and the first hybrid reasoning "
 "model. Features extended thinking capabilities for complex problem-solving "
@@ -575,7 +577,7 @@ msgstr ""
 "гибридная модель мышления. Расширяет возможности мышления для решения "
 "сложных задач с помощью пошаговых рассуждений."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:744
+#: addon/globalPlugins/AIContentDescriber/description_service.py:750
 msgid ""
 "Anthropic's high-performance model with exceptional reasoning and "
 "efficiency. Significant upgrade to Claude Sonnet 3.7 with superior coding "
@@ -585,7 +587,7 @@ msgstr ""
 "эффективностью. Значительное обновление до версии Claude Sonnet 3.7 с "
 "улучшенным пониманием задач по программированию и следованием инструкциям."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:752
+#: addon/globalPlugins/AIContentDescriber/description_service.py:758
 msgid ""
 "Anthropic's most capable and intelligent model yet. Sets new standards in "
 "complex reasoning and advanced coding with sustained performance on long-"
@@ -596,7 +598,7 @@ msgstr ""
 "программирования, обеспечивая стабильную производительность при выполнении "
 "длительных задач, требующих целенаправленных усилий."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:828
+#: addon/globalPlugins/AIContentDescriber/description_service.py:834
 msgid ""
 "MistralAI's multimodal image LLM, achieving state-of-the-art results on "
 "MathVista, DocVQA, VQAv2 and other benchmarks."
@@ -604,7 +606,7 @@ msgstr ""
 "MistralAI's multimodal image LLM, достигает самых современных результатов в "
 "MathVista, DocVQA, VQAv2 и других тестах."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:836
+#: addon/globalPlugins/AIContentDescriber/description_service.py:842
 msgid ""
 "xAI's flagship multimodal model with advanced reasoning capabilities. Excels "
 "at enterprise tasks like data extraction, programming, and text "
@@ -617,19 +619,38 @@ msgstr ""
 "благодаря превосходному знанию предметной области в области финансов, "
 "здравоохранения, права и науки."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:854
+#: addon/globalPlugins/AIContentDescriber/description_service.py:860
 msgid "The quickest way to get up and running with large language models."
 msgstr "Это самый быстрый способ начать работу с большими языковыми моделями."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:870
+#: addon/globalPlugins/AIContentDescriber/description_service.py:876
 msgid "Could not contact the provided base URL. "
 msgstr "Не удалось связаться с указанным базовым URL-адресом. "
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:902
+#: addon/globalPlugins/AIContentDescriber/description_service.py:908
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1039
 msgid "The response appears to be malformed. "
 msgstr "Ответ, по-видимому, был неправильно сформирован. "
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:938
+#: addon/globalPlugins/AIContentDescriber/description_service.py:939
+msgid "Access multiple AI models through a unified LiteLLM proxy server."
+msgstr ""
+"Получите доступ к нескольким моделям искусственного интеллекта через единый "
+"прокси-сервер LiteLLM."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:955
+msgid "Please provide a base URL first."
+msgstr "Пожалуйста, сначала укажите базовый URL-адрес."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:972
+msgid "Could not contact the LiteLLM proxy server. "
+msgstr "Не удалось связаться с прокси-сервером LiteLLM. "
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:982
+msgid "Unexpected response format from LiteLLM proxy. "
+msgstr "Неожиданный формат ответа от прокси-сервера LiteLLM. "
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1072
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -648,7 +669,7 @@ msgstr ""
 "задачей для пользователя, который знает, что делает, вы можете найти "
 "основные шаги в документации по дополнению."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:977
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1111
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -657,7 +678,7 @@ msgstr ""
 "Реакция на распознавание изображений, по-видимому, искажена.\n"
 "{response}"
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:1003
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1137
 msgid ""
 "A multimodal model from vivo, accessed via NVDA-CN account. This service is "
 "provided by the NVDA Chinese community and requires your nvdacn.com "
@@ -667,20 +688,20 @@ msgstr ""
 "учетную запись NVDA-CN. Эта сервис предоставляется китайским сообществом "
 "пользователей NVDA и требует ваших учетных данных nvdacn.com."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:1071
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1206
 #, python-brace-format
 msgid "API Error: {error}"
 msgstr "Ошибка API: {error}"
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:1078
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1213
 msgid "The model returned an empty response."
 msgstr "Модель вернула пустой ответ."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:1108
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1243
 msgid "Network request failed unexpectedly."
 msgstr "Неожиданно произошел сбой сетевого запроса."
 
-#: addon/globalPlugins/AIContentDescriber/description_service.py:1142
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1277
 msgid "No active conversation. Please describe an image first."
 msgstr "Активного диалога нет. Пожалуйста, сначала опишите изображение."
 
@@ -869,29 +890,29 @@ msgstr "Время ожидания ответа в секундах"
 msgid "About model"
 msgstr "О модели"
 
-#: addon/globalPlugins/AIContentDescriber/model_configuration.py:125
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:128
 msgid "No models were found. Please install one, then try again."
 msgstr ""
 "Не найдено ни одной модели. Пожалуйста, установите модель и повторите "
 "попытку."
 
-#: addon/globalPlugins/AIContentDescriber/model_configuration.py:134
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:137
 msgid "Select a model"
 msgstr "Выберите модель"
 
-#: addon/globalPlugins/AIContentDescriber/model_configuration.py:142
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:145
 msgid "Model:"
 msgstr "Модель:"
 
-#: addon/globalPlugins/AIContentDescriber/model_configuration.py:296
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:302
 msgid "NVDA-CN Username"
 msgstr "Имя пользователя NVDA-CN"
 
-#: addon/globalPlugins/AIContentDescriber/model_configuration.py:298
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:304
 msgid "NVDA-CN Password"
 msgstr "Пароль NVDA-CN"
 
-#: addon/globalPlugins/AIContentDescriber/model_configuration.py:317
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:323
 msgid " (requires installation)"
 msgstr " (требуется установка)"
 
@@ -1072,3 +1093,44 @@ msgstr ""
 "«Описатель содержимого AI» и введите свой ключ API.\n"
 "Для других поставщиков моделей процесс аналогичен, подробнее об этом читайте "
 "в документации к дополнению."
+
+#~ msgid "Google's Gemini 1.5 flash model with vision capabilities."
+#~ msgstr ""
+#~ "Модель Gemini 1.5 flash от Google с возможностями восприятия образов."
+
+#~ msgid ""
+#~ "Gemini 1.5 Flash-8B is a small model designed for high volume and lower "
+#~ "intelligence tasks."
+#~ msgstr ""
+#~ "Gemini 1.5 Flash-8B - это компактная модель, предназначенная для решения "
+#~ "задач с большим объёмом данных и низким уровнем интеллекта."
+
+#~ msgid ""
+#~ "Gemini 1.5 Pro is a mid-size multimodal model that is optimized for a "
+#~ "wide-range of complex reasoning tasks requiring more intelligence. 1.5 "
+#~ "Pro can process large amounts of data at once."
+#~ msgstr ""
+#~ "Gemini 1.5 Pro - это мультимодальная модель среднего размера, "
+#~ "оптимизированная для решения широкого спектра сложных логических задач, "
+#~ "требующих повышенного интеллекта. 1.5 Pro может обрабатывать большие "
+#~ "объёмы данных одновременно."
+
+#~ msgid ""
+#~ "Gemini 2.0 Flash delivers next-gen features and improved capabilities, "
+#~ "including superior speed, native tool use, multimodal generation, and a "
+#~ "1M token context window."
+#~ msgstr ""
+#~ "Gemini 2.0 Flash предоставляет функции нового поколения и улучшенные "
+#~ "возможности, включая превосходную скорость, использование встроенных "
+#~ "инструментов, мультимодальную генерацию и контекстное окно с токенами "
+#~ "размером 1 м."
+
+#~ msgid ""
+#~ "Gemini 2.0 Flash lite preview is a Gemini 2.0 Flash model optimized for "
+#~ "cost efficiency and low latency. Outperforms 1.5 Flash on the majority of "
+#~ "benchmarks, at the same speed and cost."
+#~ msgstr ""
+#~ "Gemini 2.0 Flash lite preview - это модель Gemini 2.0 Flash , "
+#~ "оптимизированная для обеспечения экономичности и низкой задержки. "
+#~ "Превосходит 1.5 Flash по большинству показателей при той же скорости и "
+#~ "стоимости."
