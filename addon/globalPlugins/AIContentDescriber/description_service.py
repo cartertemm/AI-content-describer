@@ -265,7 +265,7 @@ class BaseDescriptionService:
 		return payload
 
 	def _get_completion_token_param_name(self):
-		"""Use OpenAI's current output token field on the official API."""
+		"""Returns the output token field name for the chat completions request. Only the default build_conversation_payload calls this, so providers that override that method are unaffected."""
 		netloc = urllib.parse.urlparse(self._get_conversation_url()).netloc.lower()
 		if netloc == "api.openai.com":
 			return "max_completion_tokens"
