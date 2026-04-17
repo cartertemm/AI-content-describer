@@ -257,11 +257,19 @@ class BaseDescriptionService:
 					"content": msg["content"]
 				}
 			formatted_messages.append(formatted_msg)
-		return {
+		payload = {
 			"model": getattr(self, 'internal_model_name', self.name),
 			"messages": formatted_messages,
-			"max_tokens": self.max_tokens
 		}
+		payload[self._get_completion_token_param_name()] = self.max_tokens
+		return payload
+
+	def _get_completion_token_param_name(self):
+		"""Use OpenAI's current output token field on the official API."""
+		netloc = urllib.parse.urlparse(self._get_conversation_url()).netloc.lower()
+		if netloc == "api.openai.com":
+			return "max_completion_tokens"
+		return "max_tokens"
 
 	def _get_conversation_headers(self):
 		"""Get headers for API requests. Override if needed."""
