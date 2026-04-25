@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2026-04-02 11:04+0300\n"
-"PO-Revision-Date: 2026-04-02 11:44+0300\n"
+"POT-Creation-Date: 2026-04-15 16:16+0300\n"
+"PO-Revision-Date: 2026-04-15 16:34+0300\n"
 "Last-Translator: Heorhii Halas <nvda.translation.uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -369,37 +369,25 @@ msgstr ""
 "запуску цього додатка. Щоб дізнатися більше, зверніться до журналу NVDA. "
 
 #. translators: error
-#: addon\globalPlugins\AIContentDescriber\description_service.py:48
-#: addon\globalPlugins\AIContentDescriber\description_service.py:90
+#: addon\globalPlugins\AIContentDescriber\description_service.py:67
+#: addon\globalPlugins\AIContentDescriber\description_service.py:109
 msgid "error"
 msgstr "помилка"
 
 #. translators: message spoken when we can't connect (error with connection)
-#: addon\globalPlugins\AIContentDescriber\description_service.py:54
-#: addon\globalPlugins\AIContentDescriber\description_service.py:103
+#: addon\globalPlugins\AIContentDescriber\description_service.py:73
+#: addon\globalPlugins\AIContentDescriber\description_service.py:122
 msgid "error making connection"
 msgstr "помилка з’єднання"
 
 #. translators: message spoken when the connection is refused by our target
-#: addon\globalPlugins\AIContentDescriber\description_service.py:61
-#: addon\globalPlugins\AIContentDescriber\description_service.py:110
+#: addon\globalPlugins\AIContentDescriber\description_service.py:80
+#: addon\globalPlugins\AIContentDescriber\description_service.py:129
 msgid "error, connection refused by target"
 msgstr "помилка, кінцевий адресат відхилив підключення"
 
-#. translators: the description for the GPT4 vision model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:436
-msgid ""
-"The GPT4 model from OpenAI, previewed with vision capabilities. As of April "
-"2024,  this model has been superseded by GPT4 turbo which has consistently "
-"achieved better metrics in tasks involving visual understanding."
-msgstr ""
-"Модель GPT4 від OpenAI, представлена з можливостями сприйняття образів. "
-"Станом на квітень 2024 року, цю модель замінила модель GPT4 Turbo, яка "
-"показала кращі результати у завданнях, що вимагають розуміння візуальної "
-"інформації."
-
 #. translators: the description for the GPT4 turbo model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:444
+#: addon\globalPlugins\AIContentDescriber\description_service.py:455
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
 "quality and understanding. This model will soon be deprecated so we "
@@ -410,7 +398,7 @@ msgstr ""
 "рекомендуємо перейти на GPT-4o."
 
 #. translators: the description for the GPT4 omni model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:452
+#: addon\globalPlugins\AIContentDescriber\description_service.py:463
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -421,7 +409,7 @@ msgstr ""
 "ефективніша, здатна генерувати текст удвічі швидше і вдвічі дешевше."
 
 #. translators: the description for the GPT-4.1 model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:459
+#: addon\globalPlugins\AIContentDescriber\description_service.py:470
 msgid ""
 "GPT-4.1 excels at instruction following and tool calling, with broad "
 "knowledge across domains. It features a 1M token context window, and low "
@@ -432,13 +420,85 @@ msgstr ""
 "контекстне вікно розміром 1 млн токенів та низьку затримку без етапу "
 "міркування."
 
+#. translators: the description for the GPT-4.1 mini model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:478
+msgid ""
+"A smaller, faster variant of GPT-4.1 with strong instruction following and a "
+"1M token context window at reduced cost."
+msgstr ""
+"Менший та швидший варіант GPT-4.1, що відрізняється високою здатністю до "
+"виконання інструкцій та контекстним вікном розміром 1 млн токенів за "
+"зниженою ціною."
+
+#. translators: the description for the GPT-4.1 nano model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:486
+msgid ""
+"The smallest and most affordable GPT-4.1 variant, optimized for fast "
+"responses with a 1M token context window."
+msgstr ""
+"Найменший і найдоступніший варіант GPT-4.1, оптимізований для швидких "
+"відповідей із контекстним вікном розміром 1 млн токенів."
+
+#. translators: the description for the GPT-5 model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:494
+msgid ""
+"OpenAI's frontier model with advanced reasoning, vision, and a 400k token "
+"context window."
+msgstr ""
+"Передова модель OpenAI з розширеними можливостями міркування, розпізнавання "
+"зображень та контекстним вікном на 400 тис. токенів."
+
+#. translators: the description for the GPT-5 mini model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:502
+msgid ""
+"A fast, cost-efficient variant of GPT-5 with vision support and a 400k token "
+"context window."
+msgstr ""
+"Швидкий та економічно вигідний варіант GPT-5 із підтримкою обробки зображень "
+"та контекстним вікном розміром 400 тис. токенів."
+
+#. translators: the description for the GPT-5 nano model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:510
+msgid ""
+"The smallest GPT-5 variant, offering vision capabilities at the lowest cost."
+msgstr ""
+"Найменший варіант GPT-5, що забезпечує функції обробки зображень за "
+"найнижчою ціною."
+
 #. translators: the description for the GPT‑5 chat model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:466
+#: addon\globalPlugins\AIContentDescriber\description_service.py:518
 msgid "GPT-5 model used in ChatGPT"
 msgstr "Модель GPT-5 використовується в ChatGPT"
 
+#. translators: the description for the GPT-5.4 model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:526
+msgid ""
+"OpenAI's latest flagship model with advanced reasoning, vision, and a 400k "
+"token context window."
+msgstr ""
+"Новітня флагманська модель OpenAI з розширеними можливостями міркування, "
+"розпізнавання зображень та контекстним вікном на 400 тис. токенів."
+
+#. translators: the description for the GPT-5.4 mini model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:534
+msgid ""
+"A fast, affordable variant of GPT-5.4 with vision support and a 400k token "
+"context window."
+msgstr ""
+"Швидкий та доступний варіант GPT-5.4 з підтримкою обробки зображень та "
+"контекстним вікном розміром 400 тис. токенів."
+
+#. translators: the description for the GPT-5.4 nano model in the configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:542
+msgid ""
+"The smallest and cheapest GPT-5.4 variant with vision capabilities and a "
+"400k token context window."
+msgstr ""
+"Найменший і найдешевший варіант GPT-5.4 з функціями обробки зображень та "
+"контекстним вікном розміром 400 тис. токенів."
+
 #. translators: the description for the OpenAI O3 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:474
+#: addon\globalPlugins\AIContentDescriber\description_service.py:550
 msgid ""
 "Released in April 2025, o3 is a well-rounded and powerful model across "
 "domains. It sets a new standard for math, science, coding, and visual "
@@ -454,7 +514,7 @@ msgstr ""
 "вимагають аналізу тексту, коду та зображень."
 
 #. translators: the description for the OpenAI O3 pro model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:482
+#: addon\globalPlugins\AIContentDescriber\description_service.py:558
 msgid ""
 "Released in June 2025, O3 pro is an upgraded version of O3. It is designed "
 "to think longer and provide the most reliable responses. Because o3-pro has "
@@ -472,7 +532,7 @@ msgstr ""
 "параметри часу очікування."
 
 #. translators: the description for the OpenAI O3 mini model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:490
+#: addon\globalPlugins\AIContentDescriber\description_service.py:566
 msgid ""
 "Released in January 2025, this powerful and fast model advances the "
 "boundaries of what small models can achieve, delivering exceptional STEM "
@@ -485,7 +545,7 @@ msgstr ""
 "низьку вартість та низьку затримку, характерні для OpenAI o1-mini."
 
 #. translators: the description for the OpenAI O4 mini model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:498
+#: addon\globalPlugins\AIContentDescriber\description_service.py:574
 msgid ""
 "Released in April 2025, o4-mini is a smaller model optimized for fast, cost-"
 "efficient reasoning. It achieves remarkable performance for its size and "
@@ -504,13 +564,13 @@ msgstr ""
 "налаштувати параметр часу очікування."
 
 #. translators: message spoken when Google gemini encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:553
+#: addon\globalPlugins\AIContentDescriber\description_service.py:629
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "Gemini зіткнувся з помилкою: {code}, {msg}"
 
 #. translators: message spoken when a Gemini thinking model uses all its tokens for reasoning, leaving nothing for the visible response. The user should increase max tokens in settings.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:560
+#: addon\globalPlugins\AIContentDescriber\description_service.py:636
 msgid ""
 "The model used all available tokens for reasoning and returned no visible "
 "response. Try increasing the max tokens setting."
@@ -519,7 +579,7 @@ msgstr ""
 "відповіді. Спробуйте збільшити налаштування максимальної кількості токенів."
 
 #. translators: the description for Google's Gemini 2.5 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:586
+#: addon\globalPlugins\AIContentDescriber\description_service.py:662
 msgid ""
 "Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for "
 "tasks like summarization, chat applications, data extraction, and captioning."
@@ -529,7 +589,7 @@ msgstr ""
 "створення підписів."
 
 #. translators: the description for Google's Gemini 2.5 Flash-Lite model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:594
+#: addon\globalPlugins\AIContentDescriber\description_service.py:670
 msgid ""
 "Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while "
 "maintaining strong performance."
@@ -538,7 +598,7 @@ msgstr ""
 "зберігаючи при цьому високу продуктивність."
 
 #. translators: the description for Google's Gemini 2.5 Pro model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:602
+#: addon\globalPlugins\AIContentDescriber\description_service.py:678
 msgid ""
 "Gemini 2.5 Pro models are capable of reasoning through their thoughts before "
 "responding, resulting in enhanced performance and improved accuracy. Best "
@@ -549,7 +609,7 @@ msgstr ""
 "підходять для програмування та виконання складних завдань."
 
 #. translators: the description for Google's Gemini 3 Flash Preview model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:610
+#: addon\globalPlugins\AIContentDescriber\description_service.py:686
 msgid ""
 "Gemini 3 Flash is Google's latest multimodal model with strong vision and "
 "agentic capabilities. Supports text, image, video, audio, and PDF input with "
@@ -561,7 +621,7 @@ msgstr ""
 "файлів із контекстним вікном розміром 1 млн токенів."
 
 #. translators: the description for Google's Gemini 3.1 Flash-Lite Preview model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:618
+#: addon\globalPlugins\AIContentDescriber\description_service.py:694
 msgid ""
 "Gemini 3.1 Flash-Lite is the most cost-efficient model in the Gemini 3 "
 "series, designed for high volume tasks."
@@ -570,7 +630,7 @@ msgstr ""
 "для виконання великих завдань."
 
 #. translators: the description for Google's Gemini 3.1 Pro Preview model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:626
+#: addon\globalPlugins\AIContentDescriber\description_service.py:702
 msgid ""
 "Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic "
 "workflows, with enhanced performance and accuracy."
@@ -580,73 +640,13 @@ msgstr ""
 "відрізняється підвищеною продуктивністю та точністю."
 
 #. translators: message spoken when Claude encounters an error with the format or content of the input.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:675
+#: addon\globalPlugins\AIContentDescriber\description_service.py:751
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr "Claude зіткнувся з помилкою. {err}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:701
-msgid "Anthropic's most powerful model for highly complex tasks."
-msgstr "Потужна модель Anthropic для надскладних завдань."
-
-#: addon\globalPlugins\AIContentDescriber\description_service.py:707
-msgid ""
-"Anthropic's model with Ideal balance of intelligence and speed, excels for "
-"enterprise workloads."
-msgstr ""
-"Модель Anthropic з ідеальним балансом інтелекту та швидкості ідеально "
-"підходить для корпоративних робочих навантажень."
-
-#: addon\globalPlugins\AIContentDescriber\description_service.py:713
-msgid ""
-"Anthropic's fastest and most compact model for near-instant responsiveness"
-msgstr ""
-"Найшвидша та найкомпактніша модель Anthropic для майже миттєвої реакції"
-
-#: addon\globalPlugins\AIContentDescriber\description_service.py:719
-msgid ""
-"Anthropic's improvement over Claude 3 sonnet, this model features enhanced "
-"reasoning capabilities relative to its predecessor."
-msgstr ""
-"Удосконалення Antropic над Claude 3 Sonnet, ця модель має покращені "
-"можливості міркувань відносно свого попередника."
-
-#. translators: the description for the Claude 3.5 Haiku model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:726
-msgid ""
-"Anthropic's next generation fastest model with improved reasoning across "
-"every skill set. Surpasses Claude 3 Opus on many benchmarks while "
-"maintaining speed and cost-effectiveness."
-msgstr ""
-"Найшвидша модель нового покоління від Anthropic із вдосконаленими "
-"можливостями міркування в усіх сферах. Перевершує Claude 3 Opus за багатьма "
-"тестами, зберігаючи при цьому швидкість і економічну ефективність."
-
-#. translators: the description for the Claude 3.5 Sonnet v2 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:734
-msgid ""
-"Anthropic's upgraded Claude 3.5 Sonnet with significant improvements in "
-"coding and computer use capabilities. Features enhanced reasoning and the "
-"ability to interact with computer interfaces."
-msgstr ""
-"Оновлена версія Claude 3.5 Sonnet від Anthropic, що відрізняється значним "
-"вдосконаленням у сфері програмування та роботи з комп’ютером. "
-"Характеризується покращеними можливостями міркування та здатністю "
-"взаємодіяти з комп’ютерними інтерфейсами."
-
-#. translators: the description for the Claude 3.7 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:742
-msgid ""
-"Anthropic's most intelligent model to date and the first hybrid reasoning "
-"model. Features extended thinking capabilities for complex problem-solving "
-"with step-by-step reasoning."
-msgstr ""
-"Найрозумніша на сьогодні модель компанії Anthropic і перша гібридна модель "
-"міркування. Має розширені можливості мислення для вирішення складних завдань "
-"із покроковим міркуванням."
-
 #. translators: the description for the Claude 4 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:750
+#: addon\globalPlugins\AIContentDescriber\description_service.py:778
 msgid ""
 "Anthropic's high-performance model with exceptional reasoning and "
 "efficiency. Significant upgrade to Claude Sonnet 3.7 with superior coding "
@@ -658,7 +658,7 @@ msgstr ""
 "виконання інструкцій."
 
 #. translators: the description for the Claude 4 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:758
+#: addon\globalPlugins\AIContentDescriber\description_service.py:786
 msgid ""
 "Anthropic's most capable and intelligent model yet. Sets new standards in "
 "complex reasoning and advanced coding with sustained performance on long-"
@@ -669,8 +669,64 @@ msgstr ""
 "програмування, демонструючи стабільну продуктивність під час виконання "
 "тривалих завдань, що вимагають зосереджених зусиль."
 
-#. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
+#. translators: the description for the Claude 4.1 Opus model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:794
+msgid ""
+"Anthropic's enhanced Opus model with improved reasoning, extended thinking, "
+"and a 200k token context window."
+msgstr ""
+"Удосконалена модель Opus від Anthropic із покращеними можливостями "
+"міркування, розширеним мисленням та контекстним вікном на 200 тис. токенів."
+
+#. translators: the description for the Claude 4.5 Sonnet model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:802
+msgid ""
+"Anthropic's upgraded Sonnet with extended thinking capabilities and a strong "
+"balance of speed and intelligence."
+msgstr ""
+"Оновлений Sonnet від Anthropic із розширеними можливостями мислення та "
+"міцним балансом швидкості та інтелекту."
+
+#. translators: the description for the Claude 4.5 Opus model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:810
+msgid ""
+"Anthropic's advanced Opus model with extended thinking and superior "
+"performance on complex tasks."
+msgstr ""
+"Удосконалена модель Anthropic Opus із розширеним мисленням і чудовою "
+"продуктивністю у складних завданнях."
+
+#. translators: the description for the Claude 4.5 Haiku model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:818
+msgid ""
+"Anthropic's fastest model with near-frontier intelligence and extended "
+"thinking support."
+msgstr ""
+"Найшвидша модель компанії Anthropic, що володіє інтелектом, близьким до межі "
+"можливостей, та розширеною підтримкою мислення."
+
+#. translators: the description for the Claude 4.6 Sonnet model in the model configuration dialog
+#: addon\globalPlugins\AIContentDescriber\description_service.py:826
+msgid ""
+"Anthropic's latest Sonnet model with the best combination of speed and "
+"intelligence. Features a 1M token context window and adaptive thinking."
+msgstr ""
+"Новітня модель Sonnet від Anthropic, що поєднує в собі найкращі показники "
+"швидкості та інтелекту. Має контекстне вікно розміром 1 млн токенів та "
+"адаптивне мислення."
+
+#. translators: the description for the Claude 4.6 Opus model in the model configuration dialog
 #: addon\globalPlugins\AIContentDescriber\description_service.py:834
+msgid ""
+"Anthropic's most intelligent model for building agents and coding. Features "
+"a 1M token context window, extended thinking, and exceptional reasoning."
+msgstr ""
+"Найрозумніша модель компанії Anthropic для створення агентів та "
+"програмування. Має контекстне вікно розміром 1 млн токенів, розширені "
+"можливості мислення та виняткову здатність до міркування."
+
+#. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:910
 msgid ""
 "MistralAI's multimodal image LLM, achieving state-of-the-art results on "
 "MathVista, DocVQA, VQAv2 and other benchmarks."
@@ -679,7 +735,7 @@ msgstr ""
 "найсучасніших результатів на MathVista, DocVQA, VQAv2 та інших бенчмарках."
 
 #. translators: the description for the xAI Grok 2 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:842
+#: addon\globalPlugins\AIContentDescriber\description_service.py:918
 msgid ""
 "xAI's flagship multimodal model with advanced reasoning capabilities. Excels "
 "at enterprise tasks like data extraction, programming, and text "
@@ -693,44 +749,44 @@ msgstr ""
 "права та науки."
 
 #. translators: the description for the Ollama model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:860
+#: addon\globalPlugins\AIContentDescriber\description_service.py:936
 msgid "The quickest way to get up and running with large language models."
 msgstr "Найшвидший спосіб розпочати роботу з великими мовними моделями."
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:876
+#: addon\globalPlugins\AIContentDescriber\description_service.py:952
 msgid "Could not contact the provided base URL. "
 msgstr "Не вдалося зв’язатися із вказаною базовою URL-адресою. "
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:908
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1039
+#: addon\globalPlugins\AIContentDescriber\description_service.py:984
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1115
 msgid "The response appears to be malformed. "
 msgstr "Відповідь, здається, є неправильною. "
 
 #. translators: the description for the LiteLLM Proxy model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:939
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1015
 msgid "Access multiple AI models through a unified LiteLLM proxy server."
 msgstr ""
 "Отримати доступ до кількох моделей ШІ через уніфікований проксі-сервер "
 "LiteLLM."
 
 #. translators: the message spoken in the LiteLLM configuration dialog when no base URL is provided
-#: addon\globalPlugins\AIContentDescriber\description_service.py:955
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1031
 msgid "Please provide a base URL first."
 msgstr "Спочатку надайте базову URL-адресу."
 
 #. translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:972
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1048
 msgid "Could not contact the LiteLLM proxy server. "
 msgstr "Не вдалося зв’язатися з проксі-сервером LiteLLM. "
 
 #. translators: the message spoken when the LiteLLM proxy returns an unexpected response format
-#: addon\globalPlugins\AIContentDescriber\description_service.py:982
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1058
 msgid "Unexpected response format from LiteLLM proxy. "
 msgstr "Неочікуваний формат відповіді від проксі LiteLLM. "
 
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1072
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1148
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -748,7 +804,7 @@ msgstr ""
 "здебільшого є завданням для користувача, який знає, що він робить, ви можете "
 "знайти основні кроки в документації до додатка."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1111
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1187
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -757,7 +813,7 @@ msgstr ""
 "Здається, відповідь розпізнавання зображень має неправильний формат.\n"
 "{response}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1137
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1213
 msgid ""
 "A multimodal model from vivo, accessed via NVDA-CN account. This service is "
 "provided by the NVDA Chinese community and requires your nvdacn.com "
@@ -767,21 +823,21 @@ msgstr ""
 "запис NVDA-CN. Ця послуга надається китайською спільнотою NVDA і вимагає "
 "введення ваших облікових даних для сайту nvdacn.com."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1206
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1282
 #, python-brace-format
 msgid "API Error: {error}"
 msgstr "Помилка API: {error}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1213
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1289
 msgid "The model returned an empty response."
 msgstr "Модель повернула порожню відповідь."
 
 #. This case is a safeguard; post() should raise an exception on failure.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1243
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1319
 msgid "Network request failed unexpectedly."
 msgstr "Несподівана помилка мережевого запиту."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1277
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1353
 msgid "No active conversation. Please describe an image first."
 msgstr "Немає активної розмови. Спочатку опишіть зображення."
 
@@ -1014,17 +1070,17 @@ msgid "Model:"
 msgstr "Модель:"
 
 #. Translators: The label for the NVDA-CN username field.
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:302
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:342
 msgid "NVDA-CN Username"
 msgstr "Ім'я користувача NVDA-CN"
 
 #. Translators: The label for the NVDA-CN password field.
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:304
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:344
 msgid "NVDA-CN Password"
 msgstr "Пароль NVDA-CN"
 
 #. Translators: Requires installation
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:323
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:363
 msgid " (requires installation)"
 msgstr " (потребує встановлення)"
 
@@ -1223,6 +1279,61 @@ msgstr ""
 "налаштувань NVDA -> керування моделями і введіть свій API ключ.\n"
 "Процес схожий для інших постачальників моделей, дивіться документацію "
 "додатка для детальнішої інформації на цю тему."
+
+#~ msgid ""
+#~ "The GPT4 model from OpenAI, previewed with vision capabilities. As of "
+#~ "April 2024,  this model has been superseded by GPT4 turbo which has "
+#~ "consistently achieved better metrics in tasks involving visual "
+#~ "understanding."
+#~ msgstr ""
+#~ "Модель GPT4 від OpenAI, представлена з можливостями сприйняття образів. "
+#~ "Станом на квітень 2024 року, цю модель замінила модель GPT4 Turbo, яка "
+#~ "показала кращі результати у завданнях, що вимагають розуміння візуальної "
+#~ "інформації."
+
+#~ msgid "Anthropic's most powerful model for highly complex tasks."
+#~ msgstr "Потужна модель Anthropic для надскладних завдань."
+
+#~ msgid ""
+#~ "Anthropic's fastest and most compact model for near-instant responsiveness"
+#~ msgstr ""
+#~ "Найшвидша та найкомпактніша модель Anthropic для майже миттєвої реакції"
+
+#~ msgid ""
+#~ "Anthropic's improvement over Claude 3 sonnet, this model features "
+#~ "enhanced reasoning capabilities relative to its predecessor."
+#~ msgstr ""
+#~ "Удосконалення Antropic над Claude 3 Sonnet, ця модель має покращені "
+#~ "можливості міркувань відносно свого попередника."
+
+#~ msgid ""
+#~ "Anthropic's next generation fastest model with improved reasoning across "
+#~ "every skill set. Surpasses Claude 3 Opus on many benchmarks while "
+#~ "maintaining speed and cost-effectiveness."
+#~ msgstr ""
+#~ "Найшвидша модель нового покоління від Anthropic із вдосконаленими "
+#~ "можливостями міркування в усіх сферах. Перевершує Claude 3 Opus за "
+#~ "багатьма тестами, зберігаючи при цьому швидкість і економічну "
+#~ "ефективність."
+
+#~ msgid ""
+#~ "Anthropic's upgraded Claude 3.5 Sonnet with significant improvements in "
+#~ "coding and computer use capabilities. Features enhanced reasoning and the "
+#~ "ability to interact with computer interfaces."
+#~ msgstr ""
+#~ "Оновлена версія Claude 3.5 Sonnet від Anthropic, що відрізняється значним "
+#~ "вдосконаленням у сфері програмування та роботи з комп’ютером. "
+#~ "Характеризується покращеними можливостями міркування та здатністю "
+#~ "взаємодіяти з комп’ютерними інтерфейсами."
+
+#~ msgid ""
+#~ "Anthropic's most intelligent model to date and the first hybrid reasoning "
+#~ "model. Features extended thinking capabilities for complex problem-"
+#~ "solving with step-by-step reasoning."
+#~ msgstr ""
+#~ "Найрозумніша на сьогодні модель компанії Anthropic і перша гібридна "
+#~ "модель міркування. Має розширені можливості мислення для вирішення "
+#~ "складних завдань із покроковим міркуванням."
 
 #~ msgid "Google's Gemini 1.5 flash model with vision capabilities."
 #~ msgstr ""
