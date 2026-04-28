@@ -37,7 +37,7 @@ Now, the possibilities are almost endless. You might:
 ## Models
 
 * [Pollinations](https://pollinations.ai/): The team behind Pollinations.AI generously sponsors free GPT4 access for this project, so users do not need to supply their own API key. Note that the service has been observed to be buggy, and we highly recommend using your own keys to realize the full benefits of this project.
-* [OpenAI GPT and reasoning models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes GPT-4 turbo, GPT-4o, the GPT-4.1 family (4.1, 4.1 mini, 4.1 nano), the GPT-5 family (5, 5 mini, 5 nano, and 5 chat), the GPT-5.4 family (5.4, 5.4 mini, 5.4 nano), and the reasoning models O3, O3 pro, O3 mini, and O4 mini.
+* [OpenAI GPT and reasoning models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes GPT-4 turbo, GPT-4o, the GPT-4.1 family (4.1, 4.1 mini, 4.1 nano), the GPT-5 family (5, 5 mini, 5 nano, and 5 chat), the GPT-5.4 family (5.4, 5.4 mini, 5.4 nano), the GPT-5.5 family (5.5 and 5.5 pro), and the reasoning models O3, O3 pro, O3 mini, and O4 mini.
 * [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3 Flash Preview, 3.1 Flash-Lite Preview, and 3.1 Pro Preview models.
 * [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4 (Sonnet, Opus), 4.1 Opus, 4.5 (Haiku, Sonnet, Opus), and 4.6 (Sonnet, Opus).
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)

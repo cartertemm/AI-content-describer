@@ -237,6 +237,16 @@ class GPT54NanoConfigurationPanel(OpenAIConfigurationPanel):
 	title = model.name
 
 
+class GPT55ConfigurationPanel(OpenAIConfigurationPanel):
+	model = description_service.GPT55()
+	title = model.name
+
+
+class GPT55ProConfigurationPanel(OpenAIConfigurationPanel):
+	model = description_service.GPT55Pro()
+	title = model.name
+
+
 class O4MiniConfigurationPanel(OpenAIConfigurationPanel):
 	model = description_service.O4Mini()
 	title = model.name
@@ -500,6 +510,8 @@ description_service.GPT5Chat.configurationPanel = GPT5ChatConfigurationPanel
 description_service.GPT54.configurationPanel = GPT54ConfigurationPanel
 description_service.GPT54Mini.configurationPanel = GPT54MiniConfigurationPanel
 description_service.GPT54Nano.configurationPanel = GPT54NanoConfigurationPanel
+description_service.GPT55.configurationPanel = GPT55ConfigurationPanel
+description_service.GPT55Pro.configurationPanel = GPT55ProConfigurationPanel
 description_service.Gemini2_5Flash.configurationPanel = Gemini2_5FlashConfigurationPanel
 description_service.Gemini2_5FlashLite.configurationPanel = Gemini2_5FlashLiteConfigurationPanel
 description_service.Gemini2_5Pro.configurationPanel = Gemini2_5ProConfigurationPanel

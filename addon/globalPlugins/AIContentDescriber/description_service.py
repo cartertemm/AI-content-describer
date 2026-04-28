@@ -552,6 +552,22 @@ class GPT54Nano(BaseGPT):
 	internal_model_name = "gpt-5.4-nano"
 
 
+class GPT55(BaseGPT):
+	name = "GPT-5.5"
+	# translators: the description for the GPT-5.5 model in the configuration dialog
+	description = _("OpenAI's frontier model for complex professional work, with a new class of intelligence for coding, vision, and agentic tasks. Supports image input and a 1M token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5.5"
+	internal_model_name = "gpt-5.5"
+
+
+class GPT55Pro(BaseGPT):
+	name = "GPT-5.5 pro"
+	# translators: the description for the GPT-5.5 pro model in the configuration dialog
+	description = _("A higher-compute variant of GPT-5.5 that thinks harder for smarter and more precise responses on complex, high-stakes workloads. Supports image input and a 1M token context window.")
+	about_url = "https://platform.openai.com/docs/models/gpt-5.5-pro"
+	internal_model_name = "gpt-5.5-pro"
+
+
 class O3(BaseGPT):
 	name = "OpenAI O3"
 	# translators: the description for the OpenAI O3 model in the model configuration dialog
@@ -1417,6 +1433,8 @@ class VivoBlueLMVision(BaseDescriptionService):
 models = [
 	PollinationsAI(),
 	GPT4O(),
+	GPT55(),
+	GPT55Pro(),
 	GPT54(),
 	GPT54Mini(),
 	GPT54Nano(),
