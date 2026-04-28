@@ -452,6 +452,21 @@ class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class Grok4ConfigurationPanel(Grok2VisionConfigurationPanel):
+	model = description_service.Grok4()
+	title = model.name
+
+
+class Grok4FastReasoningConfigurationPanel(Grok2VisionConfigurationPanel):
+	model = description_service.Grok4FastReasoning()
+	title = model.name
+
+
+class Grok4FastNonReasoningConfigurationPanel(Grok2VisionConfigurationPanel):
+	model = description_service.Grok4FastNonReasoning()
+	title = model.name
+
+
 class LiteLLMProxyConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.LiteLLMProxy()
 	title = model.name
@@ -496,6 +511,9 @@ description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfig
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
 description_service.Grok2Vision.configurationPanel = Grok2VisionConfigurationPanel
+description_service.Grok4.configurationPanel = Grok4ConfigurationPanel
+description_service.Grok4FastReasoning.configurationPanel = Grok4FastReasoningConfigurationPanel
+description_service.Grok4FastNonReasoning.configurationPanel = Grok4FastNonReasoningConfigurationPanel
 description_service.Claude4Sonnet.configurationPanel = Claude4SonnetConfigurationPanel
 description_service.Claude4Opus.configurationPanel = Claude4OpusConfigurationPanel
 description_service.Claude4_1Opus.configurationPanel = Claude4_1OpusConfigurationPanel

@@ -42,7 +42,7 @@ Now, the possibilities are almost endless. You might:
 * [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3 Flash Preview, 3.1 Flash-Lite Preview, and 3.1 Pro Preview models.
 * [Claude 3 and 4 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
-* [Grok-2](https://x.ai/news/grok-2)
+* [Grok-2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
 * [LiteLLM Proxy](https://docs.litellm.ai/docs/proxy/quick_start): Access multiple AI models through a unified proxy server. Requires a LiteLLM proxy server URL, optionally an API key depending on your proxy configuration. Appears as "LiteLLM Proxy" in the model configuration dialog. Supports dynamic model selection and follow-up questions. Compatible with all formats (PNG, JPEG, WEBP, GIF).

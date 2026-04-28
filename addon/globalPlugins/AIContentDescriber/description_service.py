@@ -936,6 +936,43 @@ class Grok2Vision(BaseGPT):
 	]
 
 
+class Grok4Base(BaseGPT):
+	openai_url = "https://api.x.ai/v1/chat/completions"
+	supported_formats = [
+		".jpeg",
+		".jpg",
+		".png",
+	]
+
+	def _get_completion_token_param_name(self):
+		# Grok 4 reasoning models require max_completion_tokens
+		return "max_completion_tokens"
+
+
+class Grok4(Grok4Base):
+	name = "Grok 4"
+	# translators: the description for the xAI Grok 4 model in the model configuration dialog
+	description = _("xAI's flagship multimodal reasoning model. Supports image input and excels at complex reasoning, math, science, and visual tasks.")
+	about_url = "https://x.ai/news/grok-4"
+	internal_model_name = "grok-4"
+
+
+class Grok4FastReasoning(Grok4Base):
+	name = "Grok 4 Fast (reasoning)"
+	# translators: the description for the xAI Grok 4 Fast reasoning model in the model configuration dialog
+	description = _("xAI's cost-efficient multimodal reasoning model with a 2M token context window. Achieves performance comparable to Grok 4 with 40% fewer thinking tokens on average.")
+	about_url = "https://x.ai/news/grok-4-fast"
+	internal_model_name = "grok-4-fast-reasoning"
+
+
+class Grok4FastNonReasoning(Grok4Base):
+	name = "Grok 4 Fast (non-reasoning)"
+	# translators: the description for the xAI Grok 4 Fast non-reasoning model in the model configuration dialog
+	description = _("xAI's cost-efficient multimodal model for instant responses without a reasoning step. Features a 2M token context window.")
+	about_url = "https://x.ai/news/grok-4-fast"
+	internal_model_name = "grok-4-fast-non-reasoning"
+
+
 class Ollama(BaseDescriptionService):
 	name = "Ollama"
 	needs_api_key = False
@@ -1395,6 +1432,9 @@ models = [
 	O3Mini(),
 	O3Pro(),
 	GPT4Turbo(),
+	Grok4(),
+	Grok4FastReasoning(),
+	Grok4FastNonReasoning(),
 	Grok2Vision(),
 	Claude4_6Opus(),
 	Claude4_6Sonnet(),
