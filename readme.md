@@ -10,7 +10,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude 3, XAI's Grok, Ollama, llama.cpp, and LiteLLM Proxy)
+* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, vivo BlueLM Vision via NVDA-CN, Ollama, llama.cpp, and LiteLLM Proxy)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -36,13 +36,13 @@ Now, the possibilities are almost endless. You might:
 
 ## Models
 
-* [GPT-4.1](https://platform.openai.com/docs/models/gpt-4.1): GPT-4.1 excels at instruction following and tool calling, with broad knowledge across domains. It features a 1M token context window, and low latency without a reasoning step. Requires an OpenAI API key. Appears as "GPT-4.1" in the model configuration dialog. Supports follow-up questions and all formats supported by GPT-4o.
-* [GPT-5 chat](https://platform.openai.com/docs/models/gpt-5-chat-latest): OpenAI's latest multimodal model, supporting image and text input via the Chat Completions API. Requires an OpenAI API key. Appears as "GPT-5 chat" in the model configuration dialog. Leave the prompt field empty to use the default prompt, or supply your own. Supports follow-up questions and all formats supported by GPT-4o.
-* [GPT4 vision](https://platform.openai.com/docs/guides/vision), including 4O, O1, O3, and derivatives
+* [Pollinations](https://pollinations.ai/): The team behind Pollinations.AI generously sponsors free GPT4 access for this project, so users do not need to supply their own API key. Note that the service has been observed to be buggy, and we highly recommend using your own keys to realize the full benefits of this project.
+* [OpenAI GPT and reasoning models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes GPT-4 turbo, GPT-4o, the GPT-4.1 family (4.1, 4.1 mini, 4.1 nano), the GPT-5 family (5, 5 mini, 5 nano, and 5 chat), the GPT-5.4 family (5.4, 5.4 mini, 5.4 nano), and the reasoning models O3, O3 pro, O3 mini, and O4 mini.
 * [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3 Flash Preview, 3.1 Flash-Lite Preview, and 3.1 Pro Preview models.
-* [Claude 3 and 4 (Haiku, Sonett, and Opus)](https://docs.anthropic.com/claude/docs/vision)
+* [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4 (Sonnet, Opus), 4.1 Opus, 4.5 (Haiku, Sonnet, Opus), and 4.6 (Sonnet, Opus).
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
-* [Grok-2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
+* [Grok 2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
+* vivo BlueLM Vision: a multimodal model from vivo, accessed via a free NVDA-CN account. See the setup section below.
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
 * [LiteLLM Proxy](https://docs.litellm.ai/docs/proxy/quick_start): Access multiple AI models through a unified proxy server. Requires a LiteLLM proxy server URL, optionally an API key depending on your proxy configuration. Appears as "LiteLLM Proxy" in the model configuration dialog. Supports dynamic model selection and follow-up questions. Compatible with all formats (PNG, JPEG, WEBP, GIF).
@@ -53,7 +53,7 @@ Follow the instructions provided below to get each of these working.
 
 Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, and proceed with the installation as prompted.
 
-As of version 2025.06.05, usage of GPT4 is free thanks to the generocity of the community behind PollinationsAI.
+As of version 2025.06.05, usage of GPT4 is free thanks to the generosity of the community behind PollinationsAI.
 
 If you have the resources and interest in exploring additional models, you can always use your own API key and reduce requests to their servers. If you don't, feel free to skip down to the `usage` section of this document.
 
@@ -73,7 +73,7 @@ Most people want to strike a balance between accuracy and cost. The [LLM arena l
 2. If you don't yet have an account, create one. If you do, log in.
 3. On the API keys page, click to create a new secret key. Copy it to your clipboard.
 4. Fund the account with at least $1
-5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select "GPT4 Vision" as the provider, tab into the API key field, and paste the key you just generated here.
+5. In the NVDA settings dialog, scroll down to the AI Content Describer category, then choose "manage models (alt+m)", select any of the OpenAI models (for example "GPT-4 omni") as the provider, tab into the API key field, and paste the key you just generated here.
 
 At the time of this writing, Open-AI issues credits to new developer accounts that can be used for three months, after which they are lost. Following this period, you will have to purchase credits. Typical usage shouldn't ever exceed $5.00 per month. For a point of reference, the original version of this add-on was developed for slightly under a dollar. It is always possible to login to your OpenAI account and click on "usage" to get your quota.
 
@@ -90,7 +90,7 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 1. Login to the [Anthropic console](https://console.anthropic.com/login).
 2. Click on your profile -> API keys.
 3. Click Create Key.
-4. Enter a name for the key, like "AIContentDescriber", then click on "Create Key" and copy the value that shows up. This is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Claude 3.
+4. Enter a name for the key, like "AIContentDescriber", then click on "Create Key" and copy the value that shows up. This is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> any Claude 4.x model (for example "Claude 4.6 Sonnet").
 5. If you haven't already, purchase at least $5 in credits under the [anthropic plans page](https://console.anthropic.com/settings/plans).
 
 ### Obtaining an API key from Mistral
@@ -98,7 +98,7 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 1. Sign into or create a MistralAI account by going to the [MistralAI login page](https://auth.mistral.ai/ui/login).
 2. If you are creating or logging into an account for the first time, add a workspace as prompted, supplying a name and accepting the terms and conditions.
 3. Once logged in, select "API keys" from the menu.
-4. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral.
+4. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral Large.
 5. Fund the account, if applicable.
 
 
@@ -141,7 +141,7 @@ Start by ensuring that you are able to interact with your preferred vision-capab
 
 ### Setting up llama.cpp
 
-This provider is currently somewhat buggy, and your mileage may very. It should really only be attempted by advanced users with an interest in running local self-hosted models, and the hardware to do so.
+This provider is currently somewhat buggy, and your mileage may vary. It should really only be attempted by advanced users with an interest in running local self-hosted models, and the hardware to do so.
 
 1. Download llama.cpp. At the time of this writing, this [pull request](https://github.com/ggerganov/llama.cpp/pull/5882) removes multimodal capabilities so you will want to use the [last version with support for this](https://github.com/ggerganov/llama.cpp/releases/tag/b2356).
 If you are running on an Nvidia graphics adapter with CUDA support, download these prebuilt binaries:
@@ -185,7 +185,7 @@ Five hotkeys are bound by default:
 * NVDA+shift+u: Describe the contents of the current navigator object using AI.
 * NVDA+shift+y: Describe the image (or file path to an image) on the clipboard using AI.
 * NVDA+shift+j: Describe the position of your face in the frame of the selected camera. If you have multiple cameras connected, navigate to the AI content describer menu (NVDA+shift+i) and choose the one you would like to use with the "select camera" item in the face detection submenu.
-* NVDA+alt+i: Open the AI conversation dialog to ask follow-up questions.
+* NVDA+alt+c: Open the AI conversation dialog to ask follow-up questions.
 
 Three gestures are unbound:
 
@@ -198,7 +198,7 @@ Don't hesitate to customize these at any time from the input gestures dialog.
 ### Following-up on a description
 
 Sometimes, the response you get back from an AI is insufficient. Perhaps the image is low quality, incomplete, or includes unwanted details. Maybe you want to hone in on just a certain section or take a clearer photo without losing context.
-After receiving a description, you can press NVDA+shift+c, or select "Follow-up on previous description" from the AI Content Describer context menu (NVDA+shift+i). By default, the focus is set at the message field.
+After receiving a description, you can press NVDA+alt+c, or select "Follow-up on previous description" from the AI Content Describer context menu (NVDA+shift+i). By default, the focus is set at the message field.
 To add an additional image, just keep the conversation window open and use the add-on as you normally would. When a picture is taken (be it from the camera, system control, screenshot, etc.) you will be asked if you want to attach it to the current session or start a new one.
 
 ## Building the add-on
