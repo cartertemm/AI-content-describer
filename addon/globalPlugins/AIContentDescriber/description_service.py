@@ -1460,7 +1460,6 @@ class Seer(BaseDescriptionService):
 		content = resp_json.get("description", "").strip()
 		if not content:
 			return None
-		self.start_conversation(image_path, None, content)
 		return content
 
 	def add_to_conversation(self, user_message, image_path=None, include_original_image=True):
