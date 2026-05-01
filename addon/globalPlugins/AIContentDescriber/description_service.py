@@ -1464,10 +1464,7 @@ class Seer(BaseDescriptionService):
 
 	def add_to_conversation(self, user_message, image_path=None, include_original_image=True):
 		# PaliGemma2 is a captioner, not a conversational model
-		return _(
-			"Seer uses PaliGemma2 which describes images but does not support "
-			"follow-up questions. Press the describe shortcut again for a new description."
-		)
+		return _("Seer uses PaliGemma2 which describes images but does not support follow-up questions.")
 
 
 models = [
