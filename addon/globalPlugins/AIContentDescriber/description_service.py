@@ -1438,6 +1438,7 @@ class Seer(BaseDescriptionService):
 	description = _(
 		"Private, on-device image descriptions using PaliGemma2. "
 		"No API key or cloud connection required. "
+		"Note: this is a captioning model, prompts and follow-up questions are not supported. "
 		"Install the Seer daemon to get started."
 	)
 	about_url = "https://github.com/recursia-lab/Seer"
