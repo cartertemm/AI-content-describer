@@ -10,7 +10,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, vivo BlueLM Vision via NVDA-CN, Ollama, llama.cpp, and LiteLLM Proxy)
+* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, vivo BlueLM Vision via NVDA-CN, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -46,6 +46,7 @@ Now, the possibilities are almost endless. You might:
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
 * [LiteLLM Proxy](https://docs.litellm.ai/docs/proxy/quick_start): Access multiple AI models through a unified proxy server. Requires a LiteLLM proxy server URL, optionally an API key depending on your proxy configuration. Appears as "LiteLLM Proxy" in the model configuration dialog. Supports dynamic model selection and follow-up questions. Compatible with all formats (PNG, JPEG, WEBP, GIF).
+* [Seer](https://github.com/recursia-lab/Seer): Runs PaliGemma2 locally via the Seer daemon. No API key or internet connection required. Note: this is a captioning-only model. Prompts and follow-up questions are not supported.
 
 Follow the instructions provided below to get each of these working.
 
@@ -176,6 +177,15 @@ This will start a proxy server at `http://localhost:4000` that forwards requests
 8. Adjust other settings like prompt, max tokens, and timeout as needed, then click OK.
 
 Note: The models available and their capabilities depend on your LiteLLM proxy configuration. Ensure your proxy is configured with vision-capable models for image description.
+
+### Setting up Seer
+
+Seer runs PaliGemma2 on your own machine with no API key or cloud connection required. Note that this is a captioning-only model; prompts and follow-up questions are not supported.
+
+1. Install the [Seer daemon](https://github.com/recursia-lab/Seer). A one-command installer is provided for Windows (.bat) and Linux/macOS (.sh).
+2. In the NVDA settings dialog, navigate to the AI Content Describer category, choose "manage models (alt+m)", and select "Seer (requires installation)".
+3. The base URL defaults to `http://127.0.0.1:11435`. Leave it as-is unless you changed the daemon's port.
+4. Click OK. The daemon must be running before you attempt a description.
 
 ## Usage
 
