@@ -7,7 +7,14 @@
 from io import StringIO
 
 
-configspec = StringIO("""[Claude 4.6 Opus]
+configspec = StringIO("""[Claude 4.7 Opus]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Claude 4.6 Opus]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=300)

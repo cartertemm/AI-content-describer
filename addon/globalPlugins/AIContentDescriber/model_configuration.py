@@ -447,6 +447,9 @@ class Claude4_6OpusConfigurationPanel(ClaudeConfigurationPanel):
 	title = model.name
 
 
+class Claude4_7OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_7Opus()
+	title = model.name
 
 
 class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
@@ -534,6 +537,7 @@ description_service.Claude4_5Opus.configurationPanel = Claude4_5OpusConfiguratio
 description_service.Claude4_5Haiku.configurationPanel = Claude4_5HaikuConfigurationPanel
 description_service.Claude4_6Sonnet.configurationPanel = Claude4_6SonnetConfigurationPanel
 description_service.Claude4_6Opus.configurationPanel = Claude4_6OpusConfigurationPanel
+description_service.Claude4_7Opus.configurationPanel = Claude4_7OpusConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
 models_dialog_parent = None
 

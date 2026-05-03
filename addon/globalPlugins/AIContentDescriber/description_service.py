@@ -860,6 +860,14 @@ class Claude4_6Opus(Anthropic):
 	internal_model_name = "claude-opus-4-6"
 
 
+class Claude4_7Opus(Anthropic):
+	name = "Claude 4.7 Opus"
+	# translators: the description for the Claude 4.7 Opus model in the model configuration dialog
+	description = _("Anthropic's most capable generally available model. Features high-resolution vision support up to 3.75MP, adaptive thinking, and a 1M token context window.")
+	about_url = "https://www.anthropic.com/claude/opus"
+	internal_model_name = "claude-opus-4-7"
+
+
 class MistralAI(BaseDescriptionService):
 	supported_formats = [
 		".png",
@@ -1454,6 +1462,7 @@ models = [
 	Grok4FastReasoning(),
 	Grok4FastNonReasoning(),
 	Grok2Vision(),
+	Claude4_7Opus(),
 	Claude4_6Opus(),
 	Claude4_6Sonnet(),
 	Claude4_5Opus(),
