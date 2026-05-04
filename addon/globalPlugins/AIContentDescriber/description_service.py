@@ -1438,6 +1438,43 @@ class VivoBlueLMVision(BaseDescriptionService):
 			return str(e)
 
 
+class Seer(BaseDescriptionService):
+	name = "Seer"
+	needs_api_key = False
+	needs_base_url = True
+	# translators: description of the Seer local vision provider
+	description = _(
+		"Private, on-device image descriptions using PaliGemma2. "
+		"No API key or cloud connection required. "
+		"Note: this is a captioning model, prompts and follow-up questions are not supported. "
+		"Install the Seer daemon to get started."
+	)
+	about_url = "https://github.com/recursia-lab/Seer"
+	supported_formats = [".jpeg", ".jpg", ".png", ".webp", ".bmp"]
+
+	@cached_description
+	def process(self, image_path, **kw):
+		base64_image = encode_image(image_path)
+		payload = json.dumps({
+			"image_b64": base64_image,
+			"task": "caption",
+		}).encode("utf-8")
+		headers = {"Content-Type": "application/json"}
+		url = urllib.parse.urljoin(self.base_url.rstrip("/") + "/", "describe")
+		response = post(url=url, headers=headers, data=payload, timeout=self.timeout)
+		if not response:
+			return None
+		resp_json = json.loads(response.decode("utf-8"))
+		content = resp_json.get("description", "").strip()
+		if not content:
+			return None
+		return content
+
+	def add_to_conversation(self, user_message, image_path=None, include_original_image=True):
+		# PaliGemma2 is a captioner, not a conversational model
+		return _("Seer uses PaliGemma2 which describes images but does not support follow-up questions.")
+
+
 models = [
 	PollinationsAI(),
 	GPT4O(),
@@ -1482,6 +1519,7 @@ models = [
 	Ollama(),
 	LlamaCPP(),
 	LiteLLMProxy(),
+	Seer(),
 ]
 
 

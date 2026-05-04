@@ -396,6 +396,18 @@ class LlamaCPPConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class SeerConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.Seer()
+	# Translators: Requires installation
+	title = model.name + _(" (requires installation)")
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_base_url_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
 class ClaudeConfigurationPanel(BaseModelSettingsPanel):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -539,6 +551,7 @@ description_service.Claude4_6Sonnet.configurationPanel = Claude4_6SonnetConfigur
 description_service.Claude4_6Opus.configurationPanel = Claude4_6OpusConfigurationPanel
 description_service.Claude4_7Opus.configurationPanel = Claude4_7OpusConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
+description_service.Seer.configurationPanel = SeerConfigurationPanel
 models_dialog_parent = None
 
 
