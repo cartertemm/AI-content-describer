@@ -1200,6 +1200,8 @@ class LiteLLMProxy(BaseDescriptionService):
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		response_json = json.loads(response.decode('utf-8'))
 		content = self._extract_conversation_response(response_json)
+		if not content:
+			return
 		self.start_conversation(image_path, self.prompt, content)
 		return content
 
