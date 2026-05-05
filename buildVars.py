@@ -23,14 +23,10 @@ addon_info = {
 	"addon_summary": _("AI Content Describer"),
 	# Add-on description
 	# Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-	"addon_description": _("""This add-on makes it possible to describe the focus object, navigator object, or screen using popular vision capable AI language models, like Claude, Gemini, or GPT4.
-It also lets one understand where their face is positioned in the frame of a connected camera.
-Though content descriptions are quite detailed, they may not always be completely accurate or reflect real world information.
-Press NVDA+shift+i to pop up a menu asking how you wish to describe based on the current position, or NVDA+shift+u to describe the navigator object, or NVDA+shift+y for an image that has been copied to the clipboard such as in windows explorer, or NVDA+alt+i to ask additional questions about a description. Other keystrokes are customizable from the input gestures dialog.
-By default, usage of GPT4 is free, thanks to the generosity of the team at PollinationsAI.
-If you would like to use other models from OpenAI, head to https://platform.openai.com/account/api-keys and create an account, then create a key for interacting with the API.
-Then, choose the "AI content describer" category from NVDA's settings dialog -> manage models and enter your API key.
-The process is similar for other model providers, see add-on documentation for more information on this."""),
+	"addon_description": _("""This add-on makes it possible to describe the focused control, navigator object, or entire screen using popular AI vision models including OpenAI GPT, Google Gemini, Anthropic Claude, xAI Grok, Mistral Pixtral, local options like Ollama/llama.cpp/LiteLLM, and more. It also supports follow-up questions on any description, camera snapshots, clipboard images, and face positioning via a connected camera.
+Content descriptions may not always be completely accurate or reflect real-world information.
+Press NVDA+shift+i to pop up a menu for choosing what to describe, NVDA+shift+u to describe the navigator object, NVDA+shift+y for an image on the clipboard, or NVDA+alt+c to ask follow-up questions about the last description. Other keystrokes are available from the input gestures dialog.
+By default, usage is free through PollinationsAI with no sign-up or API key required. To use other models, visit the provider's website to obtain an API key, then enter it under the AI Content Describer category in NVDA's settings dialog. See the add-on documentation for more information."""),
 	# version
 	"addon_version": "2025.06.17",
 	# Author(s)
