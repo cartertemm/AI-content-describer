@@ -10,63 +10,63 @@ from io import StringIO
 configspec = StringIO("""[Claude 4.7 Opus]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [Claude 4.6 Opus]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [Claude 4.6 Sonnet]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
 [Claude 4.5 Opus]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [Claude 4.5 Sonnet]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
 [Claude 4.5 Haiku]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=512)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [Claude 4.1 Opus]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [GPT-4 turbo]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [GPT-4 omni]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
@@ -80,7 +80,7 @@ timeout = integer(default=15, min=1)
 [Google Gemini 2.5 Flash-Lite]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=512)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
@@ -101,7 +101,7 @@ timeout = integer(default=15, min=1)
 [Google Gemini 3.1 Flash-Lite Preview]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=512)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
@@ -116,174 +116,174 @@ timeout = integer(default=15, min=1)
 base_url = string(default="http://localhost:11434")
 prompt = string(default="")
 chosen_model = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
 [llama.cpp]
 base_url = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
 [Pixtral Large]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [Pollinations (OpenAI)]
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [OpenAI O3]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [OpenAI O3 pro]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [OpenAI O3 mini]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
 [OpenAI O4 mini]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [GPT-4.1]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [GPT-4.1 mini]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
 [GPT-4.1 nano]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=512)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [GPT-5]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [GPT-5 mini]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
 [GPT-5 nano]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=512)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [GPT-5 chat]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [GPT-5.4]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [GPT-5.4 mini]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
 [GPT-5.4 nano]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=512)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [GPT-5.5]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [GPT-5.5 pro]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
 [Grok 2 vision]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [Grok 4]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [Grok 4 Fast (reasoning)]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [Grok 4 Fast (non-reasoning)]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [Grok 4.3]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
@@ -291,14 +291,14 @@ timeout = integer(default=30, min=1)
 [Claude 4 Opus]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
 [Claude 4 Sonnet]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=300)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
@@ -314,7 +314,7 @@ base_url = string(default="")
 api_key = string(default="")
 chosen_model = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=250)
+max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 

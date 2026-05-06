@@ -56,7 +56,7 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 
 	def add_max_tokens_field(self, sHelper):
 		# Translators: The label for the maximum tokens chooser in the model configuration dialog
-		self.max_tokens = sHelper.addLabeledControl(_("Maximum tokens"), nvdaControls.SelectOnFocusSpinCtrl, min=1, max=1000)
+		self.max_tokens = sHelper.addLabeledControl(_("Maximum tokens"), nvdaControls.SelectOnFocusSpinCtrl, min=1, max=8192)
 
 	def add_timeout_field(self, sHelper):
 		# Translators: The label for the timeout chooser in the model configuration dialog
