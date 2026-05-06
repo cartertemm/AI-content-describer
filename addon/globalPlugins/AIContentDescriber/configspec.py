@@ -280,6 +280,13 @@ max_tokens = integer(default=300)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
+[Grok 4.3]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=300)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
 
 [Claude 4 Opus]
 api_key = string(default="")

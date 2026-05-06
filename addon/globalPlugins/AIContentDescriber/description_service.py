@@ -997,6 +997,14 @@ class Grok4FastNonReasoning(Grok4Base):
 	internal_model_name = "grok-4-fast-non-reasoning"
 
 
+class Grok4_3(Grok4Base):
+	name = "Grok 4.3"
+	# translators: the description for the xAI Grok 4.3 model in the model configuration dialog
+	description = _("xAI's recommended flagship reasoning model with a 1M token context window. Features always-on chain-of-thought reasoning and support for image input.")
+	about_url = "https://docs.x.ai/developers/models"
+	internal_model_name = "grok-4.3"
+
+
 class Ollama(BaseDescriptionService):
 	name = "Ollama"
 	needs_api_key = False
@@ -1500,6 +1508,7 @@ models = [
 	Grok4(),
 	Grok4FastReasoning(),
 	Grok4FastNonReasoning(),
+	Grok4_3(),
 	Grok2Vision(),
 	Claude4_7Opus(),
 	Claude4_6Opus(),
