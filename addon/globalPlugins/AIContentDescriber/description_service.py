@@ -131,7 +131,7 @@ def post(**kwargs):
 			reason = str(i)
 			if hasattr(i, "fp"):
 				error_text = i.fp.read()
-				print(error_text)
+				log.debug(error_text)
 				error_text = json.loads(error_text)
 				if "error" in error_text:
 					err = error_text["error"]

@@ -47,12 +47,12 @@ class DownloadProgressDialog(wx.Dialog):
 		try:
 			self.download = urllib.request.urlretrieve(self.url, reporthook=self.OnProgress)
 		except urllib.error.URLError as error:
-			print(error.response)
+			log.error(error.response)
 			self.error = error
 			wx.CallAfter(self.EndModal, wx.ID_ABORT)
 			return False
 		except Exception as error:
-			print(error)
+			log.error(error)
 			self.error = error
 			wx.CallAfter(self.EndModal, wx.ID_ABORT)
 			return False
@@ -178,7 +178,7 @@ def check_url(url):
 			content_length = int(response.headers.get('Content-Length', 0))
 			return status_code == 200 and content_length > 0
 	except urllib.error.URLError as e:
-		print(f"Error: {e.reason}")
+		log.error(f"Error: {e.reason}")
 		return False
 
 
