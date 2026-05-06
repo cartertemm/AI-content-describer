@@ -5,6 +5,8 @@
 
 
 import os
+import shutil
+import sys
 import wx
 import addonHandler
 import globalVars
@@ -27,3 +29,10 @@ def onInstall():
 	# This file is placed into the root of the NVDA configuration directory to signify that a config migration may be needed
 	with open(os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber_config_migration")), "w") as f:
 		f.write("File generated automatically on installation or update of the AI content describer addon. If you are reading this, you are probably good to delete it.")
+
+
+def onUninstall():
+	py_ver = f"{sys.version_info.major}.{sys.version_info.minor}"
+	deps_path = os.path.abspath(os.path.join(globalVars.appArgs.configPath, f"aic-py-{py_ver}"))
+	if os.path.isdir(deps_path):
+		shutil.rmtree(deps_path, ignore_errors=True)
