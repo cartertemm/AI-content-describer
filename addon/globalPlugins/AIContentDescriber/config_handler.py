@@ -70,6 +70,9 @@ def migrate_config_if_needed():
 	old_settings_section = "GPT-4 vision"
 	new_settings_section = "global"
 	old_gpt_settings = ["optimize_for_size", "open_in_dialog"]
+	if old_settings_section not in config:
+		os.remove(os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber_config_migration")))
+		return False
 	for setting in old_gpt_settings:
 		value = config[old_settings_section].get(setting)
 		new_value = config[new_settings_section].get(setting)

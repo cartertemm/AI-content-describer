@@ -124,7 +124,8 @@ class AIDescriberSettingsPanel(SettingsPanel):
 				self.available_models.SetSelection(0)
 		else:
 			self.available_models.Clear()
-		self.cache_descriptions.SetValue(ch.config[service.name]["cache_descriptions"])
+		if service is not None:
+			self.cache_descriptions.SetValue(ch.config[service.name]["cache_descriptions"])
 		self.open_in_dialog.SetValue(ch.config["global"]["open_in_dialog"])
 		self.optimize_for_size.SetValue(ch.config["global"]["optimize_for_size"])
 
@@ -138,7 +139,8 @@ class AIDescriberSettingsPanel(SettingsPanel):
 			if len(available) > selection:
 				ch.config["global"]["last_used_model"] = available[selection]
 				set_model_from_config()
-		ch.config[service.name]["cache_descriptions"] = self.cache_descriptions.GetValue()
+		if service is not None:
+			ch.config[service.name]["cache_descriptions"] = self.cache_descriptions.GetValue()
 		ch.config["global"]["optimize_for_size"] = self.optimize_for_size.GetValue()
 		ch.config["global"]["open_in_dialog"] = self.open_in_dialog.GetValue()
 		ch.config.write()
