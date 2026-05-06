@@ -28,7 +28,7 @@ Content descriptions may not always be completely accurate or reflect real-world
 Press NVDA+shift+i to pop up a menu for choosing what to describe, NVDA+shift+u to describe the navigator object, NVDA+shift+y for an image on the clipboard, or NVDA+alt+c to ask follow-up questions about the last description. Other keystrokes are available from the input gestures dialog.
 By default, usage is free through PollinationsAI with no sign-up or API key required. To use other models, visit the provider's website to obtain an API key, then enter it under the AI Content Describer category in NVDA's settings dialog. See the add-on documentation for more information."""),
 	# version
-	"addon_version": "2025.06.17",
+	"addon_version": "2026.05.06",
 	# Author(s)
 	"addon_author": "Carter Temm <cartertemm@gmail.com> and various translators",
 	# URL for the add-on documentation support
