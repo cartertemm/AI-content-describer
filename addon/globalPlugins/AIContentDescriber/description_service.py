@@ -261,7 +261,9 @@ class BaseDescriptionService:
 			"model": getattr(self, 'internal_model_name', self.name),
 			"messages": formatted_messages,
 		}
-		payload[self._get_completion_token_param_name()] = self.max_tokens
+		effective_max = kw.get("max_tokens", self.max_tokens)
+		if effective_max is not None:
+			payload[self._get_completion_token_param_name()] = effective_max
 		return payload
 
 	def _get_completion_token_param_name(self):
@@ -438,12 +440,13 @@ class BaseGPT(BaseDescriptionService):
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": base64_image
 		}]
-		payload = self.build_conversation_payload(messages)
+		payload = self.build_conversation_payload(messages, max_tokens=kw.get("max_tokens", self.max_tokens))
 		headers = self._get_conversation_headers()
 		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
@@ -453,7 +456,7 @@ class BaseGPT(BaseDescriptionService):
 			import ui
 			ui.message("content returned none")
 			return
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 
@@ -633,11 +636,13 @@ class GoogleGemini(BaseDescriptionService):
 			if role == "assistant":
 				role = "model"  # Google refers to the assistant role as "model"
 			contents.append({"role": role, "parts": parts})
+		gen_config = {}
+		effective_max = kw.get("max_tokens", self.max_tokens)
+		if effective_max is not None:
+			gen_config["maxOutputTokens"] = effective_max
 		return {
 			"contents": contents,
-			"generationConfig": {
-				"maxOutputTokens": self.max_tokens
-			}
+			"generationConfig": gen_config
 		}
 
 	def _get_conversation_url(self):
@@ -663,12 +668,13 @@ class GoogleGemini(BaseDescriptionService):
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": base64_image
 		}]
-		payload = self.build_conversation_payload(messages)
+		payload = self.build_conversation_payload(messages, max_tokens=kw.get("max_tokens", self.max_tokens))
 		headers = self._get_conversation_headers()
 		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
@@ -676,7 +682,7 @@ class GoogleGemini(BaseDescriptionService):
 		content = self._extract_conversation_response(response_json)
 		if not content:
 			return
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 class Gemini2_5Flash(GoogleGemini):
@@ -751,10 +757,11 @@ class Anthropic(BaseDescriptionService):
 					}
 				})
 			formatted_messages.append({"role": msg["role"], "content": content})
+		effective_max = kw.get("max_tokens", self.max_tokens)
 		return {
 			"model": self.internal_model_name,
 			"messages": formatted_messages,
-			"max_tokens": self.max_tokens
+			"max_tokens": effective_max if effective_max is not None else 32768
 		}
 
 	def _get_conversation_url(self):
@@ -779,12 +786,13 @@ class Anthropic(BaseDescriptionService):
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": base64_image
 		}]
-		payload = self.build_conversation_payload(messages)
+		payload = self.build_conversation_payload(messages, max_tokens=kw.get("max_tokens", self.max_tokens))
 		headers = self._get_conversation_headers()
 		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
@@ -792,7 +800,7 @@ class Anthropic(BaseDescriptionService):
 		content = self._extract_conversation_response(response_json)
 		if not content:
 			return
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 
@@ -908,21 +916,25 @@ class MistralAI(BaseDescriptionService):
 					"content": msg["content"]
 				}
 			formatted_messages.append(formatted_msg)
-		return {
+		payload = {
 			"model": self.internal_model_name,
 			"messages": formatted_messages,
-			"max_tokens": self.max_tokens
 		}
+		effective_max = kw.get("max_tokens", self.max_tokens)
+		if effective_max is not None:
+			payload["max_tokens"] = effective_max
+		return payload
 
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": base64_image
 		}]
-		payload = self.build_conversation_payload(messages)
+		payload = self.build_conversation_payload(messages, max_tokens=kw.get("max_tokens", self.max_tokens))
 		headers = self._get_conversation_headers()
 		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
@@ -932,7 +944,7 @@ class MistralAI(BaseDescriptionService):
 			import ui
 			ui.message("content returned none")
 			return
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 
@@ -1066,9 +1078,10 @@ class Ollama(BaseDescriptionService):
 	def process(self, image_path, **kw):
 		# Build single-image conversation
 		base64_image = encode_image(image_path)
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": base64_image
 		}]
 		# Use conversation methods for consistency
@@ -1080,7 +1093,7 @@ class Ollama(BaseDescriptionService):
 		content = self._extract_conversation_response(response_json)
 		if not content:
 			return
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 
@@ -1164,14 +1177,14 @@ class LiteLLMProxy(BaseDescriptionService):
 		
 		payload = {
 			"messages": formatted_messages,
-			"max_tokens": self.max_tokens,
 			"stream": False
 		}
-		
+		effective_max = kw.get("max_tokens", self.max_tokens)
+		if effective_max is not None:
+			payload["max_tokens"] = effective_max
 		# Add model if specified
 		if self.chosen_model:
 			payload["model"] = self.chosen_model
-		
 		return payload
 
 	def _get_conversation_url(self):
@@ -1197,12 +1210,13 @@ class LiteLLMProxy(BaseDescriptionService):
 	def process(self, image_path, **kw):
 		"""Process an image through the LiteLLM proxy and return a description"""
 		base64_image = encode_image(image_path)
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": base64_image
 		}]
-		payload = self.build_conversation_payload(messages)
+		payload = self.build_conversation_payload(messages, max_tokens=kw.get("max_tokens", self.max_tokens))
 		headers = self._get_conversation_headers()
 		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
@@ -1210,7 +1224,7 @@ class LiteLLMProxy(BaseDescriptionService):
 		content = self._extract_conversation_response(response_json)
 		if not content:
 			return
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 
@@ -1248,8 +1262,10 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 			"prompt": "\n".join(prompt_parts),
 			"stream": False,
 			"temperature": 1.0,
-			"n_predict": self.max_tokens
 		}
+		effective_max = kw.get("max_tokens", self.max_tokens)
+		if effective_max is not None:
+			payload["n_predict"] = effective_max
 		if image_data:
 			payload["image_data"] = image_data
 		return payload
@@ -1270,12 +1286,13 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": base64_image
 		}]
-		payload = self.build_conversation_payload(messages)
+		payload = self.build_conversation_payload(messages, max_tokens=kw.get("max_tokens", self.max_tokens))
 		headers = self._get_conversation_headers()
 		url = self._get_conversation_url()
 		response = post(url=url, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
@@ -1283,7 +1300,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 		content = self._extract_conversation_response(response_json)
 		if not content:
 			return
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 
@@ -1414,13 +1431,14 @@ class VivoBlueLMVision(BaseDescriptionService):
 		It is wrapped by @cached_description, so any exception thrown will prevent
 		the failed result from being cached.
 		"""
+		prompt = kw.get("prompt") or self.prompt
 		messages = [{
 			"role": "user",
-			"content": self.prompt,
+			"content": prompt,
 			"image": encode_image(image_path)
 		}]
 		content = self._perform_vivo_request(messages)
-		self.start_conversation(image_path, self.prompt, content)
+		self.start_conversation(image_path, prompt, content)
 		return content
 
 	def add_to_conversation(self, user_message, image_path=None, include_original_image=True):

@@ -42,6 +42,7 @@ import description_service
 import model_configuration
 from multimodal_input import launch_conversation_dialog, offer_image_attachment
 import dependency_checker
+import computer_control
 
 third_party_path = dependency_checker.expand_path()
 # stdlib additions to import markdown
@@ -157,6 +158,8 @@ class AreaMenu(wx.Menu):
 		self.navigator_item = self.Append(wx.ID_ANY, _("Navigator object"))
 		# translators: screenshot of entire window menu item
 		self.screenshot_item = self.Append(wx.ID_ANY, _("Entire screen"))
+		# translators: menu item to reconstruct the screen as accessible HTML
+		self.show_ui_item = self.Append(wx.ID_ANY, _("Show UI"))
 		# translators: picture from the local camera menu item
 		self.camera_item = self.Append(wx.ID_ANY, _("Take a picture"))
 		# For the face detection submenu
@@ -187,6 +190,7 @@ class AreaMenu(wx.Menu):
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.show_ui_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.camera_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_item)
 		#gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_realtime_item)
@@ -401,6 +405,8 @@ class GlobalPlugin(GlobalPlugin):
 			self.describe_navigator_object()
 		elif menu.selection == menu.screenshot_item:
 			self.describe_screenshot()
+		elif menu.selection == menu.show_ui_item:
+			computer_control.describe_ui(self, service)
 		elif menu.selection == menu.camera_item:
 			self.describe_camera()
 		elif menu.selection == menu.detect_face_item:
