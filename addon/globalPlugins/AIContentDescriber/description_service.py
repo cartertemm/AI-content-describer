@@ -727,6 +727,14 @@ class Gemini3_1ProPreview(GoogleGemini):
 	about_url = "https://deepmind.google/models/gemini/pro/"
 
 
+class Gemini3_5Flash(GoogleGemini):
+	name = "Google Gemini 3.5 Flash"
+	internal_model_name = "gemini-3.5-flash"
+	# translators: the description for Google's Gemini 3.5 Flash model, as shown in the configuration dialog.
+	description = _("Gemini 3.5 Flash is Google's latest and most capable Flash model, with faster response times and reduced latency. Ideal for tasks requiring both speed and quality.")
+	about_url = "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash"
+
+
 class Anthropic(BaseDescriptionService):
 	supported_formats = [
 		".jpeg",
@@ -1522,6 +1530,7 @@ models = [
 	Gemini3FlashPreview(),
 	Gemini3_1FlashLitePreview(),
 	Gemini3_1ProPreview(),
+	Gemini3_5Flash(),
 	# xAI
 	Grok4FastNonReasoning(),
 	Grok4FastReasoning(),
