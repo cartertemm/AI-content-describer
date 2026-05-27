@@ -527,7 +527,7 @@ class BaseGPT(BaseDescriptionService):
 						text += block.get("text", "")
 			elif item.get("type") == "computer_call":
 				action = dict(item.get("action", {}))
-				action["_call_id"] = item.get("id", "")
+				action["_call_id"] = item.get("call_id", "")
 				actions.append(action)
 
 		is_complete = data.get("stop_reason") == "completed" and not actions
