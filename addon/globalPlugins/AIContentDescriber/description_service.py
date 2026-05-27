@@ -26,6 +26,8 @@ except addonHandler.AddonError:
 import config_handler as ch
 import cache
 
+OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
+
 
 def encode_image(image_path):
 	with open(image_path, "rb") as image_file:
@@ -462,6 +464,74 @@ class BaseGPT(BaseDescriptionService):
 			return
 		self.start_conversation(image_path, prompt, content)
 		return content
+
+	def make_computer_use_request(self, screenshot_b64, capture_w, capture_h, task, history, previous_response_id, tool_results, injected_text=None):
+		headers = {
+			"Authorization": f"Bearer {self.api_key}",
+			"Content-Type": "application/json",
+		}
+
+		if tool_results:
+			input_items = [
+				{
+					"type": "computer_call_output",
+					"call_id": tr["call_id"],
+					"output": {
+						"type": "input_image",
+						"image_url": f"data:image/png;base64,{screenshot_b64}",
+						"detail": "original",
+					},
+					"acknowledged_safety_checks": [],
+				}
+				for tr in tool_results
+			]
+			if injected_text:
+				input_items.append({
+					"type": "message",
+					"role": "user",
+					"content": [{"type": "input_text", "text": injected_text}],
+				})
+		else:
+			input_items = [
+				{
+					"type": "message",
+					"role": "user",
+					"content": [
+						{"type": "input_text", "text": task},
+						{
+							"type": "input_image",
+							"image_url": f"data:image/png;base64,{screenshot_b64}",
+							"detail": "original",
+						},
+					],
+				}
+			]
+
+		payload = {
+			"model": self.internal_model_name,
+			"tools": [{"type": "computer"}],
+			"input": input_items,
+		}
+		if previous_response_id is not None:
+			payload["previous_response_id"] = previous_response_id
+
+		raw = post(url=OPENAI_RESPONSES_URL, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		data = json.loads(raw.decode("utf-8"))
+
+		text = ""
+		actions = []
+		for item in data.get("output", []):
+			if item.get("type") == "message":
+				for block in item.get("content", []):
+					if block.get("type") == "output_text":
+						text += block.get("text", "")
+			elif item.get("type") == "computer_call":
+				action = dict(item.get("action", {}))
+				action["_call_id"] = item.get("id", "")
+				actions.append(action)
+
+		is_complete = data.get("stop_reason") == "completed" and not actions
+		return {"text": text, "actions": actions, "response_id": data.get("id"), "is_complete": is_complete}
 
 
 class GPT4Turbo(BaseGPT):
