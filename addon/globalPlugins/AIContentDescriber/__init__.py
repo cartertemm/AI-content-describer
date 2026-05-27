@@ -148,6 +148,65 @@ class AIDescriberSettingsPanel(SettingsPanel):
 
 
 
+class ComputerUseApprovalDialog(wx.Dialog):
+	"""Asks the user to approve a risky or confirm-type action before it executes."""
+
+	def __init__(self, parent, action):
+		action_type = action.get("type", "unknown")
+		action_desc = action_type
+		if "x" in action and "y" in action:
+			action_desc += f" at ({action['x']}, {action['y']})"
+		if "text" in action:
+			action_desc += f": {action['text'][:60]}"
+		if "key" in action:
+			action_desc += f": {action['key']}"
+		# Translators: title of the dialog asking whether to allow a risky AI action
+		super().__init__(parent, title=_("Approve Action"))
+		self.choice = "cancel"
+
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		msg = wx.StaticText(
+			self,
+			# Translators: body of the risky-action approval dialog; {action} is a description of what the AI wants to do
+			label=_("The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?").format(action=action_desc),
+		)
+		sizer.Add(msg, 0, wx.ALL, 10)
+
+		btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: button to deny the AI action and stop the session
+		cancel_btn = wx.Button(self, label=_("&Cancel"))
+		# Translators: button to allow this one AI action
+		once_btn = wx.Button(self, label=_("Approve &Once"))
+		# Translators: button to allow all remaining AI actions without further prompting
+		all_btn = wx.Button(self, label=_("Approve &All"))
+		btn_sizer.Add(cancel_btn, flag=wx.RIGHT, border=8)
+		btn_sizer.Add(once_btn, flag=wx.RIGHT, border=8)
+		btn_sizer.Add(all_btn)
+		sizer.Add(btn_sizer, 0, wx.ALL | wx.ALIGN_CENTER, 10)
+		self.SetSizer(sizer)
+		self.Fit()
+
+		cancel_btn.SetFocus()
+		cancel_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("cancel"))
+		once_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("approve_once"))
+		all_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("approve_all"))
+		# Closing via the window's X button must also release the session thread
+		self.Bind(wx.EVT_CLOSE, lambda e: self._close("cancel"))
+
+	def _close(self, choice):
+		self.choice = choice
+		self.EndModal(wx.ID_OK)
+
+
+def _show_computer_use_approval(action, result_event, result_holder):
+	"""Called on main thread by ComputerUseSession for risky actions."""
+	dlg = ComputerUseApprovalDialog(gui.mainFrame, action)
+	dlg.ShowModal()
+	result_holder[0] = dlg.choice
+	dlg.Destroy()
+	result_event.set()
+
+
 class AreaMenu(wx.Menu):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -187,6 +246,14 @@ class AreaMenu(wx.Menu):
 			gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.followup_item)
 		else:
 			self.followup_item = None
+		if service and service.supports_computer_use:
+			# Translators: area menu item to start an AI computer control session
+			self.computer_use_item = self.Append(wx.ID_ANY, _("Control computer..."))
+		else:
+			# Translators: area menu item shown when the selected model does not support computer control
+			self.computer_use_item = self.Append(wx.ID_ANY, _("Control computer (not supported by selected model)"))
+			self.computer_use_item.Enable(False)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.computer_use_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
@@ -387,6 +454,10 @@ class GlobalPlugin(GlobalPlugin):
 			os.unlink(file)
 
 	def show_area_menu(self):
+		# Cache foreground HWND before prePopup steals focus
+		import winUser as wu
+		foreground_hwnd = wu.getForegroundWindow()
+
 		self.prev_navigator = api.getNavigatorObject()
 		self.prev_focus = api.getFocusObject()
 		gui.mainFrame.prePopup()
@@ -419,6 +490,8 @@ class GlobalPlugin(GlobalPlugin):
 			ui.message(_("Success"))
 		elif menu.selection == menu.followup_item and menu.followup_item is not None:
 			self.show_conversation_dialog()
+		elif menu.selection == menu.computer_use_item:
+			self.open_computer_control_session(foreground_hwnd)
 		else:
 			self.prev_focus = None
 			self.prev_navigator = None
@@ -455,6 +528,71 @@ class GlobalPlugin(GlobalPlugin):
 		wx.CallAfter(self.show_area_menu)
 	script_describe_image.__doc__ = _("Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI.")
 
+	def open_computer_control_session(self, hwnd):
+		if not service:
+			ui.message(_("No AI service configured."))
+			return
+		if not service.supports_computer_use:
+			ui.message(_("Computer use is not supported by the selected model."))
+			return
+
+		from multimodal_input import MultimodalInput
+		from computer_use import ComputerUseSession
+
+		cancel_event = threading.Event()
+		pause_event = threading.Event()
+
+		dlg = MultimodalInput(service, gui.mainFrame, mode="computer_use")
+
+		def on_message(text, role):
+			dlg.append_message(text, role=role)
+
+		def on_first_message(task):
+			session = ComputerUseSession(
+				service=service,
+				hwnd=hwnd,
+				on_message=on_message,
+				cancel_event=cancel_event,
+				pause_event=pause_event,
+				request_approval=_show_computer_use_approval,
+			)
+			session.start(task)
+			dlg._computer_use_session = session
+			dlg._cancel_event = cancel_event
+
+		dlg.on_first_message_callback = on_first_message
+		dlg.Show()
+
+	def script_pause_resume_computer_use(self, gesture):
+		for win in wx.GetTopLevelWindows():
+			if hasattr(win, "_computer_use_session"):
+				session = win._computer_use_session
+				if session._pause_event.is_set():
+					session._pause_event.clear()
+					# Translators: spoken when a computer control session is resumed
+					ui.message(_("Computer control resumed."))
+				else:
+					session._pause_event.set()
+					# Translators: spoken when a computer control session is paused
+					ui.message(_("Computer control paused."))
+					wx.CallAfter(win.SetFocus)
+				return
+		# Translators: spoken when the pause gesture is pressed but no session is running
+		ui.message(_("No active computer control session."))
+
+	script_pause_resume_computer_use.__doc__ = _("Pause or resume the active computer control session")
+
+	def script_cancel_computer_use(self, gesture):
+		for win in wx.GetTopLevelWindows():
+			if hasattr(win, "_computer_use_session"):
+				win._computer_use_session._cancel_event.set()
+				# Translators: spoken when the user cancels a computer control session
+				ui.message(_("Computer control session cancelled."))
+				return
+		ui.message(_("No active computer control session."))
+
+	script_cancel_computer_use.__doc__ = _("Cancel the active computer control session")
+
 	def script_describe_camera(self, gesture):
 		self.describe_camera()
 	script_describe_camera.__doc__ = _("Snap a picture using the selected camera, then describe it using AI.")
@@ -486,4 +624,5 @@ class GlobalPlugin(GlobalPlugin):
 		"kb:shift+NVDA+y": "describe_clipboard",
 		"kb:shift+NVDA+j": "describe_face",
 		"kb:alt+NVDA+c": "show_conversation",
+		"kb:NVDA+control+shift+p": "pause_resume_computer_use",
 	}
