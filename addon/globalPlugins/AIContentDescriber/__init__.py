@@ -40,7 +40,8 @@ sys.path.append(module_path)
 import config_handler as ch
 import description_service
 import model_configuration
-from multimodal_input import launch_conversation_dialog, offer_image_attachment
+from multimodal_input import launch_conversation_dialog, offer_image_attachment, MultimodalInput
+from computer_use import ComputerUseSession
 import dependency_checker
 import computer_control
 
@@ -535,18 +536,11 @@ class GlobalPlugin(GlobalPlugin):
 		if not service.supports_computer_use:
 			ui.message(_("Computer use is not supported by the selected model."))
 			return
-
-		from multimodal_input import MultimodalInput
-		from computer_use import ComputerUseSession
-
 		cancel_event = threading.Event()
 		pause_event = threading.Event()
-
 		dlg = MultimodalInput(service, gui.mainFrame, mode="computer_use")
-
 		def on_message(text, role):
 			dlg.append_message(text, role=role)
-
 		def on_first_message(task):
 			session = ComputerUseSession(
 				service=service,
@@ -559,7 +553,6 @@ class GlobalPlugin(GlobalPlugin):
 			session.start(task)
 			dlg._computer_use_session = session
 			dlg._cancel_event = cancel_event
-
 		dlg.on_first_message_callback = on_first_message
 		dlg.Show()
 
