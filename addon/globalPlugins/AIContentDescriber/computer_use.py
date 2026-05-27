@@ -268,7 +268,9 @@ class ComputerUseSession:
 				break
 
 			previous_response_id = resp.get("response_id")
-			tool_results = []
+			# Group results by call_id: OpenAI groups multiple actions under one
+			# computer_call item and expects one computer_call_output per call_id.
+			results_by_call_id = {}
 
 			for action in resp["actions"]:
 				if self._cancel_event.is_set():
@@ -288,7 +290,13 @@ class ComputerUseSession:
 
 				compact = runner.execute(scaled)
 				self._on_message(compact, role="action")
-				tool_results.append({"call_id": action.get("_call_id", ""), "compact_result": compact})
+				call_id = action.get("_call_id", "")
+				results_by_call_id.setdefault(call_id, []).append(compact)
+
+			tool_results = [
+				{"call_id": cid, "compact_result": "\n".join(results)}
+				for cid, results in results_by_call_id.items()
+			]
 
 			if self._cancel_event.is_set():
 				break

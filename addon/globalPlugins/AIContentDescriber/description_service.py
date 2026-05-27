@@ -469,10 +469,14 @@ def _normalize_openai_action(raw):
 		action["endX"] = end[0]
 		action["endY"] = end[1]
 
-	# OpenAI "keys": [...] array → "key": "ctrl+c" string
+	# OpenAI "keypress" → our "key" type
+	if action.get("type") == "keypress":
+		action["type"] = "key"
+
+	# OpenAI "keys": [...] array → "key": "ctrl+c" string (lowercase)
 	keys = action.pop("keys", None)
 	if keys:
-		action["key"] = "+".join(keys)
+		action["key"] = "+".join(k.lower() for k in keys)
 
 	# OpenAI "scroll_direction" / "scroll_distance" → direction / amount
 	if "scroll_direction" in action:
@@ -586,11 +590,13 @@ class BaseGPT(BaseDescriptionService):
 					if block.get("type") == "output_text":
 						text += block.get("text", "")
 			elif item.get("type") == "computer_call":
-				raw_action = item.get("action", {})
-				log.debug(f"Computer call action raw: {raw_action}")
-				action = _normalize_openai_action(raw_action)
-				action["_call_id"] = item.get("call_id", "")
-				actions.append(action)
+				call_id = item.get("call_id", "")
+				# "actions" is a list; each action shares the parent call_id
+				for raw_action in item.get("actions", []):
+					log.debug(f"Computer call action raw: {raw_action}")
+					action = _normalize_openai_action(raw_action)
+					action["_call_id"] = call_id
+					actions.append(action)
 		is_complete = data.get("stop_reason") == "completed" and not actions
 		return {"text": text, "actions": actions, "response_id": data.get("id"), "is_complete": is_complete}
 
