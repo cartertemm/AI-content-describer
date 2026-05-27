@@ -12,6 +12,8 @@ except ImportError:
 	winUser = None
 	screenBitmap = None
 
+import dependency_checker
+dependency_checker.expand_path()
 from PIL import Image
 
 
@@ -46,11 +48,9 @@ class Capture:
 		cap_w = rect.right - rect.left
 		cap_h = rect.bottom - rect.top
 		self._win_x, self._win_y = winUser.ClientToScreen(self._hwnd, 0, 0)
-
 		self._scale = _calculate_scale(cap_w, cap_h, self._max_long_edge, self._max_pixels)
 		api_w = max(1, int(cap_w * self._scale))
 		api_h = max(1, int(cap_h * self._scale))
-
 		buf = screenBitmap.ScreenBitmap(api_w, api_h).captureImage(
 			self._win_x, self._win_y, cap_w, cap_h
 		)
