@@ -15,17 +15,24 @@ except addonHandler.AddonError:
 _conversation_dialog = None
 
 class MultimodalInput(wx.Dialog):
-	def __init__(self, service, parent=None, title=None, *args, **kwargs):
+	def __init__(self, service, parent=None, title=None, mode="description", *args, **kwargs):
 		self.service = service
-		if title is None:
+		self.mode = mode
+		if mode == "computer_use":
+			# Translators: Title for the computer control session dialog
+			title = _("Computer Control Session")
+		elif title is None:
 			# Translators: Default title for the multimodal conversation dialog
 			title = _("AI Conversation - {model}").format(model=service.name)
 		super().__init__(parent=parent, title=title, *args, **kwargs)
 		self.current_image_path = None
 		self.files = []  # the files (images) that are a part of the conversation and need to be cleaned up when this dialog is destroyed
 		self.include_original_image = True
+		self._session_started = False
+		self.on_first_message_callback = None
 		self.init_ui()
-		self.load_conversation_history()
+		if mode != "computer_use":
+			self.load_conversation_history()
 		self.Centre()
 		# Clean up when dialog closes
 		self.Bind(wx.EVT_CLOSE, self.on_close)
@@ -87,6 +94,13 @@ class MultimodalInput(wx.Dialog):
 		panel.SetSizer(vbox)
 		self.SetSize((750, 500))
 		self.SetMinSize((600, 400))
+		if self.mode == "computer_use":
+			image_label.Hide()
+			self.image_field.Hide()
+			self.browse_button.Hide()
+			self.delete_button.Hide()
+			self.include_original_checkbox.Hide()
+			panel.Layout()
 
 	def load_conversation_history(self):
 		"""Load conversation history from service"""
@@ -114,6 +128,17 @@ class MultimodalInput(wx.Dialog):
 			else:
 				prefix = f"{role.title()}: "
 			self.text_ctrl.AppendText(prefix + content + "\n")
+
+	def append_message(self, text, role="user"):
+		"""Append a message to the history field with a role prefix. Safe to call from any thread."""
+		prefixes = {
+			"action": "[action] ",
+			"assistant": _("AI: "),
+			"system": "[system] ",
+			"user": _("You: "),
+		}
+		prefix = prefixes.get(role, f"{role}: ")
+		wx.CallAfter(self.text_ctrl.AppendText, f"{prefix}{text}\n")
 
 	def on_browse_image(self, event):
 		"""Handle browse button click"""
@@ -147,6 +172,19 @@ class MultimodalInput(wx.Dialog):
 			return
 		self.input_txt.SetValue("")
 		self.send_button.Enable(False)
+
+		if self.mode == "computer_use":
+			self.append_message(user_input, role="user")
+			if not self._session_started and self.on_first_message_callback:
+				self._session_started = True
+				self.on_first_message_callback(user_input)
+			elif hasattr(self, "_computer_use_session") and self._computer_use_session:
+				self._computer_use_session.inject_message(user_input)
+			self.send_button.Enable(True)
+			self.input_txt.SetFocus()
+			return
+
+		# Original description flow
 		# Show user message immediately
 		text_entry = _("You: ") + user_input + "\n"
 		self.text_ctrl.AppendText(text_entry)
@@ -241,6 +279,8 @@ class MultimodalInput(wx.Dialog):
 
 	def on_close(self, event):
 		"""Handle dialog close"""
+		if self.mode == "computer_use" and hasattr(self, "_cancel_event"):
+			self._cancel_event.set()
 		global _conversation_dialog
 		_conversation_dialog = None
 		for file in self.files:
