@@ -159,6 +159,7 @@ class BaseDescriptionService:
 	needs_base_url = False
 	needs_configuration_dialog = True
 	configurationPanel = None
+	supports_computer_use = False
 
 	# Conversation management
 	_active_conversation = None
@@ -364,6 +365,9 @@ class BaseDescriptionService:
 			self._conversations.clear()
 			self._active_conversation = None
 
+	def make_computer_use_request(self, screenshot_b64, capture_w, capture_h, task, history, previous_response_id, tool_results, injected_text=None):
+		raise NotImplementedError
+
 	def process(self):
 		pass  # implement in subclasses
 
@@ -537,6 +541,7 @@ class GPT54(BaseGPT):
 	description = _("OpenAI's latest flagship model with advanced reasoning, vision, and a 400k token context window.")
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4"
 	internal_model_name = "gpt-5.4"
+	supports_computer_use = True
 
 
 class GPT54Mini(BaseGPT):
@@ -545,6 +550,7 @@ class GPT54Mini(BaseGPT):
 	description = _("A fast, affordable variant of GPT-5.4 with vision support and a 400k token context window.")
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4-mini"
 	internal_model_name = "gpt-5.4-mini"
+	supports_computer_use = True
 
 
 class GPT54Nano(BaseGPT):
@@ -553,6 +559,7 @@ class GPT54Nano(BaseGPT):
 	description = _("The smallest and cheapest GPT-5.4 variant with vision capabilities and a 400k token context window.")
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4-nano"
 	internal_model_name = "gpt-5.4-nano"
+	supports_computer_use = True
 
 
 class GPT55(BaseGPT):
@@ -561,6 +568,7 @@ class GPT55(BaseGPT):
 	description = _("OpenAI's frontier model for complex professional work, with a new class of intelligence for coding, vision, and agentic tasks. Supports image input and a 1M token context window.")
 	about_url = "https://platform.openai.com/docs/models/gpt-5.5"
 	internal_model_name = "gpt-5.5"
+	supports_computer_use = True
 
 
 class GPT55Pro(BaseGPT):
@@ -569,6 +577,7 @@ class GPT55Pro(BaseGPT):
 	description = _("A higher-compute variant of GPT-5.5 that thinks harder for smarter and more precise responses on complex, high-stakes workloads. Supports image input and a 1M token context window.")
 	about_url = "https://platform.openai.com/docs/models/gpt-5.5-pro"
 	internal_model_name = "gpt-5.5-pro"
+	supports_computer_use = True
 
 
 class O3(BaseGPT):
@@ -826,6 +835,11 @@ class Claude4_1Opus(Anthropic):
 	description = _("Anthropic's enhanced Opus model with improved reasoning, extended thinking, and a 200k token context window.")
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-1-20250805"
+	supports_computer_use = True
+	_computer_use_beta = "computer-use-2025-01-24"
+	_computer_use_tool_type = "computer_20250124"
+	_capture_max_long_edge = 1568
+	_capture_max_pixels = 1_150_000
 
 
 class Claude4_5Sonnet(Anthropic):
@@ -834,6 +848,11 @@ class Claude4_5Sonnet(Anthropic):
 	description = _("Anthropic's upgraded Sonnet with extended thinking capabilities and a strong balance of speed and intelligence.")
 	about_url = "https://www.anthropic.com/claude/sonnet"
 	internal_model_name = "claude-sonnet-4-5-20250929"
+	supports_computer_use = True
+	_computer_use_beta = "computer-use-2025-01-24"
+	_computer_use_tool_type = "computer_20250124"
+	_capture_max_long_edge = 1568
+	_capture_max_pixels = 1_150_000
 
 
 class Claude4_5Opus(Anthropic):
@@ -842,6 +861,11 @@ class Claude4_5Opus(Anthropic):
 	description = _("Anthropic's advanced Opus model with extended thinking and superior performance on complex tasks.")
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-5-20251101"
+	supports_computer_use = True
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 1568
+	_capture_max_pixels = 1_150_000
 
 
 class Claude4_5Haiku(Anthropic):
@@ -850,6 +874,11 @@ class Claude4_5Haiku(Anthropic):
 	description = _("Anthropic's fastest model with near-frontier intelligence and extended thinking support.")
 	about_url = "https://www.anthropic.com/claude/haiku"
 	internal_model_name = "claude-haiku-4-5-20251001"
+	supports_computer_use = True
+	_computer_use_beta = "computer-use-2025-01-24"
+	_computer_use_tool_type = "computer_20250124"
+	_capture_max_long_edge = 1568
+	_capture_max_pixels = 1_150_000
 
 
 class Claude4_6Sonnet(Anthropic):
@@ -858,6 +887,11 @@ class Claude4_6Sonnet(Anthropic):
 	description = _("Anthropic's latest Sonnet model with the best combination of speed and intelligence. Features a 1M token context window and adaptive thinking.")
 	about_url = "https://www.anthropic.com/claude/sonnet"
 	internal_model_name = "claude-sonnet-4-6"
+	supports_computer_use = True
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 1568
+	_capture_max_pixels = 1_150_000
 
 
 class Claude4_6Opus(Anthropic):
@@ -866,6 +900,11 @@ class Claude4_6Opus(Anthropic):
 	description = _("Anthropic's most intelligent model for building agents and coding. Features a 1M token context window, extended thinking, and exceptional reasoning.")
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-6"
+	supports_computer_use = True
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 1568
+	_capture_max_pixels = 1_150_000
 
 
 class Claude4_7Opus(Anthropic):
@@ -874,6 +913,11 @@ class Claude4_7Opus(Anthropic):
 	description = _("Anthropic's most capable generally available model. Features high-resolution vision support up to 3.75MP, adaptive thinking, and a 1M token context window.")
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-7"
+	supports_computer_use = True
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
 
 
 class MistralAI(BaseDescriptionService):
