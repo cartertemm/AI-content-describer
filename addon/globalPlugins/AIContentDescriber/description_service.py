@@ -420,6 +420,69 @@ def cached_description(func):
 	return wrapper
 
 
+def _normalize_openai_action(raw):
+	"""Normalize an OpenAI Responses API computer_call action to our internal format.
+
+	OpenAI uses:
+	- "click" type with a "button" field and "coordinate": [x, y]
+	- "key" type with a "keys": [...] array
+	- "scroll" type with "scroll_direction" / "scroll_distance"
+	- "coordinate": [x, y] instead of separate x/y fields
+
+	We also handle the alternative format where the action type is the dict key
+	rather than a "type" field value.
+	"""
+	action = dict(raw)
+
+	# Detect format where action type is the key, not a "type" field value
+	# e.g. {"left_click": {"x": 100, "y": 200}} → type="left_click", x=100, y=200
+	if not action.get("type"):
+		for key, val in list(action.items()):
+			if isinstance(val, dict):
+				action["type"] = key
+				action.update(val)
+				del action[key]
+				break
+
+	t = action.get("type", "")
+
+	# OpenAI "click" + "button" → "left_click" / "right_click" / "middle_click"
+	if t == "click":
+		button = action.pop("button", "left")
+		action["type"] = f"{button}_click"
+
+	# OpenAI "coordinate": [x, y] → x, y
+	coord = action.pop("coordinate", None)
+	if coord and len(coord) >= 2:
+		action["x"] = coord[0]
+		action["y"] = coord[1]
+
+	# OpenAI "start_coordinate": [x, y] → startX, startY
+	start = action.pop("start_coordinate", None)
+	if start and len(start) >= 2:
+		action["startX"] = start[0]
+		action["startY"] = start[1]
+
+	# OpenAI "end_coordinate": [x, y] → endX, endY
+	end = action.pop("end_coordinate", None)
+	if end and len(end) >= 2:
+		action["endX"] = end[0]
+		action["endY"] = end[1]
+
+	# OpenAI "keys": [...] array → "key": "ctrl+c" string
+	keys = action.pop("keys", None)
+	if keys:
+		action["key"] = "+".join(keys)
+
+	# OpenAI "scroll_direction" / "scroll_distance" → direction / amount
+	if "scroll_direction" in action:
+		action["direction"] = action.pop("scroll_direction")
+	if "scroll_distance" in action:
+		action["amount"] = action.pop("scroll_distance")
+
+	return action
+
+
 class BaseGPT(BaseDescriptionService):
 	supported_formats = [
 		".gif",
@@ -470,7 +533,6 @@ class BaseGPT(BaseDescriptionService):
 			"Authorization": f"Bearer {self.api_key}",
 			"Content-Type": "application/json",
 		}
-
 		if tool_results:
 			input_items = [
 				{
@@ -506,7 +568,6 @@ class BaseGPT(BaseDescriptionService):
 					],
 				}
 			]
-
 		payload = {
 			"model": self.internal_model_name,
 			"tools": [{"type": "computer"}],
@@ -514,10 +575,9 @@ class BaseGPT(BaseDescriptionService):
 		}
 		if previous_response_id is not None:
 			payload["previous_response_id"] = previous_response_id
-
 		raw = post(url=OPENAI_RESPONSES_URL, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		data = json.loads(raw.decode("utf-8"))
-
+		log.debug(f"OpenAI computer use response: {json.dumps(data)}")
 		text = ""
 		actions = []
 		for item in data.get("output", []):
@@ -526,10 +586,11 @@ class BaseGPT(BaseDescriptionService):
 					if block.get("type") == "output_text":
 						text += block.get("text", "")
 			elif item.get("type") == "computer_call":
-				action = dict(item.get("action", {}))
+				raw_action = item.get("action", {})
+				log.debug(f"Computer call action raw: {raw_action}")
+				action = _normalize_openai_action(raw_action)
 				action["_call_id"] = item.get("call_id", "")
 				actions.append(action)
-
 		is_complete = data.get("stop_reason") == "completed" and not actions
 		return {"text": text, "actions": actions, "response_id": data.get("id"), "is_complete": is_complete}
 
@@ -889,7 +950,6 @@ class Anthropic(BaseDescriptionService):
 			"anthropic-beta": self._computer_use_beta,
 			"Content-Type": "application/json",
 		}
-
 		if not history:
 			history.append({
 				"role": "user",
@@ -913,7 +973,6 @@ class Anthropic(BaseDescriptionService):
 			if injected_text:
 				content_blocks.append({"type": "text", "text": injected_text})
 			history.append({"role": "user", "content": content_blocks})
-
 		tool_def = {
 			"type": self._computer_use_tool_type,
 			"name": "computer",
@@ -926,11 +985,9 @@ class Anthropic(BaseDescriptionService):
 			"tools": [tool_def],
 			"messages": history,
 		}
-
 		raw = post(url="https://api.anthropic.com/v1/messages", headers=headers,
 			data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
 		data = json.loads(raw.decode("utf-8"))
-
 		text = ""
 		actions = []
 		for block in data.get("content", []):
@@ -952,14 +1009,11 @@ class Anthropic(BaseDescriptionService):
 					if k in inp:
 						action[k] = inp[k]
 				actions.append(action)
-
 		history.append({"role": "assistant", "content": data.get("content", [])})
-
 		# Prune screenshots every 25 turns in batches to preserve Anthropic prompt cache prefix stability.
 		# Each turn appends 2 history entries (user + assistant), so 25 turns = 50 entries.
 		if len(history) % 50 == 0:
 			self._trim_history_screenshots(history)
-
 		is_complete = data.get("stop_reason") == "end_turn" and not actions
 		return {"text": text, "actions": actions, "response_id": None, "is_complete": is_complete}
 

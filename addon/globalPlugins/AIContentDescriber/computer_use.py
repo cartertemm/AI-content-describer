@@ -131,6 +131,9 @@ class ActionRunner:
 				self._type_text(action["text"])
 				preview = action["text"][:40]
 				return f"type | {preview} | ok"
+			elif t == "screenshot":
+				# Model requested a screenshot; we always capture one at the top of each loop
+				return "screenshot | (handled by loop) | ok"
 			else:
 				return f"{t} | (unknown) | skipped"
 		except Exception as e:
