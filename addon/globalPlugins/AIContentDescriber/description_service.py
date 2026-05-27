@@ -882,6 +882,106 @@ class Anthropic(BaseDescriptionService):
 		self.start_conversation(image_path, prompt, content)
 		return content
 
+	def make_computer_use_request(self, screenshot_b64, capture_w, capture_h, task, history, previous_response_id, tool_results, injected_text=None):
+		headers = {
+			"x-api-key": self.api_key,
+			"anthropic-version": "2023-06-01",
+			"anthropic-beta": self._computer_use_beta,
+			"Content-Type": "application/json",
+		}
+
+		if not history:
+			history.append({
+				"role": "user",
+				"content": [
+					{"type": "text", "text": task},
+					{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
+				],
+			})
+		elif tool_results:
+			content_blocks = [
+				{
+					"type": "tool_result",
+					"tool_use_id": tr["call_id"],
+					"content": [
+						{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
+						{"type": "text", "text": tr["compact_result"]},
+					],
+				}
+				for tr in tool_results
+			]
+			if injected_text:
+				content_blocks.append({"type": "text", "text": injected_text})
+			history.append({"role": "user", "content": content_blocks})
+
+		tool_def = {
+			"type": self._computer_use_tool_type,
+			"name": "computer",
+			"display_width_px": capture_w,
+			"display_height_px": capture_h,
+		}
+		payload = {
+			"model": self.internal_model_name,
+			"max_tokens": 4096,
+			"tools": [tool_def],
+			"messages": history,
+		}
+
+		raw = post(url="https://api.anthropic.com/v1/messages", headers=headers,
+			data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		data = json.loads(raw.decode("utf-8"))
+
+		text = ""
+		actions = []
+		for block in data.get("content", []):
+			if block.get("type") == "text":
+				text += block.get("text", "")
+			elif block.get("type") == "tool_use" and block.get("name") == "computer":
+				inp = block.get("input", {})
+				action = {"type": inp.get("action", ""), "_call_id": block.get("id", "")}
+				coord = inp.get("coordinate")
+				if coord:
+					action["x"], action["y"] = coord[0], coord[1]
+				start = inp.get("start_coordinate")
+				if start:
+					action["startX"], action["startY"] = start[0], start[1]
+				end = inp.get("end_coordinate")
+				if end:
+					action["endX"], action["endY"] = end[0], end[1]
+				for k in ("text", "key", "direction", "amount"):
+					if k in inp:
+						action[k] = inp[k]
+				actions.append(action)
+
+		history.append({"role": "assistant", "content": data.get("content", [])})
+
+		# Prune screenshots every 25 turns in batches to preserve Anthropic prompt cache prefix stability.
+		# Each turn appends 2 history entries (user + assistant), so 25 turns = 50 entries.
+		if len(history) % 50 == 0:
+			self._trim_history_screenshots(history)
+
+		is_complete = data.get("stop_reason") == "end_turn" and not actions
+		return {"text": text, "actions": actions, "response_id": None, "is_complete": is_complete}
+
+	def _trim_history_screenshots(self, history):
+		"""Remove all but the last 3 screenshot image blocks from history, including those nested in tool_result blocks."""
+		refs = []
+		for i, msg in enumerate(history):
+			for j, block in enumerate(msg.get("content") or []):
+				if not isinstance(block, dict):
+					continue
+				if block.get("type") == "image":
+					refs.append((i, j, None))
+				elif block.get("type") == "tool_result":
+					for k, inner in enumerate(block.get("content") or []):
+						if isinstance(inner, dict) and inner.get("type") == "image":
+							refs.append((i, j, k))
+		for i, j, k in reversed(refs[:-3]):
+			if k is None:
+				history[i]["content"].pop(j)
+			else:
+				history[i]["content"][j]["content"].pop(k)
+
 
 class Claude4Sonnet(Anthropic):
 	name = "Claude 4 Sonnet"
