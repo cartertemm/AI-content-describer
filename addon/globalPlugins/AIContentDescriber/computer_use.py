@@ -131,6 +131,9 @@ class ActionRunner:
 				self._type_text(action["text"])
 				preview = action["text"][:40]
 				return f"type | {preview} | ok"
+			elif t == "wait":
+				time.sleep(0.5)
+				return "wait | 500ms | ok"
 			elif t == "screenshot":
 				# Model requested a screenshot; we always capture one at the top of each loop
 				return "screenshot | (handled by loop) | ok"
@@ -190,17 +193,20 @@ class ActionRunner:
 
 	def _type_text(self, text):
 		try:
-			with winUser.openClipboard():
-				winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
-			winUser.keybd_event(0x11, 0, 0, 0)  # Ctrl down
-			winUser.keybd_event(0x56, 0, 0, 0)  # V down
-			winUser.keybd_event(0x56, 0, winUser.KEYEVENTF_KEYUP, 0)
-			winUser.keybd_event(0x11, 0, winUser.KEYEVENTF_KEYUP, 0)
-		except Exception:
 			for ch in text:
 				cp = ord(ch)
 				winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE, 0)
 				winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0)
+		except Exception:
+			try:
+				with winUser.openClipboard():
+					winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
+				winUser.keybd_event(0x11, 0, 0, 0)  # Ctrl down
+				winUser.keybd_event(0x56, 0, 0, 0)  # V down
+				winUser.keybd_event(0x56, 0, winUser.KEYEVENTF_KEYUP, 0)
+				winUser.keybd_event(0x11, 0, winUser.KEYEVENTF_KEYUP, 0)
+			except Exception:
+				pass
 
 
 class ComputerUseSession:
@@ -300,6 +306,9 @@ class ComputerUseSession:
 
 			if self._cancel_event.is_set():
 				break
+
+			# Let keystrokes and focus changes settle before the next screenshot
+			time.sleep(0.3)
 
 			# Pause is checked between action batches only, never mid-action
 			while self._pause_event.is_set() and not self._cancel_event.is_set():
