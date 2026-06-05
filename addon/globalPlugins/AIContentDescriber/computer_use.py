@@ -33,9 +33,13 @@ def _announce_and_wait(text):
 	done = threading.Event()
 	def _on_done(**kwargs):
 		done.set()
+	# HandlerRegistrar stores only a weak reference; _on_done must stay alive
+	# for the duration of this call. The stack frame keeps it alive while we block.
 	synthDriverHandler.synthDoneSpeaking.register(_on_done)
 	try:
 		ui.message(text)
+		# synthDoneSpeaking fires for any speech, not specifically this utterance.
+		# Concurrent NVDA events can cause this to unblock early, which is acceptable.
 		done.wait(timeout=ANNOUNCE_TIMEOUT_SECONDS)
 	finally:
 		synthDriverHandler.synthDoneSpeaking.unregister(_on_done)
