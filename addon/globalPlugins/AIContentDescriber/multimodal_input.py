@@ -11,6 +11,19 @@ try:
 except addonHandler.AddonError:
 	pass
 
+def _get_pause_gesture():
+	try:
+		import globalPluginHandler
+		for plugin in globalPluginHandler.runningPlugins:
+			if not hasattr(plugin, 'script_pause_resume_computer_use'):
+				continue
+			for identifier, func in plugin._gestureMap.items():
+				if getattr(func, '__name__', '') == 'script_pause_resume_computer_use':
+					return identifier.split(":", 1)[-1] if ":" in identifier else identifier
+	except Exception:
+		pass
+	return "NVDA+control+shift+p"
+
 # Global variable to hold dialog reference
 _conversation_dialog = None
 
