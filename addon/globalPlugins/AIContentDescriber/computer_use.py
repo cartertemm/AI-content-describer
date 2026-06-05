@@ -277,43 +277,34 @@ class ComputerUseSession:
 			# Group results by call_id: OpenAI groups multiple actions under one
 			# computer_call item and expects one computer_call_output per call_id.
 			results_by_call_id = {}
-
 			for action in resp["actions"]:
 				if self._cancel_event.is_set():
 					break
-
 				if not self._approve_all and (action.get("type") == "confirm" or is_risky(action)):
 					if not self._ask_approval(action):
 						self._cancel_event.set()
 						break
-
 				scaled = dict(action)
 				if "x" in scaled and "y" in scaled:
 					scaled["x"], scaled["y"] = capture.to_screen(action["x"], action["y"])
 				if "startX" in scaled:
 					scaled["startX"], scaled["startY"] = capture.to_screen(action["startX"], action["startY"])
 					scaled["endX"], scaled["endY"] = capture.to_screen(action["endX"], action["endY"])
-
 				compact = runner.execute(scaled)
 				self._on_message(compact, role="action")
 				call_id = action.get("_call_id", "")
 				results_by_call_id.setdefault(call_id, []).append(compact)
-
 			tool_results = [
 				{"call_id": cid, "compact_result": "\n".join(results)}
 				for cid, results in results_by_call_id.items()
 			]
-
 			if self._cancel_event.is_set():
 				break
-
 			# Let keystrokes and focus changes settle before the next screenshot
 			time.sleep(0.3)
-
 			# Pause is checked between action batches only, never mid-action
 			while self._pause_event.is_set() and not self._cancel_event.is_set():
 				time.sleep(0.05)
-
 			injected = []
 			while not self._inject_queue.empty():
 				injected.append(self._inject_queue.get_nowait())
