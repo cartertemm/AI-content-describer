@@ -156,9 +156,9 @@ class ActionRunner:
 				self._key(action["key"])
 				return f"key | {action['key']} | ok"
 			elif t == "type":
-				_announce_and_wait(f"Typing {action['text']}")
-				self._type_text(action["text"])
 				preview = action["text"][:40]
+				_announce_and_wait(f"Typing {preview}")
+				self._type_text(action["text"])
 				return f"type | {preview} | ok"
 			elif t == "wait":
 				time.sleep(0.5)
