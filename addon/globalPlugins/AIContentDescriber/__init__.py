@@ -552,6 +552,7 @@ class GlobalPlugin(GlobalPlugin):
 				cancel_event=cancel_event,
 				pause_event=pause_event,
 				request_approval=_show_computer_use_approval,
+				dialog=dlg,
 			)
 			session.start(task)
 			dlg._computer_use_session = session

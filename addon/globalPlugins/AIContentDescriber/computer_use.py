@@ -19,6 +19,13 @@ except ImportError:
 	ui = None
 	synthDriverHandler = None
 
+try:
+	import tones
+	import wx
+except ImportError:
+	tones = None
+	wx = None
+
 import dependency_checker
 dependency_checker.expand_path()
 from PIL import Image
@@ -245,13 +252,14 @@ class ActionRunner:
 class ComputerUseSession:
 	"""Orchestrates the agentic control loop on a background thread."""
 
-	def __init__(self, service, hwnd, on_message, cancel_event, pause_event, request_approval=None):
+	def __init__(self, service, hwnd, on_message, cancel_event, pause_event, request_approval=None, dialog=None):
 		self._service = service
 		self._hwnd = hwnd
 		self._on_message = on_message
 		self._cancel_event = cancel_event
 		self._pause_event = pause_event
 		self._request_approval = request_approval
+		self._dialog = dialog
 		self._inject_queue = queue.Queue()
 		self._approve_all = False
 		self._thread = None
@@ -304,6 +312,10 @@ class ComputerUseSession:
 
 			if resp.get("is_complete") or not resp.get("actions"):
 				self._on_message("Task complete.", role="system")
+				if tones:
+					tones.beep(108, 300)
+				if wx and self._dialog:
+					wx.CallAfter(self._dialog.SetFocus)
 				break
 
 			previous_response_id = resp.get("response_id")
