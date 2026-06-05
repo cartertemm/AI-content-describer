@@ -12,9 +12,33 @@ except ImportError:
 	winUser = None
 	screenBitmap = None
 
+try:
+	import ui
+	import synthDriverHandler
+except ImportError:
+	ui = None
+	synthDriverHandler = None
+
 import dependency_checker
 dependency_checker.expand_path()
 from PIL import Image
+
+
+ANNOUNCE_TIMEOUT_SECONDS = 10
+
+
+def _announce_and_wait(text):
+	if ui is None or synthDriverHandler is None:
+		return
+	done = threading.Event()
+	def _on_done(**kwargs):
+		done.set()
+	synthDriverHandler.synthDoneSpeaking.register(_on_done)
+	try:
+		ui.message(text)
+		done.wait(timeout=ANNOUNCE_TIMEOUT_SECONDS)
+	finally:
+		synthDriverHandler.synthDoneSpeaking.unregister(_on_done)
 
 
 def _calculate_scale(w, h, max_long_edge=None, max_pixels=None):
