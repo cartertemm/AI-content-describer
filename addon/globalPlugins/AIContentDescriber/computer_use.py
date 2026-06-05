@@ -117,6 +117,15 @@ def is_risky(action):
 class ActionRunner:
 	"""Executes model-issued actions using NVDA's winUser module."""
 
+	def __init__(self, cancel_event=None, pause_event=None):
+		self._cancel_event = cancel_event
+		self._pause_event = pause_event
+
+	def _aborted(self):
+		"""True when the session was cancelled or paused, so long actions stop mid-flight."""
+		return ((self._cancel_event is not None and self._cancel_event.is_set())
+			or (self._pause_event is not None and self._pause_event.is_set()))
+
 	_VK_MAP = {
 		"enter": 0x0D, "return": 0x0D, "tab": 0x09, "escape": 0x1B, "esc": 0x1B,
 		"space": 0x20, "backspace": 0x08, "delete": 0x2E,
@@ -152,6 +161,8 @@ class ActionRunner:
 				return f"double_click | ({action['x']}, {action['y']}) | ok"
 			elif t == "triple_click":
 				for _ in range(3):
+					if self._aborted():
+						break
 					self._click(action["x"], action["y"], "left")
 					time.sleep(0.05)
 				return f"triple_click | ({action['x']}, {action['y']}) | ok"
@@ -232,6 +243,8 @@ class ActionRunner:
 	def _type_text(self, text):
 		try:
 			for ch in text:
+				if self._aborted():
+					break
 				if ch == "\n":
 					winUser.keybd_event(0x0D, 0, 0, 0)
 					winUser.keybd_event(0x0D, 0, winUser.KEYEVENTF_KEYUP, 0)
@@ -285,7 +298,7 @@ class ComputerUseSession:
 
 	def _run_loop(self, task):
 		capture = Capture(self._hwnd, self._max_long_edge, self._max_pixels)
-		runner = ActionRunner()
+		runner = ActionRunner(self._cancel_event, self._pause_event)
 		history = []
 		previous_response_id = None
 		tool_results = None
@@ -324,7 +337,7 @@ class ComputerUseSession:
 			# computer_call item and expects one computer_call_output per call_id.
 			results_by_call_id = {}
 			for action in resp["actions"]:
-				if self._cancel_event.is_set():
+				if self._cancel_event.is_set() or self._pause_event.is_set():
 					break
 				if not self._approve_all and (action.get("type") == "confirm" or is_risky(action)):
 					if not self._ask_approval(action):
