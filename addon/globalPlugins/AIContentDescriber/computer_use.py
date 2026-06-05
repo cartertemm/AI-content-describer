@@ -239,6 +239,7 @@ class ActionRunner:
 					cp = ord(ch)
 					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE, 0)
 					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0)
+				time.sleep(0.005)
 		except Exception:
 			try:
 				with winUser.openClipboard():
