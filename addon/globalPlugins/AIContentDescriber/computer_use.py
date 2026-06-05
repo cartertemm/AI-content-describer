@@ -32,6 +32,7 @@ from PIL import Image
 
 
 ANNOUNCE_TIMEOUT_SECONDS = 10
+TYPE_PREVIEW_MAX_CHARS = 40
 
 
 def _announce_and_wait(text):
@@ -163,7 +164,7 @@ class ActionRunner:
 				self._key(action["key"])
 				return f"key | {action['key']} | ok"
 			elif t == "type":
-				preview = action["text"][:40]
+				preview = action["text"][:TYPE_PREVIEW_MAX_CHARS]
 				_announce_and_wait(f"Typing {preview}")
 				self._type_text(action["text"])
 				return f"type | {preview} | ok"
