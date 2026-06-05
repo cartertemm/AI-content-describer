@@ -189,8 +189,23 @@ class MultimodalInput(wx.Dialog):
 		if self.mode == "computer_use":
 			self.append_message(user_input, role="user")
 			if not self._session_started and self.on_first_message_callback:
-				self._session_started = True
-				self.on_first_message_callback(user_input)
+				keystroke = _get_pause_gesture()
+				dlg = wx.MessageDialog(
+					self,
+					# Translators: body of the computer control consent dialog
+					_("The selected model would like to take control of your computer to perform the requested task. You will be notified as actions occur, and you can press {keystroke} any time to pause the session. Would you like to allow this?").format(keystroke=keystroke),
+					# Translators: title of the computer control consent dialog
+					_("AI Content Describer"),
+					wx.YES_NO | wx.ICON_QUESTION,
+				)
+				result = dlg.ShowModal()
+				dlg.Destroy()
+				if result == wx.ID_YES:
+					self._session_started = True
+					self.on_first_message_callback(user_input)
+				else:
+					# Translators: shown in session history when user declines consent
+					self.append_message(_("Session declined by user"), role="system")
 			elif hasattr(self, "_computer_use_session") and self._computer_use_session:
 				self._computer_use_session.inject_message(user_input)
 			self.send_button.Enable(True)
