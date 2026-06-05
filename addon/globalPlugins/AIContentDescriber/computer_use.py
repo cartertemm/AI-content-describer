@@ -315,7 +315,8 @@ class ComputerUseSession:
 				if tones:
 					tones.beep(108, 300)
 				if wx and self._dialog:
-					wx.CallAfter(self._dialog.SetFocus)
+					dlg = self._dialog
+					wx.CallAfter(lambda: dlg.SetFocus() if not dlg.IsBeingDeleted() else None)
 				break
 
 			previous_response_id = resp.get("response_id")
@@ -361,7 +362,6 @@ class ComputerUseSession:
 			return True
 		result_event = threading.Event()
 		result_holder = [None]
-		import wx
 		wx.CallAfter(self._request_approval, action, result_event, result_holder)
 		result_event.wait()
 		choice = result_holder[0]
