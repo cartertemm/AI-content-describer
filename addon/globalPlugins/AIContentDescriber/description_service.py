@@ -543,9 +543,8 @@ class BaseGPT(BaseDescriptionService):
 					"type": "computer_call_output",
 					"call_id": tr["call_id"],
 					"output": {
-						"type": "input_image",
+						"type": "computer_screenshot",
 						"image_url": f"data:image/png;base64,{screenshot_b64}",
-						"detail": "original",
 					},
 					"acknowledged_safety_checks": [],
 				}
