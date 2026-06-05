@@ -156,6 +156,7 @@ class ActionRunner:
 				self._key(action["key"])
 				return f"key | {action['key']} | ok"
 			elif t == "type":
+				_announce_and_wait(f"Typing {action['text']}")
 				self._type_text(action["text"])
 				preview = action["text"][:40]
 				return f"type | {preview} | ok"
@@ -163,7 +164,7 @@ class ActionRunner:
 				time.sleep(0.5)
 				return "wait | 500ms | ok"
 			elif t == "screenshot":
-				# Model requested a screenshot; we always capture one at the top of each loop
+				_announce_and_wait("Taking screenshot...")
 				return "screenshot | (handled by loop) | ok"
 			else:
 				return f"{t} | (unknown) | skipped"
