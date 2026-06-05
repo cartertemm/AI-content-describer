@@ -536,6 +536,9 @@ class GlobalPlugin(GlobalPlugin):
 		if not service.supports_computer_use:
 			ui.message(_("Computer use is not supported by the selected model."))
 			return
+		if self.is_screen_curtain_running():
+			ui.message(_("Computer control cannot be used while the screen curtain is active."))
+			return
 		cancel_event = threading.Event()
 		pause_event = threading.Event()
 		dlg = MultimodalInput(service, gui.mainFrame, mode="computer_use")
