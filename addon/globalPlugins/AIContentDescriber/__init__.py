@@ -572,6 +572,7 @@ class GlobalPlugin(GlobalPlugin):
 					session._pause_event.set()
 					# Translators: spoken when a computer control session is paused
 					ui.message(_("Computer control paused."))
+					tones.beep(108, 300)
 					wx.CallAfter(win.SetFocus)
 				return
 		# Translators: spoken when the pause gesture is pressed but no session is running
