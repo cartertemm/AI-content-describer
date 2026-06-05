@@ -22,7 +22,7 @@ def _get_pause_gesture():
 					return identifier.split(":", 1)[-1] if ":" in identifier else identifier
 	except Exception:
 		pass
-	return "NVDA+control+shift+p"
+	return "nvda+control+shift+p"
 
 # Global variable to hold dialog reference
 _conversation_dialog = None
