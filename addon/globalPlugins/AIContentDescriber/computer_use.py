@@ -194,9 +194,13 @@ class ActionRunner:
 	def _type_text(self, text):
 		try:
 			for ch in text:
-				cp = ord(ch)
-				winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE, 0)
-				winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0)
+				if ch == "\n":
+					winUser.keybd_event(0x0D, 0, 0, 0)
+					winUser.keybd_event(0x0D, 0, winUser.KEYEVENTF_KEYUP, 0)
+				else:
+					cp = ord(ch)
+					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE, 0)
+					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0)
 		except Exception:
 			try:
 				with winUser.openClipboard():
