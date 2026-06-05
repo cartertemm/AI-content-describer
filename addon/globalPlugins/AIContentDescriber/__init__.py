@@ -199,12 +199,17 @@ class ComputerUseApprovalDialog(wx.Dialog):
 		self.EndModal(wx.ID_OK)
 
 
-def _show_computer_use_approval(action, result_event, result_holder):
+def _show_computer_use_approval(action, result_event, result_holder, target_hwnd=None):
 	"""Called on main thread by ComputerUseSession for risky actions."""
 	dlg = ComputerUseApprovalDialog(gui.mainFrame, action)
 	dlg.ShowModal()
 	result_holder[0] = dlg.choice
 	dlg.Destroy()
+	# Restore the target window's foreground while we still own it so the
+	# approved action's input goes to the user's app, not elsewhere.
+	if target_hwnd and result_holder[0] in ("approve_once", "approve_all"):
+		import winUser as wu
+		wu.setForegroundWindow(target_hwnd)
 	result_event.set()
 
 
@@ -554,9 +559,14 @@ class GlobalPlugin(GlobalPlugin):
 				request_approval=_show_computer_use_approval,
 				dialog=dlg,
 			)
-			session.start(task)
 			dlg._computer_use_session = session
 			dlg._cancel_event = cancel_event
+			# Hand the foreground to the user's window and get our dialog out of
+			# the way before the session screenshots or sends any input.
+			import winUser as wu
+			wu.setForegroundWindow(hwnd)
+			dlg.Hide()
+			session.start(task)
 		dlg.on_first_message_callback = on_first_message
 		dlg.Show()
 
@@ -573,7 +583,6 @@ class GlobalPlugin(GlobalPlugin):
 					# Translators: spoken when a computer control session is paused
 					ui.message(_("Computer control paused."))
 					tones.beep(108, 300)
-					wx.CallAfter(win.SetFocus)
 				return
 		# Translators: spoken when the pause gesture is pressed but no session is running
 		ui.message(_("No active computer control session."))

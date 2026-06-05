@@ -433,9 +433,8 @@ def _normalize_openai_action(raw):
 	rather than a "type" field value.
 	"""
 	action = dict(raw)
-
 	# Detect format where action type is the key, not a "type" field value
-	# e.g. {"left_click": {"x": 100, "y": 200}} → type="left_click", x=100, y=200
+	# e.g. {"left_click": {"x": 100, "y": 200}}
 	if not action.get("type"):
 		for key, val in list(action.items()):
 			if isinstance(val, dict):
@@ -443,47 +442,31 @@ def _normalize_openai_action(raw):
 				action.update(val)
 				del action[key]
 				break
-
 	t = action.get("type", "")
-
-	# OpenAI "click" + "button" → "left_click" / "right_click" / "middle_click"
 	if t == "click":
 		button = action.pop("button", "left")
 		action["type"] = f"{button}_click"
-
-	# OpenAI "coordinate": [x, y] → x, y
 	coord = action.pop("coordinate", None)
 	if coord and len(coord) >= 2:
 		action["x"] = coord[0]
 		action["y"] = coord[1]
-
-	# OpenAI "start_coordinate": [x, y] → startX, startY
 	start = action.pop("start_coordinate", None)
 	if start and len(start) >= 2:
 		action["startX"] = start[0]
 		action["startY"] = start[1]
-
-	# OpenAI "end_coordinate": [x, y] → endX, endY
 	end = action.pop("end_coordinate", None)
 	if end and len(end) >= 2:
 		action["endX"] = end[0]
 		action["endY"] = end[1]
-
-	# OpenAI "keypress" → our "key" type
 	if action.get("type") == "keypress":
 		action["type"] = "key"
-
-	# OpenAI "keys": [...] array → "key": "ctrl+c" string (lowercase)
 	keys = action.pop("keys", None)
 	if keys:
 		action["key"] = "+".join(k.lower() for k in keys)
-
-	# OpenAI "scroll_direction" / "scroll_distance" → direction / amount
 	if "scroll_direction" in action:
 		action["direction"] = action.pop("scroll_direction")
 	if "scroll_distance" in action:
 		action["amount"] = action.pop("scroll_distance")
-
 	return action
 
 

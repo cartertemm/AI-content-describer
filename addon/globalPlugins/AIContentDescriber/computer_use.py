@@ -278,20 +278,24 @@ class ComputerUseSession:
 		self._inject_queue.put(text)
 
 	def _run(self, task):
+		try:
+			self._run_loop(task)
+		finally:
+			self._show_dialog()
+
+	def _run_loop(self, task):
 		capture = Capture(self._hwnd, self._max_long_edge, self._max_pixels)
 		runner = ActionRunner()
 		history = []
 		previous_response_id = None
 		tool_results = None
 		injected_text = None
-
 		while not self._cancel_event.is_set():
 			try:
 				b64, cap_w, cap_h = capture.capture()
 			except Exception as e:
 				self._on_message(f"Screenshot failed: {e}", role="system")
 				break
-
 			try:
 				resp = self._service.make_computer_use_request(
 					screenshot_b64=b64,
@@ -307,21 +311,14 @@ class ComputerUseSession:
 				self._on_message(f"API error: {e}", role="system")
 				previous_response_id = None
 				break
-
 			injected_text = None
-
 			if resp.get("text"):
 				self._on_message(resp["text"], role="assistant")
-
 			if resp.get("is_complete") or not resp.get("actions"):
 				self._on_message("Task complete.", role="system")
 				if tones:
 					tones.beep(108, 300)
-				if wx and self._dialog:
-					dlg = self._dialog
-					wx.CallAfter(lambda: dlg.SetFocus() if not dlg.IsBeingDeleted() else None)
 				break
-
 			previous_response_id = resp.get("response_id")
 			# Group results by call_id: OpenAI groups multiple actions under one
 			# computer_call item and expects one computer_call_output per call_id.
@@ -351,21 +348,60 @@ class ComputerUseSession:
 				break
 			# Let keystrokes and focus changes settle before the next screenshot
 			time.sleep(0.3)
-			# Pause is checked between action batches only, never mid-action
-			while self._pause_event.is_set() and not self._cancel_event.is_set():
-				time.sleep(0.05)
+			# Pause is checked between action batches only, never mid-action.
+			# While paused, surface the dialog so the user can read the log or
+			# inject a follow-up, then hand the target window back on resume.
+			if self._pause_event.is_set():
+				self._show_dialog()
+				while self._pause_event.is_set() and not self._cancel_event.is_set():
+					time.sleep(0.05)
+				if not self._cancel_event.is_set():
+					self._resume_to_target()
+					time.sleep(0.2)
 			injected = []
 			while not self._inject_queue.empty():
 				injected.append(self._inject_queue.get_nowait())
 			if injected:
 				injected_text = " ".join(injected)
 
+	def _show_dialog(self):
+		"""Bring the session dialog back to the foreground (scheduled on the main thread)."""
+		if wx is None or self._dialog is None:
+			return
+		dlg = self._dialog
+		def _do():
+			try:
+				if dlg.IsBeingDeleted():
+					return
+				dlg.Show()
+				dlg.Raise()
+				dlg.SetFocus()
+			except RuntimeError:
+				pass
+		wx.CallAfter(_do)
+
+	def _resume_to_target(self):
+		"""Hand the foreground back to the target window and hide our dialog (main thread)."""
+		if wx is None:
+			return
+		dlg = self._dialog
+		hwnd = self._hwnd
+		def _do():
+			try:
+				if winUser is not None:
+					winUser.setForegroundWindow(hwnd)
+				if dlg is not None and not dlg.IsBeingDeleted():
+					dlg.Hide()
+			except RuntimeError:
+				pass
+		wx.CallAfter(_do)
+
 	def _ask_approval(self, action):
 		if self._request_approval is None:
 			return True
 		result_event = threading.Event()
 		result_holder = [None]
-		wx.CallAfter(self._request_approval, action, result_event, result_holder)
+		wx.CallAfter(self._request_approval, action, result_event, result_holder, self._hwnd)
 		result_event.wait()
 		choice = result_holder[0]
 		if choice == "approve_all":
