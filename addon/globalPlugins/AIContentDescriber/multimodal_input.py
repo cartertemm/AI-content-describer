@@ -199,6 +199,10 @@ class MultimodalInput(wx.Dialog):
 					_("AI Content Describer"),
 					wx.YES_NO | wx.ICON_QUESTION,
 				)
+				import winUser
+				winUser.setForegroundWindow(dlg.GetHandle())
+				# Translators: spoken when the consent dialog appears, to alert the user to switch to it
+				ui.message(_("Consent required. Please check the dialog."))
 				result = dlg.ShowModal()
 				dlg.Destroy()
 				if result == wx.ID_YES:
