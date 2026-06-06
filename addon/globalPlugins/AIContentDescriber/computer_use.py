@@ -218,8 +218,13 @@ class ActionRunner:
 
 	def _key(self, key):
 		parts = key.lower().split("+")
-		main_key = parts[-1].strip()
-		modifiers = [self._MOD_MAP[p.strip()] for p in parts[:-1] if p.strip() in self._MOD_MAP]
+		# Empty main_key means the intended key is the literal "+" (e.g. "ctrl++")
+		main_key = parts[-1].strip() or "+"
+		mod_tokens = [p.strip() for p in parts[:-1] if p.strip()]
+		unknown = [t for t in mod_tokens if t not in self._MOD_MAP]
+		if unknown:
+			raise ValueError(f"unknown modifier(s): {', '.join(unknown)}")
+		modifiers = [self._MOD_MAP[t] for t in mod_tokens]
 		for vk in modifiers:
 			winUser.keybd_event(vk, 0, 0, 0)
 		main_vk = self._VK_MAP.get(main_key)
