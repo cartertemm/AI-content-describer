@@ -114,6 +114,28 @@ def is_risky(action):
 	return any(kw in text for kw in RISKY_KEYWORDS)
 
 
+def describe_action(action):
+	"""Return a short user-facing description of a computer-use action."""
+	action_desc = action.get("type", "unknown")
+	if "x" in action and "y" in action:
+		action_desc += f" at ({action['x']}, {action['y']})"
+	if "text" in action:
+		action_desc += f": {action['text'][:TYPE_PREVIEW_MAX_CHARS]}"
+	if "key" in action:
+		action_desc += f": {action['key']}"
+	return action_desc
+
+
+def safety_check_messages(action):
+	"""Return displayable messages from API-issued safety checks."""
+	messages = [sc.get("message") or sc.get("code", "") for sc in action.get("_safety_checks", [])]
+	return [m for m in messages if m]
+
+
+def format_action_result(action, detail, status="ok"):
+	return f"{action.get('type', '')} | {detail} | {status}"
+
+
 class ActionRunner:
 	"""Executes model-issued actions using NVDA's winUser module."""
 
@@ -144,52 +166,52 @@ class ActionRunner:
 		try:
 			if t == "move":
 				self._move(action["x"], action["y"])
-				return f"move | ({action['x']}, {action['y']}) | ok"
+				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "left_click":
 				self._click(action["x"], action["y"], "left")
-				return f"left_click | ({action['x']}, {action['y']}) | ok"
+				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "right_click":
 				self._click(action["x"], action["y"], "right")
-				return f"right_click | ({action['x']}, {action['y']}) | ok"
+				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "middle_click":
 				self._click(action["x"], action["y"], "middle")
-				return f"middle_click | ({action['x']}, {action['y']}) | ok"
+				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "double_click":
 				self._click(action["x"], action["y"], "left")
 				time.sleep(0.05)
 				self._click(action["x"], action["y"], "left")
-				return f"double_click | ({action['x']}, {action['y']}) | ok"
+				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "triple_click":
 				for _ in range(3):
 					if self._aborted():
 						break
 					self._click(action["x"], action["y"], "left")
 					time.sleep(0.05)
-				return f"triple_click | ({action['x']}, {action['y']}) | ok"
+				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "left_click_drag":
 				self._drag(action["startX"], action["startY"], action["endX"], action["endY"])
-				return f"left_click_drag | ({action['startX']},{action['startY']})->({action['endX']},{action['endY']}) | ok"
+				return format_action_result(action, f"({action['startX']},{action['startY']})->({action['endX']},{action['endY']})")
 			elif t == "scroll":
 				self._scroll(action["x"], action["y"], action.get("direction", "down"), action.get("amount", 3))
-				return f"scroll | ({action['x']}, {action['y']}) {action.get('direction', 'down')} {action.get('amount', 3)} | ok"
+				return format_action_result(action, f"({action['x']}, {action['y']}) {action.get('direction', 'down')} {action.get('amount', 3)}")
 			elif t == "key":
 				self._key(action["key"])
-				return f"key | {action['key']} | ok"
+				return format_action_result(action, action["key"])
 			elif t == "type":
 				preview = action["text"][:TYPE_PREVIEW_MAX_CHARS]
 				_announce_and_wait(f"Typing {preview}")
 				self._type_text(action["text"])
-				return f"type | {preview} | ok"
+				return format_action_result(action, preview)
 			elif t == "wait":
 				time.sleep(0.5)
-				return "wait | 500ms | ok"
+				return format_action_result(action, "500ms")
 			elif t == "screenshot":
 				_announce_and_wait("Taking screenshot...")
-				return "screenshot | (handled by loop) | ok"
+				return format_action_result(action, "(handled by loop)")
 			else:
-				return f"{t} | (unknown) | skipped"
+				return format_action_result(action, "(unknown)", "skipped")
 		except Exception as e:
-			return f"{t} | error | {e}"
+			return format_action_result(action, "error", e)
 
 	def _move(self, x, y):
 		winUser.setCursorPos(x, y)

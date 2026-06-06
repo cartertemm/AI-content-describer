@@ -41,7 +41,7 @@ import config_handler as ch
 import description_service
 import model_configuration
 from multimodal_input import launch_conversation_dialog, offer_image_attachment, MultimodalInput
-from computer_use import ComputerUseSession
+from computer_use import ComputerUseSession, describe_action, safety_check_messages
 import dependency_checker
 import computer_control
 
@@ -153,27 +153,16 @@ class ComputerUseApprovalDialog(wx.Dialog):
 	"""Asks the user to approve a risky or confirm-type action before it executes."""
 
 	def __init__(self, parent, action):
-		action_type = action.get("type", "unknown")
-		action_desc = action_type
-		if "x" in action and "y" in action:
-			action_desc += f" at ({action['x']}, {action['y']})"
-		if "text" in action:
-			action_desc += f": {action['text'][:60]}"
-		if "key" in action:
-			action_desc += f": {action['key']}"
 		# Translators: title of the dialog asking whether to allow a risky AI action
 		super().__init__(parent, title=_("Approve Action"))
 		self.choice = "cancel"
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: body of the risky-action approval dialog; {action} is a description of what the AI wants to do
-		body = _("The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?").format(action=action_desc)
-		safety_checks = action.get("_safety_checks", [])
-		if safety_checks:
-			messages = [sc.get("message") or sc.get("code", "") for sc in safety_checks]
-			messages = [m for m in messages if m]
-			if messages:
-				# Translators: header for API-issued safety warnings appended to the approval dialog
-				body += "\n\n" + _("API safety warnings:") + "\n" + "\n".join(f"- {m}" for m in messages)
+		body = _("The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?").format(action=describe_action(action))
+		messages = safety_check_messages(action)
+		if messages:
+			# Translators: header for API-issued safety warnings appended to the approval dialog
+			body += "\n\n" + _("API safety warnings:") + "\n" + "\n".join(f"- {m}" for m in messages)
 		msg = wx.StaticText(self, label=body)
 		sizer.Add(msg, 0, wx.ALL, 10)
 		btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
