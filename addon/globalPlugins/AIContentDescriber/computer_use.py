@@ -356,7 +356,7 @@ class ComputerUseSession:
 			if resp.get("is_complete") or not resp.get("actions"):
 				self._on_message("Task complete.", role="system")
 				if tones:
-					tones.beep(300, 1000)
+					tones.beep(108, 300)
 				break
 			previous_response_id = resp.get("response_id")
 			# Group results by call_id: OpenAI groups multiple actions under one
