@@ -306,6 +306,21 @@ class ComputerUseSession:
 			self._run_loop(task)
 		finally:
 			self._show_dialog()
+			self._clear_dialog_session()
+
+	def _clear_dialog_session(self):
+		if wx is None or self._dialog is None:
+			return
+		dlg = self._dialog
+		def _do():
+			try:
+				if dlg.IsBeingDeleted():
+					return
+				dlg._computer_use_session = None
+				dlg._session_started = False
+			except RuntimeError:
+				pass
+		wx.CallAfter(_do)
 
 	def _run_loop(self, task):
 		capture = Capture(self._hwnd, self._max_long_edge, self._max_pixels)
