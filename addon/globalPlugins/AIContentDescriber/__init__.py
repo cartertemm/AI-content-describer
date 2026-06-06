@@ -567,6 +567,7 @@ class GlobalPlugin(GlobalPlugin):
 			import winUser
 			winUser.setForegroundWindow(hwnd)
 			dlg.Hide()
+			tones.beep(300, 1000)
 			session.start(task)
 		dlg.on_first_message_callback = on_first_message
 		dlg.Show()
@@ -577,13 +578,14 @@ class GlobalPlugin(GlobalPlugin):
 				session = win._computer_use_session
 				if session._pause_event.is_set():
 					session._pause_event.clear()
+					tones.beep(300, 1000)
 					# Translators: spoken when a computer control session is resumed
 					ui.message(_("Computer control resumed."))
 				else:
 					session._pause_event.set()
+					tones.beep(300, 1000)
 					# Translators: spoken when a computer control session is paused
 					ui.message(_("Computer control paused."))
-					tones.beep(108, 300)
 				return
 		# Translators: spoken when the pause gesture is pressed but no session is running
 		ui.message(_("No active computer control session."))
@@ -594,6 +596,7 @@ class GlobalPlugin(GlobalPlugin):
 		for win in wx.GetTopLevelWindows():
 			if hasattr(win, "_computer_use_session"):
 				win._computer_use_session._cancel_event.set()
+				tones.beep(300, 1000)
 				# Translators: spoken when the user cancels a computer control session
 				ui.message(_("Computer control session cancelled."))
 				return
