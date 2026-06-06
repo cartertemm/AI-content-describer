@@ -567,6 +567,7 @@ class GlobalPlugin(GlobalPlugin):
 			import winUser
 			winUser.setForegroundWindow(hwnd)
 			dlg.Hide()
+			tones.beep(1000, 300)
 			session.start(task)
 		dlg.on_first_message_callback = on_first_message
 		dlg.Show()
@@ -577,6 +578,7 @@ class GlobalPlugin(GlobalPlugin):
 				session = win._computer_use_session
 				if session._pause_event.is_set():
 					session._pause_event.clear()
+					tones.beep(1000, 300)
 					# Translators: spoken when a computer control session is resumed
 					ui.message(_("Computer control resumed."))
 				else:
