@@ -350,7 +350,7 @@ class ComputerUseSession:
 			for action in resp["actions"]:
 				if self._cancel_event.is_set() or self._pause_event.is_set():
 					break
-				if not self._approve_all and (action.get("type") == "confirm" or is_risky(action)):
+				if not self._approve_all and (action.get("type") == "confirm" or is_risky(action) or action.get("_safety_checks")):
 					if not self._ask_approval(action):
 						self._cancel_event.set()
 						break
@@ -363,10 +363,11 @@ class ComputerUseSession:
 				compact = runner.execute(scaled)
 				self._on_message(compact, role="action")
 				call_id = action.get("_call_id", "")
-				results_by_call_id.setdefault(call_id, []).append(compact)
+				entry = results_by_call_id.setdefault(call_id, {"results": [], "safety_checks": action.get("_safety_checks", [])})
+				entry["results"].append(compact)
 			tool_results = [
-				{"call_id": cid, "compact_result": "\n".join(results)}
-				for cid, results in results_by_call_id.items()
+				{"call_id": cid, "compact_result": "\n".join(entry["results"]), "safety_checks": entry["safety_checks"]}
+				for cid, entry in results_by_call_id.items()
 			]
 			if self._cancel_event.is_set():
 				break

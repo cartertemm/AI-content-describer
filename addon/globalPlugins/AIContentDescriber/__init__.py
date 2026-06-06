@@ -164,15 +164,18 @@ class ComputerUseApprovalDialog(wx.Dialog):
 		# Translators: title of the dialog asking whether to allow a risky AI action
 		super().__init__(parent, title=_("Approve Action"))
 		self.choice = "cancel"
-
 		sizer = wx.BoxSizer(wx.VERTICAL)
-		msg = wx.StaticText(
-			self,
-			# Translators: body of the risky-action approval dialog; {action} is a description of what the AI wants to do
-			label=_("The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?").format(action=action_desc),
-		)
+		# Translators: body of the risky-action approval dialog; {action} is a description of what the AI wants to do
+		body = _("The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?").format(action=action_desc)
+		safety_checks = action.get("_safety_checks", [])
+		if safety_checks:
+			messages = [sc.get("message") or sc.get("code", "") for sc in safety_checks]
+			messages = [m for m in messages if m]
+			if messages:
+				# Translators: header for API-issued safety warnings appended to the approval dialog
+				body += "\n\n" + _("API safety warnings:") + "\n" + "\n".join(f"- {m}" for m in messages)
+		msg = wx.StaticText(self, label=body)
 		sizer.Add(msg, 0, wx.ALL, 10)
-
 		btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: button to deny the AI action and stop the session
 		cancel_btn = wx.Button(self, label=_("&Cancel"))
@@ -186,7 +189,6 @@ class ComputerUseApprovalDialog(wx.Dialog):
 		sizer.Add(btn_sizer, 0, wx.ALL | wx.ALIGN_CENTER, 10)
 		self.SetSizer(sizer)
 		self.Fit()
-
 		cancel_btn.SetFocus()
 		cancel_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("cancel"))
 		once_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("approve_once"))
@@ -208,8 +210,8 @@ def _show_computer_use_approval(action, result_event, result_holder, target_hwnd
 	# Restore the target window's foreground while we still own it so the
 	# approved action's input goes to the user's app, not elsewhere.
 	if target_hwnd and result_holder[0] in ("approve_once", "approve_all"):
-		import winUser as wu
-		wu.setForegroundWindow(target_hwnd)
+		import winUser
+		winUser.setForegroundWindow(target_hwnd)
 	result_event.set()
 
 
@@ -461,9 +463,8 @@ class GlobalPlugin(GlobalPlugin):
 
 	def show_area_menu(self):
 		# Cache foreground HWND before prePopup steals focus
-		import winUser as wu
-		foreground_hwnd = wu.getForegroundWindow()
-
+		import winUser
+		foreground_hwnd = winUser.getForegroundWindow()
 		self.prev_navigator = api.getNavigatorObject()
 		self.prev_focus = api.getFocusObject()
 		gui.mainFrame.prePopup()
@@ -563,8 +564,8 @@ class GlobalPlugin(GlobalPlugin):
 			dlg._cancel_event = cancel_event
 			# Hand the foreground to the user's window and get our dialog out of
 			# the way before the session screenshots or sends any input.
-			import winUser as wu
-			wu.setForegroundWindow(hwnd)
+			import winUser
+			winUser.setForegroundWindow(hwnd)
 			dlg.Hide()
 			session.start(task)
 		dlg.on_first_message_callback = on_first_message

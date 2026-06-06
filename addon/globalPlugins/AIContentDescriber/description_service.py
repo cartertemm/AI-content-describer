@@ -529,7 +529,7 @@ class BaseGPT(BaseDescriptionService):
 						"type": "computer_screenshot",
 						"image_url": f"data:image/png;base64,{screenshot_b64}",
 					},
-					"acknowledged_safety_checks": [],
+					"acknowledged_safety_checks": tr.get("safety_checks", []),
 				}
 				for tr in tool_results
 			]
@@ -573,11 +573,13 @@ class BaseGPT(BaseDescriptionService):
 						text += block.get("text", "")
 			elif item.get("type") == "computer_call":
 				call_id = item.get("call_id", "")
+				safety_checks = item.get("pending_safety_checks", [])
 				# "actions" is a list; each action shares the parent call_id
 				for raw_action in item.get("actions", []):
 					log.debug(f"Computer call action raw: {raw_action}")
 					action = _normalize_openai_action(raw_action)
 					action["_call_id"] = call_id
+					action["_safety_checks"] = safety_checks
 					actions.append(action)
 		is_complete = data.get("stop_reason") == "completed" and not actions
 		return {"text": text, "actions": actions, "response_id": data.get("id"), "is_complete": is_complete}
