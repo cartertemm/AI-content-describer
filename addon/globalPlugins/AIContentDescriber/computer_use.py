@@ -256,11 +256,17 @@ class ActionRunner:
 		except Exception:
 			try:
 				with winUser.openClipboard():
+					prior = winUser.getClipboardData(winUser.CF_UNICODETEXT)
+				with winUser.openClipboard():
 					winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
 				winUser.keybd_event(0x11, 0, 0, 0)  # Ctrl down
 				winUser.keybd_event(0x56, 0, 0, 0)  # V down
 				winUser.keybd_event(0x56, 0, winUser.KEYEVENTF_KEYUP, 0)
 				winUser.keybd_event(0x11, 0, winUser.KEYEVENTF_KEYUP, 0)
+				# Brief delay to ensure control+v was actually pressed and released
+				time.sleep(0.1)
+				with winUser.openClipboard():
+					winUser.setClipboardData(winUser.CF_UNICODETEXT, prior if prior is not None else "")
 			except Exception:
 				pass
 
