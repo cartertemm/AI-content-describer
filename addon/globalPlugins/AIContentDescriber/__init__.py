@@ -43,7 +43,7 @@ import model_configuration
 from multimodal_input import launch_conversation_dialog, offer_image_attachment, MultimodalInput
 from computer_use import ComputerUseSession, describe_action, safety_check_messages
 import dependency_checker
-import computer_control
+import ui_viewer
 
 third_party_path = dependency_checker.expand_path()
 # stdlib additions to import markdown
@@ -473,7 +473,7 @@ class GlobalPlugin(GlobalPlugin):
 		elif menu.selection == menu.screenshot_item:
 			self.describe_screenshot()
 		elif menu.selection == menu.show_ui_item:
-			computer_control.describe_ui(self, service)
+			ui_viewer.describe_ui(self, service)
 		elif menu.selection == menu.camera_item:
 			self.describe_camera()
 		elif menu.selection == menu.detect_face_item:
