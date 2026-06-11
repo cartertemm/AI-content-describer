@@ -109,6 +109,9 @@ def post(**kwargs):
 	import tones
 	#translators: error
 	error=_("error")
+	# Callers that report errors themselves (the computer-use loop, which may have
+	# already abandoned this request) pass quiet=True so we raise instead of speaking.
+	quiet = kwargs.pop("quiet", False)
 	kwargs["method"] = "POST"
 	if "timeout" in kwargs:
 		timeout = kwargs.get("timeout", 10)
@@ -119,6 +122,20 @@ def post(**kwargs):
 		request = urllib.request.Request(**kwargs)
 		response=urllib.request.urlopen(request, timeout=timeout).read()
 	except IOError as i:
+		if quiet:
+			detail = str(i)
+			fp = getattr(i, "fp", None)
+			if fp is not None:
+				try:
+					body = json.loads(fp.read().decode("utf-8"))
+					err = body.get("error")
+					if isinstance(err, dict):
+						err = err.get("message")
+					if err:
+						detail += ". " + str(err)
+				except Exception:
+					pass
+			raise IOError(detail) from i
 		tones.beep(150, 200)
 		#translators: message spoken when we can't connect (error with connection)
 		error_connection=_("error making connection")
@@ -145,6 +162,8 @@ def post(**kwargs):
 			raise
 		return
 	except Exception as i:
+		if quiet:
+			raise
 		tones.beep(150, 200)
 		ui.message(error+": "+str(i))
 		return
@@ -533,12 +552,12 @@ class BaseGPT(BaseDescriptionService):
 				}
 				for tr in tool_results
 			]
-			if injected_text:
-				input_items.append({
-					"type": "message",
-					"role": "user",
-					"content": [{"type": "input_text", "text": injected_text}],
-				})
+		elif injected_text:
+			# The model yielded and the user sent a follow-up; it rides in the
+			# text-only message appended below. The computer tool rejects an
+			# input_image once a previous response exists, so the model requests a
+			# screenshot itself when it needs to see the screen.
+			input_items = []
 		else:
 			input_items = [
 				{
@@ -554,6 +573,12 @@ class BaseGPT(BaseDescriptionService):
 					],
 				}
 			]
+		if injected_text:
+			input_items.append({
+				"type": "message",
+				"role": "user",
+				"content": [{"type": "input_text", "text": injected_text}],
+			})
 		payload = {
 			"model": self.internal_model_name,
 			"tools": [{"type": "computer"}],
@@ -561,7 +586,7 @@ class BaseGPT(BaseDescriptionService):
 		}
 		if previous_response_id is not None:
 			payload["previous_response_id"] = previous_response_id
-		raw = post(url=OPENAI_RESPONSES_URL, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+		raw = post(url=OPENAI_RESPONSES_URL, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout, quiet=True)
 		data = json.loads(raw.decode("utf-8"))
 		log.debug(f"OpenAI computer use response: {json.dumps(data)}")
 		text = ""
@@ -948,7 +973,10 @@ class Anthropic(BaseDescriptionService):
 					{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
 				],
 			})
-		elif tool_results:
+		else:
+			# Either tool results from the actions just run, a user follow-up after
+			# the model yielded, or both. They go in one user turn appended to the
+			# history; the model asks for a screenshot when it needs the screen.
 			content_blocks = [
 				{
 					"type": "tool_result",
@@ -958,11 +986,12 @@ class Anthropic(BaseDescriptionService):
 						{"type": "text", "text": tr["compact_result"]},
 					],
 				}
-				for tr in tool_results
+				for tr in (tool_results or [])
 			]
 			if injected_text:
 				content_blocks.append({"type": "text", "text": injected_text})
-			history.append({"role": "user", "content": content_blocks})
+			if content_blocks:
+				history.append({"role": "user", "content": content_blocks})
 		tool_def = {
 			"type": self._computer_use_tool_type,
 			"name": "computer",
@@ -971,12 +1000,13 @@ class Anthropic(BaseDescriptionService):
 		}
 		payload = {
 			"model": self.internal_model_name,
+			# todo: Make this a config value. 4096 should be reasonable for computer use scenarios, but Anthropic requires us to pass this unlike OpenAI with the responses API
 			"max_tokens": 4096,
 			"tools": [tool_def],
 			"messages": history,
 		}
 		raw = post(url="https://api.anthropic.com/v1/messages", headers=headers,
-			data=json.dumps(payload).encode("utf-8"), timeout=self.timeout)
+			data=json.dumps(payload).encode("utf-8"), timeout=self.timeout, quiet=True)
 		data = json.loads(raw.decode("utf-8"))
 		text = ""
 		actions = []

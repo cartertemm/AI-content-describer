@@ -320,8 +320,15 @@ class ComputerUseSession:
 		self._thread.start()
 
 	def inject_message(self, text):
-		"""Queue a user message to be added before the next API call."""
+		"""Queue a user message to be added before the next API call.
+
+		Sending while paused also resumes the session, so the user can pause, type
+		a follow-up, and continue in one motion. Queue first, then clear, so the
+		message is waiting when the paused loop wakes and drains it. Outside a pause
+		the event isn't set, so clearing is a harmless no-op."""
 		self._inject_queue.put(text)
+		if self._pause_event is not None:
+			self._pause_event.clear()
 
 	def _run(self, task):
 		try:
@@ -357,30 +364,70 @@ class ComputerUseSession:
 			except Exception as e:
 				self._on_message(f"Screenshot failed: {e}", role="system")
 				break
-			try:
-				resp = self._service.make_computer_use_request(
-					screenshot_b64=b64,
-					capture_w=cap_w,
-					capture_h=cap_h,
-					task=task,
-					history=history,
-					previous_response_id=previous_response_id,
-					tool_results=tool_results,
-					injected_text=injected_text,
-				)
-			except Exception as e:
-				self._on_message(f"API error: {e}", role="system")
+			# Run the request on a worker thread so a pause or cancel interrupts the
+			# wait instead of blocking on a slow turn until the socket times out. The
+			# history copy keeps an abandoned turn from polluting committed state.
+			working_history = list(history)
+			status, payload = self._make_request_interruptible(
+				screenshot_b64=b64,
+				capture_w=cap_w,
+				capture_h=cap_h,
+				task=task,
+				history=working_history,
+				previous_response_id=previous_response_id,
+				tool_results=tool_results,
+				injected_text=injected_text,
+			)
+			if status == "cancelled":
+				break
+			if status == "paused":
+				# The user paused while we waited. Abandon this turn, let them read the
+				# log or type a follow-up, then loop back and re-issue the request with
+				# whatever they added. Committed state is untouched, so the retry is clean.
+				if not self._wait_while_paused():
+					break
+				followup = self._drain_injection()
+				if followup:
+					injected_text = " ".join(t for t in (injected_text, followup) if t)
+				continue
+			if status == "error":
+				self._on_message(f"API error: {payload}", role="system")
+				if tones:
+					tones.beep(150, 200)
 				previous_response_id = None
 				break
+			resp = payload
+			history = working_history
 			injected_text = None
 			if resp.get("text"):
 				self._on_message(resp["text"], role="assistant")
 			if resp.get("is_complete") or not resp.get("actions"):
-				self._on_message("Task complete.", role="system")
+				# The model yielded its turn: either the task is done or it needs
+				# something from the user. The API gives no way to tell those apart,
+				# so keep the session alive and wait for a follow-up. Typing continues
+				# with full context (history and response id intact); closing the
+				# dialog or cancelling ends the session.
+				self._on_message("Ready for your next instruction.", role="system")
 				if tones:
 					tones.beep(108, 300)
-				break
+				previous_response_id = resp.get("response_id") or previous_response_id
+				self._show_dialog(focus_input=True)
+				followup = self._await_followup()
+				if followup is None:
+					break
+				injected_text = followup
+				tool_results = None
+				# Don't hand control back yet. The model may just ask another question
+				# about this input rather than act; the dialog stays up until it
+				# actually issues actions (handled just before the action loop below).
+				continue
 			previous_response_id = resp.get("response_id")
+			# The model is taking control. If our dialog is still up (we were waiting
+			# on the user), hide it and hand the foreground to the target first, so
+			# input lands on the target window and not on us.
+			if self._dialog_is_shown():
+				self._resume_to_target()
+				time.sleep(0.2)
 			# Group results by call_id: OpenAI groups multiple actions under one
 			# computer_call item and expects one computer_call_output per call_id.
 			results_by_call_id = {}
@@ -411,22 +458,87 @@ class ComputerUseSession:
 			# Let keystrokes and focus changes settle before the next screenshot
 			time.sleep(0.3)
 			# Pause is checked between action batches only, never mid-action.
-			# While paused, surface the dialog so the user can read the log or
-			# inject a follow-up, then hand the target window back on resume.
-			if self._pause_event.is_set():
-				self._show_dialog()
-				while self._pause_event.is_set() and not self._cancel_event.is_set():
-					time.sleep(0.05)
-				if not self._cancel_event.is_set():
-					self._resume_to_target()
-					time.sleep(0.2)
-			injected = []
-			while not self._inject_queue.empty():
-				injected.append(self._inject_queue.get_nowait())
-			if injected:
-				injected_text = " ".join(injected)
+			if not self._wait_while_paused():
+				break
+			followup = self._drain_injection()
+			if followup:
+				injected_text = followup
 
-	def _show_dialog(self):
+	def _make_request_interruptible(self, **kwargs):
+		"""Make the API request on a worker thread, polling for pause/cancel so a slow
+		turn never blocks the loop until the socket times out. Returns one of:
+		("ok", resp), ("paused", None), ("cancelled", None), ("error", exception).
+		A paused or cancelled request is abandoned; its worker thread finishes (and
+		fails quietly) in the background."""
+		holder = {}
+		done = threading.Event()
+		def _worker():
+			try:
+				holder["resp"] = self._service.make_computer_use_request(**kwargs)
+			except Exception as e:
+				holder["error"] = e
+			finally:
+				done.set()
+		threading.Thread(target=_worker, daemon=True).start()
+		while not done.wait(0.05):
+			if self._cancel_event.is_set():
+				return "cancelled", None
+			if self._pause_event.is_set():
+				return "paused", None
+		if "error" in holder:
+			return "error", holder["error"]
+		return "ok", holder["resp"]
+
+	def _wait_while_paused(self):
+		"""If paused, surface the dialog so the user can read the log or inject a
+		follow-up, block until they resume or cancel, then hand the target window back.
+		Returns False if the session was cancelled, True otherwise."""
+		if not self._pause_event.is_set():
+			return not self._cancel_event.is_set()
+		self._show_dialog(focus_input=True)
+		while self._pause_event.is_set() and not self._cancel_event.is_set():
+			time.sleep(0.05)
+		if self._cancel_event.is_set():
+			return False
+		self._resume_to_target()
+		time.sleep(0.2)
+		return True
+
+	def _drain_injection(self):
+		"""Pull every queued follow-up message, joined into one string, or None."""
+		injected = []
+		while not self._inject_queue.empty():
+			try:
+				injected.append(self._inject_queue.get_nowait())
+			except queue.Empty:
+				break
+		return " ".join(injected) if injected else None
+
+	def _await_followup(self):
+		"""Block until the user sends a follow-up message or ends the session.
+
+		Returns the message text to continue with, or None if the session was
+		cancelled (dialog closed or cancel gesture)."""
+		while not self._cancel_event.is_set():
+			try:
+				return self._inject_queue.get(timeout=0.1)
+			except queue.Empty:
+				continue
+		return None
+
+	def _dialog_is_shown(self):
+		"""True if the session dialog is currently visible. Read from the session
+		thread, which is safe here: it's a bool accessor, and the dialog's visibility
+		is settled by the time we check (shown during the idle wait, hidden through
+		control), so there's no in-flight Show/Hide to race."""
+		if wx is None or self._dialog is None:
+			return False
+		try:
+			return self._dialog.IsShown()
+		except RuntimeError:
+			return False
+
+	def _show_dialog(self, focus_input=False):
 		"""Bring the session dialog back to the foreground (scheduled on the main thread)."""
 		if wx is None or self._dialog is None:
 			return
@@ -437,25 +549,34 @@ class ComputerUseSession:
 					return
 				dlg.Show()
 				dlg.Raise()
-				dlg.SetFocus()
+				if focus_input:
+					dlg.input_txt.SetFocus()
+				else:
+					dlg.SetFocus()
 			except RuntimeError:
 				pass
 		wx.CallAfter(_do)
 
 	def _resume_to_target(self):
-		"""Hand the foreground back to the target window and hide our dialog (main thread)."""
+		"""Hide our dialog and hand the foreground back to the target window (main thread)."""
 		if wx is None:
 			return
 		dlg = self._dialog
 		hwnd = self._hwnd
 		def _do():
-			try:
-				if winUser is not None:
+			# Hide first and independently: a failure to raise the target window must
+			# never leave our dialog covering the screen the model is controlling.
+			if dlg is not None:
+				try:
+					if not dlg.IsBeingDeleted():
+						dlg.Hide()
+				except RuntimeError:
+					pass
+			if winUser is not None:
+				try:
 					winUser.setForegroundWindow(hwnd)
-				if dlg is not None and not dlg.IsBeingDeleted():
-					dlg.Hide()
-			except RuntimeError:
-				pass
+				except Exception:
+					pass
 		wx.CallAfter(_do)
 
 	def _ask_approval(self, action):
