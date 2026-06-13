@@ -333,13 +333,16 @@ class ComputerUseSession:
 	def inject_message(self, text):
 		"""Queue a user message to be added before the next API call.
 
-		Sending while paused also resumes the session, so the user can pause, type
-		a follow-up, and continue in one motion. Queue first, then clear, so the
-		message is waiting when the paused loop wakes and drains it. Outside a pause
-		the event isn't set, so clearing is a harmless no-op."""
+		Sending always hands control back to the model (answering a question it asked,
+		or resuming a session the user paused), so beep that control has started. Sending
+		while paused also resumes the session, so the user can pause, type a follow-up,
+		and continue in one motion. Queue first, then clear, so the message is waiting
+		when the paused loop wakes and drains it. Outside a pause the event isn't set, so
+		clearing is a harmless no-op."""
 		self._inject_queue.put(text)
 		if self._pause_event is not None:
 			self._pause_event.clear()
+		on_control_start()
 
 	def _run(self, task):
 		try:
