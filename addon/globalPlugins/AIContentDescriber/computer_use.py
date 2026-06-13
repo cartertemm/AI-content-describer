@@ -371,6 +371,9 @@ class ComputerUseSession:
 		self._dialog_visible = False
 		self._max_long_edge = getattr(service, "_capture_max_long_edge", None)
 		self._max_pixels = getattr(service, "_capture_max_pixels", None)
+		# Imported lazily (not at module top) to break the computer_use <-> computer_use_dialogs
+		# import cycle: the dialog module imports helpers from this one. By the time a session is
+		# constructed, this module is fully loaded and the dependency path is already expanded.
 		from computer_use_dialogs import ComputerUseDialog
 		self._dialog = ComputerUseDialog(self, hwnd, parent=parent)
 
