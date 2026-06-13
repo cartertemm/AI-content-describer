@@ -1,9 +1,12 @@
 import base64
+import logging
 import math
 import queue
 import threading
 import time
 from io import BytesIO
+
+log = logging.getLogger(__name__)
 
 try:
 	import winUser
@@ -29,6 +32,29 @@ except ImportError:
 import dependency_checker
 dependency_checker.expand_path()
 from PIL import Image
+
+
+def _on_main_thread(fn):
+	"""Schedule fn() on the wx main thread. The fn closures guard IsBeingDeleted(); this
+	RuntimeError catch is only a backstop for the rare race where the dialog is destroyed
+	between scheduling and running, and it logs rather than dropping the error silently."""
+	def _do():
+		try:
+			fn()
+		except RuntimeError:
+			log.debug("computer use: skipped a main-thread UI call, window already gone", exc_info=True)
+	wx.CallAfter(_do)
+
+
+def yield_foreground_to(hwnd):
+	"""Bring the given window to the foreground. Foreground only: callers hide their own
+	dialog first, in the same main-thread step, so the hide and this stay ordered."""
+	try:
+		winUser.setForegroundWindow(hwnd)
+	except Exception:
+		# Windows restricts which processes may change the foreground window, so this can
+		# fail. Log it rather than abort the caller (which may be starting the control loop).
+		log.debug("yield_foreground_to: could not raise window %r", hwnd, exc_info=True)
 
 
 ANNOUNCE_TIMEOUT_SECONDS = 10
@@ -333,23 +359,35 @@ class ActionRunner:
 class ComputerUseSession:
 	"""Orchestrates the agentic control loop on a background thread."""
 
-	def __init__(self, service, hwnd, on_message, request_approval=None, dialog=None):
+	def __init__(self, service, hwnd, request_approval=None, parent=None):
 		self._service = service
 		self._hwnd = hwnd
-		self._on_message = on_message
+		self._request_approval = request_approval
 		self._cancel_event = threading.Event()
 		self._pause_event = threading.Event()
-		self._request_approval = request_approval
-		self._dialog = dialog
 		self._inject_queue = queue.Queue()
 		self._approve_all = False
 		self._thread = None
 		self._dialog_visible = False
 		self._max_long_edge = getattr(service, "_capture_max_long_edge", None)
 		self._max_pixels = getattr(service, "_capture_max_pixels", None)
+		from computer_use_dialog import ComputerUseDialog
+		self._dialog = ComputerUseDialog(self, hwnd, parent=parent)
 
-	def start(self, task):
+	def show_dialog(self):
+		"""Show the dialog so the user can type the first instruction."""
+		self._dialog.bring_to_front(focus_input=True)
+
+	def begin(self, task):
+		"""Called by the dialog, on the main thread, once the user has consented. Hand the
+		foreground to the target window (so the first screenshot and actions land there, not
+		on our dialog), beep that control has started, then start the control loop."""
 		_set_active_session(self)
+		if not self._dialog.IsBeingDeleted():
+			self._dialog.Hide()
+		yield_foreground_to(self._hwnd)
+		self._dialog_visible = False
+		on_control_start()
 		self._thread = threading.Thread(target=self._run, args=(task,), daemon=True)
 		self._thread.start()
 
@@ -387,23 +425,10 @@ class ComputerUseSession:
 		try:
 			self._run_loop(task)
 		finally:
-			self._show_dialog()
-			self._clear_dialog_session()
+			self._dialog.bring_to_front()
+			self._dialog_visible = True
+			self._dialog.session_ended()
 			_clear_active_session(self)
-
-	def _clear_dialog_session(self):
-		if wx is None or self._dialog is None:
-			return
-		dlg = self._dialog
-		def _do():
-			try:
-				if dlg.IsBeingDeleted():
-					return
-				dlg._computer_use_session = None
-				dlg._session_started = False
-			except RuntimeError:
-				pass
-		wx.CallAfter(_do)
 
 	def _run_loop(self, task):
 		capture = Capture(self._hwnd, self._max_long_edge, self._max_pixels)
@@ -416,7 +441,7 @@ class ComputerUseSession:
 			try:
 				b64, cap_w, cap_h = capture.capture()
 			except Exception as e:
-				self._on_message(f"Screenshot failed: {e}", role="system")
+				self._dialog.append_message(f"Screenshot failed: {e}", role="system")
 				break
 			# Run the request on a worker thread so a pause or cancel interrupts the
 			# wait instead of blocking on a slow turn until the socket times out. The
@@ -445,7 +470,7 @@ class ComputerUseSession:
 					injected_text = " ".join(t for t in (injected_text, followup) if t)
 				continue
 			if status == "error":
-				self._on_message(f"API error: {payload}", role="system")
+				self._dialog.append_message(f"API error: {payload}", role="system")
 				if tones:
 					tones.beep(150, 200)
 				previous_response_id = None
@@ -454,17 +479,18 @@ class ComputerUseSession:
 			history = working_history
 			injected_text = None
 			if resp.get("text"):
-				self._on_message(resp["text"], role="assistant")
+				self._dialog.append_message(resp["text"], role="assistant")
 			if resp.get("is_complete") or not resp.get("actions"):
 				# The model yielded its turn: either the task is done or it needs
 				# something from the user. The API gives no way to tell those apart,
 				# so keep the session alive and wait for a follow-up. Typing continues
 				# with full context (history and response id intact); closing the
 				# dialog or cancelling ends the session.
-				self._on_message("Ready for your next instruction.", role="system")
+				self._dialog.append_message("Ready for your next instruction.", role="system")
 				on_control_pause()
 				previous_response_id = resp.get("response_id") or previous_response_id
-				self._show_dialog(focus_input=True)
+				self._dialog.bring_to_front(focus_input=True)
+				self._dialog_visible = True
 				followup = self._await_followup()
 				if followup is None:
 					break
@@ -479,7 +505,8 @@ class ComputerUseSession:
 			# on the user), hide it and hand the foreground to the target first, so
 			# input lands on the target window and not on us.
 			if self._dialog_visible:
-				self._resume_to_target()
+				self._dialog.yield_to_target()
+				self._dialog_visible = False
 				time.sleep(0.2)
 			# Group results by call_id: OpenAI groups multiple actions under one
 			# computer_call item and expects one computer_call_output per call_id.
@@ -498,7 +525,7 @@ class ComputerUseSession:
 					scaled["startX"], scaled["startY"] = capture.to_screen(action["startX"], action["startY"])
 					scaled["endX"], scaled["endY"] = capture.to_screen(action["endX"], action["endY"])
 				compact = runner.execute(scaled)
-				self._on_message(compact, role="action")
+				self._dialog.append_message(compact, role="action")
 				call_id = action.get("_call_id", "")
 				entry = results_by_call_id.setdefault(call_id, {"results": [], "safety_checks": action.get("_safety_checks", [])})
 				entry["results"].append(compact)
@@ -548,12 +575,14 @@ class ComputerUseSession:
 		Returns False if the session was cancelled, True otherwise."""
 		if not self._pause_event.is_set():
 			return not self._cancel_event.is_set()
-		self._show_dialog(focus_input=True)
+		self._dialog.bring_to_front(focus_input=True)
+		self._dialog_visible = True
 		while self._pause_event.is_set() and not self._cancel_event.is_set():
 			time.sleep(0.05)
 		if self._cancel_event.is_set():
 			return False
-		self._resume_to_target()
+		self._dialog.yield_to_target()
+		self._dialog_visible = False
 		time.sleep(0.2)
 		return True
 
@@ -578,51 +607,6 @@ class ComputerUseSession:
 			except queue.Empty:
 				continue
 		return None
-
-	def _show_dialog(self, focus_input=False):
-		"""Bring the session dialog back to the foreground (scheduled on the main thread)."""
-		if wx is None or self._dialog is None:
-			return
-		dlg = self._dialog
-		session = self
-		def _do():
-			try:
-				if dlg.IsBeingDeleted():
-					return
-				dlg.Show()
-				session._dialog_visible = True
-				dlg.Raise()
-				if focus_input:
-					dlg.input_txt.SetFocus()
-				else:
-					dlg.SetFocus()
-			except RuntimeError:
-				pass
-		wx.CallAfter(_do)
-
-	def _resume_to_target(self):
-		"""Hide our dialog and hand the foreground back to the target window (main thread)."""
-		if wx is None:
-			return
-		dlg = self._dialog
-		hwnd = self._hwnd
-		session = self
-		def _do():
-			# Hide first and independently: a failure to raise the target window must
-			# never leave our dialog covering the screen the model is controlling.
-			if dlg is not None:
-				try:
-					if not dlg.IsBeingDeleted():
-						dlg.Hide()
-						session._dialog_visible = False
-				except RuntimeError:
-					pass
-			if winUser is not None:
-				try:
-					winUser.setForegroundWindow(hwnd)
-				except Exception:
-					pass
-		wx.CallAfter(_do)
 
 	def _ask_approval(self, action):
 		if self._request_approval is None:

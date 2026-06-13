@@ -40,8 +40,8 @@ sys.path.append(module_path)
 import config_handler as ch
 import description_service
 import model_configuration
-from multimodal_input import launch_conversation_dialog, offer_image_attachment, MultimodalInput
-from computer_use import ComputerUseSession, describe_action, safety_check_messages, on_control_start, get_active_session
+from multimodal_input import launch_conversation_dialog, offer_image_attachment
+from computer_use import ComputerUseSession, describe_action, safety_check_messages, get_active_session
 import dependency_checker
 import ui_viewer
 
@@ -534,27 +534,13 @@ class GlobalPlugin(GlobalPlugin):
 		if self.is_screen_curtain_running():
 			ui.message(_("Computer control cannot be used while the screen curtain is active."))
 			return
-		dlg = MultimodalInput(service, gui.mainFrame, mode="computer_use")
-		def on_message(text, role):
-			dlg.append_message(text, role=role)
-		def on_first_message(task):
-			session = ComputerUseSession(
-				service=service,
-				hwnd=hwnd,
-				on_message=on_message,
-				request_approval=_show_computer_use_approval,
-				dialog=dlg,
-			)
-			dlg._computer_use_session = session
-			# Hand the foreground to the user's window and get our dialog out of
-			# the way before the session screenshots or sends any input.
-			import winUser
-			winUser.setForegroundWindow(hwnd)
-			dlg.Hide()
-			on_control_start()
-			session.start(task)
-		dlg.on_first_message_callback = on_first_message
-		dlg.Show()
+		session = ComputerUseSession(
+			service=service,
+			hwnd=hwnd,
+			request_approval=_show_computer_use_approval,
+			parent=gui.mainFrame,
+		)
+		session.show_dialog()
 
 	def script_pause_resume_computer_use(self, gesture):
 		session = get_active_session()
