@@ -147,6 +147,27 @@ def format_action_result(action, detail, status="ok"):
 	return f"{action.get('type', '')} | {detail} | {status}"
 
 
+_active_session = None
+
+
+def get_active_session():
+	"""Return the one running ComputerUseSession, or None.
+
+	Note: It is only possible to have one session running at a time."""
+	return _active_session
+
+
+def _set_active_session(session):
+	global _active_session
+	_active_session = session
+
+
+def _clear_active_session(session):
+	global _active_session
+	if _active_session is session:
+		_active_session = None
+
+
 class ActionRunner:
 	"""Executes model-issued actions using NVDA's winUser module."""
 
@@ -312,21 +333,23 @@ class ActionRunner:
 class ComputerUseSession:
 	"""Orchestrates the agentic control loop on a background thread."""
 
-	def __init__(self, service, hwnd, on_message, cancel_event, pause_event, request_approval=None, dialog=None):
+	def __init__(self, service, hwnd, on_message, request_approval=None, dialog=None):
 		self._service = service
 		self._hwnd = hwnd
 		self._on_message = on_message
-		self._cancel_event = cancel_event
-		self._pause_event = pause_event
+		self._cancel_event = threading.Event()
+		self._pause_event = threading.Event()
 		self._request_approval = request_approval
 		self._dialog = dialog
 		self._inject_queue = queue.Queue()
 		self._approve_all = False
 		self._thread = None
+		self._dialog_visible = False
 		self._max_long_edge = getattr(service, "_capture_max_long_edge", None)
 		self._max_pixels = getattr(service, "_capture_max_pixels", None)
 
 	def start(self, task):
+		_set_active_session(self)
 		self._thread = threading.Thread(target=self._run, args=(task,), daemon=True)
 		self._thread.start()
 
@@ -344,12 +367,29 @@ class ComputerUseSession:
 			self._pause_event.clear()
 		on_control_start()
 
+	def toggle_pause(self):
+		"""Flip pause state and beep accordingly. Spoken feedback is expected to be handled by the caller, depending on the reason that the session was paused."""
+		if self._pause_event.is_set():
+			self._pause_event.clear()
+			on_control_start()
+		else:
+			self._pause_event.set()
+			on_control_pause()
+
+	def cancel(self):
+		self._cancel_event.set()
+
+	@property
+	def is_paused(self):
+		return self._pause_event.is_set()
+
 	def _run(self, task):
 		try:
 			self._run_loop(task)
 		finally:
 			self._show_dialog()
 			self._clear_dialog_session()
+			_clear_active_session(self)
 
 	def _clear_dialog_session(self):
 		if wx is None or self._dialog is None:
@@ -438,7 +478,7 @@ class ComputerUseSession:
 			# The model is taking control. If our dialog is still up (we were waiting
 			# on the user), hide it and hand the foreground to the target first, so
 			# input lands on the target window and not on us.
-			if self._dialog_is_shown():
+			if self._dialog_visible:
 				self._resume_to_target()
 				time.sleep(0.2)
 			# Group results by call_id: OpenAI groups multiple actions under one
@@ -539,28 +579,18 @@ class ComputerUseSession:
 				continue
 		return None
 
-	def _dialog_is_shown(self):
-		"""True if the session dialog is currently visible. Read from the session
-		thread, which is safe here: it's a bool accessor, and the dialog's visibility
-		is settled by the time we check (shown during the idle wait, hidden through
-		control), so there's no in-flight Show/Hide to race."""
-		if wx is None or self._dialog is None:
-			return False
-		try:
-			return self._dialog.IsShown()
-		except RuntimeError:
-			return False
-
 	def _show_dialog(self, focus_input=False):
 		"""Bring the session dialog back to the foreground (scheduled on the main thread)."""
 		if wx is None or self._dialog is None:
 			return
 		dlg = self._dialog
+		session = self
 		def _do():
 			try:
 				if dlg.IsBeingDeleted():
 					return
 				dlg.Show()
+				session._dialog_visible = True
 				dlg.Raise()
 				if focus_input:
 					dlg.input_txt.SetFocus()
@@ -576,6 +606,7 @@ class ComputerUseSession:
 			return
 		dlg = self._dialog
 		hwnd = self._hwnd
+		session = self
 		def _do():
 			# Hide first and independently: a failure to raise the target window must
 			# never leave our dialog covering the screen the model is controlling.
@@ -583,6 +614,7 @@ class ComputerUseSession:
 				try:
 					if not dlg.IsBeingDeleted():
 						dlg.Hide()
+						session._dialog_visible = False
 				except RuntimeError:
 					pass
 			if winUser is not None:

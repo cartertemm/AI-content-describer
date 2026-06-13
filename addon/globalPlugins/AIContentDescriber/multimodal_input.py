@@ -312,8 +312,8 @@ class MultimodalInput(wx.Dialog):
 
 	def on_close(self, event):
 		"""Handle dialog close"""
-		if self.mode == "computer_use" and hasattr(self, "_cancel_event"):
-			self._cancel_event.set()
+		if self.mode == "computer_use" and getattr(self, "_computer_use_session", None):
+			self._computer_use_session.cancel()
 		global _conversation_dialog
 		_conversation_dialog = None
 		for file in self.files:

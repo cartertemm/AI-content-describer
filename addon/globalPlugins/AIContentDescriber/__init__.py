@@ -41,7 +41,7 @@ import config_handler as ch
 import description_service
 import model_configuration
 from multimodal_input import launch_conversation_dialog, offer_image_attachment, MultimodalInput
-from computer_use import ComputerUseSession, describe_action, safety_check_messages, on_control_start, on_control_pause
+from computer_use import ComputerUseSession, describe_action, safety_check_messages, on_control_start, get_active_session
 import dependency_checker
 import ui_viewer
 
@@ -534,8 +534,6 @@ class GlobalPlugin(GlobalPlugin):
 		if self.is_screen_curtain_running():
 			ui.message(_("Computer control cannot be used while the screen curtain is active."))
 			return
-		cancel_event = threading.Event()
-		pause_event = threading.Event()
 		dlg = MultimodalInput(service, gui.mainFrame, mode="computer_use")
 		def on_message(text, role):
 			dlg.append_message(text, role=role)
@@ -544,13 +542,10 @@ class GlobalPlugin(GlobalPlugin):
 				service=service,
 				hwnd=hwnd,
 				on_message=on_message,
-				cancel_event=cancel_event,
-				pause_event=pause_event,
 				request_approval=_show_computer_use_approval,
 				dialog=dlg,
 			)
 			dlg._computer_use_session = session
-			dlg._cancel_event = cancel_event
 			# Hand the foreground to the user's window and get our dialog out of
 			# the way before the session screenshots or sends any input.
 			import winUser
@@ -562,33 +557,30 @@ class GlobalPlugin(GlobalPlugin):
 		dlg.Show()
 
 	def script_pause_resume_computer_use(self, gesture):
-		for win in wx.GetTopLevelWindows():
-			if hasattr(win, "_computer_use_session"):
-				session = win._computer_use_session
-				if session._pause_event.is_set():
-					session._pause_event.clear()
-					on_control_start()
-					# Translators: spoken when a computer control session is resumed
-					ui.message(_("Computer control resumed."))
-				else:
-					session._pause_event.set()
-					# Translators: spoken when a computer control session is paused
-					ui.message(_("Computer control paused."))
-					on_control_pause()
-				return
-		# Translators: spoken when the pause gesture is pressed but no session is running
-		ui.message(_("No active computer control session."))
+		session = get_active_session()
+		if not session:
+			# Translators: spoken when the pause gesture is pressed but no session is running
+			ui.message(_("No active computer control session."))
+			return
+		if session.is_paused:
+			session.toggle_pause()
+			# Translators: spoken when a computer control session is resumed
+			ui.message(_("Computer control resumed."))
+		else:
+			session.toggle_pause()
+			# Translators: spoken when a computer control session is paused
+			ui.message(_("Computer control paused."))
 
 	script_pause_resume_computer_use.__doc__ = _("Pause or resume the active computer control session")
 
 	def script_cancel_computer_use(self, gesture):
-		for win in wx.GetTopLevelWindows():
-			if hasattr(win, "_computer_use_session"):
-				win._computer_use_session._cancel_event.set()
-				# Translators: spoken when the user cancels a computer control session
-				ui.message(_("Computer control session cancelled."))
-				return
-		ui.message(_("No active computer control session."))
+		session = get_active_session()
+		if not session:
+			ui.message(_("No active computer control session."))
+			return
+		session.cancel()
+		# Translators: spoken when the user cancels a computer control session
+		ui.message(_("Computer control session cancelled."))
 
 	script_cancel_computer_use.__doc__ = _("Cancel the active computer control session")
 
