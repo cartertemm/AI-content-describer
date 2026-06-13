@@ -102,7 +102,12 @@ class ComputerUseDialog(wx.Dialog):
 		_on_main_thread(_do)
 
 	def session_ended(self):
-		"""Called when the session loop has finished; stop forwarding input to a dead session."""
+		"""Called when the session loop has finished. A clean end has no beep, so log and
+		speak that it ended, then stop forwarding input to a dead session."""
+		# Translators: logged and spoken when a computer control session ends
+		message = _("Session ended")
+		self.append_message(message, role="system")
+		ui.message(message)
 		def _do():
 			if not self.IsBeingDeleted():
 				self.input_txt.Disable()
