@@ -35,6 +35,17 @@ ANNOUNCE_TIMEOUT_SECONDS = 10
 TYPE_PREVIEW_MAX_CHARS = 40
 
 
+def on_control_start():
+	"""Beep signalling the model has taken control: session start or resume."""
+	tones.beep(1000, 300)
+
+
+def on_control_pause():
+	"""Beep signalling the model has stopped touching the machine while the session is
+	still alive: the user paused, or the model yielded its turn. Cancel does not beep."""
+	tones.beep(108, 300)
+
+
 def _announce_and_wait(text):
 	if ui is None or synthDriverHandler is None:
 		return
@@ -408,8 +419,7 @@ class ComputerUseSession:
 				# with full context (history and response id intact); closing the
 				# dialog or cancelling ends the session.
 				self._on_message("Ready for your next instruction.", role="system")
-				if tones:
-					tones.beep(108, 300)
+				on_control_pause()
 				previous_response_id = resp.get("response_id") or previous_response_id
 				self._show_dialog(focus_input=True)
 				followup = self._await_followup()

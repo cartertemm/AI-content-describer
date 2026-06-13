@@ -41,7 +41,7 @@ import config_handler as ch
 import description_service
 import model_configuration
 from multimodal_input import launch_conversation_dialog, offer_image_attachment, MultimodalInput
-from computer_use import ComputerUseSession, describe_action, safety_check_messages
+from computer_use import ComputerUseSession, describe_action, safety_check_messages, on_control_start, on_control_pause
 import dependency_checker
 import ui_viewer
 
@@ -556,7 +556,7 @@ class GlobalPlugin(GlobalPlugin):
 			import winUser
 			winUser.setForegroundWindow(hwnd)
 			dlg.Hide()
-			tones.beep(1000, 300)
+			on_control_start()
 			session.start(task)
 		dlg.on_first_message_callback = on_first_message
 		dlg.Show()
@@ -567,14 +567,14 @@ class GlobalPlugin(GlobalPlugin):
 				session = win._computer_use_session
 				if session._pause_event.is_set():
 					session._pause_event.clear()
-					tones.beep(1000, 300)
+					on_control_start()
 					# Translators: spoken when a computer control session is resumed
 					ui.message(_("Computer control resumed."))
 				else:
 					session._pause_event.set()
 					# Translators: spoken when a computer control session is paused
 					ui.message(_("Computer control paused."))
-					tones.beep(108, 300)
+					on_control_pause()
 				return
 		# Translators: spoken when the pause gesture is pressed but no session is running
 		ui.message(_("No active computer control session."))
