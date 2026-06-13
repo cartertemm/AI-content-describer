@@ -10,8 +10,9 @@ try:
 except addonHandler.AddonError:
 	log.warning("Couldn't initialise translations for the computer use dialog.")
 
+import gui
 import winUser
-from computer_use import _announce_and_wait, yield_foreground_to, _on_main_thread
+from computer_use import _announce_and_wait, yield_foreground_to, _on_main_thread, describe_action, safety_check_messages
 
 
 class ComputerUseDialog(wx.Dialog):
@@ -166,3 +167,57 @@ class ComputerUseDialog(wx.Dialog):
 	def on_close(self, event):
 		self._session.cancel()
 		self.Destroy()
+
+
+class ComputerUseApprovalDialog(wx.Dialog):
+	"""Asks the user to approve a risky or confirm-type action before it executes."""
+
+	def __init__(self, parent, action):
+		# Translators: title of the dialog asking whether to allow a risky AI action
+		super().__init__(parent, title=_("Approve Action"))
+		self.choice = "cancel"
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		# Translators: body of the risky-action approval dialog; {action} is a description of what the AI wants to do
+		body = _("The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?").format(action=describe_action(action))
+		messages = safety_check_messages(action)
+		if messages:
+			# Translators: header for API-issued safety warnings appended to the approval dialog
+			body += "\n\n" + _("API safety warnings:") + "\n" + "\n".join(f"- {m}" for m in messages)
+		msg = wx.StaticText(self, label=body)
+		sizer.Add(msg, 0, wx.ALL, 10)
+		btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: button to deny the AI action and stop the session
+		cancel_btn = wx.Button(self, label=_("&Cancel"))
+		# Translators: button to allow this one AI action
+		once_btn = wx.Button(self, label=_("Approve &Once"))
+		# Translators: button to allow all remaining AI actions without further prompting
+		all_btn = wx.Button(self, label=_("Approve &All"))
+		btn_sizer.Add(cancel_btn, flag=wx.RIGHT, border=8)
+		btn_sizer.Add(once_btn, flag=wx.RIGHT, border=8)
+		btn_sizer.Add(all_btn)
+		sizer.Add(btn_sizer, 0, wx.ALL | wx.ALIGN_CENTER, 10)
+		self.SetSizer(sizer)
+		self.Fit()
+		cancel_btn.SetFocus()
+		cancel_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("cancel"))
+		once_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("approve_once"))
+		all_btn.Bind(wx.EVT_BUTTON, lambda e: self._close("approve_all"))
+		# Closing via the window's X button must also release the session thread
+		self.Bind(wx.EVT_CLOSE, lambda e: self._close("cancel"))
+
+	def _close(self, choice):
+		self.choice = choice
+		self.EndModal(wx.ID_OK)
+
+
+def show_computer_use_approval(action, result_event, result_holder, target_hwnd=None):
+	"""Called on the main thread by ComputerUseSession for risky actions."""
+	dlg = ComputerUseApprovalDialog(gui.mainFrame, action)
+	dlg.ShowModal()
+	result_holder[0] = dlg.choice
+	dlg.Destroy()
+	# Restore the target window's foreground while we still own it so the
+	# approved action's input goes to the user's app, not elsewhere.
+	if target_hwnd and result_holder[0] in ("approve_once", "approve_all"):
+		yield_foreground_to(target_hwnd)
+	result_event.set()

@@ -371,7 +371,7 @@ class ComputerUseSession:
 		self._dialog_visible = False
 		self._max_long_edge = getattr(service, "_capture_max_long_edge", None)
 		self._max_pixels = getattr(service, "_capture_max_pixels", None)
-		from computer_use_dialog import ComputerUseDialog
+		from computer_use_dialogs import ComputerUseDialog
 		self._dialog = ComputerUseDialog(self, hwnd, parent=parent)
 
 	def show_dialog(self):
