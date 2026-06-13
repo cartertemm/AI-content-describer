@@ -29,6 +29,21 @@ import cache
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 
 
+class StepResult:
+	"""What one call to the model produced for a single turn: any text it spoke, the list of
+	actions it wants to run, and whether it considers the task finished. `pending` holds the
+	change this turn would make to the provider's saved conversation, a new response id for
+	OpenAI, or the new message turns for Anthropic. The loop hands `pending` to save() only
+	once it has decided to keep the turn, so a turn dropped on pause leaves the saved
+	conversation untouched. The loop never looks inside `pending`."""
+
+	def __init__(self, text, actions, is_complete, pending):
+		self.text = text
+		self.actions = actions
+		self.is_complete = is_complete
+		self.pending = pending
+
+
 def encode_image(image_path):
 	with open(image_path, "rb") as image_file:
 		return base64.b64encode(image_file.read()).decode('utf-8')
@@ -386,7 +401,7 @@ class BaseDescriptionService:
 			self._conversations.clear()
 			self._active_conversation = None
 
-	def make_computer_use_request(self, screenshot_b64, capture_w, capture_h, task, history, previous_response_id, tool_results, injected_text=None):
+	def create_computer_session(self, task):
 		raise NotImplementedError
 
 	def process(self):
@@ -489,6 +504,93 @@ def _normalize_openai_action(raw):
 	return action
 
 
+class OpenAIComputerSession:
+	"""Per-task conversation state for OpenAI computer use (Responses API)."""
+
+	def __init__(self, service, task):
+		self._service = service
+		self._task = task
+		self._previous_response_id = None
+
+	def step(self, screenshot_b64, capture_w, capture_h, tool_results, injected_text):
+		headers = {
+			"Authorization": f"Bearer {self._service.api_key}",
+			"Content-Type": "application/json",
+		}
+		if tool_results:
+			input_items = [
+				{
+					"type": "computer_call_output",
+					"call_id": tr["call_id"],
+					"output": {
+						"type": "computer_screenshot",
+						"image_url": f"data:image/png;base64,{screenshot_b64}",
+					},
+					"acknowledged_safety_checks": tr.get("safety_checks", []),
+				}
+				for tr in tool_results
+			]
+		elif injected_text:
+			# The model yielded and the user sent a follow-up; it rides in the
+			# text-only message appended below. The computer tool rejects an
+			# input_image once a previous response exists, so the model requests a
+			# screenshot itself when it needs to see the screen.
+			input_items = []
+		else:
+			input_items = [
+				{
+					"type": "message",
+					"role": "user",
+					"content": [
+						{"type": "input_text", "text": self._task},
+						{
+							"type": "input_image",
+							"image_url": f"data:image/png;base64,{screenshot_b64}",
+							"detail": "original",
+						},
+					],
+				}
+			]
+		if injected_text:
+			input_items.append({
+				"type": "message",
+				"role": "user",
+				"content": [{"type": "input_text", "text": injected_text}],
+			})
+		payload = {
+			"model": self._service.internal_model_name,
+			"tools": [{"type": "computer"}],
+			"input": input_items,
+		}
+		if self._previous_response_id is not None:
+			payload["previous_response_id"] = self._previous_response_id
+		raw = post(url=OPENAI_RESPONSES_URL, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self._service.timeout, quiet=True)
+		data = json.loads(raw.decode("utf-8"))
+		log.debug(f"OpenAI computer use response: {json.dumps(data)}")
+		text = ""
+		actions = []
+		for item in data.get("output", []):
+			if item.get("type") == "message":
+				for block in item.get("content", []):
+					if block.get("type") == "output_text":
+						text += block.get("text", "")
+			elif item.get("type") == "computer_call":
+				call_id = item.get("call_id", "")
+				safety_checks = item.get("pending_safety_checks", [])
+				for raw_action in item.get("actions", []):
+					log.debug(f"Computer call action raw: {raw_action}")
+					action = _normalize_openai_action(raw_action)
+					action["call_id"] = call_id
+					action["safety_checks"] = safety_checks
+					actions.append(action)
+		is_complete = data.get("stop_reason") == "completed" and not actions
+		return StepResult(text, actions, is_complete, pending=data.get("id"))
+
+	def save(self, step_result):
+		if step_result.pending is not None:
+			self._previous_response_id = step_result.pending
+
+
 class BaseGPT(BaseDescriptionService):
 	supported_formats = [
 		".gif",
@@ -534,80 +636,8 @@ class BaseGPT(BaseDescriptionService):
 		self.start_conversation(image_path, prompt, content)
 		return content
 
-	def make_computer_use_request(self, screenshot_b64, capture_w, capture_h, task, history, previous_response_id, tool_results, injected_text=None):
-		headers = {
-			"Authorization": f"Bearer {self.api_key}",
-			"Content-Type": "application/json",
-		}
-		if tool_results:
-			input_items = [
-				{
-					"type": "computer_call_output",
-					"call_id": tr["call_id"],
-					"output": {
-						"type": "computer_screenshot",
-						"image_url": f"data:image/png;base64,{screenshot_b64}",
-					},
-					"acknowledged_safety_checks": tr.get("safety_checks", []),
-				}
-				for tr in tool_results
-			]
-		elif injected_text:
-			# The model yielded and the user sent a follow-up; it rides in the
-			# text-only message appended below. The computer tool rejects an
-			# input_image once a previous response exists, so the model requests a
-			# screenshot itself when it needs to see the screen.
-			input_items = []
-		else:
-			input_items = [
-				{
-					"type": "message",
-					"role": "user",
-					"content": [
-						{"type": "input_text", "text": task},
-						{
-							"type": "input_image",
-							"image_url": f"data:image/png;base64,{screenshot_b64}",
-							"detail": "original",
-						},
-					],
-				}
-			]
-		if injected_text:
-			input_items.append({
-				"type": "message",
-				"role": "user",
-				"content": [{"type": "input_text", "text": injected_text}],
-			})
-		payload = {
-			"model": self.internal_model_name,
-			"tools": [{"type": "computer"}],
-			"input": input_items,
-		}
-		if previous_response_id is not None:
-			payload["previous_response_id"] = previous_response_id
-		raw = post(url=OPENAI_RESPONSES_URL, headers=headers, data=json.dumps(payload).encode("utf-8"), timeout=self.timeout, quiet=True)
-		data = json.loads(raw.decode("utf-8"))
-		log.debug(f"OpenAI computer use response: {json.dumps(data)}")
-		text = ""
-		actions = []
-		for item in data.get("output", []):
-			if item.get("type") == "message":
-				for block in item.get("content", []):
-					if block.get("type") == "output_text":
-						text += block.get("text", "")
-			elif item.get("type") == "computer_call":
-				call_id = item.get("call_id", "")
-				safety_checks = item.get("pending_safety_checks", [])
-				# "actions" is a list; each action shares the parent call_id
-				for raw_action in item.get("actions", []):
-					log.debug(f"Computer call action raw: {raw_action}")
-					action = _normalize_openai_action(raw_action)
-					action["_call_id"] = call_id
-					action["_safety_checks"] = safety_checks
-					actions.append(action)
-		is_complete = data.get("stop_reason") == "completed" and not actions
-		return {"text": text, "actions": actions, "response_id": data.get("id"), "is_complete": is_complete}
+	def create_computer_session(self, task):
+		return OpenAIComputerSession(self, task)
 
 
 class GPT4Turbo(BaseGPT):
@@ -888,6 +918,123 @@ class Gemini3_1ProPreview(GoogleGemini):
 	about_url = "https://deepmind.google/models/gemini/pro/"
 
 
+class AnthropicComputerSession:
+	"""Per-task conversation state for Anthropic computer use."""
+
+	def __init__(self, service, task):
+		self._service = service
+		self._task = task
+		self._history = []
+
+	def _build_user_turn(self, screenshot_b64, tool_results, injected_text):
+		"""Return the user-turn dict for this step, or None if there's nothing to add."""
+		if not self._history:
+			return {
+				"role": "user",
+				"content": [
+					{"type": "text", "text": self._task},
+					{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
+				],
+			}
+		# Either tool results from the actions just run, a user follow-up after
+		# the model yielded, or both. They go in one user turn; the model asks for
+		# a screenshot when it needs the screen.
+		content_blocks = [
+			{
+				"type": "tool_result",
+				"tool_use_id": tr["call_id"],
+				"content": [
+					{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
+					{"type": "text", "text": tr["compact_result"]},
+				],
+			}
+			for tr in (tool_results or [])
+		]
+		if injected_text:
+			content_blocks.append({"type": "text", "text": injected_text})
+		if not content_blocks:
+			return None
+		return {"role": "user", "content": content_blocks}
+
+	def step(self, screenshot_b64, capture_w, capture_h, tool_results, injected_text):
+		new_user_turn = self._build_user_turn(screenshot_b64, tool_results, injected_text)
+		messages = self._history + ([new_user_turn] if new_user_turn else [])
+		headers = {
+			"x-api-key": self._service.api_key,
+			"anthropic-version": "2023-06-01",
+			"anthropic-beta": self._service._computer_use_beta,
+			"Content-Type": "application/json",
+		}
+		tool_def = {
+			"type": self._service._computer_use_tool_type,
+			"name": "computer",
+			"display_width_px": capture_w,
+			"display_height_px": capture_h,
+		}
+		payload = {
+			"model": self._service.internal_model_name,
+			"max_tokens": 4096,
+			"tools": [tool_def],
+			"messages": messages,
+		}
+		raw = post(url="https://api.anthropic.com/v1/messages", headers=headers,
+			data=json.dumps(payload).encode("utf-8"), timeout=self._service.timeout, quiet=True)
+		data = json.loads(raw.decode("utf-8"))
+		text = ""
+		actions = []
+		for block in data.get("content", []):
+			if block.get("type") == "text":
+				text += block.get("text", "")
+			elif block.get("type") == "tool_use" and block.get("name") == "computer":
+				inp = block.get("input", {})
+				action = {
+					"type": inp.get("action", ""),
+					"call_id": block.get("id", ""),
+					"safety_checks": [],
+				}
+				coord = inp.get("coordinate")
+				if coord:
+					action["x"], action["y"] = coord[0], coord[1]
+				start = inp.get("start_coordinate")
+				if start:
+					action["startX"], action["startY"] = start[0], start[1]
+				end = inp.get("end_coordinate")
+				if end:
+					action["endX"], action["endY"] = end[0], end[1]
+				for k in ("text", "key", "direction", "amount"):
+					if k in inp:
+						action[k] = inp[k]
+				actions.append(action)
+		assistant_turn = {"role": "assistant", "content": data.get("content", [])}
+		is_complete = data.get("stop_reason") == "end_turn" and not actions
+		pending = [t for t in (new_user_turn, assistant_turn) if t]
+		return StepResult(text, actions, is_complete, pending=pending)
+
+	def save(self, step_result):
+		self._history.extend(step_result.pending)
+		if len(self._history) % 50 == 0:
+			self._trim_history_screenshots(self._history)
+
+	def _trim_history_screenshots(self, history):
+		"""Remove all but the last 3 screenshot image blocks from history, including those nested in tool_result blocks."""
+		refs = []
+		for i, msg in enumerate(history):
+			for j, block in enumerate(msg.get("content") or []):
+				if not isinstance(block, dict):
+					continue
+				if block.get("type") == "image":
+					refs.append((i, j, None))
+				elif block.get("type") == "tool_result":
+					for k, inner in enumerate(block.get("content") or []):
+						if isinstance(inner, dict) and inner.get("type") == "image":
+							refs.append((i, j, k))
+		for i, j, k in reversed(refs[:-3]):
+			if k is None:
+				history[i]["content"].pop(j)
+			else:
+				history[i]["content"][j]["content"].pop(k)
+
+
 class Anthropic(BaseDescriptionService):
 	supported_formats = [
 		".jpeg",
@@ -958,103 +1105,8 @@ class Anthropic(BaseDescriptionService):
 		self.start_conversation(image_path, prompt, content)
 		return content
 
-	def make_computer_use_request(self, screenshot_b64, capture_w, capture_h, task, history, previous_response_id, tool_results, injected_text=None):
-		headers = {
-			"x-api-key": self.api_key,
-			"anthropic-version": "2023-06-01",
-			"anthropic-beta": self._computer_use_beta,
-			"Content-Type": "application/json",
-		}
-		if not history:
-			history.append({
-				"role": "user",
-				"content": [
-					{"type": "text", "text": task},
-					{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
-				],
-			})
-		else:
-			# Either tool results from the actions just run, a user follow-up after
-			# the model yielded, or both. They go in one user turn appended to the
-			# history; the model asks for a screenshot when it needs the screen.
-			content_blocks = [
-				{
-					"type": "tool_result",
-					"tool_use_id": tr["call_id"],
-					"content": [
-						{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
-						{"type": "text", "text": tr["compact_result"]},
-					],
-				}
-				for tr in (tool_results or [])
-			]
-			if injected_text:
-				content_blocks.append({"type": "text", "text": injected_text})
-			if content_blocks:
-				history.append({"role": "user", "content": content_blocks})
-		tool_def = {
-			"type": self._computer_use_tool_type,
-			"name": "computer",
-			"display_width_px": capture_w,
-			"display_height_px": capture_h,
-		}
-		payload = {
-			"model": self.internal_model_name,
-			# todo: Make this a config value. 4096 should be reasonable for computer use scenarios, but Anthropic requires us to pass this unlike OpenAI with the responses API
-			"max_tokens": 4096,
-			"tools": [tool_def],
-			"messages": history,
-		}
-		raw = post(url="https://api.anthropic.com/v1/messages", headers=headers,
-			data=json.dumps(payload).encode("utf-8"), timeout=self.timeout, quiet=True)
-		data = json.loads(raw.decode("utf-8"))
-		text = ""
-		actions = []
-		for block in data.get("content", []):
-			if block.get("type") == "text":
-				text += block.get("text", "")
-			elif block.get("type") == "tool_use" and block.get("name") == "computer":
-				inp = block.get("input", {})
-				action = {"type": inp.get("action", ""), "_call_id": block.get("id", "")}
-				coord = inp.get("coordinate")
-				if coord:
-					action["x"], action["y"] = coord[0], coord[1]
-				start = inp.get("start_coordinate")
-				if start:
-					action["startX"], action["startY"] = start[0], start[1]
-				end = inp.get("end_coordinate")
-				if end:
-					action["endX"], action["endY"] = end[0], end[1]
-				for k in ("text", "key", "direction", "amount"):
-					if k in inp:
-						action[k] = inp[k]
-				actions.append(action)
-		history.append({"role": "assistant", "content": data.get("content", [])})
-		# Prune screenshots every 25 turns in batches to preserve Anthropic prompt cache prefix stability.
-		# Each turn appends 2 history entries (user + assistant), so 25 turns = 50 entries.
-		if len(history) % 50 == 0:
-			self._trim_history_screenshots(history)
-		is_complete = data.get("stop_reason") == "end_turn" and not actions
-		return {"text": text, "actions": actions, "response_id": None, "is_complete": is_complete}
-
-	def _trim_history_screenshots(self, history):
-		"""Remove all but the last 3 screenshot image blocks from history, including those nested in tool_result blocks."""
-		refs = []
-		for i, msg in enumerate(history):
-			for j, block in enumerate(msg.get("content") or []):
-				if not isinstance(block, dict):
-					continue
-				if block.get("type") == "image":
-					refs.append((i, j, None))
-				elif block.get("type") == "tool_result":
-					for k, inner in enumerate(block.get("content") or []):
-						if isinstance(inner, dict) and inner.get("type") == "image":
-							refs.append((i, j, k))
-		for i, j, k in reversed(refs[:-3]):
-			if k is None:
-				history[i]["content"].pop(j)
-			else:
-				history[i]["content"][j]["content"].pop(k)
+	def create_computer_session(self, task):
+		return AnthropicComputerSession(self, task)
 
 
 class Claude4Sonnet(Anthropic):

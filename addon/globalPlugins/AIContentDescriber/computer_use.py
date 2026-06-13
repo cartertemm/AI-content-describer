@@ -137,20 +137,6 @@ class Capture:
 		return int(rx / self._scale) + self._win_x, int(ry / self._scale) + self._win_y
 
 
-RISKY_KEYWORDS = frozenset([
-	"delete", "remove", "format", "uninstall", "password", "payment",
-	"send", "submit", "purchase", "confirm", "agree", "sign in", "login",
-])
-
-
-def is_risky(action):
-	"""True if action type is 'confirm' or any field value contains a risky keyword."""
-	if action.get("type") == "confirm":
-		return True
-	text = " ".join(str(v) for v in action.values()).lower()
-	return any(kw in text for kw in RISKY_KEYWORDS)
-
-
 def describe_action(action):
 	"""Return a short user-facing description of a computer-use action."""
 	action_desc = action.get("type", "unknown")
@@ -165,7 +151,7 @@ def describe_action(action):
 
 def safety_check_messages(action):
 	"""Return displayable messages from API-issued safety checks."""
-	messages = [sc.get("message") or sc.get("code", "") for sc in action.get("_safety_checks", [])]
+	messages = [sc.get("message") or sc.get("code", "") for sc in action.get("safety_checks", [])]
 	return [m for m in messages if m]
 
 
@@ -436,8 +422,7 @@ class ComputerUseSession:
 	def _run_loop(self, task):
 		capture = Capture(self._hwnd, self._max_long_edge, self._max_pixels)
 		runner = ActionRunner(self._cancel_event, self._pause_event)
-		history = []
-		previous_response_id = None
+		provider_session = self._service.create_computer_session(task)
 		tool_results = None
 		injected_text = None
 		while not self._cancel_event.is_set():
@@ -447,16 +432,14 @@ class ComputerUseSession:
 				self._dialog.append_message(f"Screenshot failed: {e}", role="system")
 				break
 			# Run the request on a worker thread so a pause or cancel interrupts the
-			# wait instead of blocking on a slow turn until the socket times out. The
-			# history copy keeps an abandoned turn from polluting committed state.
-			working_history = list(history)
+			# wait instead of blocking on a slow turn until the socket times out.
+			# step() does not mutate saved state, so an abandoned turn leaves the
+			# provider session untouched and the retry is clean.
 			status, payload = self._make_request_interruptible(
+				provider_session=provider_session,
 				screenshot_b64=b64,
 				capture_w=cap_w,
 				capture_h=cap_h,
-				task=task,
-				history=working_history,
-				previous_response_id=previous_response_id,
 				tool_results=tool_results,
 				injected_text=injected_text,
 			)
@@ -476,14 +459,14 @@ class ComputerUseSession:
 				self._dialog.append_message(f"API error: {payload}", role="system")
 				if tones:
 					tones.beep(150, 200)
-				previous_response_id = None
 				break
 			resp = payload
-			history = working_history
+			# Commit this turn's state before executing any actions.
+			provider_session.save(resp)
 			injected_text = None
-			if resp.get("text"):
-				self._dialog.append_message(resp["text"], role="assistant")
-			if resp.get("is_complete") or not resp.get("actions"):
+			if resp.text:
+				self._dialog.append_message(resp.text, role="assistant")
+			if resp.is_complete or not resp.actions:
 				# The model yielded its turn: either the task is done or it needs
 				# something from the user. The API gives no way to tell those apart,
 				# so keep the session alive and wait for a follow-up. Typing continues
@@ -491,7 +474,6 @@ class ComputerUseSession:
 				# dialog or cancelling ends the session.
 				self._dialog.append_message("Ready for your next instruction.", role="system")
 				on_control_pause()
-				previous_response_id = resp.get("response_id") or previous_response_id
 				self._dialog.bring_to_front(focus_input=True)
 				self._dialog_visible = True
 				followup = self._await_followup()
@@ -503,7 +485,6 @@ class ComputerUseSession:
 				# about this input rather than act; the dialog stays up until it
 				# actually issues actions (handled just before the action loop below).
 				continue
-			previous_response_id = resp.get("response_id")
 			# The model is taking control. If our dialog is still up (we were waiting
 			# on the user), hide it and hand the foreground to the target first, so
 			# input lands on the target window and not on us.
@@ -514,10 +495,10 @@ class ComputerUseSession:
 			# Group results by call_id: OpenAI groups multiple actions under one
 			# computer_call item and expects one computer_call_output per call_id.
 			results_by_call_id = {}
-			for action in resp["actions"]:
+			for action in resp.actions:
 				if self._cancel_event.is_set() or self._pause_event.is_set():
 					break
-				if not self._approve_all and (action.get("type") == "confirm" or is_risky(action) or action.get("_safety_checks")):
+				if not self._approve_all and (action.get("type") == "confirm" or action.get("safety_checks")):
 					if not self._ask_approval(action):
 						self._cancel_event.set()
 						break
@@ -529,8 +510,8 @@ class ComputerUseSession:
 					scaled["endX"], scaled["endY"] = capture.to_screen(action["endX"], action["endY"])
 				compact = runner.execute(scaled)
 				self._dialog.append_message(compact, role="action")
-				call_id = action.get("_call_id", "")
-				entry = results_by_call_id.setdefault(call_id, {"results": [], "safety_checks": action.get("_safety_checks", [])})
+				call_id = action.get("call_id", "")
+				entry = results_by_call_id.setdefault(call_id, {"results": [], "safety_checks": action.get("safety_checks", [])})
 				entry["results"].append(compact)
 			tool_results = [
 				{"call_id": cid, "compact_result": "\n".join(entry["results"]), "safety_checks": entry["safety_checks"]}
@@ -547,17 +528,17 @@ class ComputerUseSession:
 			if followup:
 				injected_text = followup
 
-	def _make_request_interruptible(self, **kwargs):
+	def _make_request_interruptible(self, provider_session, **kwargs):
 		"""Make the API request on a worker thread, polling for pause/cancel so a slow
 		turn never blocks the loop until the socket times out. Returns one of:
-		("ok", resp), ("paused", None), ("cancelled", None), ("error", exception).
+		("ok", StepResult), ("paused", None), ("cancelled", None), ("error", exception).
 		A paused or cancelled request is abandoned; its worker thread finishes (and
 		fails quietly) in the background."""
 		holder = {}
 		done = threading.Event()
 		def _worker():
 			try:
-				holder["resp"] = self._service.make_computer_use_request(**kwargs)
+				holder["resp"] = provider_session.step(**kwargs)
 			except Exception as e:
 				holder["error"] = e
 			finally:
