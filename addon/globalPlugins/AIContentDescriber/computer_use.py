@@ -456,8 +456,7 @@ class ComputerUseSession:
 				continue
 			if status == "error":
 				self._dialog.append_message(f"API error: {payload}", role="system")
-				if tones:
-					tones.beep(150, 200)
+				tones.beep(150, 200)
 				break
 			resp = payload
 			# Commit this turn's state before executing any actions.
