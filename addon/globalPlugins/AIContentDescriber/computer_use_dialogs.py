@@ -15,6 +15,21 @@ import winUser
 from computer_use import _announce_and_wait, yield_foreground_to, _on_main_thread, describe_action, safety_check_messages
 
 
+def _get_pause_gesture():
+	try:
+		import globalPluginHandler
+		import inputCore
+		for plugin in globalPluginHandler.runningPlugins:
+			if not hasattr(plugin, 'script_pause_resume_computer_use'):
+				continue
+			for identifier, func in plugin._gestureMap.items():
+				if getattr(func, '__name__', '') == 'script_pause_resume_computer_use':
+					return inputCore.getDisplayTextForGestureIdentifier(identifier)[1]
+	except Exception:
+		log.exception("Couldn't resolve the pause/resume gesture; falling back to the default.")
+	return "NVDA+Control+Shift+P"
+
+
 class ComputerUseDialog(wx.Dialog):
 	"""Dialog for an AI computer-control session: a read-only log plus an input box.
 
@@ -128,7 +143,6 @@ class ComputerUseDialog(wx.Dialog):
 		self.input_txt.SetFocus()
 
 	def _request_consent(self, task):
-		from multimodal_input import _get_pause_gesture
 		keystroke = _get_pause_gesture()
 		dlg = wx.MessageDialog(
 			self,
