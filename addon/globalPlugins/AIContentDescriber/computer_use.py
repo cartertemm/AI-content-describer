@@ -390,8 +390,7 @@ class ComputerUseSession:
 		when the paused loop wakes and drains it. Outside a pause the event isn't set, so
 		clearing is a harmless no-op."""
 		self._inject_queue.put(text)
-		if self._pause_event is not None:
-			self._pause_event.clear()
+		self._pause_event.clear()
 		on_control_start()
 
 	def toggle_pause(self):
@@ -485,48 +484,58 @@ class ComputerUseSession:
 				# about this input rather than act; the dialog stays up until it
 				# actually issues actions (handled just before the action loop below).
 				continue
-			# The model is taking control. If our dialog is still up (we were waiting
-			# on the user), hide it and hand the foreground to the target first, so
-			# input lands on the target window and not on us.
-			if self._dialog_visible:
-				self._dialog.yield_to_target()
-				self._dialog_visible = False
-				time.sleep(0.2)
-			# Group results by call_id: OpenAI groups multiple actions under one
-			# computer_call item and expects one computer_call_output per call_id.
-			results_by_call_id = {}
-			for action in resp.actions:
-				if self._cancel_event.is_set() or self._pause_event.is_set():
-					break
-				if not self._approve_all and (action.get("type") == "confirm" or action.get("safety_checks")):
-					if not self._ask_approval(action):
-						self._cancel_event.set()
-						break
-				scaled = dict(action)
-				if "x" in scaled and "y" in scaled:
-					scaled["x"], scaled["y"] = capture.to_screen(action["x"], action["y"])
-				if "startX" in scaled:
-					scaled["startX"], scaled["startY"] = capture.to_screen(action["startX"], action["startY"])
-					scaled["endX"], scaled["endY"] = capture.to_screen(action["endX"], action["endY"])
-				compact = runner.execute(scaled)
-				self._dialog.append_message(compact, role="action")
-				call_id = action.get("call_id", "")
-				entry = results_by_call_id.setdefault(call_id, {"results": [], "safety_checks": action.get("safety_checks", [])})
-				entry["results"].append(compact)
-			tool_results = [
-				{"call_id": cid, "compact_result": "\n".join(entry["results"]), "safety_checks": entry["safety_checks"]}
-				for cid, entry in results_by_call_id.items()
-			]
+			tool_results = self._execute_actions(resp, capture, runner)
 			if self._cancel_event.is_set():
 				break
-			# Let keystrokes and focus changes settle before the next screenshot
-			time.sleep(0.3)
-			# Pause is checked between action batches only, never mid-action.
-			if not self._wait_while_paused():
+			injected_text = self._handle_pause()
+
+	def _execute_actions(self, resp, capture, runner):
+		"""Hand control to the target window, run the model's action batch (asking approval
+		for confirm/flagged actions), and return the tool_results grouped by call_id for the
+		next request. Stops early if the session is cancelled or paused."""
+		# The model is taking control. If our dialog is still up (we were waiting on the
+		# user), hide it and hand the foreground to the target first, so input lands on the
+		# target window and not on us.
+		if self._dialog_visible:
+			self._dialog.yield_to_target()
+			self._dialog_visible = False
+			time.sleep(0.2)
+		# Group results by call_id: OpenAI groups multiple actions under one computer_call
+		# item and expects one computer_call_output per call_id.
+		results_by_call_id = {}
+		for action in resp.actions:
+			if self._cancel_event.is_set() or self._pause_event.is_set():
 				break
-			followup = self._drain_injection()
-			if followup:
-				injected_text = followup
+			if not self._approve_all and (action.get("type") == "confirm" or action.get("safety_checks")):
+				if not self._ask_approval(action):
+					self._cancel_event.set()
+					break
+			scaled = dict(action)
+			if "x" in scaled and "y" in scaled:
+				scaled["x"], scaled["y"] = capture.to_screen(action["x"], action["y"])
+			if "startX" in scaled:
+				scaled["startX"], scaled["startY"] = capture.to_screen(action["startX"], action["startY"])
+				scaled["endX"], scaled["endY"] = capture.to_screen(action["endX"], action["endY"])
+			compact = runner.execute(scaled)
+			self._dialog.append_message(compact, role="action")
+			call_id = action.get("call_id", "")
+			entry = results_by_call_id.setdefault(call_id, {"results": [], "safety_checks": action.get("safety_checks", [])})
+			entry["results"].append(compact)
+		return [
+			{"call_id": cid, "compact_result": "\n".join(entry["results"]), "safety_checks": entry["safety_checks"]}
+			for cid, entry in results_by_call_id.items()
+		]
+
+	def _handle_pause(self):
+		"""Between action batches, let keystrokes settle then block while paused. Returns the
+		next injected_text (a drained follow-up, or None). If the session is cancelled during
+		the wait, returns None and the loop's while-condition ends the session."""
+		# Let keystrokes and focus changes settle before the next screenshot
+		time.sleep(0.3)
+		# Pause is checked between action batches only, never mid-action.
+		if not self._wait_while_paused():
+			return None
+		return self._drain_injection()
 
 	def _make_request_interruptible(self, provider_session, **kwargs):
 		"""Make the API request on a worker thread, polling for pause/cancel so a slow
