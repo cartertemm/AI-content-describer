@@ -143,10 +143,14 @@ def format_focus_context(focus):
 
 
 class Capture:
-	"""Captures the foreground window as a scaled base64 PNG."""
+	"""Captures the live foreground window as a scaled base64 PNG.
 
-	def __init__(self, hwnd, max_long_edge=None, max_pixels=None):
-		self._hwnd = hwnd
+	`resolve_target` is a callable returning (hwnd, obj) for the frame to capture: the current
+	foreground window, or a fallback when the foreground is one of our own dialogs. `obj` is the
+	NVDA foreground object used for focus metadata, or None on fallback."""
+
+	def __init__(self, resolve_target, max_long_edge=None, max_pixels=None):
+		self._resolve_target = resolve_target
 		self._max_long_edge = max_long_edge
 		self._max_pixels = max_pixels
 		self._scale = 1.0
@@ -154,11 +158,12 @@ class Capture:
 		self._win_y = 0
 
 	def capture(self):
-		"""Returns (b64_png_str, api_w, api_h)."""
-		rect = winUser.getClientRect(self._hwnd)
+		"""Returns (b64_png_str, api_w, api_h, focus_dict)."""
+		hwnd, obj = self._resolve_target()
+		rect = winUser.getClientRect(hwnd)
 		cap_w = rect.right - rect.left
 		cap_h = rect.bottom - rect.top
-		self._win_x, self._win_y = winUser.ClientToScreen(self._hwnd, 0, 0)
+		self._win_x, self._win_y = winUser.ClientToScreen(hwnd, 0, 0)
 		self._scale = _calculate_scale(cap_w, cap_h, self._max_long_edge, self._max_pixels)
 		api_w = max(1, int(cap_w * self._scale))
 		api_h = max(1, int(cap_h * self._scale))
@@ -168,10 +173,12 @@ class Capture:
 		img = Image.frombuffer("RGB", (api_w, api_h), buf, "raw", "BGRX", 0, 1)
 		out = BytesIO()
 		img.save(out, format="PNG")
-		return base64.b64encode(out.getvalue()).decode("ascii"), api_w, api_h
+		b64 = base64.b64encode(out.getvalue()).decode("ascii")
+		focus = _focus_metadata(obj, api_w, api_h)
+		return b64, api_w, api_h, focus
 
 	def to_screen(self, rx, ry):
-		"""Convert API-space coordinates to physical screen coordinates."""
+		"""Convert API-space coordinates to physical screen coordinates for the last frame."""
 		return int(rx / self._scale) + self._win_x, int(ry / self._scale) + self._win_y
 
 
