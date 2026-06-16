@@ -488,18 +488,30 @@ class ComputerUseSession:
 		return False
 
 	def _resolve_capture_target(self):
-		"""Pick the window to screenshot this frame: the live foreground window, unless it is our
-		own dialog, in which case fall back to the last real target. Returns (hwnd, obj), where obj
-		is the NVDA foreground object (for focus metadata) or None on fallback."""
+		"""Pick the window to screenshot this frame: the live foreground window, unless it is not a
+		real window or is one of our own dialogs, in which case fall back to the last good target.
+		The foreground comes from the OS (winUser), not NVDA's cached foreground object, which lags
+		behind focus changes and can briefly point at a just-closed window (e.g. the consent dialog
+		right after the session starts), yielding a dead handle. Returns (hwnd, obj), where obj is
+		the matching NVDA foreground object for metadata, or None."""
 		try:
-			obj = api.getForegroundObject()
-			hwnd = int(getattr(obj, "windowHandle", 0) or 0)
+			hwnd = winUser.getForegroundWindow()
 		except Exception:
-			hwnd, obj = 0, None
-		if hwnd and not self._is_own_window(hwnd):
-			self._target_hwnd = hwnd
-			return hwnd, obj
-		return self._target_hwnd, None
+			log.debug("computer use: getForegroundWindow failed; falling back to last target", exc_info=True)
+			hwnd = 0
+		if not hwnd or not winUser.isWindow(hwnd) or self._is_own_window(hwnd):
+			return self._target_hwnd, None
+		self._target_hwnd = hwnd
+		obj = None
+		try:
+			fg = api.getForegroundObject()
+			if fg is not None and int(getattr(fg, "windowHandle", 0) or 0) == hwnd:
+				obj = fg
+			else:
+				log.debug("computer use: foreground object does not match foreground window; no metadata")
+		except Exception:
+			log.debug("computer use: getForegroundObject failed; capturing without metadata", exc_info=True)
+		return hwnd, obj
 
 	def _run_loop(self, task):
 		capture = Capture(self._resolve_capture_target, self._max_long_edge, self._max_pixels)
