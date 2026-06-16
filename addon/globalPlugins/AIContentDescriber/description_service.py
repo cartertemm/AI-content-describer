@@ -539,10 +539,9 @@ class OpenAIComputerSession:
 					"content": [{"type": "input_text", "text": focus_text}],
 				})
 		elif injected_text:
-			# The model yielded and the user sent a follow-up; it rides in the
-			# text-only message appended below. The computer tool rejects an
-			# input_image once a previous response exists, so the model requests a
-			# screenshot itself when it needs to see the screen.
+			# The model yielded and the user sent a follow-up
+			# The computer tool rejects an input_image once a previous response exists, so we need to rely on the
+			# model to request one when it needs to see the screen
 			input_items = []
 		else:
 			input_items = [
@@ -931,6 +930,8 @@ class Gemini3_1ProPreview(GoogleGemini):
 class AnthropicComputerSession:
 	"""Per-task conversation state for Anthropic computer use."""
 
+	KEEP_RECENT_SCREENSHOTS = 3
+
 	def __init__(self, service, task):
 		self._service = service
 		self._task = task
@@ -1027,11 +1028,10 @@ class AnthropicComputerSession:
 
 	def save(self, step_result):
 		self._history.extend(step_result.pending)
-		if len(self._history) % 50 == 0:
-			self._trim_history_screenshots(self._history)
+		self._trim_history_screenshots(self._history)
 
 	def _trim_history_screenshots(self, history):
-		"""Remove all but the last 3 screenshot image blocks from history, including those nested in tool_result blocks."""
+		"""Remove all but the most recent screenshot image blocks from history, including those nested in tool_result blocks."""
 		refs = []
 		for i, msg in enumerate(history):
 			for j, block in enumerate(msg.get("content") or []):
@@ -1043,7 +1043,7 @@ class AnthropicComputerSession:
 					for k, inner in enumerate(block.get("content") or []):
 						if isinstance(inner, dict) and inner.get("type") == "image":
 							refs.append((i, j, k))
-		for i, j, k in reversed(refs[:-3]):
+		for i, j, k in reversed(refs[:-self.KEEP_RECENT_SCREENSHOTS]):
 			if k is None:
 				history[i]["content"].pop(j)
 			else:
