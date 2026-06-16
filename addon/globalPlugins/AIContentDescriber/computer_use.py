@@ -8,26 +8,12 @@ from io import BytesIO
 
 log = logging.getLogger(__name__)
 
-try:
-	import winUser
-	import screenBitmap
-except ImportError:
-	winUser = None
-	screenBitmap = None
-
-try:
-	import ui
-	import synthDriverHandler
-except ImportError:
-	ui = None
-	synthDriverHandler = None
-
-try:
-	import tones
-	import wx
-except ImportError:
-	tones = None
-	wx = None
+import winUser
+import screenBitmap
+import ui
+import synthDriverHandler
+import tones
+import wx
 
 import dependency_checker
 dependency_checker.expand_path()
@@ -73,8 +59,6 @@ def on_control_pause():
 
 
 def _announce_and_wait(text):
-	if ui is None or synthDriverHandler is None:
-		return
 	done = threading.Event()
 	def _on_done(**kwargs):
 		done.set()
@@ -367,6 +351,19 @@ class ComputerUseSession:
 		"""Show the dialog so the user can type the first instruction."""
 		self._dialog.bring_to_front(focus_input=True)
 
+	def _surface_dialog(self, focus_input=False):
+		"""Bring the dialog up and record that it now owns the foreground."""
+		self._dialog.bring_to_front(focus_input=focus_input)
+		self._dialog_visible = True
+
+	def _hand_off_to_target(self):
+		"""If the dialog is up, hide it, give the foreground to the target window, and let
+		focus settle before the next screenshot. No-op if the dialog is already hidden."""
+		if self._dialog_visible:
+			self._dialog.yield_to_target()
+			self._dialog_visible = False
+			time.sleep(0.2)
+
 	def begin(self, task):
 		"""Called by the dialog, on the main thread, once the user has consented. Hand the
 		foreground to the target window (so the first screenshot and actions land there, not
@@ -413,8 +410,7 @@ class ComputerUseSession:
 		try:
 			self._run_loop(task)
 		finally:
-			self._dialog.bring_to_front()
-			self._dialog_visible = True
+			self._surface_dialog()
 			self._dialog.session_ended()
 			_clear_active_session(self)
 
@@ -472,8 +468,7 @@ class ComputerUseSession:
 				# dialog or cancelling ends the session.
 				self._dialog.append_message("Ready for your next instruction.", role="system")
 				on_control_pause()
-				self._dialog.bring_to_front(focus_input=True)
-				self._dialog_visible = True
+				self._surface_dialog(focus_input=True)
 				followup = self._await_followup()
 				if followup is None:
 					break
@@ -495,10 +490,7 @@ class ComputerUseSession:
 		# The model is taking control. If our dialog is still up (we were waiting on the
 		# user), hide it and hand the foreground to the target first, so input lands on the
 		# target window and not on us.
-		if self._dialog_visible:
-			self._dialog.yield_to_target()
-			self._dialog_visible = False
-			time.sleep(0.2)
+		self._hand_off_to_target()
 		# Group results by call_id: OpenAI groups multiple actions under one computer_call
 		# item and expects one computer_call_output per call_id.
 		results_by_call_id = {}
@@ -567,15 +559,12 @@ class ComputerUseSession:
 		Returns False if the session was cancelled, True otherwise."""
 		if not self._pause_event.is_set():
 			return not self._cancel_event.is_set()
-		self._dialog.bring_to_front(focus_input=True)
-		self._dialog_visible = True
+		self._surface_dialog(focus_input=True)
 		while self._pause_event.is_set() and not self._cancel_event.is_set():
 			time.sleep(0.05)
 		if self._cancel_event.is_set():
 			return False
-		self._dialog.yield_to_target()
-		self._dialog_visible = False
-		time.sleep(0.2)
+		self._hand_off_to_target()
 		return True
 
 	def _drain_injection(self):
