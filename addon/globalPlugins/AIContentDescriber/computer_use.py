@@ -300,6 +300,7 @@ class ActionRunner:
 			else:
 				return format_action_result(action, "(unknown)", "skipped")
 		except Exception as e:
+			log.error("computer use: action %r failed", action.get("type"), exc_info=True)
 			return format_action_result(action, "error", e)
 
 	def _move(self, x, y):
@@ -370,6 +371,7 @@ class ActionRunner:
 					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0)
 				time.sleep(0.005)
 		except Exception:
+			log.debug("computer use: direct typing failed, falling back to clipboard paste", exc_info=True)
 			try:
 				with winUser.openClipboard():
 					prior = winUser.getClipboardData(winUser.CF_UNICODETEXT)
@@ -384,7 +386,7 @@ class ActionRunner:
 				with winUser.openClipboard():
 					winUser.setClipboardData(winUser.CF_UNICODETEXT, prior if prior is not None else "")
 			except Exception:
-				pass
+				log.error("computer use: clipboard paste fallback failed", exc_info=True)
 
 
 class ComputerUseSession:
@@ -523,6 +525,7 @@ class ComputerUseSession:
 			try:
 				b64, cap_w, cap_h, focus = capture.capture()
 			except Exception as e:
+				log.error("computer use: screenshot failed", exc_info=True)
 				self._dialog.append_message(f"Screenshot failed: {e}", role="system")
 				break
 			# Run the request on a worker thread so a pause or cancel interrupts the
@@ -551,6 +554,7 @@ class ComputerUseSession:
 					injected_text = " ".join(t for t in (injected_text, followup) if t)
 				continue
 			if status == "error":
+				log.error("computer use: API request failed", exc_info=payload)
 				self._dialog.append_message(f"API error: {payload}", role="system")
 				tones.beep(150, 200)
 				break
