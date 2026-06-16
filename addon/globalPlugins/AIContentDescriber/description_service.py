@@ -25,6 +25,7 @@ except addonHandler.AddonError:
 
 import config_handler as ch
 import cache
+from computer_use import SYSTEM_PROMPT, format_focus_context
 
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 
@@ -512,7 +513,8 @@ class OpenAIComputerSession:
 		self._task = task
 		self._previous_response_id = None
 
-	def step(self, screenshot_b64, capture_w, capture_h, tool_results, injected_text):
+	def step(self, screenshot_b64, capture_w, capture_h, tool_results, injected_text, focus=None):
+		focus_text = format_focus_context(focus) if focus else ""
 		headers = {
 			"Authorization": f"Bearer {self._service.api_key}",
 			"Content-Type": "application/json",
@@ -530,6 +532,12 @@ class OpenAIComputerSession:
 				}
 				for tr in tool_results
 			]
+			if focus_text:
+				input_items.append({
+					"type": "message",
+					"role": "user",
+					"content": [{"type": "input_text", "text": focus_text}],
+				})
 		elif injected_text:
 			# The model yielded and the user sent a follow-up; it rides in the
 			# text-only message appended below. The computer tool rejects an
@@ -543,6 +551,7 @@ class OpenAIComputerSession:
 					"role": "user",
 					"content": [
 						{"type": "input_text", "text": self._task},
+					] + ([{"type": "input_text", "text": focus_text}] if focus_text else []) + [
 						{
 							"type": "input_image",
 							"image_url": f"data:image/png;base64,{screenshot_b64}",
@@ -561,6 +570,7 @@ class OpenAIComputerSession:
 			"model": self._service.internal_model_name,
 			"tools": [{"type": "computer"}],
 			"input": input_items,
+			"instructions": SYSTEM_PROMPT,
 		}
 		if self._previous_response_id is not None:
 			payload["previous_response_id"] = self._previous_response_id
