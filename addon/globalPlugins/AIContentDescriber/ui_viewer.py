@@ -55,13 +55,14 @@ PROMPT = """You are given a screenshot of a Windows desktop or application. Reco
 
 6. Output the following, in this order:
 	First, the full HTML reconstruction of the screen contents, in reading order (top to bottom, left to right).
-	Then, a <h1> element at the very bottom of the output:
+	If you inferred or changed labels:
+		Add a <h1> element at the very bottom of the output:
 		<h1>Changes</h1>
-	  <ul>
-	  <li>Unlabelled control {position description, e.g. "top-left button"}, set to {inferred label}</li>
-	  </ul>
-	  </h1>
-	If no labels were inferred, still include the <h1> element with an empty <ul></ul>.
+		<ul>
+		<li>Unlabelled control {position description, e.g. "top-left button"}, set to {inferred label}</li>
+		</ul>
+		</h1>
+	If no labels were inferred, do not include the <h1> element with an empty <ul></ul>.
 
 7. Do not reproduce visual styles, colors, fonts, or decorative elements. Only structure and content matter.
 
