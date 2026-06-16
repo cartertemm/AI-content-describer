@@ -936,16 +936,16 @@ class AnthropicComputerSession:
 		self._task = task
 		self._history = []
 
-	def _build_user_turn(self, screenshot_b64, tool_results, injected_text):
+	def _build_user_turn(self, screenshot_b64, tool_results, injected_text, focus_text):
 		"""Return the user-turn dict for this step, or None if there's nothing to add."""
 		if not self._history:
-			return {
-				"role": "user",
-				"content": [
-					{"type": "text", "text": self._task},
-					{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
-				],
-			}
+			content = [
+				{"type": "text", "text": self._task},
+				{"type": "image", "source": {"type": "base64", "media_type": "image/png", "data": screenshot_b64}},
+			]
+			if focus_text:
+				content.insert(1, {"type": "text", "text": focus_text})
+			return {"role": "user", "content": content}
 		# Either tool results from the actions just run, a user follow-up after
 		# the model yielded, or both. They go in one user turn; the model asks for
 		# a screenshot when it needs the screen.
@@ -960,14 +960,18 @@ class AnthropicComputerSession:
 			}
 			for tr in (tool_results or [])
 		]
+		# Focus context rides next to the screenshot, so only when tool results carried one.
+		if focus_text and content_blocks:
+			content_blocks.append({"type": "text", "text": focus_text})
 		if injected_text:
 			content_blocks.append({"type": "text", "text": injected_text})
 		if not content_blocks:
 			return None
 		return {"role": "user", "content": content_blocks}
 
-	def step(self, screenshot_b64, capture_w, capture_h, tool_results, injected_text):
-		new_user_turn = self._build_user_turn(screenshot_b64, tool_results, injected_text)
+	def step(self, screenshot_b64, capture_w, capture_h, tool_results, injected_text, focus=None):
+		focus_text = format_focus_context(focus) if focus else ""
+		new_user_turn = self._build_user_turn(screenshot_b64, tool_results, injected_text, focus_text)
 		messages = self._history + ([new_user_turn] if new_user_turn else [])
 		headers = {
 			"x-api-key": self._service.api_key,
@@ -984,6 +988,7 @@ class AnthropicComputerSession:
 		payload = {
 			"model": self._service.internal_model_name,
 			"max_tokens": 4096,
+			"system": SYSTEM_PROMPT,
 			"tools": [tool_def],
 			"messages": messages,
 		}
