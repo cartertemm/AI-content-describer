@@ -236,7 +236,8 @@ def show_computer_use_approval(action, result_event, result_holder, target_hwnd=
 	result_holder[0] = dlg.choice
 	dlg.Destroy()
 	# Restore the target window's foreground while we still own it so the
-	# approved action's input goes to the user's app, not elsewhere.
+	# approved action's input goes to the user's app.
+	# Otherwise, actions will be sent to the computer use dialog
 	if target_hwnd and result_holder[0] in ("approve_once", "approve_all"):
 		yield_foreground_to(target_hwnd)
 	result_event.set()
