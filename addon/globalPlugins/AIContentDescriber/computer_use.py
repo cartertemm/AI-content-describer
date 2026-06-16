@@ -8,6 +8,7 @@ from io import BytesIO
 
 log = logging.getLogger(__name__)
 
+import api
 import winUser
 import screenBitmap
 import ui
@@ -45,6 +46,21 @@ def yield_foreground_to(hwnd):
 
 ANNOUNCE_TIMEOUT_SECONDS = 10
 TYPE_PREVIEW_MAX_CHARS = 40
+
+# Sent to the model on every computer-use turn.
+# Not currently translated
+SYSTEM_PROMPT = (
+	"You are controlling a Windows computer on behalf of a blind user who relies on the NVDA "
+	"screen reader and cannot see the screen. You are their trusted eyes and hands, so you must "
+	"be careful and deliberate.\n\n"
+	"Each screenshot shows only the currently focused foreground window. Coordinates are pixels "
+	"from the top-left of the screenshot. You will be told which app and window are focused in "
+	"each turn. Keyboard and mouse input will be sent to the currently focused window.\n\n"
+	"Work one step at a time. After each action, look at the next screenshot and confirm it did "
+	"what you expected before continuing. Do not assume an action succeeded. If the focused window "
+	"changed to something you did not expect, stop and reassess instead of pushing on. If you are "
+	"stuck or the task is ambiguous, stop and ask the user rather than guessing."
+)
 
 
 def on_control_start():
@@ -86,6 +102,44 @@ def _calculate_scale(w, h, max_long_edge=None, max_pixels=None):
 		if pixels > max_pixels:
 			scale = min(scale, math.sqrt(max_pixels / pixels))
 	return scale
+
+
+def _focus_metadata(obj, width, height):
+	"""Build the focused-window metadata for a capture.
+	This is sent to the model as part of every computer-use request."""
+	app_name = ""
+	app_version = ""
+	window_title = ""
+	if obj is not None:
+		try:
+			app_module = getattr(obj, "appModule", None)
+			if app_module is not None:
+				app_name = getattr(app_module, "appName", "") or ""
+				app_version = getattr(app_module, "productVersion", "") or ""
+			window_title = getattr(obj, "name", "") or ""
+		except Exception:
+			log.debug("computer use: could not read focus metadata", exc_info=True)
+	return {
+		"app_name": app_name,
+		"app_version": app_version,
+		"window_title": window_title,
+		"width": width,
+		"height": height,
+	}
+
+
+def format_focus_context(focus):
+	"""Render the focus metadata that accompanies each screenshot, so the model knows which
+	window it is looking at and does not send input on unexpected focus changes."""
+	app = focus.get("app_name") or "unknown"
+	version = focus.get("app_version") or ""
+	if version:
+		app = f"{app} {version}"
+	return (
+		f"Focused app: {app}\n"
+		f"Focused window: {focus.get('window_title') or 'unknown'}\n"
+		f"Screenshot size: {focus.get('width')}x{focus.get('height')}"
+	)
 
 
 class Capture:
