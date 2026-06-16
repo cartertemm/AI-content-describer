@@ -393,6 +393,7 @@ class ComputerUseSession:
 	def __init__(self, service, hwnd, request_approval=None, parent=None):
 		self._service = service
 		self._hwnd = hwnd
+		self._target_hwnd = hwnd
 		self._request_approval = request_approval
 		self._cancel_event = threading.Event()
 		self._pause_event = threading.Event()
@@ -418,10 +419,10 @@ class ComputerUseSession:
 		self._dialog_visible = True
 
 	def _hand_off_to_target(self):
-		"""If the dialog is up, hide it, give the foreground to the target window, and let
+		"""If the dialog is up, hide it, give the foreground to the current target window, and let
 		focus settle before the next screenshot. No-op if the dialog is already hidden."""
 		if self._dialog_visible:
-			self._dialog.yield_to_target()
+			self._dialog.yield_to_target(self._target_hwnd)
 			self._dialog_visible = False
 			time.sleep(0.2)
 
@@ -475,15 +476,40 @@ class ComputerUseSession:
 			self._dialog.session_ended()
 			_clear_active_session(self)
 
+	def _is_own_window(self, hwnd):
+		"""True if hwnd is our computer-use dialog. The risky-action approval dialog blocks the
+		worker thread on its result event rather than during a capture, so it never needs guarding
+		here."""
+		try:
+			if not self._dialog.IsBeingDeleted() and hwnd == self._dialog.GetHandle():
+				return True
+		except Exception:
+			log.debug("computer use: own-window check failed", exc_info=True)
+		return False
+
+	def _resolve_capture_target(self):
+		"""Pick the window to screenshot this frame: the live foreground window, unless it is our
+		own dialog, in which case fall back to the last real target. Returns (hwnd, obj), where obj
+		is the NVDA foreground object (for focus metadata) or None on fallback."""
+		try:
+			obj = api.getForegroundObject()
+			hwnd = int(getattr(obj, "windowHandle", 0) or 0)
+		except Exception:
+			hwnd, obj = 0, None
+		if hwnd and not self._is_own_window(hwnd):
+			self._target_hwnd = hwnd
+			return hwnd, obj
+		return self._target_hwnd, None
+
 	def _run_loop(self, task):
-		capture = Capture(self._hwnd, self._max_long_edge, self._max_pixels)
+		capture = Capture(self._resolve_capture_target, self._max_long_edge, self._max_pixels)
 		runner = ActionRunner(self._cancel_event, self._pause_event)
 		provider_session = self._service.create_computer_session(task)
 		tool_results = None
 		injected_text = None
 		while not self._cancel_event.is_set():
 			try:
-				b64, cap_w, cap_h = capture.capture()
+				b64, cap_w, cap_h, focus = capture.capture()
 			except Exception as e:
 				self._dialog.append_message(f"Screenshot failed: {e}", role="system")
 				break
@@ -498,6 +524,7 @@ class ComputerUseSession:
 				capture_h=cap_h,
 				tool_results=tool_results,
 				injected_text=injected_text,
+				focus=focus,
 			)
 			if status == "cancelled":
 				break
@@ -655,7 +682,7 @@ class ComputerUseSession:
 			return True
 		result_event = threading.Event()
 		result_holder = [None]
-		wx.CallAfter(self._request_approval, action, result_event, result_holder, self._hwnd)
+		wx.CallAfter(self._request_approval, action, result_event, result_holder, self._target_hwnd)
 		result_event.wait()
 		choice = result_holder[0]
 		if choice == "approve_all":

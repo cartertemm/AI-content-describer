@@ -108,12 +108,14 @@ class ComputerUseDialog(wx.Dialog):
 				self.SetFocus()
 		_on_main_thread(_do)
 
-	def yield_to_target(self):
-		"""Hide this dialog and hand the foreground to the target window."""
+	def yield_to_target(self, hwnd=None):
+		"""Hide this dialog and hand the foreground to the target window. `hwnd` lets the session
+		pass the live target; falls back to the window the dialog was opened for."""
+		target = hwnd if hwnd is not None else self._hwnd
 		def _do():
 			if not self.IsBeingDeleted():
 				self.Hide()
-			yield_foreground_to(self._hwnd)
+			yield_foreground_to(target)
 		_on_main_thread(_do)
 
 	def session_ended(self):
