@@ -12,7 +12,7 @@ except addonHandler.AddonError:
 
 import gui
 import winUser
-from computer_use import _announce_and_wait, yield_foreground_to, _on_main_thread, describe_action, safety_check_messages
+from computer_use import _announce_and_wait, _on_main_thread, describe_action, safety_check_messages
 
 
 def _get_pause_gesture():
@@ -115,7 +115,7 @@ class ComputerUseDialog(wx.Dialog):
 		def _do():
 			if not self.IsBeingDeleted():
 				self.Hide()
-			yield_foreground_to(target)
+			winUser.setForegroundWindow(target)
 		_on_main_thread(_do)
 
 	def session_ended(self):
@@ -241,5 +241,5 @@ def show_computer_use_approval(action, result_event, result_holder, target_hwnd=
 	# approved action's input goes to the user's app.
 	# Otherwise, actions will be sent to the computer use dialog
 	if target_hwnd and result_holder[0] in ("approve_once", "approve_all"):
-		yield_foreground_to(target_hwnd)
+		winUser.setForegroundWindow(target_hwnd)
 	result_event.set()

@@ -31,12 +31,7 @@ OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 
 
 class StepResult:
-	"""What one call to the model produced for a single turn: any text it spoke, the list of
-	actions it wants to run, and whether it considers the task finished. `pending` holds the
-	change this turn would make to the provider's saved conversation, a new response id for
-	OpenAI, or the new message turns for Anthropic. The loop hands `pending` to save() only
-	once it has decided to keep the turn, so a turn dropped on pause leaves the saved
-	conversation untouched. The loop never looks inside `pending`."""
+	"""Represents a single call to a model following a computer-use request."""
 
 	def __init__(self, text, actions, is_complete, pending):
 		self.text = text

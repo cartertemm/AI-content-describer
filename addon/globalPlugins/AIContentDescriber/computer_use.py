@@ -22,26 +22,16 @@ from PIL import Image
 
 
 def _on_main_thread(fn):
-	"""Schedule fn() on the wx main thread. The fn closures guard IsBeingDeleted(); this
-	RuntimeError catch is only a backstop for the rare race where the dialog is destroyed
-	between scheduling and running, and it logs rather than dropping the error silently."""
+	"""Schedule fn() on the wx main thread. A background thread may schedule a UI update just
+	as the user closes the dialog, so by the time fn() runs the window can already be destroyed;
+	calling into a dead wx object raises RuntimeError, which we catch and log instead of letting
+	it surface as a noisy traceback."""
 	def _do():
 		try:
 			fn()
 		except RuntimeError:
 			log.debug("computer use: skipped a main-thread UI call, window already gone", exc_info=True)
 	wx.CallAfter(_do)
-
-
-def yield_foreground_to(hwnd):
-	"""Bring the given window to the foreground. Foreground only: callers hide their own
-	dialog first, in the same main-thread step, so the hide and this stay ordered."""
-	try:
-		winUser.setForegroundWindow(hwnd)
-	except Exception:
-		# Windows restricts which processes may change the foreground window, so this can
-		# fail. Log it rather than abort the caller (which may be starting the control loop).
-		log.debug("yield_foreground_to: could not raise window %r", hwnd, exc_info=True)
 
 
 ANNOUNCE_TIMEOUT_SECONDS = 10
@@ -70,7 +60,7 @@ def on_control_start():
 
 def on_control_pause():
 	"""Beep signalling the model has stopped touching the machine while the session is
-	still alive: the user paused, or the model yielded its turn. Cancel does not beep."""
+	still alive because the user paused, or the model wants input."""
 	tones.beep(108, 300)
 
 
@@ -84,7 +74,6 @@ def _announce_and_wait(text):
 	try:
 		ui.message(text)
 		# synthDoneSpeaking fires for any speech, not specifically this utterance.
-		# Concurrent NVDA events can cause this to unblock early, which is acceptable.
 		done.wait(timeout=ANNOUNCE_TIMEOUT_SECONDS)
 	finally:
 		synthDriverHandler.synthDoneSpeaking.unregister(_on_done)
@@ -281,6 +270,7 @@ class ActionRunner:
 				self._drag(action["startX"], action["startY"], action["endX"], action["endY"])
 				return format_action_result(action, f"({action['startX']},{action['startY']})->({action['endX']},{action['endY']})")
 			elif t == "scroll":
+				_announce_and_wait("Scrolling...")
 				self._scroll(action["x"], action["y"], action.get("direction", "down"), action.get("amount", 3))
 				return format_action_result(action, f"({action['x']}, {action['y']}) {action.get('direction', 'down')} {action.get('amount', 3)}")
 			elif t == "key":
@@ -293,6 +283,7 @@ class ActionRunner:
 				return format_action_result(action, preview)
 			elif t == "wait":
 				time.sleep(0.5)
+				_announce_and_wait("Waiting for 500 MS...")
 				return format_action_result(action, "500ms")
 			elif t == "screenshot":
 				_announce_and_wait("Taking screenshot...")
@@ -422,7 +413,7 @@ class ComputerUseSession:
 
 	def _hand_off_to_target(self):
 		"""If the dialog is up, hide it, give the foreground to the current target window, and let
-		focus settle before the next screenshot. No-op if the dialog is already hidden."""
+		focus settle before the next screenshot. Does nothing if the dialog is already hidden."""
 		if self._dialog_visible:
 			self._dialog.yield_to_target(self._target_hwnd)
 			self._dialog_visible = False
@@ -435,7 +426,7 @@ class ComputerUseSession:
 		_set_active_session(self)
 		if not self._dialog.IsBeingDeleted():
 			self._dialog.Hide()
-		yield_foreground_to(self._hwnd)
+		winUser.setForegroundWindow(self._hwnd)
 		self._dialog_visible = False
 		on_control_start()
 		self._thread = threading.Thread(target=self._run, args=(task,), daemon=True)
@@ -593,7 +584,7 @@ class ComputerUseSession:
 		next request. Stops early if the session is cancelled or paused."""
 		# The model is taking control. If our dialog is still up (we were waiting on the
 		# user), hide it and hand the foreground to the target first, so input lands on the
-		# target window and not on us.
+		# target window and not on the computer control dialog.
 		self._hand_off_to_target()
 		# Group results by call_id: OpenAI groups multiple actions under one computer_call
 		# item and expects one computer_call_output per call_id.
