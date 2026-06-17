@@ -36,6 +36,8 @@ def _on_main_thread(fn):
 
 ANNOUNCE_TIMEOUT_SECONDS = 10
 TYPE_PREVIEW_MAX_CHARS = 40
+# Above this length, paste the text instead of synthesizing a keystroke per character.
+PASTE_TYPE_THRESHOLD_CHARS = 512
 
 # Sent to the model on every computer-use turn.
 # Not currently translated
@@ -349,6 +351,19 @@ class ActionRunner:
 			winUser.keybd_event(vk, 0, winUser.KEYEVENTF_KEYUP, 0)
 
 	def _type_text(self, text):
+		# Long strings are slow to synthesize a keystroke at a time, so paste them. Either method can fail though.
+		# For instance, paste needs a control that accepts ctrl+v, and per-character typing can
+		# drop keys on slower machines. This is why we fall back to the other if the first one doesn't work.
+		# todo: Handle the unlikely case where text can be inputted partially, then fail, then be pasted, thereby duplicating data.
+		if len(text) > PASTE_TYPE_THRESHOLD_CHARS:
+			if not self._paste_text(text):
+				self._type_chars(text)
+		else:
+			if not self._type_chars(text):
+				self._paste_text(text)
+
+	def _type_chars(self, text):
+		"""Type the text one synthesized keystroke per character. Returns False if it failed."""
 		try:
 			for ch in text:
 				if self._aborted():
@@ -361,23 +376,30 @@ class ActionRunner:
 					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE, 0)
 					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0)
 				time.sleep(0.005)
+			return True
 		except Exception:
-			log.debug("computer use: direct typing failed, falling back to clipboard paste", exc_info=True)
-			try:
-				with winUser.openClipboard():
-					prior = winUser.getClipboardData(winUser.CF_UNICODETEXT)
-				with winUser.openClipboard():
-					winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
-				winUser.keybd_event(0x11, 0, 0, 0)  # Ctrl down
-				winUser.keybd_event(0x56, 0, 0, 0)  # V down
-				winUser.keybd_event(0x56, 0, winUser.KEYEVENTF_KEYUP, 0)
-				winUser.keybd_event(0x11, 0, winUser.KEYEVENTF_KEYUP, 0)
-				# Brief delay to ensure control+v was actually pressed and released
-				time.sleep(0.1)
-				with winUser.openClipboard():
-					winUser.setClipboardData(winUser.CF_UNICODETEXT, prior if prior is not None else "")
-			except Exception:
-				log.error("computer use: clipboard paste fallback failed", exc_info=True)
+			log.debug("computer use: direct typing failed", exc_info=True)
+			return False
+
+	def _paste_text(self, text):
+		"""Set the clipboard and send ctrl+v, restoring the prior contents. Returns False if it failed."""
+		try:
+			with winUser.openClipboard():
+				prior = winUser.getClipboardData(winUser.CF_UNICODETEXT)
+			with winUser.openClipboard():
+				winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
+			winUser.keybd_event(0x11, 0, 0, 0)  # Ctrl down
+			winUser.keybd_event(0x56, 0, 0, 0)  # V down
+			winUser.keybd_event(0x56, 0, winUser.KEYEVENTF_KEYUP, 0)
+			winUser.keybd_event(0x11, 0, winUser.KEYEVENTF_KEYUP, 0)
+			# Brief delay to ensure control+v was actually pressed and released
+			time.sleep(0.1)
+			with winUser.openClipboard():
+				winUser.setClipboardData(winUser.CF_UNICODETEXT, prior if prior is not None else "")
+			return True
+		except Exception:
+			log.error("computer use: clipboard paste failed", exc_info=True)
+			return False
 
 
 class ComputerUseSession:
