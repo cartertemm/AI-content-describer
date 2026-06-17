@@ -18,25 +18,32 @@ import tones
 import wx
 
 import dependency_checker
+
 dependency_checker.expand_path()
 from PIL import Image
 
 
 def _on_main_thread(fn):
 	"""Schedule fn() on the wx main thread. A background thread may schedule a UI update just
-	as the user closes the dialog, so by the time fn() runs the window can already be destroyed;
-	calling into a dead wx object raises RuntimeError, which we catch and log instead of letting
-	it surface as a noisy traceback."""
+	as the user closes the dialog, so by the time fn() runs the window can already be destroyed.
+
+	Calling into a dead wx object raises RuntimeError, which we catch and log instead of letting
+	it traceback."""
+
 	def _do():
 		try:
 			fn()
 		except RuntimeError:
-			log.debug("computer use: skipped a main-thread UI call, window already gone", exc_info=True)
+			log.debug(
+				"computer use: skipped a main-thread UI call, window already gone",
+				exc_info=True,
+			)
+
 	wx.CallAfter(_do)
 
 
 def _is_retryable_request_error(error):
-	"""Returns True for a transport failure where no HTTP response was received (SSL EOF, connection reset, DNS issue, timeout).
+	"""Returns True for a transport failure where no HTTP response was received (SSL EOF, connection reset, DNS issue, timeout, etc.)
 	Returns False if an HTTP response was received."""
 	cause = getattr(error, "__cause__", None)
 	if isinstance(cause, urllib.error.HTTPError):
@@ -70,20 +77,25 @@ SYSTEM_PROMPT = (
 
 
 def on_control_start():
-	"""Beep signalling the model has taken control: session start or resume."""
+	"""Called whenever the model has taken control, either the session was started or resumed after follow-up from the user."""
 	tones.beep(1000, 300)
 
 
 def on_control_pause():
-	"""Beep signalling the model has stopped touching the machine while the session is
-	still alive because the user paused, or the model wants input."""
+	"""Called after the model has stopped touching the machine while the session is
+	still alive. Either the user paused, or the model wants input."""
 	tones.beep(108, 300)
 
 
 def _announce_and_wait(text):
+	"""Present a message, returning only when it has completed speaking.
+	A global timeout (ANNOUNCE_TIMEOUT_SECONDS) ensures that this doesn't block indefinitely if a synth driver fails to indicate that the utterance has completed.
+	"""
 	done = threading.Event()
+
 	def _on_done(**kwargs):
 		done.set()
+
 	# HandlerRegistrar stores only a weak reference; _on_done must stay alive
 	# for the duration of this call. The stack frame keeps it alive while we block.
 	synthDriverHandler.synthDoneSpeaking.register(_on_done)
@@ -151,7 +163,8 @@ class Capture:
 	"""Captures the live foreground window as a scaled base64 PNG.
 
 	`resolve_target` is a callable returning (hwnd, obj) for the frame to capture: the current
-	foreground window, or a fallback when the foreground is one of our own dialogs. `obj` is the
+	foreground window, or a fallback when the foreground is one of our own dialogs.
+	`obj` is the
 	NVDA foreground object used for focus metadata, or None on fallback."""
 
 	def __init__(self, resolve_target, max_long_edge=None, max_pixels=None):
@@ -169,7 +182,9 @@ class Capture:
 		cap_w = rect.right - rect.left
 		cap_h = rect.bottom - rect.top
 		self._win_x, self._win_y = winUser.ClientToScreen(hwnd, 0, 0)
-		self._scale = _calculate_scale(cap_w, cap_h, self._max_long_edge, self._max_pixels)
+		self._scale = _calculate_scale(
+			cap_w, cap_h, self._max_long_edge, self._max_pixels
+		)
 		api_w = max(1, int(cap_w * self._scale))
 		api_h = max(1, int(cap_h * self._scale))
 		buf = screenBitmap.ScreenBitmap(api_w, api_h).captureImage(
@@ -201,7 +216,10 @@ def describe_action(action):
 
 def safety_check_messages(action):
 	"""Return displayable messages from API-issued safety checks."""
-	messages = [sc.get("message") or sc.get("code", "") for sc in action.get("safety_checks", [])]
+	messages = [
+		sc.get("message") or sc.get("code", "")
+		for sc in action.get("safety_checks", [])
+	]
 	return [m for m in messages if m]
 
 
@@ -231,31 +249,55 @@ def _clear_active_session(session):
 
 
 class ActionRunner:
-	"""Executes model-issued actions using NVDA's winUser module."""
+	"""Executes model-issued actions."""
 
 	def __init__(self, cancel_event=None, pause_event=None):
 		self._cancel_event = cancel_event
 		self._pause_event = pause_event
 
 	def _aborted(self):
-		"""True when the session was cancelled or paused, so long actions stop mid-flight."""
-		return ((self._cancel_event is not None and self._cancel_event.is_set())
-			or (self._pause_event is not None and self._pause_event.is_set()))
+		return (self._cancel_event is not None and self._cancel_event.is_set()) or (
+			self._pause_event is not None and self._pause_event.is_set()
+		)
 
 	_VK_MAP = {
-		"enter": winUser.VK_RETURN, "return": winUser.VK_RETURN, "tab": winUser.VK_TAB,
-		"escape": winUser.VK_ESCAPE, "esc": winUser.VK_ESCAPE, "space": winUser.VK_SPACE,
-		"backspace": winUser.VK_BACK, "delete": winUser.VK_DELETE,
-		"up": winUser.VK_UP, "down": winUser.VK_DOWN, "left": winUser.VK_LEFT, "right": winUser.VK_RIGHT,
-		"home": winUser.VK_HOME, "end": winUser.VK_END, "pageup": winUser.VK_PRIOR, "pagedown": winUser.VK_NEXT,
-		"f1": winUser.VK_F1, "f2": winUser.VK_F2, "f3": winUser.VK_F3, "f4": winUser.VK_F4,
-		"f5": winUser.VK_F5, "f6": winUser.VK_F6, "f7": winUser.VK_F7, "f8": winUser.VK_F8,
-		"f9": winUser.VK_F9, "f10": winUser.VK_F10, "f11": winUser.VK_F11, "f12": winUser.VK_F12,
-		"win": winUser.VK_LWIN, "windows": winUser.VK_LWIN,
+		"enter": winUser.VK_RETURN,
+		"return": winUser.VK_RETURN,
+		"tab": winUser.VK_TAB,
+		"escape": winUser.VK_ESCAPE,
+		"esc": winUser.VK_ESCAPE,
+		"space": winUser.VK_SPACE,
+		"backspace": winUser.VK_BACK,
+		"delete": winUser.VK_DELETE,
+		"up": winUser.VK_UP,
+		"down": winUser.VK_DOWN,
+		"left": winUser.VK_LEFT,
+		"right": winUser.VK_RIGHT,
+		"home": winUser.VK_HOME,
+		"end": winUser.VK_END,
+		"pageup": winUser.VK_PRIOR,
+		"pagedown": winUser.VK_NEXT,
+		"f1": winUser.VK_F1,
+		"f2": winUser.VK_F2,
+		"f3": winUser.VK_F3,
+		"f4": winUser.VK_F4,
+		"f5": winUser.VK_F5,
+		"f6": winUser.VK_F6,
+		"f7": winUser.VK_F7,
+		"f8": winUser.VK_F8,
+		"f9": winUser.VK_F9,
+		"f10": winUser.VK_F10,
+		"f11": winUser.VK_F11,
+		"f12": winUser.VK_F12,
+		"win": winUser.VK_LWIN,
+		"windows": winUser.VK_LWIN,
 	}
 	_MOD_MAP = {
-		"ctrl": winUser.VK_CONTROL, "control": winUser.VK_CONTROL, "shift": winUser.VK_SHIFT,
-		"alt": winUser.VK_MENU, "win": winUser.VK_LWIN,
+		"ctrl": winUser.VK_CONTROL,
+		"control": winUser.VK_CONTROL,
+		"shift": winUser.VK_SHIFT,
+		"alt": winUser.VK_MENU,
+		"win": winUser.VK_LWIN,
 	}
 
 	def execute(self, action):
@@ -287,12 +329,25 @@ class ActionRunner:
 					time.sleep(0.05)
 				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "left_click_drag":
-				self._drag(action["startX"], action["startY"], action["endX"], action["endY"])
-				return format_action_result(action, f"({action['startX']},{action['startY']})->({action['endX']},{action['endY']})")
+				self._drag(
+					action["startX"], action["startY"], action["endX"], action["endY"]
+				)
+				return format_action_result(
+					action,
+					f"({action['startX']},{action['startY']})->({action['endX']},{action['endY']})",
+				)
 			elif t == "scroll":
 				_announce_and_wait("Scrolling...")
-				self._scroll(action["x"], action["y"], action.get("direction", "down"), action.get("amount", 3))
-				return format_action_result(action, f"({action['x']}, {action['y']}) {action.get('direction', 'down')} {action.get('amount', 3)}")
+				self._scroll(
+					action["x"],
+					action["y"],
+					action.get("direction", "down"),
+					action.get("amount", 3),
+				)
+				return format_action_result(
+					action,
+					f"({action['x']}, {action['y']}) {action.get('direction', 'down')} {action.get('amount', 3)}",
+				)
 			elif t == "key":
 				self._key(action["key"])
 				return format_action_result(action, action["key"])
@@ -311,15 +366,25 @@ class ActionRunner:
 			else:
 				return format_action_result(action, "(unknown)", "skipped")
 		except Exception as e:
-			log.error("computer use: action %r failed", action.get("type"), exc_info=True)
+			log.error(
+				"computer use: action %r failed", action.get("type"), exc_info=True
+			)
 			return format_action_result(action, "error", e)
 
 	def _move(self, x, y):
 		winUser.setCursorPos(x, y)
 
 	def _click(self, x, y, button):
-		down = {"left": winUser.MOUSEEVENTF_LEFTDOWN, "right": winUser.MOUSEEVENTF_RIGHTDOWN, "middle": winUser.MOUSEEVENTF_MIDDLEDOWN}
-		up = {"left": winUser.MOUSEEVENTF_LEFTUP, "right": winUser.MOUSEEVENTF_RIGHTUP, "middle": winUser.MOUSEEVENTF_MIDDLEUP}
+		down = {
+			"left": winUser.MOUSEEVENTF_LEFTDOWN,
+			"right": winUser.MOUSEEVENTF_RIGHTDOWN,
+			"middle": winUser.MOUSEEVENTF_MIDDLEDOWN,
+		}
+		up = {
+			"left": winUser.MOUSEEVENTF_LEFTUP,
+			"right": winUser.MOUSEEVENTF_RIGHTUP,
+			"middle": winUser.MOUSEEVENTF_MIDDLEUP,
+		}
 		winUser.setCursorPos(x, y)
 		winUser.mouse_event(down[button], 0, 0, 0, 0)
 		winUser.mouse_event(up[button], 0, 0, 0, 0)
@@ -388,11 +453,15 @@ class ActionRunner:
 					break
 				if ch == "\n":
 					winUser.keybd_event(self._VK_MAP["enter"], 0, 0, 0)
-					winUser.keybd_event(self._VK_MAP["enter"], 0, winUser.KEYEVENTF_KEYUP, 0)
+					winUser.keybd_event(
+						self._VK_MAP["enter"], 0, winUser.KEYEVENTF_KEYUP, 0
+					)
 				else:
 					cp = ord(ch)
 					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE, 0)
-					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0)
+					winUser.keybd_event(
+						0, cp, winUser.KEYEVENTF_UNICODE | winUser.KEYEVENTF_KEYUP, 0
+					)
 				time.sleep(0.005)
 			return True
 		except Exception:
@@ -410,7 +479,9 @@ class ActionRunner:
 			# Brief delay to ensure control+v was actually pressed and released
 			time.sleep(0.1)
 			with winUser.openClipboard():
-				winUser.setClipboardData(winUser.CF_UNICODETEXT, prior if prior is not None else "")
+				winUser.setClipboardData(
+					winUser.CF_UNICODETEXT, prior if prior is not None else ""
+				)
 			return True
 		except Exception:
 			log.error("computer use: clipboard paste failed", exc_info=True)
@@ -437,6 +508,7 @@ class ComputerUseSession:
 		# import cycle: the dialog module imports helpers from this one. By the time a session is
 		# constructed, this module is fully loaded and the dependency path is already expanded.
 		from computer_use_dialogs import ComputerUseDialog
+
 		self._dialog = ComputerUseDialog(self, hwnd, parent=parent)
 
 	def show_dialog(self):
@@ -450,16 +522,18 @@ class ComputerUseSession:
 
 	def _hand_off_to_target(self):
 		"""If the dialog is up, hide it, give the foreground to the current target window, and let
-		focus settle before the next screenshot. Does nothing if the dialog is already hidden."""
+		focus changes apply before the next screenshot. Does nothing if the dialog is already hidden.
+		"""
 		if self._dialog_visible:
 			self._dialog.yield_to_target(self._target_hwnd)
 			self._dialog_visible = False
 			time.sleep(0.2)
 
 	def begin(self, task):
-		"""Called by the dialog, on the main thread, once the user has consented. Hand the
-		foreground to the target window (so the first screenshot and actions land there, not
-		on our dialog), beep that control has started, then start the control loop."""
+		"""Called by the dialog on the main thread once the user has consented.
+
+		Sets the target window to the foreground window so the first set of screenshots and actions don't hit the computer use session dialog.
+		Then start the control loop."""
 		_set_active_session(self)
 		if not self._dialog.IsBeingDeleted():
 			self._dialog.Hide()
@@ -470,14 +544,7 @@ class ComputerUseSession:
 		self._thread.start()
 
 	def inject_message(self, text):
-		"""Queue a user message to be added before the next API call.
-
-		Sending always hands control back to the model (answering a question it asked,
-		or resuming a session the user paused), so beep that control has started. Sending
-		while paused also resumes the session, so the user can pause, type a follow-up,
-		and continue in one motion. Queue first, then clear, so the message is waiting
-		when the paused loop wakes and drains it. Outside a pause the event isn't set, so
-		clearing is a harmless no-op."""
+		"""Queues a user message to be added before the next API call and hands control back to the underlying modal."""
 		self._inject_queue.put(text)
 		self._pause_event.clear()
 		on_control_start()
@@ -507,9 +574,10 @@ class ComputerUseSession:
 			_clear_active_session(self)
 
 	def _is_own_window(self, hwnd):
-		"""True if hwnd is our computer-use dialog. The risky-action approval dialog blocks the
-		worker thread on its result event rather than during a capture, so it never needs guarding
-		here."""
+		"""True if hwnd is our computer-use dialog.
+
+		Note: The risky-action approval dialog blocks the worker thread on its result event rather than during a capture,
+		so we don't check for it here."""
 		try:
 			if not self._dialog.IsBeingDeleted() and hwnd == self._dialog.GetHandle():
 				return True
@@ -527,7 +595,10 @@ class ComputerUseSession:
 		try:
 			hwnd = winUser.getForegroundWindow()
 		except Exception:
-			log.debug("computer use: getForegroundWindow failed; falling back to last target", exc_info=True)
+			log.debug(
+				"computer use: getForegroundWindow failed; falling back to last target",
+				exc_info=True,
+			)
 			hwnd = 0
 		if not hwnd or not winUser.isWindow(hwnd) or self._is_own_window(hwnd):
 			return self._target_hwnd, None
@@ -538,13 +609,20 @@ class ComputerUseSession:
 			if fg is not None and int(getattr(fg, "windowHandle", 0) or 0) == hwnd:
 				obj = fg
 			else:
-				log.debug("computer use: foreground object does not match foreground window; no metadata")
+				log.debug(
+					"computer use: foreground object does not match foreground window; no metadata"
+				)
 		except Exception:
-			log.debug("computer use: getForegroundObject failed; capturing without metadata", exc_info=True)
+			log.debug(
+				"computer use: getForegroundObject failed; capturing without metadata",
+				exc_info=True,
+			)
 		return hwnd, obj
 
 	def _run_loop(self, task):
-		capture = Capture(self._resolve_capture_target, self._max_long_edge, self._max_pixels)
+		capture = Capture(
+			self._resolve_capture_target, self._max_long_edge, self._max_pixels
+		)
 		runner = ActionRunner(self._cancel_event, self._pause_event)
 		provider_session = self._service.create_computer_session(task)
 		tool_results = None
@@ -598,7 +676,9 @@ class ComputerUseSession:
 				# so keep the session alive and wait for a follow-up. Typing continues
 				# with full context (history and response id intact); closing the
 				# dialog or cancelling ends the session.
-				self._dialog.append_message("Ready for your next instruction.", role="system")
+				self._dialog.append_message(
+					"Ready for your next instruction.", role="system"
+				)
 				on_control_pause()
 				self._surface_dialog(focus_input=True)
 				followup = self._await_followup()
@@ -629,7 +709,9 @@ class ComputerUseSession:
 		for action in resp.actions:
 			if self._cancel_event.is_set() or self._pause_event.is_set():
 				break
-			if not self._approve_all and (action.get("type") == "confirm" or action.get("safety_checks")):
+			if not self._approve_all and (
+				action.get("type") == "confirm" or action.get("safety_checks")
+			):
 				if not self._ask_approval(action):
 					self._cancel_event.set()
 					break
@@ -637,25 +719,32 @@ class ComputerUseSession:
 			if "x" in scaled and "y" in scaled:
 				scaled["x"], scaled["y"] = capture.to_screen(action["x"], action["y"])
 			if "startX" in scaled:
-				scaled["startX"], scaled["startY"] = capture.to_screen(action["startX"], action["startY"])
-				scaled["endX"], scaled["endY"] = capture.to_screen(action["endX"], action["endY"])
+				scaled["startX"], scaled["startY"] = capture.to_screen(
+					action["startX"], action["startY"]
+				)
+				scaled["endX"], scaled["endY"] = capture.to_screen(
+					action["endX"], action["endY"]
+				)
 			compact = runner.execute(scaled)
 			self._dialog.append_message(compact, role="action")
 			call_id = action.get("call_id", "")
-			entry = results_by_call_id.setdefault(call_id, {"results": [], "safety_checks": action.get("safety_checks", [])})
+			entry = results_by_call_id.setdefault(
+				call_id,
+				{"results": [], "safety_checks": action.get("safety_checks", [])},
+			)
 			entry["results"].append(compact)
 		return [
-			{"call_id": cid, "compact_result": "\n".join(entry["results"]), "safety_checks": entry["safety_checks"]}
+			{
+				"call_id": cid,
+				"compact_result": "\n".join(entry["results"]),
+				"safety_checks": entry["safety_checks"],
+			}
 			for cid, entry in results_by_call_id.items()
 		]
 
 	def _handle_pause(self):
-		"""Between action batches, let keystrokes settle then block while paused. Returns the
-		next injected_text (a drained follow-up, or None). If the session is cancelled during
-		the wait, returns None and the loop's while-condition ends the session."""
-		# Let keystrokes and focus changes settle before the next screenshot
+		# Give keystrokes and focus changes time to apply before the next screenshot
 		time.sleep(0.3)
-		# Pause is checked between action batches only, never mid-action.
 		if not self._wait_while_paused():
 			return None
 		return self._drain_injection()
@@ -671,10 +760,12 @@ class ComputerUseSession:
 		("error", exception).
 
 		A paused or cancelled request is abandoned with its worker thread finishing and quietly failing in the background.
-		A transient transport failure is retried a few times, backing off at a globally defined interval."""
+		A transient transport failure is retried a few times, backing off at a globally defined interval.
+		"""
 		for attempt in range(MAX_REQUEST_ATTEMPTS):
 			holder = {}
 			done = threading.Event()
+
 			def _worker():
 				try:
 					holder["resp"] = provider_session.step(**kwargs)
@@ -682,6 +773,7 @@ class ComputerUseSession:
 					holder["error"] = e
 				finally:
 					done.set()
+
 			threading.Thread(target=_worker, daemon=True).start()
 			while not done.wait(0.05):
 				if self._cancel_event.is_set():
@@ -691,11 +783,16 @@ class ComputerUseSession:
 			if "error" not in holder:
 				return "ok", holder["resp"]
 			error = holder["error"]
-			if attempt + 1 >= MAX_REQUEST_ATTEMPTS or not _is_retryable_request_error(error):
+			if attempt + 1 >= MAX_REQUEST_ATTEMPTS or not _is_retryable_request_error(
+				error
+			):
 				return "error", error
-			log.warning(f"computer use: request attempt {attempt + 1} failed, retrying", exc_info=error)
+			log.warning(
+				f"computer use: request attempt {attempt + 1} failed, retrying",
+				exc_info=error,
+			)
 			# Back off before retrying, but make sure it is still possible to cancel while we're waiting.
-			backoff = RETRY_BACKOFF_BASE_SECONDS * (2 ** attempt)
+			backoff = RETRY_BACKOFF_BASE_SECONDS * (2**attempt)
 			waited = 0.0
 			while waited < backoff:
 				if self._cancel_event.is_set():
@@ -746,7 +843,13 @@ class ComputerUseSession:
 			return True
 		result_event = threading.Event()
 		result_holder = [None]
-		wx.CallAfter(self._request_approval, action, result_event, result_holder, self._target_hwnd)
+		wx.CallAfter(
+			self._request_approval,
+			action,
+			result_event,
+			result_holder,
+			self._target_hwnd,
+		)
 		result_event.wait()
 		choice = result_holder[0]
 		if choice == "approve_all":

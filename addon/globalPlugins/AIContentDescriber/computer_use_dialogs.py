@@ -1,10 +1,12 @@
 import wx
 
 import logging
+
 log = logging.getLogger(__name__)
 
 import ui
 import addonHandler
+
 try:
 	addonHandler.initTranslation()
 except addonHandler.AddonError:
@@ -12,21 +14,29 @@ except addonHandler.AddonError:
 
 import gui
 import winUser
-from computer_use import _announce_and_wait, _on_main_thread, describe_action, safety_check_messages
+from computer_use import (
+	_announce_and_wait,
+	_on_main_thread,
+	describe_action,
+	safety_check_messages,
+)
 
 
 def _get_pause_gesture():
 	try:
 		import globalPluginHandler
 		import inputCore
+
 		for plugin in globalPluginHandler.runningPlugins:
-			if not hasattr(plugin, 'script_pause_resume_computer_use'):
+			if not hasattr(plugin, "script_pause_resume_computer_use"):
 				continue
 			for identifier, func in plugin._gestureMap.items():
-				if getattr(func, '__name__', '') == 'script_pause_resume_computer_use':
+				if getattr(func, "__name__", "") == "script_pause_resume_computer_use":
 					return inputCore.getDisplayTextForGestureIdentifier(identifier)[1]
 	except Exception:
-		log.exception("Couldn't resolve the pause/resume gesture; falling back to the default.")
+		log.exception(
+			"Couldn't resolve the pause/resume gesture; falling back to the default."
+		)
 	return "NVDA+Control+Shift+P"
 
 
@@ -60,7 +70,9 @@ class ComputerUseDialog(wx.Dialog):
 		vbox.Add(message_label, flag=wx.LEFT, border=15)
 		self.input_txt = wx.TextCtrl(panel, style=wx.TE_PROCESS_ENTER)
 		self.input_txt.Bind(wx.EVT_TEXT_ENTER, self.on_send)
-		vbox.Add(self.input_txt, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=15)
+		vbox.Add(
+			self.input_txt, flag=wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM, border=15
+		)
 		hbox = wx.BoxSizer(wx.HORIZONTAL)
 		# Translators: the Send button in the computer control dialog
 		self.send_button = wx.Button(panel, label=_("&Send"))
@@ -82,8 +94,10 @@ class ComputerUseDialog(wx.Dialog):
 		self.input_txt.SetFocus()
 
 	def append_message(self, text, role="system"):
-		"""Append a role-prefixed line to the log. Speak only the model's own messages,
-		using announce-and-wait so they are not cut off by the next action announcement."""
+		"""Append a role-prefixed line to the log.
+
+		Speak only the model's own messages using announce-and-wait so they are not cut off by the next action announcement.
+		"""
 		prefixes = {
 			"action": "[action] ",
 			"assistant": _("AI: "),
@@ -97,6 +111,7 @@ class ComputerUseDialog(wx.Dialog):
 
 	def bring_to_front(self, focus_input=False):
 		"""Brings this dialog to the foreground, optionally focusing the text field."""
+
 		def _do():
 			if self.IsBeingDeleted():
 				return
@@ -106,29 +121,32 @@ class ComputerUseDialog(wx.Dialog):
 				self.input_txt.SetFocus()
 			else:
 				self.SetFocus()
+
 		_on_main_thread(_do)
 
 	def yield_to_target(self, hwnd=None):
-		"""Hide this dialog and hand the foreground to the target window. `hwnd` lets the session
-		pass the live target; falls back to the window the dialog was opened for."""
+		"""Hide this dialog and hand the foreground to the target window."""
 		target = hwnd if hwnd is not None else self._hwnd
+
 		def _do():
 			if not self.IsBeingDeleted():
 				self.Hide()
 			winUser.setForegroundWindow(target)
+
 		_on_main_thread(_do)
 
 	def session_ended(self):
-		"""Called when the session loop has finished. A clean end has no beep, so log and
-		speak that it ended, then stop forwarding input to a dead session."""
+		"""Called when the session loop has finished."""
 		# Translators: logged and spoken when a computer control session ends
 		message = _("Session ended")
 		self.append_message(message, role="system")
 		ui.message(message)
+
 		def _do():
 			if not self.IsBeingDeleted():
 				self.input_txt.Disable()
 				self.send_button.Disable()
+
 		_on_main_thread(_do)
 
 	def on_send(self, event=None):
@@ -149,7 +167,9 @@ class ComputerUseDialog(wx.Dialog):
 		dlg = wx.MessageDialog(
 			self,
 			# Translators: body of the computer control consent dialog
-			_("The selected model would like to take control of your computer to perform the requested task. You will be notified as actions occur, and you can press {keystroke} any time to pause the session. Would you like to allow this?").format(keystroke=keystroke),
+			_(
+				"The selected model would like to take control of your computer to perform the requested task. You will be notified as actions occur, and you can press {keystroke} any time to pause the session. Would you like to allow this?"
+			).format(keystroke=keystroke),
 			# Translators: title of the computer control consent dialog
 			_("AI Content Describer"),
 			wx.YES_NO | wx.ICON_QUESTION,
@@ -199,11 +219,18 @@ class ComputerUseApprovalDialog(wx.Dialog):
 		self.choice = "cancel"
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		# Translators: body of the risky-action approval dialog; {action} is a description of what the AI wants to do
-		body = _("The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?").format(action=describe_action(action))
+		body = _(
+			"The AI wants to perform a potentially risky action:\n\n{action}\n\nAllow it?"
+		).format(action=describe_action(action))
 		messages = safety_check_messages(action)
 		if messages:
 			# Translators: header for API-issued safety warnings appended to the approval dialog
-			body += "\n\n" + _("API safety warnings:") + "\n" + "\n".join(f"- {m}" for m in messages)
+			body += (
+				"\n\n"
+				+ _("API safety warnings:")
+				+ "\n"
+				+ "\n".join(f"- {m}" for m in messages)
+			)
 		msg = wx.StaticText(self, label=body)
 		sizer.Add(msg, 0, wx.ALL, 10)
 		btn_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -237,8 +264,7 @@ def show_computer_use_approval(action, result_event, result_holder, target_hwnd=
 	dlg.ShowModal()
 	result_holder[0] = dlg.choice
 	dlg.Destroy()
-	# Restore the target window's foreground while we still own it so the
-	# approved action's input goes to the user's app.
+	# Restore the target window's foreground while we still own it so the approved action's input goes to the user's app.
 	# Otherwise, actions will be sent to the computer use dialog
 	if target_hwnd and result_holder[0] in ("approve_once", "approve_all"):
 		winUser.setForegroundWindow(target_hwnd)
