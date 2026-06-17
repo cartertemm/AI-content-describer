@@ -337,16 +337,16 @@ class ActionRunner:
 		if main_vk is None and main_key:
 			try:
 				shift_state, main_vk = winUser.VkKeyScanEx(main_key[0], 0)
-				if shift_state & 0x01 and 0x10 not in modifiers:
+				if shift_state & 0x01 and self._MOD_MAP["shift"] not in modifiers:
 					extra_shift = True
-					winUser.keybd_event(0x10, 0, 0, 0)
+					winUser.keybd_event(self._MOD_MAP["shift"], 0, 0, 0)
 			except LookupError:
 				pass
 		if main_vk is not None:
 			winUser.keybd_event(main_vk, 0, 0, 0)
 			winUser.keybd_event(main_vk, 0, winUser.KEYEVENTF_KEYUP, 0)
 		if extra_shift:
-			winUser.keybd_event(0x10, 0, winUser.KEYEVENTF_KEYUP, 0)
+			winUser.keybd_event(self._MOD_MAP["shift"], 0, winUser.KEYEVENTF_KEYUP, 0)
 		for vk in reversed(modifiers):
 			winUser.keybd_event(vk, 0, winUser.KEYEVENTF_KEYUP, 0)
 
@@ -369,8 +369,8 @@ class ActionRunner:
 				if self._aborted():
 					break
 				if ch == "\n":
-					winUser.keybd_event(0x0D, 0, 0, 0)
-					winUser.keybd_event(0x0D, 0, winUser.KEYEVENTF_KEYUP, 0)
+					winUser.keybd_event(self._VK_MAP["enter"], 0, 0, 0)
+					winUser.keybd_event(self._VK_MAP["enter"], 0, winUser.KEYEVENTF_KEYUP, 0)
 				else:
 					cp = ord(ch)
 					winUser.keybd_event(0, cp, winUser.KEYEVENTF_UNICODE, 0)
@@ -388,10 +388,7 @@ class ActionRunner:
 				prior = winUser.getClipboardData(winUser.CF_UNICODETEXT)
 			with winUser.openClipboard():
 				winUser.setClipboardData(winUser.CF_UNICODETEXT, text)
-			winUser.keybd_event(0x11, 0, 0, 0)  # Ctrl down
-			winUser.keybd_event(0x56, 0, 0, 0)  # V down
-			winUser.keybd_event(0x56, 0, winUser.KEYEVENTF_KEYUP, 0)
-			winUser.keybd_event(0x11, 0, winUser.KEYEVENTF_KEYUP, 0)
+			self._key("ctrl+v")
 			# Brief delay to ensure control+v was actually pressed and released
 			time.sleep(0.1)
 			with winUser.openClipboard():
