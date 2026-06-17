@@ -4,6 +4,7 @@ import math
 import queue
 import threading
 import time
+import urllib.error
 from io import BytesIO
 
 log = logging.getLogger(__name__)
@@ -34,7 +35,20 @@ def _on_main_thread(fn):
 	wx.CallAfter(_do)
 
 
-ANNOUNCE_TIMEOUT_SECONDS = 10
+def _is_retryable_request_error(error):
+	"""Returns True for a transport failure where no HTTP response was received (SSL EOF, connection reset, DNS issue, timeout).
+	Returns False if an HTTP response was received."""
+	cause = getattr(error, "__cause__", None)
+	if isinstance(cause, urllib.error.HTTPError):
+		return False
+	return isinstance(cause, (urllib.error.URLError, OSError))
+
+
+# In case a synth driver doesn't signal completion of an utterance, continue after this many seconds
+ANNOUNCE_TIMEOUT_SECONDS = 5
+# A transient transport failure (SSL EOF, connection reset) shouldn't end an entire session. We can simply re-issue the request a maximum number of times
+MAX_REQUEST_ATTEMPTS = 3
+RETRY_BACKOFF_BASE_SECONDS = 1.0
 TYPE_PREVIEW_MAX_CHARS = 40
 # Above this length, paste the text instead of synthesizing a keystroke per character.
 PASTE_TYPE_THRESHOLD_CHARS = 512
@@ -648,32 +662,52 @@ class ComputerUseSession:
 
 	def _make_request_interruptible(self, provider_session, **kwargs):
 		"""Make the API request on a worker thread, polling for pause/cancel so a slow
-		turn never blocks the loop until the socket times out. Returns one of:
-		("ok", StepResult), ("paused", None), ("cancelled", None), ("error", exception).
-		A paused or cancelled request is abandoned; its worker thread finishes (and
-		fails quietly) in the background."""
-		holder = {}
-		done = threading.Event()
-		def _worker():
-			try:
-				holder["resp"] = provider_session.step(**kwargs)
-			except Exception as e:
-				holder["error"] = e
-			finally:
-				done.set()
-		threading.Thread(target=_worker, daemon=True).start()
-		while not done.wait(0.05):
-			if self._cancel_event.is_set():
-				return "cancelled", None
-			if self._pause_event.is_set():
-				return "paused", None
-		if "error" in holder:
-			return "error", holder["error"]
-		return "ok", holder["resp"]
+		turn never blocks the loop until the socket times out.
+
+		Returns one of:
+		("ok", StepResult)
+		("paused", None)
+		("cancelled", None)
+		("error", exception).
+
+		A paused or cancelled request is abandoned with its worker thread finishing and quietly failing in the background.
+		A transient transport failure is retried a few times, backing off at a globally defined interval."""
+		for attempt in range(MAX_REQUEST_ATTEMPTS):
+			holder = {}
+			done = threading.Event()
+			def _worker():
+				try:
+					holder["resp"] = provider_session.step(**kwargs)
+				except Exception as e:
+					holder["error"] = e
+				finally:
+					done.set()
+			threading.Thread(target=_worker, daemon=True).start()
+			while not done.wait(0.05):
+				if self._cancel_event.is_set():
+					return "cancelled", None
+				if self._pause_event.is_set():
+					return "paused", None
+			if "error" not in holder:
+				return "ok", holder["resp"]
+			error = holder["error"]
+			if attempt + 1 >= MAX_REQUEST_ATTEMPTS or not _is_retryable_request_error(error):
+				return "error", error
+			log.warning(f"computer use: request attempt {attempt + 1} failed, retrying", exc_info=error)
+			# Back off before retrying, but make sure it is still possible to cancel while we're waiting.
+			backoff = RETRY_BACKOFF_BASE_SECONDS * (2 ** attempt)
+			waited = 0.0
+			while waited < backoff:
+				if self._cancel_event.is_set():
+					return "cancelled", None
+				time.sleep(0.05)
+				waited += 0.05
+		return "error", holder["error"]
 
 	def _wait_while_paused(self):
 		"""If paused, surface the dialog so the user can read the log or inject a
 		follow-up, block until they resume or cancel, then hand the target window back.
+
 		Returns False if the session was cancelled, True otherwise."""
 		if not self._pause_event.is_set():
 			return not self._cancel_event.is_set()
