@@ -229,16 +229,20 @@ class ActionRunner:
 			or (self._pause_event is not None and self._pause_event.is_set()))
 
 	_VK_MAP = {
-		"enter": 0x0D, "return": 0x0D, "tab": 0x09, "escape": 0x1B, "esc": 0x1B,
-		"space": 0x20, "backspace": 0x08, "delete": 0x2E,
-		"up": 0x26, "down": 0x28, "left": 0x25, "right": 0x27,
-		"home": 0x24, "end": 0x23, "pageup": 0x21, "pagedown": 0x22,
-		"f1": 0x70, "f2": 0x71, "f3": 0x72, "f4": 0x73,
-		"f5": 0x74, "f6": 0x75, "f7": 0x76, "f8": 0x77,
-		"f9": 0x78, "f10": 0x79, "f11": 0x7A, "f12": 0x7B,
-		"win": 0x5B, "windows": 0x5B,
+		"enter": winUser.VK_RETURN, "return": winUser.VK_RETURN, "tab": winUser.VK_TAB,
+		"escape": winUser.VK_ESCAPE, "esc": winUser.VK_ESCAPE, "space": winUser.VK_SPACE,
+		"backspace": winUser.VK_BACK, "delete": winUser.VK_DELETE,
+		"up": winUser.VK_UP, "down": winUser.VK_DOWN, "left": winUser.VK_LEFT, "right": winUser.VK_RIGHT,
+		"home": winUser.VK_HOME, "end": winUser.VK_END, "pageup": winUser.VK_PRIOR, "pagedown": winUser.VK_NEXT,
+		"f1": winUser.VK_F1, "f2": winUser.VK_F2, "f3": winUser.VK_F3, "f4": winUser.VK_F4,
+		"f5": winUser.VK_F5, "f6": winUser.VK_F6, "f7": winUser.VK_F7, "f8": winUser.VK_F8,
+		"f9": winUser.VK_F9, "f10": winUser.VK_F10, "f11": winUser.VK_F11, "f12": winUser.VK_F12,
+		"win": winUser.VK_LWIN, "windows": winUser.VK_LWIN,
 	}
-	_MOD_MAP = {"ctrl": 0x11, "control": 0x11, "shift": 0x10, "alt": 0x12, "win": 0x5B}
+	_MOD_MAP = {
+		"ctrl": winUser.VK_CONTROL, "control": winUser.VK_CONTROL, "shift": winUser.VK_SHIFT,
+		"alt": winUser.VK_MENU, "win": winUser.VK_LWIN,
+	}
 
 	def execute(self, action):
 		"""Execute one action dict; return a compact result string."""
