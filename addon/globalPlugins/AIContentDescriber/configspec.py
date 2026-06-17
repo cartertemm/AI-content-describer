@@ -1,5 +1,5 @@
 # Configuration specification for the AI Content Describer NVDA add-on
-# Copyright (C) 2023, Carter Temm
+# Copyright (C) 2023 - 2026, Carter Temm
 # This add-on is free software, licensed under the terms of the GNU General Public License (version 2).
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -106,6 +106,13 @@ cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [Google Gemini 3.1 Pro Preview]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=2048)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Google Gemini 3.5 Flash]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=2048)
