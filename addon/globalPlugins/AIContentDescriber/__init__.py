@@ -41,7 +41,10 @@ import config_handler as ch
 import description_service
 import model_configuration
 from multimodal_input import launch_conversation_dialog, offer_image_attachment
+from computer_use import ComputerUseSession, get_active_session
+from computer_use_dialogs import show_computer_use_approval
 import dependency_checker
+import ui_viewer
 
 third_party_path = dependency_checker.expand_path()
 # stdlib additions to import markdown
@@ -157,6 +160,8 @@ class AreaMenu(wx.Menu):
 		self.navigator_item = self.Append(wx.ID_ANY, _("Navigator object"))
 		# translators: screenshot of entire window menu item
 		self.screenshot_item = self.Append(wx.ID_ANY, _("Entire screen"))
+		# translators: menu item to reconstruct the screen as accessible HTML
+		self.show_ui_item = self.Append(wx.ID_ANY, _("Show UI"))
 		# translators: picture from the local camera menu item
 		self.camera_item = self.Append(wx.ID_ANY, _("Take a picture"))
 		# For the face detection submenu
@@ -184,9 +189,18 @@ class AreaMenu(wx.Menu):
 			gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.followup_item)
 		else:
 			self.followup_item = None
+		if service and service.supports_computer_use:
+			# Translators: area menu item to start an AI computer control session
+			self.computer_use_item = self.Append(wx.ID_ANY, _("Control computer..."))
+		else:
+			# Translators: area menu item shown when the selected model does not support computer control
+			self.computer_use_item = self.Append(wx.ID_ANY, _("Control computer (not supported by selected model)"))
+			self.computer_use_item.Enable(False)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.computer_use_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.focus_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.navigator_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.show_ui_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.camera_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_item)
 		#gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_realtime_item)
@@ -383,6 +397,9 @@ class GlobalPlugin(GlobalPlugin):
 			os.unlink(file)
 
 	def show_area_menu(self):
+		# Cache foreground HWND before prePopup steals focus
+		import winUser
+		foreground_hwnd = winUser.getForegroundWindow()
 		self.prev_navigator = api.getNavigatorObject()
 		self.prev_focus = api.getFocusObject()
 		gui.mainFrame.prePopup()
@@ -401,6 +418,8 @@ class GlobalPlugin(GlobalPlugin):
 			self.describe_navigator_object()
 		elif menu.selection == menu.screenshot_item:
 			self.describe_screenshot()
+		elif menu.selection == menu.show_ui_item:
+			ui_viewer.describe_ui(self, service)
 		elif menu.selection == menu.camera_item:
 			self.describe_camera()
 		elif menu.selection == menu.detect_face_item:
@@ -413,6 +432,8 @@ class GlobalPlugin(GlobalPlugin):
 			ui.message(_("Success"))
 		elif menu.selection == menu.followup_item and menu.followup_item is not None:
 			self.show_conversation_dialog()
+		elif menu.selection == menu.computer_use_item:
+			self.open_computer_control_session(foreground_hwnd)
 		else:
 			self.prev_focus = None
 			self.prev_navigator = None
@@ -449,6 +470,52 @@ class GlobalPlugin(GlobalPlugin):
 		wx.CallAfter(self.show_area_menu)
 	script_describe_image.__doc__ = _("Pop up a menu asking whether to describe the current focus, navigator object, or entire screen with AI.")
 
+	def open_computer_control_session(self, hwnd):
+		if not service:
+			ui.message(_("No AI service configured."))
+			return
+		if not service.supports_computer_use:
+			ui.message(_("Computer use is not supported by the selected model."))
+			return
+		if self.is_screen_curtain_running():
+			ui.message(_("Computer control cannot be used while the screen curtain is active."))
+			return
+		session = ComputerUseSession(
+			service=service,
+			hwnd=hwnd,
+			request_approval=show_computer_use_approval,
+			parent=gui.mainFrame,
+		)
+		session.show_dialog()
+
+	def script_pause_resume_computer_use(self, gesture):
+		session = get_active_session()
+		if not session:
+			# Translators: spoken when the pause gesture is pressed but no session is running
+			ui.message(_("No active computer control session."))
+			return
+		if session.is_paused:
+			session.toggle_pause()
+			# Translators: spoken when a computer control session is resumed
+			ui.message(_("Computer control resumed."))
+		else:
+			session.toggle_pause()
+			# Translators: spoken when a computer control session is paused
+			ui.message(_("Computer control paused."))
+
+	script_pause_resume_computer_use.__doc__ = _("Pause or resume the active computer control session")
+
+	def script_cancel_computer_use(self, gesture):
+		session = get_active_session()
+		if not session:
+			ui.message(_("No active computer control session."))
+			return
+		session.cancel()
+		# Translators: spoken when the user cancels a computer control session
+		ui.message(_("Computer control session cancelled."))
+
+	script_cancel_computer_use.__doc__ = _("Cancel the active computer control session")
+
 	def script_describe_camera(self, gesture):
 		self.describe_camera()
 	script_describe_camera.__doc__ = _("Snap a picture using the selected camera, then describe it using AI.")
@@ -480,4 +547,5 @@ class GlobalPlugin(GlobalPlugin):
 		"kb:shift+NVDA+y": "describe_clipboard",
 		"kb:shift+NVDA+j": "describe_face",
 		"kb:alt+NVDA+c": "show_conversation",
+		"kb:NVDA+control+shift+p": "pause_resume_computer_use",
 	}

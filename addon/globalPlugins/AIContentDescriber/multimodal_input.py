@@ -147,6 +147,8 @@ class MultimodalInput(wx.Dialog):
 			return
 		self.input_txt.SetValue("")
 		self.send_button.Enable(False)
+
+		# Description flow
 		# Show user message immediately
 		text_entry = _("You: ") + user_input + "\n"
 		self.text_ctrl.AppendText(text_entry)
