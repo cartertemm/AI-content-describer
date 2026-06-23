@@ -159,7 +159,7 @@ class FaceDetectionInterface:
 		if self.chosen_camera is not None and self.chosen_camera in self.devices:
 			return  # continue using it
 		if len(self.devices) == 1:
-			if self.chosen_camera is not None and not self.chosen_camera in self.devices:
+			if self.chosen_camera is not None and self.chosen_camera not in self.devices:
 				# translators: message spoken when the camera that was being used before has disconnected
 				wx.CallAfter(ui.message, _(self.chosen_camera+" is no longer available. Switching to the other on the system."))
 			self.chosen_camera = self.devices[0]  # just use the first available

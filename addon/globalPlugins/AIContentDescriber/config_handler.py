@@ -26,7 +26,7 @@ def load_config():
 		config = ConfigObj(
 			infile=path, configspec=configspec, default_encoding="UTF8", create_empty=True
 		)
-	except ConfigObjError as exc:
+	except ConfigObjError:
 		log.exception("While loading the configuration file")
 		return
 	validator = Validator()

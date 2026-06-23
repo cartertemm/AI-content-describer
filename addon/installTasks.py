@@ -11,7 +11,6 @@ import wx
 import addonHandler
 import globalVars
 import gui
-from gui import addonGui
 addonHandler.initTranslation()
 
 

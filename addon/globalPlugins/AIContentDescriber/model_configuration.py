@@ -1,4 +1,3 @@
-import threading
 import wx
 from gui import guiHelper
 from gui import nvdaControls
@@ -34,15 +33,15 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 
 	def add_api_key_field(self, sHelper):
 		# Translators: The label for the API key field in the model configuration dialog
-		self.api_key = sHelper.addLabeledControl(_(f"API key"), wx.TextCtrl)
+		self.api_key = sHelper.addLabeledControl(_("API key"), wx.TextCtrl)
 
 	def add_base_url_field(self, sHelper):
 		# Translators: The label for the base URL field in the model configuration dialog
-		self.base_url = sHelper.addLabeledControl(_(f"Base URL"), wx.TextCtrl)
+		self.base_url = sHelper.addLabeledControl(_("Base URL"), wx.TextCtrl)
 
 	def add_model_name_field(self, sHelper):
 		# Translators: The label for the model name field in the model configuration dialog
-		self.chosen_model = sHelper.addLabeledControl(_(f"Model name"), wx.TextCtrl)
+		self.chosen_model = sHelper.addLabeledControl(_("Model name"), wx.TextCtrl)
 
 	def add_list_models_button(self, sHelper):
 		# Translators: The label for the list models button in the model configuration dialog
@@ -574,6 +573,6 @@ def build_model_configuration_dialog(parent=None):
 	for model in description_service.models:
 		if hasattr(model, "configurationPanel"):
 			panel = model.configurationPanel
-			if not panel in dlg.categoryClasses:
+			if panel not in dlg.categoryClasses:
 				dlg.categoryClasses.append(panel)
 	return dlg

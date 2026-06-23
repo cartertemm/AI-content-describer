@@ -199,7 +199,7 @@ def get_dependencies_url(mirror=False):
 
 def  get_all_dependencies():
 	base = globalVars.appArgs.configPath
-	wildcard= os.path.abspath(os.path.join(base, f"aic-py-*"))
+	wildcard= os.path.abspath(os.path.join(base, "aic-py-*"))
 	return glob.glob(wildcard, recursive=False)
 
 

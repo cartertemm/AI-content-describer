@@ -348,7 +348,7 @@ class GlobalPlugin(GlobalPlugin):
 				ui.message(_("The item on the clipboard is not an image."))
 				return
 			file = snap[0]
-			if service.supported_formats and not os.path.splitext(file)[1].lower() in service.supported_formats:
+			if service.supported_formats and os.path.splitext(file)[1].lower() not in service.supported_formats:
 				# Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
 				unsupported_format_msg = _("Unsupported image format. Please copy another file to the clipboard that is {formats}").format(formats=', '.join(service.supported_formats))
 				ui.message(unsupported_format_msg)
@@ -386,7 +386,7 @@ class GlobalPlugin(GlobalPlugin):
 			messageTitle = _("Image description")
 			try:
 				message = markdown.markdown(message, extensions = [fenced_code.FencedCodeExtension(), tables.TableExtension(), nl2br.Nl2BrExtension(), sane_lists.SaneListExtension()])
-			except Exception as e:
+			except Exception:
 				log.exception("Exception while converting markdown to html, falling back to a text description")
 			# The browsableMessage dialog uses mshtml, which doesn't appear to care if the text isn't actually markup.
 			wx.CallAfter(ui.browseableMessage, message, messageTitle, True)

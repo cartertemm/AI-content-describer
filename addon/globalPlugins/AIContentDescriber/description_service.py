@@ -6,8 +6,6 @@
 
 import base64
 import json
-import os.path
-import tempfile
 import functools
 import urllib.parse
 import urllib.request
@@ -1601,7 +1599,7 @@ class Ollama(BaseDescriptionService):
 		return {"Content-Type": "application/json"}
 
 	def _extract_conversation_response(self, response_json):
-		if not "message" in response_json:
+		if "message" not in response_json:
 			import ui
 
 			ui.message(
@@ -1728,7 +1726,7 @@ class LiteLLMProxy(BaseDescriptionService):
 
 	def _extract_conversation_response(self, response_json):
 		if (
-			not "choices" in response_json
+			"choices" not in response_json
 			or not response_json["choices"]
 			or "message" not in response_json["choices"][0]
 		):
@@ -1818,7 +1816,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 		return {"Content-Type": "application/json"}
 
 	def _extract_conversation_response(self, response_json):
-		if not "content" in response_json:
+		if "content" not in response_json:
 			import ui
 
 			ui.message(
