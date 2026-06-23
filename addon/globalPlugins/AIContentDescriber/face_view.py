@@ -5,6 +5,7 @@ from gui import settingsDialogs
 from gui import guiHelper
 
 import addonHandler
+from logHandler import log
 try:
 	addonHandler.initTranslation()
 except addonHandler.AddonError:
@@ -13,7 +14,6 @@ except addonHandler.AddonError:
 import wx
 import cv2
 from pygrabber import dshow_graph
-from logHandler import log
 
 
 LAPLACIAN_THRESHOLD = 2
