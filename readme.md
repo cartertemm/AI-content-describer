@@ -9,6 +9,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Describe the focus object, navigator object, entire screen, or snap a photo from the onboard camera
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
+* Use supported models to control the active application with mouse and keyboard actions for potentially inaccessible tasks
 * Free to use by default, optionally add your own API key for more models
 * Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, vivo BlueLM Vision via NVDA-CN, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
@@ -32,14 +33,15 @@ Now, the possibilities are almost endless. You might:
 * Get detailed info about the status of games, virtual machines, etc when sound is insufficient or unavailable
 * Figure out what is displayed in a graph
 * Demystify screenshots or screen shares in Zoom or Microsoft Teams
+* Ask a supported model to help operate an inaccessible app or complete a task in the foreground window
 * Ensure your face is looking clearly at the camera and that your background is professional before recording videos or participating in online meetings
 
 ## Models
 
 * [Pollinations](https://pollinations.ai/): The team behind Pollinations.AI generously sponsors free GPT4 access for this project, so users do not need to supply their own API key. Note that the service has been observed to be buggy, and we highly recommend using your own keys to realize the full benefits of this project.
-* [OpenAI GPT and reasoning models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes GPT-4 turbo, GPT-4o, the GPT-4.1 family (4.1, 4.1 mini, 4.1 nano), the GPT-5 family (5, 5 mini, 5 nano, and 5 chat), the GPT-5.4 family (5.4, 5.4 mini, 5.4 nano), the GPT-5.5 family (5.5 and 5.5 pro), and the reasoning models O3, O3 pro, O3 mini, and O4 mini.
+* [OpenAI GPT and reasoning models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes GPT-4 turbo, GPT-4o, the GPT-4.1 family (4.1, 4.1 mini, 4.1 nano), the GPT-5 family (5, 5 mini, 5 nano, and 5 chat), the GPT-5.4 family (5.4, 5.4 mini, 5.4 nano), the GPT-5.5 family (5.5 and 5.5 pro), and the reasoning models O3, O3 pro, O3 mini, and O4 mini. Computer use is supported by the GPT-5.4 and GPT-5.5 families.
 * [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3 Flash Preview, 3.1 Flash-Lite Preview, and 3.1 Pro Preview models.
-* [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4 (Sonnet, Opus), 4.1 Opus, 4.5 (Haiku, Sonnet, Opus), and 4.6 (Sonnet, Opus).
+* [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4 (Sonnet, Opus), 4.1 Opus, 4.5 (Haiku, Sonnet, Opus), 4.6 (Sonnet, Opus), and 4.7 Opus. Computer use is supported by Claude 4.1 Opus, Claude 4.5 models, Claude 4.6 models, and Claude 4.7 Opus.
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [Grok 2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
 * vivo BlueLM Vision: a multimodal model from vivo, accessed via a free NVDA-CN account. See the setup section below.
@@ -67,6 +69,8 @@ We used to provide recommendations on the cheapest and highest quality options, 
 The short answer is that most of the state-of-the-art models have gotten to a point where they are accurate for most every-day use cases, so choose the provider that you are familiar with.
 
 Most people want to strike a balance between accuracy and cost. The [LLM arena leaderboard](https://lmarena.ai/leaderboard) (specifically the vision category) measures correctness, while [LLM pricing calculator](https://www.llm-prices.com/) outlines pricing.
+
+If you want to use computer control, choose one of the supported OpenAI or Anthropic models listed above. Free Pollinations access is useful for image descriptions, but it does not support computer use.
 
 ### Obtaining an API key from Open-AI:
 
@@ -189,19 +193,21 @@ Seer runs PaliGemma2 on your own machine with no API key or cloud connection req
 
 ## Usage
 
-Five hotkeys are bound by default:
+Six hotkeys are bound by default:
 
-* NVDA+shift+i: Pops up a menu asking whether to describe the current focus, navigator object, physical camera, or entire screen with AI.
+* NVDA+shift+i: Pops up a menu asking whether to describe the current focus, navigator object, physical camera, entire screen, or control the computer with AI.
 * NVDA+shift+u: Describe the contents of the current navigator object using AI.
 * NVDA+shift+y: Describe the image (or file path to an image) on the clipboard using AI.
 * NVDA+shift+j: Describe the position of your face in the frame of the selected camera. If you have multiple cameras connected, navigate to the AI content describer menu (NVDA+shift+i) and choose the one you would like to use with the "select camera" item in the face detection submenu.
 * NVDA+alt+c: Open the AI conversation dialog to ask follow-up questions.
+* NVDA+control+shift+p: Pause or resume an active computer control session.
 
-Three gestures are unbound:
+Four gestures are unbound:
 
 * Describe the contents of the currently focused item using AI.
 * Take a screenshot, then describe it using AI.
 * Snap a picture using the selected camera, then describe it using AI.
+* Cancel the active computer control session.
 
 Don't hesitate to customize these at any time from the input gestures dialog.
 
@@ -210,6 +216,32 @@ Don't hesitate to customize these at any time from the input gestures dialog.
 Sometimes, the response you get back from an AI is insufficient. Perhaps the image is low quality, incomplete, or includes unwanted details. Maybe you want to hone in on just a certain section or take a clearer photo without losing context.
 After receiving a description, you can press NVDA+alt+c, or select "Follow-up on previous description" from the AI Content Describer context menu (NVDA+shift+i). By default, the focus is set at the message field.
 To add an additional image, just keep the conversation window open and use the add-on as you normally would. When a picture is taken (be it from the camera, system control, screenshot, etc.) you will be asked if you want to attach it to the current session or start a new one.
+
+### Computer use
+
+Computer use lets AI Content Describer control the active application with the mouse and keyboard after you describe a task. This can help with tasks that are difficult or inaccessible to complete manually.
+
+Because this gives an AI model control of your computer, use it carefully. The add-on asks for consent before starting, reports actions as they happen, and asks before potentially risky actions. You are responsible for what it does, so monitor the session and avoid using it for sensitive or hard-to-reverse work.
+
+You can pause or resume computer control at any time with `NVDA+Control+Shift+P`. While paused, the add-on will not continue with the next action until you resume it.
+
+The add-on uses tones to indicate the control state. A high beep means the model is taking control or resuming control. A low beep means control has paused, either because you paused it or because the model needs input. A short low error beep means the session stopped because of an API error.
+
+While a control session is active, the model will announce what it is about to do before sending input. Nothing happens until that speech has finished, unless you press `Control` to interrupt the announcement and let the action continue sooner.
+
+If the model is unsure how to complete an action, needs more information, or otherwise yields the turn back to you, the session pauses and the Computer Use dialog comes to the foreground. Type a follow-up message there to continue the conversation, or close the dialog to stop the session.
+
+This feature only works with models that provide a computer-use tool: GPT-5.4, GPT-5.4 mini, GPT-5.4 nano, GPT-5.5, GPT-5.5 pro, Claude 4.1 Opus, Claude 4.5 Sonnet, Claude 4.5 Opus, Claude 4.5 Haiku, Claude 4.6 Sonnet, Claude 4.6 Opus, and Claude 4.7 Opus. Other models can describe images, but they do not provide the structured mouse and keyboard actions needed for computer control.
+
+To use computer control:
+
+1. Configure and select one of the supported models.
+2. Open the application or window you want the model to work with.
+3. Press `NVDA+shift+i`, then choose "Control computer...".
+4. Type the task you want performed and press Send.
+5. Review the consent prompt. If you allow the session, monitor the actions and approve or cancel any risky action prompts.
+
+Note: This should be considered a beta feature, and we are actively taking steps to harden the implementation.
 
 ## Building the add-on
 
