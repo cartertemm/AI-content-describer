@@ -12,7 +12,7 @@ import sys
 
 # While names imported below are available by default in every SConscript
 # Linters aren't aware about them.
-# To avoid Flake8 F821 warnings about them they are imported explicitly.
+# To avoid Ruff F821 warnings about them they are imported explicitly.
 # When using other  Scons functions please add them to the line below.
 from SCons.Script import BoolVariable, Builder, Copy, Environment, Variables
 
