@@ -1,22 +1,57 @@
 # Ruff configuration for the AI Content Describer NVDA add-on.
-# The project uses tabs for indentation throughout.
+# Based on the reference ruff config for NVDA add-ons. The project uses tabs.
 
 line-length = 110
 
-# Functions the add-on treats as built-in (gettext translation lookups).
-builtins = ["_", "ngettext", "pgettext", "npgettext"]
+builtins = [
+	# translation lookup
+	"_",
+	# translation lookup
+	"ngettext",
+	# translation lookup
+	"pgettext",
+	# translation lookup
+	"npgettext",
+]
 
-exclude = [".git", "__pycache__"]
+include = [
+	"*.py",
+	"sconstruct",
+]
+
+exclude = [
+	".git",
+	"__pycache__",
+	".venv",
+	"buildVars.py",
+	# Untracked scratch directories, not part of the add-on source.
+	"build",
+	"NVDAComputerUse",
+	"NVDA_winAPI",
+	"other stuff",
+	"docs",
+]
+
+[format]
+indent-style = "tab"
+line-ending = "lf"
 
 [lint]
-# Default rules (E4, E7, E9, F) plus mccabe complexity.
-select = ["E4", "E7", "E9", "F", "C901"]
-# Third-party libs are imported after dependency_checker.expand_path() puts them
-# on sys.path, so module-level imports legitimately appear below that call.
-ignore = ["E402"]
+# Keep ruff's default rules (E4, E7, E9, F) plus mccabe complexity (C901),
+# which the old flake8 setup enabled via max-complexity.
+extend-select = ["C901"]
+ignore = [
+	# Third-party libs are imported after dependency_checker.expand_path() puts
+	# them on sys.path, so module-level imports legitimately appear below it.
+	"E402",
+	# indentation contains tabs
+	"W191",
+]
+logger-objects = ["logHandler.log"]
 
 [lint.mccabe]
 max-complexity = 15
 
-[format]
-indent-style = "tab"
+[lint.per-file-ignores]
+# sconstruct relies on SCons builtins the linter cannot see, so ignore F821.
+"sconstruct" = ["F821"]
