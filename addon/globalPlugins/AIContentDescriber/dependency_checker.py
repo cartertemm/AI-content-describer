@@ -47,7 +47,7 @@ class DownloadProgressDialog(wx.Dialog):
 		try:
 			self.download = urllib.request.urlretrieve(self.url, reporthook=self.OnProgress)
 		except urllib.error.URLError as error:
-			log.error(error.response)
+			log.error(error.reason)
 			self.error = error
 			wx.CallAfter(self.EndModal, wx.ID_ABORT)
 			return False

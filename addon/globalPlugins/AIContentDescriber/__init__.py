@@ -1,5 +1,3 @@
-# add prompt specific timeout and caching
-
 # *-* coding: utf-8 *-*
 
 # NVDA Add-on: Ai Content Describer
@@ -104,7 +102,7 @@ class AIDescriberSettingsPanel(SettingsPanel):
 		self.available_models = sHelper.addLabeledControl(_("Model (configure more in the manage models dialog, defaults to last used):"), wx.Choice)
 		# Translators: The label for the option to open results in browsable dialogs
 		self.open_in_dialog = sHelper.addItem(wx.CheckBox(self, label=_("Open each result in a browsable dialog; Markdown will be rendered if possible")))
-		# Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
+		# Translators: The label for the checkbox to cache images and their descriptions in the settings dialog
 		self.cache_descriptions = sHelper.addItem(wx.CheckBox(self, label=_("Remember/cache descriptions of each item to save API quota")))
 		# Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
 		self.optimize_for_size = sHelper.addItem(wx.CheckBox(self, label=_("Optimize images for size, may speed up detection in some situations (experimental)")))
