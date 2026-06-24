@@ -75,7 +75,7 @@ class FaceDetectionInterface:
 		#print(f"x: {x_percent}%, y: {y_percent}%")
 		directions = []
 		if x_percent < 10:
-			# Translators: the following messages correspond to the instructions provided to the user for facial detection. They are chosen and then concatinated together based on certain conditions, so please replicate the whitespace.
+			# Translators: the following messages correspond to the instructions provided to the user for facial detection. They are chosen and then concatenated together based on certain conditions, so please replicate the whitespace.
 			directions.append(_("far to the left of "))
 		elif x_percent < 30:
 			directions.append(_("to the left of "))
@@ -132,7 +132,7 @@ class FaceDetectionInterface:
 			wx.CallAfter(ui.message, _("No face detected. Please ensure your face is in the frame and that your camera is not covered up."))
 		elif len(faces) > 1:
 			# translators: the message spoken when more than one face was detected
-			wx.CallAfter(ui.message, _("{} faces detected near the frame. Please try for another angle with fewer background objects.".format(len(faces))))
+			wx.CallAfter(ui.message, _("{} faces detected near the frame. Please try for another angle with fewer background objects.").format(len(faces)))
 		else:
 			for face in faces:
 				direction = self.get_direction(frame, face)
@@ -161,7 +161,7 @@ class FaceDetectionInterface:
 		if len(self.devices) == 1:
 			if self.chosen_camera is not None and self.chosen_camera not in self.devices:
 				# translators: message spoken when the camera that was being used before has disconnected
-				wx.CallAfter(ui.message, _(self.chosen_camera+" is no longer available. Switching to the other on the system."))
+				wx.CallAfter(ui.message, _("{} is no longer available. Switching to the other on the system.").format(self.chosen_camera))
 			self.chosen_camera = self.devices[0]  # just use the first available
 		else:
 			self.show_device_dialog()
