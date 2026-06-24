@@ -27,7 +27,6 @@ import wx
 import globalVars
 import gui
 from gui import guiHelper
-from gui import nvdaControls
 from gui.settingsDialogs import SettingsPanel
 import tones
 import ui
