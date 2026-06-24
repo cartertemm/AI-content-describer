@@ -152,7 +152,7 @@ class ModelListDialog(settingsDialogs.SettingsDialog):
 		try:
 			index = self.Parent.models.index(chosen_model)
 			self.models_list.SetSelection(index)
-		except:
+		except Exception:
 			pass
 
 	def onOk(self, event):

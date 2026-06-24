@@ -174,7 +174,7 @@ class FaceDetectionInterface:
 			wx.CallAfter(ui.message, _("No camera found on your system. Please connect one and try again."))
 			return
 		dlg_shown = self.show_device_dialog_if_needed()
-		if dlg_shown == True:
+		if dlg_shown:
 			return 
 		log.warning(self.chosen_camera)
 		try:

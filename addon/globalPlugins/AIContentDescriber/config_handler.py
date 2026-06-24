@@ -31,7 +31,7 @@ def load_config():
 		return
 	validator = Validator()
 	result = config.validate(validator, copy=True)
-	if result != True:
+	if result is not True:
 		errors = report_validation_errors(config, result)
 		errors = "\n".join(errors)
 		e = "error" + ("" if len(errors) == 1 else "s")
