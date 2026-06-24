@@ -81,24 +81,24 @@ class FaceDetectionInterface:
 			directions.append(_("to the left of "))
 		elif x_percent < 45:
 			directions.append(_("slightly to the left of "))
-		elif x_percent > 55:
-			directions.append(_("slightly to the right of "))
-		elif x_percent > 70:
-				directions.append(_("to the right of "))
 		elif x_percent > 90:
 			directions.append(_("far to the right of "))
+		elif x_percent > 70:
+			directions.append(_("to the right of "))
+		elif x_percent > 55:
+			directions.append(_("slightly to the right of "))
 		if y_percent < 10:
 			directions.append(_("far below"))
 		elif y_percent < 30:
 			directions.append(_("below"))
 		elif y_percent < 45:
 			directions.append(_("slightly below"))
-		elif y_percent > 55:
-			directions.append(_("slightly above"))
-		elif y_percent > 70:
-			directions.append(_("above"))
 		elif y_percent > 90:
 			directions.append(_("far above"))
+		elif y_percent > 70:
+			directions.append(_("above"))
+		elif y_percent > 55:
+			directions.append(_("slightly above"))
 		# Translators: Message spoken when the user's face is clearly in view
 		face_in_view_msg = _("Face clearly in view")
 		return _(' and ').join(directions)+" "+_("the center") if directions else face_in_view_msg
