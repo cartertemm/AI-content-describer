@@ -1,5 +1,5 @@
 # Ruff configuration for the AI Content Describer NVDA add-on.
-# Based on the reference ruff config for NVDA add-ons. The project uses tabs.
+# Based on but slightly modified from the reference ruff add-on template config for NVDA add-ons. The project uses tabs.
 
 line-length = 110
 
@@ -26,8 +26,6 @@ exclude = [
 	"buildVars.py",
 	# Untracked scratch directories, not part of the add-on source.
 	"build",
-	"NVDAComputerUse",
-	"NVDA_winAPI",
 	"other stuff",
 	"docs",
 ]
