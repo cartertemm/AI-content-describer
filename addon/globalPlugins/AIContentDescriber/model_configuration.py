@@ -501,6 +501,32 @@ class Grok4_3ConfigurationPanel(Grok2VisionConfigurationPanel):
 	title = model.name
 
 
+class KimiConfigurationPanel(BaseModelSettingsPanel):
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_api_key_field(sHelper)
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+
+class KimiK3ConfigurationPanel(KimiConfigurationPanel):
+	model = description_service.KimiK3()
+	title = model.name
+
+
+class KimiK2_6ConfigurationPanel(KimiConfigurationPanel):
+	model = description_service.KimiK2_6()
+	title = model.name
+
+
+class KimiK2_5ConfigurationPanel(KimiConfigurationPanel):
+	model = description_service.KimiK2_5()
+	title = model.name
+
+
 class LiteLLMProxyConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.LiteLLMProxy()
 	title = model.name
@@ -561,6 +587,9 @@ description_service.Claude4_5Haiku.configurationPanel = Claude4_5HaikuConfigurat
 description_service.Claude4_6Sonnet.configurationPanel = Claude4_6SonnetConfigurationPanel
 description_service.Claude4_6Opus.configurationPanel = Claude4_6OpusConfigurationPanel
 description_service.Claude4_7Opus.configurationPanel = Claude4_7OpusConfigurationPanel
+description_service.KimiK3.configurationPanel = KimiK3ConfigurationPanel
+description_service.KimiK2_6.configurationPanel = KimiK2_6ConfigurationPanel
+description_service.KimiK2_5.configurationPanel = KimiK2_5ConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
 description_service.Seer.configurationPanel = SeerConfigurationPanel
 models_dialog_parent = None

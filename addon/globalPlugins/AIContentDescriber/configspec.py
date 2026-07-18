@@ -309,6 +309,27 @@ max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
+[Kimi K3]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=2048)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Kimi K2.6]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=1024)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Kimi K2.5]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=1024)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
 [vivo BlueLM Vision (NVDA-CN)]
 nvdacn_user = string(default="")
 nvdacn_pass = string(default="")
