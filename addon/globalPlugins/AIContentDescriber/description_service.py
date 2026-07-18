@@ -486,6 +486,8 @@ def _normalize_openai_action(raw):
 	- "key" type with a "keys": [...] array
 	- "scroll" type with "scroll_direction" / "scroll_distance"
 	- "coordinate": [x, y] instead of separate x/y fields
+	- "drag" type with a "path": [[x, y], ...] or [{"x": x, "y": y}, ...] array,
+	  using only the first and last point since we don't replay intermediate waypoints
 
 	We also handle the alternative format where the action type is the dict key
 	rather than a "type" field value.
@@ -516,6 +518,17 @@ def _normalize_openai_action(raw):
 	if end and len(end) >= 2:
 		action["endX"] = end[0]
 		action["endY"] = end[1]
+	path = action.pop("path", None)
+	if path and len(path) >= 2:
+
+		def _point(p):
+			if isinstance(p, dict):
+				return p["x"], p["y"]
+			return p[0], p[1]
+
+		action["type"] = "left_click_drag"
+		action["startX"], action["startY"] = _point(path[0])
+		action["endX"], action["endY"] = _point(path[-1])
 	if action.get("type") == "keypress":
 		action["type"] = "key"
 	keys = action.pop("keys", None)
