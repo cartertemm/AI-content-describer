@@ -11,7 +11,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Use supported models to control the active application with mouse and keyboard actions for potentially inaccessible tasks
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, vivo BlueLM Vision via NVDA-CN, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
+* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, Moonshot AI's Kimi, vivo BlueLM Vision via NVDA-CN, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -44,6 +44,7 @@ Now, the possibilities are almost endless. You might:
 * [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4 (Sonnet, Opus), 4.1 Opus, 4.5 (Haiku, Sonnet, Opus), 4.6 (Sonnet, Opus), and 4.7 Opus. Computer use is supported by Claude 4.1 Opus, Claude 4.5 models, Claude 4.6 models, and Claude 4.7 Opus.
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [Grok 2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
+* [Kimi](https://platform.kimi.ai/docs/guide/use-kimi-vision-model), Moonshot AI's multimodal models, including Kimi K3, Kimi K2.6, and Kimi K2.5.
 * vivo BlueLM Vision: a multimodal model from vivo, accessed via a free NVDA-CN account. See the setup section below.
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
@@ -105,6 +106,13 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 3. Once logged in, select "API keys" from the menu.
 4. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral Large.
 5. Fund the account, if applicable.
+
+### Obtaining an API key from Kimi (Moonshot AI)
+
+1. Sign into or create an account on the [Kimi developer platform](https://platform.kimi.ai/).
+2. Once logged in, open the API keys section of the console and create a new key.
+3. Copy the key to your clipboard. This value is what you will paste into the API key field under the AI Content Describer category of the NVDA settings dialog -> manage models -> Kimi K3 (or another Kimi model).
+4. Fund the account, if applicable.
 
 
 ### Activating the VIVO BlueLM Vision Model via NVDA-CN
