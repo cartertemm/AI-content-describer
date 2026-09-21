@@ -73,8 +73,12 @@ def migrate_config_if_needed():
 	if old_settings_section not in config:
 		os.remove(os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber_config_migration")))
 		return False
+	validator = Validator()
 	for setting in old_gpt_settings:
 		value = config[old_settings_section].get(setting)
+		if value is not None:
+			# the old section is absent from the configspec, so its values are still raw strings
+			value = validator.check("boolean", value)
 		new_value = config[new_settings_section].get(setting)
 		if value is not None and value != new_value:
 			if not migrated:
