@@ -16,19 +16,44 @@ log = logging.getLogger(__name__)
 config = None
 
 
-def load_config():
-	"""Loads the add-on's configuration."""
-	global config
-	path = os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber.conf"))
+def get_config_path():
+	return os.path.abspath(os.path.join(globalVars.appArgs.configPath, "AIContentDescriber.conf"))
+
+
+def get_unused_backup_path():
+	"""Returns a backup path that does not exist yet, so that an earlier backup is never overwritten."""
+	path = get_config_path() + ".bak"
+	number = 1
+	while os.path.exists(path):
+		number += 1
+		path = get_config_path() + ".bak%d" % number
+	return path
+
+
+def _read_config(path):
 	# seek back to the beginning of the spec for every read, in case this is called twice
 	configspec.seek(0)
+	return ConfigObj(
+		infile=path, configspec=configspec, default_encoding="UTF8", create_empty=True
+	)
+
+
+def load_config():
+	"""Loads the add-on's configuration.
+
+	A file that cannot be parsed is moved to a backup path and replaced with defaults.
+	Returns a (parse error description, backup path) tuple when that happens, None otherwise.
+	"""
+	global config
+	path = get_config_path()
+	failure = None
 	try:
-		config = ConfigObj(
-			infile=path, configspec=configspec, default_encoding="UTF8", create_empty=True
-		)
-	except ConfigObjError:
+		config = _read_config(path)
+	except ConfigObjError as e:
 		log.exception("While loading the configuration file")
-		return
+		failure = (str(e), get_unused_backup_path())
+		os.rename(path, failure[1])
+		config = _read_config(path)
 	validator = Validator()
 	result = config.validate(validator, copy=True)
 	if result is not True:
@@ -36,6 +61,7 @@ def load_config():
 		errors = "\n".join(errors)
 		e = "error" + ("" if len(errors) == 1 else "s")
 		log.error(e+ " were encountered while validating the configuration.\n" + errors)
+	return failure
 
 
 def report_validation_errors(config, validation_result):

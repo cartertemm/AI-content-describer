@@ -8,6 +8,9 @@
 
 import sys
 import os
+import ctypes
+import ctypes.wintypes
+import subprocess
 import tempfile
 import threading
 import logging
@@ -214,6 +217,61 @@ class AreaMenu(wx.Menu):
 		set_model_from_config()
 
 
+def open_in_text_editor(path):
+	"""Opens the provided path in the editor registered for .txt files."""
+	ASSOCSTR_EXECUTABLE = 2
+	query = ctypes.windll.shlwapi.AssocQueryStringW
+	size = ctypes.wintypes.DWORD(0)
+	query(0, ASSOCSTR_EXECUTABLE, ".txt", None, None, ctypes.byref(size))
+	editor = ctypes.create_unicode_buffer(size.value)
+	query(0, ASSOCSTR_EXECUTABLE, ".txt", None, editor, ctypes.byref(size))
+	try:
+		subprocess.Popen([editor.value, path])
+	except OSError:
+		subprocess.Popen(["notepad.exe", path])
+
+
+class ConfigErrorDialog(wx.Dialog):
+	"""Tells the user that the configuration file was unreadable and has been reset."""
+
+	def __init__(self, parent, parse_error, backup_path):
+		# Translators: title of the dialog shown when the configuration file could not be read
+		super().__init__(parent, title=_("AI Content Describer configuration error"))
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		# Translators: body of the dialog shown when the configuration file could not be read. {error} is the problem that was found, {backup} is the path of the backed up file, {config} is the path of the active configuration file
+		body = _(
+			"The AI Content Describer configuration file could not be read: {error}\n\n"
+			"Your settings were backed up to {backup} and the add-on is now using default settings.\n\n"
+			"To restore your settings, choose Open configuration, correct the problem and save. "
+			"Then replace {config} with the corrected file and restart NVDA."
+		).format(error=parse_error, backup=backup_path, config=ch.get_config_path())
+		message = wx.StaticText(self, label=body)
+		message.Wrap(600)
+		sizer.Add(message, 0, wx.ALL, 10)
+		button_sizer = wx.BoxSizer(wx.HORIZONTAL)
+		# Translators: button that opens the backed up configuration file in a text editor
+		open_button = wx.Button(self, label=_("&Open configuration"))
+		# Translators: button that closes the configuration error dialog
+		close_button = wx.Button(self, wx.ID_CLOSE, label=_("&Close"))
+		button_sizer.Add(open_button, flag=wx.RIGHT, border=8)
+		button_sizer.Add(close_button)
+		sizer.Add(button_sizer, 0, wx.ALL | wx.ALIGN_CENTER, 10)
+		self.SetSizer(sizer)
+		self.Fit()
+		self.Centre()
+		self.SetEscapeId(wx.ID_CLOSE)
+		open_button.Bind(wx.EVT_BUTTON, lambda e: open_in_text_editor(backup_path))
+		close_button.Bind(wx.EVT_BUTTON, lambda e: self.Close())
+		self.Bind(wx.EVT_CLOSE, lambda e: self.Destroy())
+		close_button.SetFocus()
+
+
+def show_config_error(parse_error, backup_path):
+	gui.mainFrame.prePopup()
+	ConfigErrorDialog(gui.mainFrame, parse_error, backup_path).Show()
+	gui.mainFrame.postPopup()
+
+
 class GlobalPlugin(GlobalPlugin):
 	scriptCategory = _("AI Content Describer")
 
@@ -222,7 +280,9 @@ class GlobalPlugin(GlobalPlugin):
 		super(GlobalPlugin, self).__init__(*args, **kwargs)
 		if not globalVars.appArgs.secure:
 			gui.settingsDialogs.NVDASettingsDialog.categoryClasses.append(AIDescriberSettingsPanel)
-		ch.load_config()
+		config_failure = ch.load_config()
+		if config_failure:
+			wx.CallAfter(show_config_error, *config_failure)
 		if ch.migrate_config_if_needed():
 			ch.config.write()
 		set_model_from_config()
