@@ -423,21 +423,6 @@ class ClaudeConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
-class Claude4SonnetConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude4Sonnet()
-	title = model.name
-
-
-class Claude4OpusConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude4Opus()
-	title = model.name
-
-
-class Claude4_1OpusConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude4_1Opus()
-	title = model.name
-
-
 class Claude4_5SonnetConfigurationPanel(ClaudeConfigurationPanel):
 	model = description_service.Claude4_5Sonnet()
 	title = model.name
@@ -445,11 +430,6 @@ class Claude4_5SonnetConfigurationPanel(ClaudeConfigurationPanel):
 
 class Claude4_5OpusConfigurationPanel(ClaudeConfigurationPanel):
 	model = description_service.Claude4_5Opus()
-	title = model.name
-
-
-class Claude4_5HaikuConfigurationPanel(ClaudeConfigurationPanel):
-	model = description_service.Claude4_5Haiku()
 	title = model.name
 
 
@@ -578,12 +558,8 @@ description_service.Grok4.configurationPanel = Grok4ConfigurationPanel
 description_service.Grok4FastReasoning.configurationPanel = Grok4FastReasoningConfigurationPanel
 description_service.Grok4FastNonReasoning.configurationPanel = Grok4FastNonReasoningConfigurationPanel
 description_service.Grok4_3.configurationPanel = Grok4_3ConfigurationPanel
-description_service.Claude4Sonnet.configurationPanel = Claude4SonnetConfigurationPanel
-description_service.Claude4Opus.configurationPanel = Claude4OpusConfigurationPanel
-description_service.Claude4_1Opus.configurationPanel = Claude4_1OpusConfigurationPanel
 description_service.Claude4_5Sonnet.configurationPanel = Claude4_5SonnetConfigurationPanel
 description_service.Claude4_5Opus.configurationPanel = Claude4_5OpusConfigurationPanel
-description_service.Claude4_5Haiku.configurationPanel = Claude4_5HaikuConfigurationPanel
 description_service.Claude4_6Sonnet.configurationPanel = Claude4_6SonnetConfigurationPanel
 description_service.Claude4_6Opus.configurationPanel = Claude4_6OpusConfigurationPanel
 description_service.Claude4_7Opus.configurationPanel = Claude4_7OpusConfigurationPanel

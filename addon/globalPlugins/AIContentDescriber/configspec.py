@@ -3,9 +3,7 @@
 # This add-on is free software, licensed under the terms of the GNU General Public License (version 2).
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-
 from io import StringIO
-
 
 configspec = StringIO("""[Claude 4.7 Opus]
 api_key = string(default="")
@@ -41,20 +39,6 @@ prompt = string(default="")
 max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
-
-[Claude 4.5 Haiku]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=512)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[Claude 4.1 Opus]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
 
 [GPT-4 turbo]
 api_key = string(default="")
@@ -293,21 +277,6 @@ prompt = string(default="")
 max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
-
-
-[Claude 4 Opus]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[Claude 4 Sonnet]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=20, min=1)
 
 [Kimi K3]
 api_key = string(default="")

@@ -1285,41 +1285,6 @@ class Anthropic(BaseDescriptionService):
 		return AnthropicComputerSession(self, task)
 
 
-class Claude4Sonnet(Anthropic):
-	name = "Claude 4 Sonnet"
-	# translators: the description for the Claude 4 Sonnet model in the model configuration dialog
-	description = _(
-		"Anthropic's high-performance model with exceptional reasoning and efficiency. Significant upgrade to Claude Sonnet 3.7 with superior coding and enhanced instruction following."
-	)
-	about_url = "https://www.anthropic.com/claude/sonnet"
-	internal_model_name = "claude-sonnet-4-20250514"
-
-
-class Claude4Opus(Anthropic):
-	name = "Claude 4 Opus"
-	# translators: the description for the Claude 4 Opus model in the model configuration dialog
-	description = _(
-		"Anthropic's most capable and intelligent model yet. Sets new standards in complex reasoning and advanced coding with sustained performance on long-running tasks requiring focused effort."
-	)
-	about_url = "https://www.anthropic.com/claude/opus"
-	internal_model_name = "claude-opus-4-20250514"
-
-
-class Claude4_1Opus(Anthropic):
-	name = "Claude 4.1 Opus"
-	# translators: the description for the Claude 4.1 Opus model in the model configuration dialog
-	description = _(
-		"Anthropic's enhanced Opus model with improved reasoning, extended thinking, and a 200k token context window."
-	)
-	about_url = "https://www.anthropic.com/claude/opus"
-	internal_model_name = "claude-opus-4-1-20250805"
-	supports_computer_use = True
-	_computer_use_beta = "computer-use-2025-01-24"
-	_computer_use_tool_type = "computer_20250124"
-	_capture_max_long_edge = 1568
-	_capture_max_pixels = 1_150_000
-
-
 class Claude4_5Sonnet(Anthropic):
 	name = "Claude 4.5 Sonnet"
 	# translators: the description for the Claude 4.5 Sonnet model in the model configuration dialog
@@ -1346,21 +1311,6 @@ class Claude4_5Opus(Anthropic):
 	supports_computer_use = True
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
-	_capture_max_long_edge = 1568
-	_capture_max_pixels = 1_150_000
-
-
-class Claude4_5Haiku(Anthropic):
-	name = "Claude 4.5 Haiku"
-	# translators: the description for the Claude 4.5 Haiku model in the model configuration dialog
-	description = _(
-		"Anthropic's fastest model with near-frontier intelligence and extended thinking support."
-	)
-	about_url = "https://www.anthropic.com/claude/haiku"
-	internal_model_name = "claude-haiku-4-5-20251001"
-	supports_computer_use = True
-	_computer_use_beta = "computer-use-2025-01-24"
-	_computer_use_tool_type = "computer_20250124"
 	_capture_max_long_edge = 1568
 	_capture_max_pixels = 1_150_000
 
@@ -2158,12 +2108,8 @@ models = [
 	GPT55Pro(),
 	GPT4Turbo(),
 	# Anthropic
-	Claude4Sonnet(),
 	Claude4_5Sonnet(),
 	Claude4_6Sonnet(),
-	Claude4_5Haiku(),
-	Claude4Opus(),
-	Claude4_1Opus(),
 	Claude4_5Opus(),
 	Claude4_6Opus(),
 	Claude4_7Opus(),
