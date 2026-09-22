@@ -41,7 +41,7 @@ Now, the possibilities are almost endless. You might:
 * [Pollinations](https://pollinations.ai/): The team behind Pollinations.AI generously sponsors free GPT4 access for this project, so users do not need to supply their own API key. Note that the service has been observed to be buggy, and we highly recommend using your own keys to realize the full benefits of this project.
 * [OpenAI GPT and reasoning models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes GPT-4 turbo, GPT-4o, the GPT-4.1 family (4.1, 4.1 mini, 4.1 nano), the GPT-5 family (5, 5 mini, 5 nano, and 5 chat), the GPT-5.4 family (5.4, 5.4 mini, 5.4 nano), the GPT-5.5 family (5.5 and 5.5 pro), and the reasoning models O3, O3 pro, O3 mini, and O4 mini. Computer use is supported by the GPT-5.4 and GPT-5.5 families.
 * [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3 Flash Preview, 3.1 Flash-Lite Preview, and 3.1 Pro Preview models.
-* [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4.5 (Sonnet, Opus), 4.6 (Sonnet, Opus), and 4.7 Opus. All of these support computer use.
+* [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4.5 (Sonnet, Opus), 4.6 (Sonnet, Opus), 4.7 Opus, 4.8 Opus, 5 (Sonnet, Opus, Fable), and 5.1 Fable. All of these support computer use.
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [Grok 2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
 * [Kimi](https://platform.kimi.ai/docs/guide/use-kimi-vision-model), Moonshot AI's multimodal models, including Kimi K3, Kimi K2.6, and Kimi K2.5.
@@ -96,7 +96,7 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 1. Login to the [Anthropic console](https://console.anthropic.com/login).
 2. Click on your profile -> API keys.
 3. Click Create Key.
-4. Enter a name for the key, like "AIContentDescriber", then click on "Create Key" and copy the value that shows up. This is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> any Claude 4.x model (for example "Claude 4.6 Sonnet").
+4. Enter a name for the key, like "AIContentDescriber", then click on "Create Key" and copy the value that shows up. This is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> any Claude model (for example "Claude 5 Sonnet").
 5. If you haven't already, purchase at least $5 in credits under the [anthropic plans page](https://console.anthropic.com/settings/plans).
 
 ### Obtaining an API key from Mistral
@@ -239,7 +239,7 @@ While a control session is active, the model will announce what it is about to d
 
 If the model is unsure how to complete an action, needs more information, or otherwise yields the turn back to you, the session pauses and the Computer Use dialog comes to the foreground. Type a follow-up message there to continue the conversation, or close the dialog to stop the session.
 
-This feature only works with models that provide a computer-use tool: GPT-5.4, GPT-5.4 mini, GPT-5.4 nano, GPT-5.5, GPT-5.5 pro, Claude 4.5 Sonnet, Claude 4.5 Opus, Claude 4.6 Sonnet, Claude 4.6 Opus, and Claude 4.7 Opus. Other models can describe images, but they do not provide the structured mouse and keyboard actions needed for computer control.
+This feature only works with models that provide a computer-use tool: GPT-5.4, GPT-5.4 mini, GPT-5.4 nano, GPT-5.5, GPT-5.5 pro, Claude 4.5 Sonnet, Claude 4.5 Opus, Claude 4.6 Sonnet, Claude 4.6 Opus, Claude 4.7 Opus, Claude 4.8 Opus, Claude 5 Sonnet, Claude 5 Opus, Claude 5 Fable, and Claude 5.1 Fable. Other models can describe images, but they do not provide the structured mouse and keyboard actions needed for computer control.
 
 To use computer control:
 

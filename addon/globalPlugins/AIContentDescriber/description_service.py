@@ -196,6 +196,7 @@ class BaseDescriptionService:
 	needs_configuration_dialog = True
 	configurationPanel = None
 	supports_computer_use = False
+	effort_levels = []
 
 	# Conversation management
 	_active_conversation = None
@@ -241,6 +242,14 @@ class BaseDescriptionService:
 	@prompt.setter
 	def prompt(self, value):
 		ch.config[self.name]["prompt"] = value
+
+	@property
+	def effort(self):
+		return ch.config[self.name].get("effort")
+
+	@effort.setter
+	def effort(self, value):
+		ch.config[self.name]["effort"] = value
 
 	@property
 	def timeout(self):
@@ -1139,7 +1148,7 @@ class AnthropicComputerSession:
 		}
 		payload = {
 			"model": self._service.internal_model_name,
-			"max_tokens": 4096,
+			"max_tokens": 16384 if self._service._thinks_by_default else 4096,
 			"system": SYSTEM_PROMPT,
 			"tools": [tool_def],
 			"messages": messages,
@@ -1208,6 +1217,9 @@ class AnthropicComputerSession:
 
 class Anthropic(BaseDescriptionService):
 	supported_formats = [".jpeg", ".jpg", ".png", ".gif", ".webp"]
+	# Models that run adaptive thinking when the request omits the thinking parameter.
+	# Thinking tokens count against max_tokens, so these need more headroom.
+	_thinks_by_default = False
 
 	def build_conversation_payload(self, messages, **kw):
 		"""Override for Anthropic's message format with content arrays"""
@@ -1228,11 +1240,14 @@ class Anthropic(BaseDescriptionService):
 				)
 			formatted_messages.append({"role": msg["role"], "content": content})
 		effective_max = kw.get("max_tokens", self.max_tokens)
-		return {
+		payload = {
 			"model": self.internal_model_name,
 			"messages": formatted_messages,
 			"max_tokens": effective_max if effective_max is not None else 32768,
 		}
+		if self.effort_levels and self.effort:
+			payload["output_config"] = {"effort": self.effort}
+		return payload
 
 	def _get_conversation_url(self):
 		return "https://api.anthropic.com/v1/messages"
@@ -1256,7 +1271,10 @@ class Anthropic(BaseDescriptionService):
 				)
 			)
 			return ""
-		return response_json["content"][0]["text"]
+		for block in response_json.get("content", []):
+			if block.get("type") == "text":
+				return block["text"]
+		return ""
 
 	@cached_description
 	def process(self, image_path, **kw):
@@ -1309,6 +1327,7 @@ class Claude4_5Opus(Anthropic):
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-5-20251101"
 	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 1568
@@ -1324,6 +1343,7 @@ class Claude4_6Sonnet(Anthropic):
 	about_url = "https://www.anthropic.com/claude/sonnet"
 	internal_model_name = "claude-sonnet-4-6"
 	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 1568
@@ -1339,6 +1359,7 @@ class Claude4_6Opus(Anthropic):
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-6"
 	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 1568
@@ -1354,6 +1375,91 @@ class Claude4_7Opus(Anthropic):
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-7"
 	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+
+
+class Claude4_8Opus(Anthropic):
+	name = "Claude 4.8 Opus"
+	# translators: the description for the Claude 4.8 Opus model in the model configuration dialog
+	description = _(
+		"Anthropic's refined Opus model with the same high-resolution vision, adaptive thinking, and 1M token context window as Claude 4.7 Opus."
+	)
+	about_url = "https://www.anthropic.com/claude/opus"
+	internal_model_name = "claude-opus-4-8"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+
+
+class Claude5Sonnet(Anthropic):
+	name = "Claude 5 Sonnet"
+	# translators: the description for the Claude 5 Sonnet model in the model configuration dialog
+	description = _(
+		"Anthropic's fast and affordable Sonnet model with high-resolution vision, adaptive thinking, and a 1M token context window."
+	)
+	about_url = "https://www.anthropic.com/claude/sonnet"
+	internal_model_name = "claude-sonnet-5"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+
+
+class Claude5Opus(Anthropic):
+	name = "Claude 5 Opus"
+	# translators: the description for the Claude 5 Opus model in the model configuration dialog
+	description = _(
+		"Anthropic's most capable Opus model. Thinks by default, with high-resolution vision and a 1M token context window."
+	)
+	about_url = "https://www.anthropic.com/claude/opus"
+	internal_model_name = "claude-opus-5"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+
+
+class Claude5Fable(Anthropic):
+	name = "Claude 5 Fable"
+	# translators: the description for the Claude 5 Fable model in the model configuration dialog
+	description = _(
+		"Anthropic's frontier model above the Opus tier, for the most demanding reasoning and vision tasks. Thinking is always on. Higher cost than Opus."
+	)
+	about_url = "https://www.anthropic.com/claude/fable"
+	internal_model_name = "claude-fable-5"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
+	_computer_use_beta = "computer-use-2025-11-24"
+	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+
+
+class Claude5_1Fable(Anthropic):
+	name = "Claude 5.1 Fable"
+	# translators: the description for the Claude 5.1 Fable model in the model configuration dialog
+	description = _(
+		"Anthropic's most intelligent generally available model, with stronger vision and computer use than Claude 5 Fable. Thinking is always on. Higher cost than Opus."
+	)
+	about_url = "https://www.anthropic.com/claude/fable"
+	internal_model_name = "claude-fable-5-1"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 2576
@@ -2110,9 +2216,14 @@ models = [
 	# Anthropic
 	Claude4_5Sonnet(),
 	Claude4_6Sonnet(),
+	Claude5Sonnet(),
 	Claude4_5Opus(),
 	Claude4_6Opus(),
 	Claude4_7Opus(),
+	Claude4_8Opus(),
+	Claude5Opus(),
+	Claude5Fable(),
+	Claude5_1Fable(),
 	# Google
 	Gemini2_5Flash(),
 	Gemini2_5FlashLite(),

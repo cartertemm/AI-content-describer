@@ -5,10 +5,51 @@
 
 from io import StringIO
 
-configspec = StringIO("""[Claude 4.7 Opus]
+configspec = StringIO("""[Claude 5.1 Fable]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=60, min=1)
+
+[Claude 5 Fable]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=60, min=1)
+
+[Claude 5 Opus]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=45, min=1)
+
+[Claude 4.8 Opus]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=2048)
+effort = option("low", "medium", "high", "xhigh", "max", default="high")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Claude 5 Sonnet]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Claude 4.7 Opus]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=2048)
+effort = option("low", "medium", "high", "xhigh", "max", default="high")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
@@ -16,6 +57,7 @@ timeout = integer(default=30, min=1)
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=2048)
+effort = option("low", "medium", "high", "max", default="high")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
@@ -23,6 +65,7 @@ timeout = integer(default=30, min=1)
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=1024)
+effort = option("low", "medium", "high", "max", default="high")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
@@ -30,6 +73,7 @@ timeout = integer(default=20, min=1)
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=2048)
+effort = option("low", "medium", "high", default="high")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 

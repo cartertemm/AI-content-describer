@@ -57,6 +57,10 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 		# Translators: The label for the maximum tokens chooser in the model configuration dialog
 		self.max_tokens = sHelper.addLabeledControl(_("Maximum tokens"), nvdaControls.SelectOnFocusSpinCtrl, min=1, max=8192)
 
+	def add_effort_field(self, sHelper):
+		# Translators: The label for the effort chooser in the model configuration dialog. Effort controls how much the model thinks before answering.
+		self.effort = sHelper.addLabeledControl(_("Effort"), wx.Choice, choices=self.model.effort_levels)
+
 	def add_timeout_field(self, sHelper):
 		# Translators: The label for the timeout chooser in the model configuration dialog
 		self.timeout = sHelper.addLabeledControl(_("Seconds to wait for a response before timing out"), nvdaControls.SelectOnFocusSpinCtrl, min=1)
@@ -72,6 +76,8 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 			self.prompt.SetValue(self.model.prompt)
 		if hasattr(self, "max_tokens"):
 			self.max_tokens.SetValue(self.model.max_tokens)
+		if hasattr(self, "effort"):
+			self.effort.SetStringSelection(self.model.effort)
 		if hasattr(self, "timeout"):
 			self.timeout.SetValue(self.model.timeout)
 
@@ -86,6 +92,8 @@ class BaseModelSettingsPanel(settingsDialogs.SettingsPanel):
 			self.model.prompt = self.prompt.GetValue()
 		if hasattr(self, "max_tokens"):
 			self.model.max_tokens = self.max_tokens.GetValue()
+		if hasattr(self, "effort"):
+			self.model.effort = self.effort.GetStringSelection()
 		if hasattr(self, "timeout"):
 			self.model.timeout = self.timeout.GetValue()
 		self.model.save_config()
@@ -419,6 +427,8 @@ class ClaudeConfigurationPanel(BaseModelSettingsPanel):
 		self.add_api_key_field(sHelper)
 		self.add_prompt_field(sHelper)
 		self.add_max_tokens_field(sHelper)
+		if self.model.effort_levels:
+			self.add_effort_field(sHelper)
 		self.add_timeout_field(sHelper)
 		super().makeSettings(settingsSizer)
 
@@ -445,6 +455,31 @@ class Claude4_6OpusConfigurationPanel(ClaudeConfigurationPanel):
 
 class Claude4_7OpusConfigurationPanel(ClaudeConfigurationPanel):
 	model = description_service.Claude4_7Opus()
+	title = model.name
+
+
+class Claude4_8OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude4_8Opus()
+	title = model.name
+
+
+class Claude5SonnetConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude5Sonnet()
+	title = model.name
+
+
+class Claude5OpusConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude5Opus()
+	title = model.name
+
+
+class Claude5FableConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude5Fable()
+	title = model.name
+
+
+class Claude5_1FableConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude5_1Fable()
 	title = model.name
 
 
@@ -563,6 +598,11 @@ description_service.Claude4_5Opus.configurationPanel = Claude4_5OpusConfiguratio
 description_service.Claude4_6Sonnet.configurationPanel = Claude4_6SonnetConfigurationPanel
 description_service.Claude4_6Opus.configurationPanel = Claude4_6OpusConfigurationPanel
 description_service.Claude4_7Opus.configurationPanel = Claude4_7OpusConfigurationPanel
+description_service.Claude4_8Opus.configurationPanel = Claude4_8OpusConfigurationPanel
+description_service.Claude5Sonnet.configurationPanel = Claude5SonnetConfigurationPanel
+description_service.Claude5Opus.configurationPanel = Claude5OpusConfigurationPanel
+description_service.Claude5Fable.configurationPanel = Claude5FableConfigurationPanel
+description_service.Claude5_1Fable.configurationPanel = Claude5_1FableConfigurationPanel
 description_service.KimiK3.configurationPanel = KimiK3ConfigurationPanel
 description_service.KimiK2_6.configurationPanel = KimiK2_6ConfigurationPanel
 description_service.KimiK2_5.configurationPanel = KimiK2_5ConfigurationPanel
