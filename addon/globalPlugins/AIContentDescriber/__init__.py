@@ -398,6 +398,9 @@ class GlobalPlugin(GlobalPlugin):
 
 
 	def describe_clipboard(self):
+		if not service:
+			ui.message(_("No AI service configured."))
+			return
 		snap = ImageGrab.grabclipboard()
 		if isinstance(snap, list):
 			if len(snap) == 0:
@@ -421,6 +424,9 @@ class GlobalPlugin(GlobalPlugin):
 
 	def describe_image(self, file, delete=False):
 		# Few sanity checks before we go ahead with the API request
+		if not service:
+			wx.CallAfter(ui.message, _("No AI service configured."))
+			return
 		if not service.is_available:
 			# Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key or base URL
 			wx.CallAfter(ui.message, _("To describe content, you must provide an API key or base URL in the AI image describer category of the NVDA settings dialog. Please consult add-on help for more information"))
