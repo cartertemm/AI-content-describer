@@ -364,6 +364,16 @@ base_url = string(default="http://127.0.0.1:11435")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
+[Datalab Chandra 2]
+api_key = string(default="")
+base_url = string(default="https://www.datalab.to/api/v1/convert")
+chosen_model = string(default="datalab-to/chandra-ocr-2")
+prompt = string(default="")
+max_tokens = integer(default=4096)
+mode = string(default="balanced")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=60, min=1)
+
 [global]
 optimize_for_size = boolean(default=False)
 open_in_dialog = boolean(default=True)

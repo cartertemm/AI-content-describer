@@ -7,6 +7,8 @@
 import base64
 import json
 import functools
+import os
+import time
 import urllib.parse
 import urllib.request
 import hashlib
@@ -478,7 +480,7 @@ def cached_description(func):
 		log.debug(f"Cache miss. Fetching description for {image_path} from {self.name}")
 		description = func(self, image_path, **kw)
 		# (optionally) update the cache
-		if is_cache_enabled:
+		if is_cache_enabled and description:
 			cache.read_cache(self.name)
 			cache.cache[self.name][base64_image] = description
 			cache.write_cache(self.name)
@@ -2193,6 +2195,286 @@ class Seer(BaseDescriptionService):
 		)
 
 
+def encode_multipart_formdata(fields, files):
+	boundary = f"----WebKitFormBoundary{uuid.uuid4().hex}"
+	body = bytearray()
+	for key, value in fields.items():
+		if value is None:
+			continue
+		body.extend(f"--{boundary}\r\n".encode("utf-8"))
+		body.extend(f'Content-Disposition: form-data; name="{key}"\r\n\r\n'.encode("utf-8"))
+		body.extend(f"{value}\r\n".encode("utf-8"))
+	for key, (filename, file_bytes, content_type) in files.items():
+		body.extend(f"--{boundary}\r\n".encode("utf-8"))
+		body.extend(
+			f'Content-Disposition: form-data; name="{key}"; filename="{filename}"\r\n'.encode("utf-8")
+		)
+		body.extend(f"Content-Type: {content_type}\r\n\r\n".encode("utf-8"))
+		body.extend(file_bytes)
+		body.extend(b"\r\n")
+	body.extend(f"--{boundary}--\r\n".encode("utf-8"))
+	content_type_header = f"multipart/form-data; boundary={boundary}"
+	return bytes(body), content_type_header
+
+
+class DatalabChandra2(BaseDescriptionService):
+	name = "Datalab Chandra 2"
+	# translators: description of the Datalab Chandra 2 vision model
+	description = _(
+		"Datalab Chandra 2 is a state-of-the-art vision and OCR model specialized in complex document layouts, "
+		"tables, forms, handwriting, charts, and math. Supports Datalab's Cloud / On-Prem API as well as "
+		"self-hosted OpenAI-compatible vLLM endpoints."
+	)
+	about_url = "https://github.com/datalab-to/chandra"
+	DEFAULT_PROMPT = (
+		"Extract and transcribe all text, tables, forms, math formulas, and layout from this image in markdown format. "
+		"Describe any visual elements or diagrams."
+	)
+	needs_api_key = True
+	needs_base_url = True
+	supported_formats = [".jpeg", ".jpg", ".png", ".webp"]
+
+	@property
+	def mode(self):
+		return ch.config[self.name].get("mode", "balanced")
+
+	@mode.setter
+	def mode(self, value):
+		ch.config[self.name]["mode"] = value
+
+	@property
+	def internal_model_name(self):
+		return self.chosen_model or "datalab-to/chandra-ocr-2"
+
+	def is_convert_api(self):
+		url = (self.base_url or "").strip().lower()
+		return (
+			not url
+			or "datalab.to" in url
+			or url.endswith("/convert")
+			or "/api/v1/convert" in url
+		)
+
+	@property
+	def is_available(self):
+		if self.is_convert_api():
+			if "datalab.to" in (self.base_url or "").lower():
+				return bool(self.api_key)
+			return bool(self.base_url)
+		return bool(self.base_url)
+
+	def _get_conversation_url(self):
+		base = (self.base_url or "http://localhost:8000/v1").rstrip("/")
+		if base.endswith("/chat/completions"):
+			return base
+		return f"{base}/chat/completions"
+
+	def _get_conversation_headers(self):
+		headers = {"Content-Type": "application/json"}
+		if self.api_key:
+			headers["Authorization"] = f"Bearer {self.api_key}"
+		return headers
+
+	def _process_convert_api(self, image_path, **kw):
+		import ui
+		import wx
+
+		prompt = kw.get("prompt") or self.prompt
+		filename = os.path.basename(image_path)
+		ext = os.path.splitext(filename)[1].lower()
+		if ext in (".jpg", ".jpeg"):
+			mime_type = "image/jpeg"
+		elif ext == ".png":
+			mime_type = "image/png"
+		elif ext == ".webp":
+			mime_type = "image/webp"
+		else:
+			mime_type = "image/png"
+			if not filename.endswith(".png"):
+				filename += ".png"
+
+		with open(image_path, "rb") as f:
+			file_bytes = f.read()
+
+		mode_val = kw.get("mode") or self.mode
+		if mode_val not in ("fast", "balanced", "accurate"):
+			mode_val = "balanced"
+		fields = {
+			"output_format": "markdown",
+			"mode": mode_val,
+			"paginate": "false",
+		}
+		files = {
+			"file": (filename, file_bytes, mime_type),
+		}
+		data_bytes, content_type_header = encode_multipart_formdata(fields, files)
+
+		convert_url = (kw.get("base_url") or self.base_url or "").strip()
+		if not convert_url:
+			convert_url = "https://www.datalab.to/api/v1/convert"
+
+		api_key = kw.get("api_key") or self.api_key
+		headers = {
+			"Content-Type": content_type_header,
+			"User-Agent": "NVDA-AIContentDescriber/1.0",
+		}
+		if api_key:
+			headers["X-API-Key"] = api_key
+
+		timeout_val = int(kw.get("timeout") or self.timeout or 100)
+
+		try:
+			initial_response = post(
+				url=convert_url,
+				headers=headers,
+				data=data_bytes,
+				timeout=min(timeout_val, 30),
+			)
+		except Exception as e:
+			log.exception("Error calling Datalab conversion API")
+			# translators: message spoken when an error occurs while contacting the Datalab API
+			wx.CallAfter(ui.message, _("Datalab API error: {error}").format(error=str(e)))
+			return None
+
+		if not initial_response:
+			return None
+
+		try:
+			initial_json = json.loads(initial_response.decode("utf-8"))
+		except json.JSONDecodeError:
+			# translators: message spoken when the Datalab API returns an invalid or non-JSON response
+			wx.CallAfter(ui.message, _("Invalid response received from Datalab API."))
+			return None
+
+		if not initial_json.get("success", True) or initial_json.get("error"):
+			# translators: message spoken when a Datalab conversion request fails
+			err = initial_json.get("error") or _("Datalab conversion request failed.")
+			wx.CallAfter(ui.message, str(err))
+			return None
+
+		request_check_url = initial_json.get("request_check_url")
+		if not request_check_url:
+			if "markdown" in initial_json and initial_json["markdown"]:
+				content = initial_json["markdown"]
+				self.start_conversation(image_path, prompt, content)
+				return content
+			request_id = initial_json.get("request_id")
+			if request_id:
+				base = convert_url.split("/api/v1/convert")[0] or "https://www.datalab.to"
+				request_check_url = f"{base}/api/v1/convert/{request_id}"
+			else:
+				# translators: message spoken when Datalab does not return a request check URL
+				wx.CallAfter(ui.message, _("No request check URL returned by Datalab."))
+				return None
+
+		request_check_url = urllib.parse.urljoin(convert_url, request_check_url)
+
+		check_headers = {
+			"User-Agent": "NVDA-AIContentDescriber/1.0",
+		}
+		if api_key:
+			check_headers["X-API-Key"] = api_key
+
+		start_time = time.time()
+		while time.time() - start_time < timeout_val:
+			time.sleep(1)
+			req = urllib.request.Request(request_check_url, headers=check_headers, method="GET")
+			try:
+				with urllib.request.urlopen(req, timeout=10) as resp:
+					resp_bytes = resp.read()
+			except IOError as e:
+				log.debug(f"Polling error from Datalab: {e}")
+				continue
+			except Exception as e:
+				log.debug(f"Unexpected error polling Datalab: {e}")
+				continue
+
+			try:
+				check_json = json.loads(resp_bytes.decode("utf-8"))
+			except json.JSONDecodeError:
+				continue
+
+			status = str(check_json.get("status", "")).lower()
+			if status == "complete":
+				if check_json.get("success") is False or (check_json.get("error") and not check_json.get("markdown")):
+					# translators: message spoken when Datalab Chandra 2 conversion fails
+					err_msg = check_json.get("error") or _("Datalab Chandra 2 conversion failed.")
+					wx.CallAfter(ui.message, str(err_msg))
+					return None
+
+				markdown = check_json.get("markdown")
+				if markdown is None and "result" in check_json and isinstance(check_json["result"], dict):
+					markdown = check_json["result"].get("markdown")
+				if not markdown:
+					markdown = check_json.get("html") or check_json.get("text") or ""
+				if not markdown and check_json.get("result_url"):
+					result_url = check_json["result_url"]
+					try:
+						with urllib.request.urlopen(result_url, timeout=15) as r_resp:
+							r_json = json.loads(r_resp.read().decode("utf-8"))
+							markdown = r_json.get("markdown", "")
+					except Exception as e:
+						log.debug(f"Failed fetching result_url: {e}")
+				if markdown:
+					self.start_conversation(image_path, prompt, markdown)
+					return markdown
+				# translators: message spoken when Datalab Chandra 2 returns an empty response
+				wx.CallAfter(ui.message, _("No content returned from Datalab Chandra 2."))
+				return None
+			elif status in ("failed", "error"):
+				# translators: message spoken when Datalab Chandra 2 conversion fails
+				err_msg = check_json.get("error") or _("Datalab Chandra 2 conversion failed.")
+				wx.CallAfter(ui.message, str(err_msg))
+				return None
+
+		# translators: message spoken when Datalab Chandra 2 conversion times out
+		wx.CallAfter(ui.message, _("Datalab Chandra 2 conversion timed out."))
+		return None
+
+	def _process_openai_api(self, image_path, **kw):
+		prompt = kw.get("prompt") or self.prompt
+		base64_image = encode_image(image_path)
+		messages = [{"role": "user", "content": prompt, "image": base64_image}]
+		payload = self.build_conversation_payload(
+			messages, max_tokens=kw.get("max_tokens", self.max_tokens)
+		)
+		headers = self._get_conversation_headers()
+		url = self._get_conversation_url()
+		response = post(
+			url=url,
+			headers=headers,
+			data=json.dumps(payload).encode("utf-8"),
+			timeout=self.timeout,
+		)
+		if not response:
+			return None
+		response_json = json.loads(response.decode("utf-8"))
+		content = self._extract_conversation_response(response_json)
+		if not content:
+			return None
+		self.start_conversation(image_path, prompt, content)
+		return content
+
+	@cached_description
+	def process(self, image_path, **kw):
+		if self.is_convert_api():
+			return self._process_convert_api(image_path, **kw)
+		return self._process_openai_api(image_path, **kw)
+
+	def add_to_conversation(
+		self, user_message, image_path=None, include_original_image=True
+	):
+		if self.is_convert_api():
+			# translators: message spoken when a user attempts a follow-up question on Datalab Convert API
+			return _(
+				"Datalab Chandra 2 Convert API is specialized for OCR and document transcription, "
+				"and does not support follow-up questions."
+			)
+		return super().add_to_conversation(
+			user_message, image_path=image_path, include_original_image=include_original_image
+		)
+
+
 models = [
 	# OpenAI
 	GPT4O(),
@@ -2246,6 +2528,8 @@ models = [
 	KimiK2_5(),
 	# vivo (NVDA-CN)
 	VivoBlueLMVision(),
+	# Datalab
+	DatalabChandra2(),
 	# Free
 	PollinationsAI(),
 	# Local / self-hosted
