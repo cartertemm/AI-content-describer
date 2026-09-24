@@ -2247,8 +2247,10 @@ class DatalabChandra2(BaseDescriptionService):
 	def internal_model_name(self):
 		return self.chosen_model or "datalab-to/chandra-ocr-2"
 
-	def is_convert_api(self):
-		url = (self.base_url or "").strip().lower()
+	def is_convert_api(self, base_url=None):
+		if base_url is None:
+			base_url = self.base_url
+		url = (base_url or "").strip().lower()
 		return (
 			not url
 			or "datalab.to" in url

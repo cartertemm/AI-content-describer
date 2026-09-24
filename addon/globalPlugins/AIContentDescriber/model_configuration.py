@@ -583,6 +583,16 @@ class DatalabChandra2ConfigurationPanel(BaseModelSettingsPanel):
 				self.mode.SetStringSelection(mode_val)
 			else:
 				self.mode.SetStringSelection("balanced")
+		self.update_convert_api_fields()
+
+	def bind_events(self):
+		super().bind_events()
+		self.base_url.Bind(wx.EVT_TEXT, lambda event: self.update_convert_api_fields())
+
+	def update_convert_api_fields(self):
+		enabled = not self.model.is_convert_api(self.base_url.GetValue())
+		for control in (self.prompt, self.reset_prompt, self.max_tokens):
+			control.Enable(enabled)
 
 	def onSave(self):
 		if hasattr(self, "mode"):
