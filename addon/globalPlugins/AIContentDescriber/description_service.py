@@ -9,6 +9,7 @@ import json
 import functools
 import os
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import hashlib
@@ -2382,6 +2383,14 @@ class DatalabChandra2(BaseDescriptionService):
 			try:
 				with urllib.request.urlopen(req, timeout=10) as resp:
 					resp_bytes = resp.read()
+			except urllib.error.HTTPError as e:
+				if e.code == 429 or e.code >= 500:
+					log.debug(f"Retryable polling error from Datalab: {e}")
+					continue
+				log.error(f"Datalab polling failed: {e}")
+				# translators: message spoken when checking the status of a Datalab conversion fails
+				wx.CallAfter(ui.message, _("Datalab API error: {error}").format(error=str(e)))
+				return None
 			except IOError as e:
 				log.debug(f"Polling error from Datalab: {e}")
 				continue
