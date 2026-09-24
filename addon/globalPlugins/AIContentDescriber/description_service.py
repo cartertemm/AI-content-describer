@@ -2258,11 +2258,10 @@ class DatalabChandra2(BaseDescriptionService):
 
 	@property
 	def is_available(self):
-		if self.is_convert_api():
-			if "datalab.to" in (self.base_url or "").lower():
-				return bool(self.api_key)
-			return bool(self.base_url)
-		return bool(self.base_url)
+		url = (self.base_url or "").strip().lower()
+		if not url or "datalab.to" in url:
+			return bool(self.api_key)
+		return True
 
 	def _get_conversation_url(self):
 		base = (self.base_url or "http://localhost:8000/v1").rstrip("/")
