@@ -2234,6 +2234,7 @@ class DatalabChandra2(BaseDescriptionService):
 	needs_api_key = True
 	needs_base_url = True
 	supported_formats = [".jpeg", ".jpg", ".png", ".webp"]
+	MAX_POLL_FAILURES = 3
 
 	@property
 	def mode(self):
@@ -2376,6 +2377,7 @@ class DatalabChandra2(BaseDescriptionService):
 			check_headers["X-API-Key"] = api_key
 
 		start_time = time.time()
+		failures = 0
 		while time.time() - start_time < timeout_val:
 			time.sleep(1)
 			req = urllib.request.Request(request_check_url, headers=check_headers, method="GET")
@@ -2390,12 +2392,15 @@ class DatalabChandra2(BaseDescriptionService):
 				# translators: message spoken when checking the status of a Datalab conversion fails
 				wx.CallAfter(ui.message, _("Datalab API error: {error}").format(error=str(e)))
 				return None
-			except IOError as e:
-				log.debug(f"Polling error from Datalab: {e}")
-				continue
 			except Exception as e:
-				log.debug(f"Unexpected error polling Datalab: {e}")
+				failures += 1
+				log.debug(f"Polling error from Datalab: {e}")
+				if failures >= self.MAX_POLL_FAILURES:
+					# translators: message spoken when checking the status of a Datalab conversion fails
+					wx.CallAfter(ui.message, _("Datalab API error: {error}").format(error=str(e)))
+					return None
 				continue
+			failures = 0
 
 			try:
 				check_json = json.loads(resp_bytes.decode("utf-8"))
