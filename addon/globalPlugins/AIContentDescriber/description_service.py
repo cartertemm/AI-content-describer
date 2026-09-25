@@ -2331,6 +2331,7 @@ class DatalabChandra2(BaseDescriptionService):
 				headers=headers,
 				data=data_bytes,
 				timeout=min(timeout_val, 30),
+				quiet=True,
 			)
 		except Exception as e:
 			log.exception("Error calling Datalab conversion API")
