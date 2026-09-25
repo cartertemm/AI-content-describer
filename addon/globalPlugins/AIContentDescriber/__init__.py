@@ -443,7 +443,20 @@ class GlobalPlugin(GlobalPlugin):
 		tones.beep(300, 200)
 		# Translators: Message spoken after the beep - when we have started fetching the description
 		wx.CallAfter(ui.message, _("Retrieving description using {name}...").format(name=service.name))
-		message = service.process(file, **ch.config[service.name])
+		try:
+			message = service.process(file, **ch.config[service.name])
+		except Exception as e:
+			log.exception("Exception while describing image")
+			# translators: message spoken when an error occurs while describing an image
+			wx.CallAfter(ui.message, _("Error describing image: {error}").format(error=str(e)))
+			message = None
+
+		if not message:
+			if delete:
+				log.debug("Cleaning up image: " + file)
+				os.unlink(file)
+			return
+
 		if ch.config["global"]["open_in_dialog"]:
 			# Translators: Title of the browseable message
 			messageTitle = _("Image description")

@@ -558,6 +558,48 @@ class LiteLLMProxyConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
+class DatalabChandra2ConfigurationPanel(BaseModelSettingsPanel):
+	model = description_service.DatalabChandra2()
+	title = model.name
+
+	def makeSettings(self, settingsSizer):
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.add_about_button(sHelper)
+		self.add_base_url_field(sHelper)
+		self.add_api_key_field(sHelper)
+		self.add_model_name_field(sHelper)
+		# Translators: The label for the processing mode chooser for Datalab Chandra 2
+		self.mode = sHelper.addLabeledControl(_("Processing mode"), wx.Choice, choices=["fast", "balanced", "accurate"])
+		self.add_prompt_field(sHelper)
+		self.add_max_tokens_field(sHelper)
+		self.add_timeout_field(sHelper)
+		super().makeSettings(settingsSizer)
+
+	def populate_values(self):
+		super().populate_values()
+		if hasattr(self, "mode"):
+			mode_val = getattr(self.model, "mode", "balanced")
+			if mode_val in ["fast", "balanced", "accurate"]:
+				self.mode.SetStringSelection(mode_val)
+			else:
+				self.mode.SetStringSelection("balanced")
+		self.update_convert_api_fields()
+
+	def bind_events(self):
+		super().bind_events()
+		self.base_url.Bind(wx.EVT_TEXT, lambda event: self.update_convert_api_fields())
+
+	def update_convert_api_fields(self):
+		enabled = not self.model.is_convert_api(self.base_url.GetValue())
+		for control in (self.prompt, self.reset_prompt, self.max_tokens):
+			control.Enable(enabled)
+
+	def onSave(self):
+		if hasattr(self, "mode"):
+			self.model.mode = self.mode.GetStringSelection()
+		super().onSave()
+
+
 description_service.PollinationsAI.configurationPanel = PollinationsAIConfigurationPanel
 description_service.O4Mini.configurationPanel = O4MiniConfigurationPanel
 description_service.O3.configurationPanel = O3ConfigurationPanel
@@ -608,6 +650,7 @@ description_service.KimiK2_6.configurationPanel = KimiK2_6ConfigurationPanel
 description_service.KimiK2_5.configurationPanel = KimiK2_5ConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
 description_service.Seer.configurationPanel = SeerConfigurationPanel
+description_service.DatalabChandra2.configurationPanel = DatalabChandra2ConfigurationPanel
 models_dialog_parent = None
 
 

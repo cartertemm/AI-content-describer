@@ -11,7 +11,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Use supported models to control the active application with mouse and keyboard actions for potentially inaccessible tasks
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, Moonshot AI's Kimi, vivo BlueLM Vision via NVDA-CN, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
+* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, Moonshot AI's Kimi, vivo BlueLM Vision via NVDA-CN, Datalab Chandra 2, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -46,6 +46,7 @@ Now, the possibilities are almost endless. You might:
 * [Grok 2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
 * [Kimi](https://platform.kimi.ai/docs/guide/use-kimi-vision-model), Moonshot AI's multimodal models, including Kimi K3, Kimi K2.6, and Kimi K2.5.
 * vivo BlueLM Vision: a multimodal model from vivo, accessed via a free NVDA-CN account. See the setup section below.
+* [Datalab Chandra 2](https://github.com/datalab-to/chandra): State-of-the-art vision and OCR model from Datalab specializing in complex document layouts, tables, forms, handwriting, charts, and math. Supports Datalab's managed cloud API (at [datalab.to](https://www.datalab.to)) or self-hosted deployments via vLLM (using `chandra_vllm` or OpenAI-compatible `/v1` endpoints).
 * [Ollama (unstable)](https://ollama.com/)
 * [llama.cpp (extremely unstable and slow depending on your hardware, tested to work with llava-v1.5/1.6, BakLLaVA, Obsidian, and MobileVLM 1.7B/3B models)](https://github.com/ggerganov/llama.cpp)
 * [LiteLLM Proxy](https://docs.litellm.ai/docs/proxy/quick_start): Access multiple AI models through a unified proxy server. Requires a LiteLLM proxy server URL, optionally an API key depending on your proxy configuration. Appears as "LiteLLM Proxy" in the model configuration dialog. Supports dynamic model selection and follow-up questions. Compatible with all formats (PNG, JPEG, WEBP, GIF).
@@ -198,6 +199,23 @@ Seer runs PaliGemma2 on your own machine with no API key or cloud connection req
 2. In the NVDA settings dialog, navigate to the AI Content Describer category, choose "manage models (alt+m)", and select "Seer (requires installation)".
 3. The base URL defaults to `http://127.0.0.1:11435`. Leave it as-is unless you changed the daemon's port.
 4. Click OK. The daemon must be running before you attempt a description.
+
+### Setting up Datalab Chandra 2
+
+Datalab Chandra 2 is a state-of-the-art document intelligence and OCR model specializing in complex layouts, tables, forms, handwriting, charts, and math formulas. It can be used via Datalab's managed cloud API, an on-premise container, or via a self-hosted vLLM instance.
+
+#### Option A: Using Datalab's Cloud API (Recommended)
+1. Sign up for an account at [datalab.to](https://www.datalab.to). New accounts receive free trial credits.
+2. Visit the [API keys page](https://www.datalab.to/app/keys) and generate an API key.
+3. In the NVDA settings dialog, navigate to the AI Content Describer category, choose "manage models (alt+m)", and select "Datalab Chandra 2".
+4. Enter your API key into the "API key" field.
+5. The Base URL is configured to `https://www.datalab.to/api/v1/convert` by default. You can adjust the processing mode (`fast`, `balanced`, or `accurate`) depending on your requirements.
+6. Click OK. The model will now be available in the AI Content Describer menu.
+
+#### Option B: Self-Hosted with vLLM
+1. Start your local vLLM server with Chandra 2 (e.g., using `chandra_vllm` or `vllm serve datalab-to/chandra-ocr-2`). By default, the server runs on `http://localhost:8000/v1`.
+2. In NVDA settings -> AI Content Describer -> Manage models -> "Datalab Chandra 2", enter your local endpoint into the "Base URL" field (e.g., `http://localhost:8000/v1`).
+3. Set the model name if different from the default (`datalab-to/chandra-ocr-2`), leave the API key blank (or provide a bearer token if authentication is enabled), and click OK.
 
 ## Usage
 
