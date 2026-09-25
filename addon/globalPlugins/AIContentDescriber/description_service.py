@@ -2281,7 +2281,6 @@ class DatalabChandra2(BaseDescriptionService):
 		import ui
 		import wx
 
-		prompt = kw.get("prompt") or self.prompt
 		filename = os.path.basename(image_path)
 		ext = os.path.splitext(filename)[1].lower()
 		if ext in (".jpg", ".jpeg"):
@@ -2358,9 +2357,7 @@ class DatalabChandra2(BaseDescriptionService):
 		request_check_url = initial_json.get("request_check_url")
 		if not request_check_url:
 			if "markdown" in initial_json and initial_json["markdown"]:
-				content = initial_json["markdown"]
-				self.start_conversation(image_path, prompt, content)
-				return content
+				return initial_json["markdown"]
 			request_id = initial_json.get("request_id")
 			if request_id:
 				base = convert_url.split("/api/v1/convert")[0] or "https://www.datalab.to"
@@ -2427,7 +2424,6 @@ class DatalabChandra2(BaseDescriptionService):
 					except Exception as e:
 						log.debug(f"Failed fetching result_url: {e}")
 				if markdown:
-					self.start_conversation(image_path, prompt, markdown)
 					return markdown
 				# translators: message spoken when Datalab Chandra 2 returns an empty response
 				wx.CallAfter(ui.message, _("No content returned from Datalab Chandra 2."))
@@ -2477,13 +2473,16 @@ class DatalabChandra2(BaseDescriptionService):
 	):
 		if self.is_convert_api():
 			# translators: message spoken when a user attempts a follow-up question on Datalab Convert API
-			return _(
+			raise ValueError(_(
 				"Datalab Chandra 2 Convert API is specialized for OCR and document transcription, "
 				"and does not support follow-up questions."
-			)
+			))
 		return super().add_to_conversation(
 			user_message, image_path=image_path, include_original_image=include_original_image
 		)
+
+	def has_conversation(self):
+		return not self.is_convert_api() and super().has_conversation()
 
 
 models = [
