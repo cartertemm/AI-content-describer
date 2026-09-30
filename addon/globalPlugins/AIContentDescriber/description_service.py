@@ -945,10 +945,13 @@ class GoogleGemini(BaseDescriptionService):
 		return {"contents": contents, "generationConfig": gen_config}
 
 	def _get_conversation_url(self):
-		return f"https://generativelanguage.googleapis.com/v1beta/models/{self.internal_model_name}:generateContent?key={self.api_key}"
+		return f"https://generativelanguage.googleapis.com/v1beta/models/{self.internal_model_name}:generateContent"
 
 	def _get_conversation_headers(self):
-		return {"Content-Type": "application/json"}
+		headers = {"Content-Type": "application/json"}
+		if self.api_key:
+			headers["x-goog-api-key"] = self.api_key
+		return headers
 
 	def _extract_conversation_response(self, response_json):
 		if "error" in response_json:
