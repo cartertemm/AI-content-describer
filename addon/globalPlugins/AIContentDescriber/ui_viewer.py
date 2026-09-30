@@ -77,12 +77,16 @@ def _process(service, file):
 	wx.CallAfter(ui.message, _("Retrieving UI description using {name}...").format(name=service.name))
 	try:
 		result = service.process(file, prompt=PROMPT, max_tokens=CC_MAX_TOKENS, cache_descriptions=False)
-		if result and (not isinstance(result, str) or result.strip()):
+		if result is None:
+			return
+		if not isinstance(result, str) or result.strip():
 			# Translators: title of the browseable message showing reconstructed UI controls
 			wx.CallAfter(ui.browseableMessage, result, _("UI Controls"), True, sanitizeHtmlFunc=lambda html:html)
 		else:
 			# Translators: message spoken when no UI description is returned
 			wx.CallAfter(ui.message, _("No UI description returned"))
+	except IOError:
+		log.exception("Connection error while describing UI")
 	except Exception:
 		log.exception("Exception while describing UI")
 		tones.beep(200, 100)
