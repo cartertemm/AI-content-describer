@@ -537,11 +537,6 @@ class KimiK2_6ConfigurationPanel(KimiConfigurationPanel):
 	title = model.name
 
 
-class KimiK2_5ConfigurationPanel(KimiConfigurationPanel):
-	model = description_service.KimiK2_5()
-	title = model.name
-
-
 class LiteLLMProxyConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.LiteLLMProxy()
 	title = model.name
@@ -647,7 +642,6 @@ description_service.Claude5Fable.configurationPanel = Claude5FableConfigurationP
 description_service.Claude5_1Fable.configurationPanel = Claude5_1FableConfigurationPanel
 description_service.KimiK3.configurationPanel = KimiK3ConfigurationPanel
 description_service.KimiK2_6.configurationPanel = KimiK2_6ConfigurationPanel
-description_service.KimiK2_5.configurationPanel = KimiK2_5ConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
 description_service.Seer.configurationPanel = SeerConfigurationPanel
 description_service.DatalabChandra2.configurationPanel = DatalabChandra2ConfigurationPanel

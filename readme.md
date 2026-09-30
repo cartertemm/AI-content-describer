@@ -44,7 +44,7 @@ Now, the possibilities are almost endless. You might:
 * [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4.5 (Sonnet, Opus), 4.6 (Sonnet, Opus), 4.7 Opus, 4.8 Opus, 5 (Sonnet, Opus, Fable), and 5.1 Fable. All of these support computer use.
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [Grok 2](https://x.ai/news/grok-2), [Grok 4](https://x.ai/news/grok-4), and [Grok 4 Fast (reasoning and non-reasoning)](https://x.ai/news/grok-4-fast)
-* [Kimi](https://platform.kimi.ai/docs/guide/use-kimi-vision-model), Moonshot AI's multimodal models, including Kimi K3, Kimi K2.6, and Kimi K2.5.
+* [Kimi](https://platform.kimi.ai/docs/guide/use-kimi-vision-model), Moonshot AI's multimodal models, including Kimi K3 and Kimi K2.6.
 * vivo BlueLM Vision: a multimodal model from vivo, accessed via a free NVDA-CN account. See the setup section below.
 * [Datalab Chandra 2](https://github.com/datalab-to/chandra): State-of-the-art vision and OCR model from Datalab specializing in complex document layouts, tables, forms, handwriting, charts, and math. Supports Datalab's managed cloud API (at [datalab.to](https://www.datalab.to)) or self-hosted deployments via vLLM (using `chandra_vllm` or OpenAI-compatible `/v1` endpoints).
 * [Ollama (unstable)](https://ollama.com/)

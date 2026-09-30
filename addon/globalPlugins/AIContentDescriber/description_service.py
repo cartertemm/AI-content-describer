@@ -1654,16 +1654,6 @@ class KimiK2_6(Kimi):
 	internal_model_name = "kimi-k2.6"
 
 
-class KimiK2_5(Kimi):
-	name = "Kimi K2.5"
-	# translators: the description for Moonshot AI's Kimi K2.5 model in the model configuration dialog
-	description = _(
-		"A Kimi multimodal model with image and text understanding, well suited to describing pictures and reading text within them."
-	)
-	about_url = "https://platform.kimi.ai/docs/guide/use-kimi-vision-model"
-	internal_model_name = "kimi-k2.5"
-
-
 class Ollama(BaseDescriptionService):
 	name = "Ollama"
 	needs_api_key = False
@@ -2543,7 +2533,6 @@ models = [
 	# Moonshot AI (Kimi)
 	KimiK3(),
 	KimiK2_6(),
-	KimiK2_5(),
 	# vivo (NVDA-CN)
 	VivoBlueLMVision(),
 	# Datalab
