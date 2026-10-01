@@ -307,14 +307,8 @@ class ActionRunner:
 			if t == "move":
 				self._move(action["x"], action["y"])
 				return format_action_result(action, f"({action['x']}, {action['y']})")
-			elif t == "left_click":
-				self._click(action["x"], action["y"], "left")
-				return format_action_result(action, f"({action['x']}, {action['y']})")
-			elif t == "right_click":
-				self._click(action["x"], action["y"], "right")
-				return format_action_result(action, f"({action['x']}, {action['y']})")
-			elif t == "middle_click":
-				self._click(action["x"], action["y"], "middle")
+			elif t in ("left_click", "right_click", "middle_click"):
+				self._click(action["x"], action["y"], t.removesuffix("_click"))
 				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "double_click":
 				self._click(action["x"], action["y"], "left")
