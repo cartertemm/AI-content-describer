@@ -118,6 +118,25 @@ def get(*args, **kwargs):
 	return response
 
 
+def _describe_request_error(error):
+	"""Return the error text, plus the API's own error message when the response body has one."""
+	detail = str(error)
+	fp = getattr(error, "fp", None)
+	if fp is None:
+		return detail
+	try:
+		body = fp.read()
+		log.debug(body)
+		err = json.loads(body.decode("utf-8")).get("error")
+	except Exception:
+		return detail
+	if isinstance(err, dict):
+		err = err.get("message")
+	if err:
+		detail += ". " + str(err)
+	return detail
+
+
 def post(**kwargs):
 	"""Post to a URL and report status information back to NVDA.
 	Keyword arguments are the same as those accepted by urllib.request.Request, except for timeout, which is handled separately.
@@ -141,42 +160,17 @@ def post(**kwargs):
 		response = urllib.request.urlopen(request, timeout=timeout).read()
 	except IOError as i:
 		if quiet:
-			detail = str(i)
-			fp = getattr(i, "fp", None)
-			if fp is not None:
-				try:
-					body = json.loads(fp.read().decode("utf-8"))
-					err = body.get("error")
-					if isinstance(err, dict):
-						err = err.get("message")
-					if err:
-						detail += ". " + str(err)
-				except Exception:
-					pass
-			raise IOError(detail) from i
+			raise IOError(_describe_request_error(i)) from i
 		tones.beep(150, 200)
 		# translators: message spoken when we can't connect (error with connection)
 		error_connection = _("error making connection")
-		if str(i).find("Errno 11001") > -1:
+		if "Errno 11001" in str(i) or "Errno 10060" in str(i):
 			ui.message(error_connection)
-		elif str(i).find("Errno 10060") > -1:
-			ui.message(error_connection)
-		elif str(i).find("Errno 10061") > -1:
+		elif "Errno 10061" in str(i):
 			# translators: message spoken when the connection is refused by our target
 			ui.message(_("error, connection refused by target"))
 		else:
-			reason = str(i)
-			if hasattr(i, "fp"):
-				error_text = i.fp.read()
-				log.debug(error_text)
-				error_text = json.loads(error_text)
-				if "error" in error_text:
-					err = error_text["error"]
-					if isinstance(err, dict) and "message" in err:
-						reason += ". " + err["message"]
-					elif isinstance(err, str):
-						reason += ". " + err
-			ui.message(error + ": " + reason)
+			ui.message(error + ": " + _describe_request_error(i))
 			raise
 		return
 	except Exception as i:
