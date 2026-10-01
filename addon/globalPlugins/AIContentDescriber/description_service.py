@@ -2271,10 +2271,13 @@ class DatalabChandra2(BaseDescriptionService):
 			headers["Authorization"] = f"Bearer {self.api_key}"
 		return headers
 
-	def _process_convert_api(self, image_path, **kw):
+	def _report_convert_error(self, message):
 		import ui
 		import wx
 
+		wx.CallAfter(ui.message, message)
+
+	def _build_upload_file(self, image_path):
 		filename = os.path.basename(image_path)
 		ext = os.path.splitext(filename)[1].lower()
 		if ext in (".jpg", ".jpeg"):
@@ -2290,33 +2293,25 @@ class DatalabChandra2(BaseDescriptionService):
 
 		with open(image_path, "rb") as f:
 			file_bytes = f.read()
+		return filename, file_bytes, mime_type
 
-		mode_val = kw.get("mode") or self.mode
-		if mode_val not in ("fast", "balanced", "accurate"):
-			mode_val = "balanced"
+	def _submit_convert_request(self, image_path, convert_url, api_key, timeout_val, mode_val):
 		fields = {
 			"output_format": "markdown",
 			"mode": mode_val,
 			"paginate": "false",
 		}
 		files = {
-			"file": (filename, file_bytes, mime_type),
+			"file": self._build_upload_file(image_path),
 		}
 		data_bytes, content_type_header = encode_multipart_formdata(fields, files)
 
-		convert_url = (kw.get("base_url") or self.base_url or "").strip()
-		if not convert_url:
-			convert_url = "https://www.datalab.to/api/v1/convert"
-
-		api_key = kw.get("api_key") or self.api_key
 		headers = {
 			"Content-Type": content_type_header,
 			"User-Agent": "NVDA-AIContentDescriber/1.0",
 		}
 		if api_key:
 			headers["X-API-Key"] = api_key
-
-		timeout_val = int(kw.get("timeout") or self.timeout or 100)
 
 		try:
 			initial_response = post(
@@ -2329,7 +2324,7 @@ class DatalabChandra2(BaseDescriptionService):
 		except Exception as e:
 			log.exception("Error calling Datalab conversion API")
 			# translators: message spoken when an error occurs while contacting the Datalab API
-			wx.CallAfter(ui.message, _("Datalab API error: {error}").format(error=str(e)))
+			self._report_convert_error(_("Datalab API error: {error}").format(error=str(e)))
 			return None
 
 		if not initial_response:
@@ -2339,30 +2334,55 @@ class DatalabChandra2(BaseDescriptionService):
 			initial_json = json.loads(initial_response.decode("utf-8"))
 		except json.JSONDecodeError:
 			# translators: message spoken when the Datalab API returns an invalid or non-JSON response
-			wx.CallAfter(ui.message, _("Invalid response received from Datalab API."))
+			self._report_convert_error(_("Invalid response received from Datalab API."))
 			return None
 
 		if not initial_json.get("success", True) or initial_json.get("error"):
 			# translators: message spoken when a Datalab conversion request fails
 			err = initial_json.get("error") or _("Datalab conversion request failed.")
-			wx.CallAfter(ui.message, str(err))
+			self._report_convert_error(str(err))
 			return None
+		return initial_json
 
+	def _get_request_check_url(self, initial_json, convert_url):
 		request_check_url = initial_json.get("request_check_url")
 		if not request_check_url:
-			if "markdown" in initial_json and initial_json["markdown"]:
-				return initial_json["markdown"]
 			request_id = initial_json.get("request_id")
-			if request_id:
-				base = convert_url.split("/api/v1/convert")[0] or "https://www.datalab.to"
-				request_check_url = f"{base}/api/v1/convert/{request_id}"
-			else:
+			if not request_id:
 				# translators: message spoken when Datalab does not return a request check URL
-				wx.CallAfter(ui.message, _("No request check URL returned by Datalab."))
+				self._report_convert_error(_("No request check URL returned by Datalab."))
 				return None
+			base = convert_url.split("/api/v1/convert")[0] or "https://www.datalab.to"
+			request_check_url = f"{base}/api/v1/convert/{request_id}"
+		return urllib.parse.urljoin(convert_url, request_check_url)
 
-		request_check_url = urllib.parse.urljoin(convert_url, request_check_url)
+	def _extract_convert_result(self, check_json):
+		if check_json.get("success") is False or (check_json.get("error") and not check_json.get("markdown")):
+			# translators: message spoken when Datalab Chandra 2 conversion fails
+			err_msg = check_json.get("error") or _("Datalab Chandra 2 conversion failed.")
+			self._report_convert_error(str(err_msg))
+			return None
 
+		markdown = check_json.get("markdown")
+		if markdown is None and "result" in check_json and isinstance(check_json["result"], dict):
+			markdown = check_json["result"].get("markdown")
+		if not markdown:
+			markdown = check_json.get("html") or check_json.get("text") or ""
+		if not markdown and check_json.get("result_url"):
+			result_url = check_json["result_url"]
+			try:
+				with urllib.request.urlopen(result_url, timeout=15) as r_resp:
+					r_json = json.loads(r_resp.read().decode("utf-8"))
+					markdown = r_json.get("markdown", "")
+			except Exception as e:
+				log.debug(f"Failed fetching result_url: {e}")
+		if markdown:
+			return markdown
+		# translators: message spoken when Datalab Chandra 2 returns an empty response
+		self._report_convert_error(_("No content returned from Datalab Chandra 2."))
+		return None
+
+	def _poll_convert_result(self, request_check_url, api_key, timeout_val):
 		check_headers = {
 			"User-Agent": "NVDA-AIContentDescriber/1.0",
 		}
@@ -2383,14 +2403,14 @@ class DatalabChandra2(BaseDescriptionService):
 					continue
 				log.error(f"Datalab polling failed: {e}")
 				# translators: message spoken when checking the status of a Datalab conversion fails
-				wx.CallAfter(ui.message, _("Datalab API error: {error}").format(error=str(e)))
+				self._report_convert_error(_("Datalab API error: {error}").format(error=str(e)))
 				return None
 			except Exception as e:
 				failures += 1
 				log.debug(f"Polling error from Datalab: {e}")
 				if failures >= self.MAX_POLL_FAILURES:
 					# translators: message spoken when checking the status of a Datalab conversion fails
-					wx.CallAfter(ui.message, _("Datalab API error: {error}").format(error=str(e)))
+					self._report_convert_error(_("Datalab API error: {error}").format(error=str(e)))
 					return None
 				continue
 			failures = 0
@@ -2402,39 +2422,36 @@ class DatalabChandra2(BaseDescriptionService):
 
 			status = str(check_json.get("status", "")).lower()
 			if status == "complete":
-				if check_json.get("success") is False or (check_json.get("error") and not check_json.get("markdown")):
-					# translators: message spoken when Datalab Chandra 2 conversion fails
-					err_msg = check_json.get("error") or _("Datalab Chandra 2 conversion failed.")
-					wx.CallAfter(ui.message, str(err_msg))
-					return None
-
-				markdown = check_json.get("markdown")
-				if markdown is None and "result" in check_json and isinstance(check_json["result"], dict):
-					markdown = check_json["result"].get("markdown")
-				if not markdown:
-					markdown = check_json.get("html") or check_json.get("text") or ""
-				if not markdown and check_json.get("result_url"):
-					result_url = check_json["result_url"]
-					try:
-						with urllib.request.urlopen(result_url, timeout=15) as r_resp:
-							r_json = json.loads(r_resp.read().decode("utf-8"))
-							markdown = r_json.get("markdown", "")
-					except Exception as e:
-						log.debug(f"Failed fetching result_url: {e}")
-				if markdown:
-					return markdown
-				# translators: message spoken when Datalab Chandra 2 returns an empty response
-				wx.CallAfter(ui.message, _("No content returned from Datalab Chandra 2."))
-				return None
+				return self._extract_convert_result(check_json)
 			elif status in ("failed", "error"):
 				# translators: message spoken when Datalab Chandra 2 conversion fails
 				err_msg = check_json.get("error") or _("Datalab Chandra 2 conversion failed.")
-				wx.CallAfter(ui.message, str(err_msg))
+				self._report_convert_error(str(err_msg))
 				return None
 
 		# translators: message spoken when Datalab Chandra 2 conversion times out
-		wx.CallAfter(ui.message, _("Datalab Chandra 2 conversion timed out."))
+		self._report_convert_error(_("Datalab Chandra 2 conversion timed out."))
 		return None
+
+	def _process_convert_api(self, image_path, **kw):
+		mode_val = kw.get("mode") or self.mode
+		if mode_val not in ("fast", "balanced", "accurate"):
+			mode_val = "balanced"
+		convert_url = (kw.get("base_url") or self.base_url or "").strip()
+		if not convert_url:
+			convert_url = "https://www.datalab.to/api/v1/convert"
+		api_key = kw.get("api_key") or self.api_key
+		timeout_val = int(kw.get("timeout") or self.timeout or 100)
+
+		initial_json = self._submit_convert_request(image_path, convert_url, api_key, timeout_val, mode_val)
+		if initial_json is None:
+			return None
+		if not initial_json.get("request_check_url") and initial_json.get("markdown"):
+			return initial_json["markdown"]
+		request_check_url = self._get_request_check_url(initial_json, convert_url)
+		if not request_check_url:
+			return None
+		return self._poll_convert_result(request_check_url, api_key, timeout_val)
 
 	def _process_openai_api(self, image_path, **kw):
 		prompt = kw.get("prompt") or self.prompt
