@@ -58,6 +58,8 @@ Follow the instructions provided below to get each of these working.
 
 Download the latest release of the add-on from [this link](https://github.com/cartertemm/AI-content-describer/releases/latest/). Click on the file on a computer with NVDA installed, and proceed with the installation as prompted.
 
+The first time NVDA starts with the add-on, it asks to download some extra libraries. See the `Dependencies` section of this document for details.
+
 As of version 2025.06.05, usage of GPT4 is free thanks to the generosity of the community behind PollinationsAI.
 
 If you have the resources and interest in exploring additional models, you can always use your own API key and reduce requests to their servers. If you don't, feel free to skip down to the `usage` section of this document.
@@ -268,6 +270,25 @@ To use computer control:
 5. Review the consent prompt. If you allow the session, monitor the actions and approve or cancel any risky action prompts.
 
 Note: This should be considered a beta feature, and we are actively taking steps to harden the implementation.
+
+## Dependencies
+
+Some of the libraries this add-on needs are too large to include in the add-on package. Instead, the first time NVDA starts with the add-on installed, you are asked whether to download them. Select yes, wait for the download to finish, and NVDA restarts.
+
+The download is a zip file of about 35 to 70 MB, depending on your NVDA version. It comes from the [libs-release](https://github.com/cartertemm/AI-content-describer/releases/tag/libs-release) page of this repository. If GitHub can't be reached, the add-on offers to try a mirror provided by the Chinese NVDA community.
+
+The zip contains:
+
+* [NumPy](https://numpy.org/): math on arrays, required by OpenCV.
+* [OpenCV](https://opencv.org/) (`cv2`): finds your face in webcam images for the face detection feature.
+* [Pillow](https://python-pillow.org/) (`PIL`): captures screenshots and converts them to images the AI models can read.
+* [Markdown](https://python-markdown.github.io/): shows descriptions with formatting, such as headings, lists, and tables.
+* [pygrabber](https://github.com/andreaschiavinato/python_grabber): lists the webcams on your computer.
+* A few modules from the Python standard library that NVDA does not include (`html`, `xml`, `pathlib`, `secrets`, and `_markupbase`). The libraries above need them.
+
+The files go in a folder named `aic-py-` followed by NVDA's Python version, such as `aic-py-3.13`. This folder is in your NVDA user configuration folder, usually `%APPDATA%\nvda`. Each Python version gets its own folder, meaning that the add-on downloads the libraries again when a new NVDA release changes its Python version. Uninstalling the add-on deletes the folder for NVDA's current Python version.
+
+If the download doesn't work, you can install the libraries yourself. Download `aic-py-3.13.zip` (or the file for your NVDA's Python version) from the libs-release page, extract it into your NVDA user configuration folder, and restart NVDA.
 
 ## Building the add-on
 
