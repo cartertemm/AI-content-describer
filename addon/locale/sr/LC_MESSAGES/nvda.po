@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.1\n"
 
-#. Translators: The message displayed if during installation, there is an incompatable version already installed
+#. Translators: The message displayed if during installation, there is an incompatible version already installed
 #: addon\installTasks.py:18
 msgid ""
 "There appears to be an older version of this add-on installed that is "
-"incompatable with future versions because the name has changed. It will be "
+"incompatible with future versions because the name has changed. It will be "
 "removed the next time NVDA is restarted."
 msgstr ""
 "Izgleda da je instalirana starija verzija ovog dodatka koja je "

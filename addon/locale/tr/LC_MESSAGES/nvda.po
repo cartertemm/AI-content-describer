@@ -16,11 +16,11 @@ msgstr ""
 "X-Poedit-SearchPath-1: __pycache__\n"
 "X-Poedit-SearchPath-2: installTasks.py\n"
 
-#. Translators: The message displayed if during installation, there is an incompatable version already installed
+#. Translators: The message displayed if during installation, there is an incompatible version already installed
 #: addon\installTasks.py:20
 msgid ""
 "There appears to be an older version of this add-on installed that is "
-"incompatable with future versions because the name has changed. It will be "
+"incompatible with future versions because the name has changed. It will be "
 "removed the next time NVDA is restarted."
 msgstr ""
 "Bu eklentinin, adı değiştiği için gelecekteki sürümlerle uyumlu olmayan eski "

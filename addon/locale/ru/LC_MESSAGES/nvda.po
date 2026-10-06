@@ -1039,7 +1039,7 @@ msgstr "Прикрепить изображение"
 #: addon/installTasks.py:20
 msgid ""
 "There appears to be an older version of this add-on installed that is "
-"incompatable with future versions because the name has changed. It will be "
+"incompatible with future versions because the name has changed. It will be "
 "removed the next time NVDA is restarted."
 msgstr ""
 "Похоже, что установлена старая версия дополнения, которая несовместима со "
