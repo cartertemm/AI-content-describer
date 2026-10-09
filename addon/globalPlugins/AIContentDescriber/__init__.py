@@ -164,6 +164,15 @@ class AreaMenu(wx.Menu):
 		self.show_ui_item = self.Append(wx.ID_ANY, _("Show UI"))
 		# translators: picture from the local camera menu item
 		self.camera_item = self.Append(wx.ID_ANY, _("Take a picture"))
+		self.copy_menu = wx.Menu()
+		# Translators: item in the copy image to clipboard submenu that captures the focus object
+		self.copy_focus_item = self.copy_menu.Append(wx.ID_ANY, _("Focus object"))
+		# Translators: item in the copy image to clipboard submenu that captures the navigator object
+		self.copy_navigator_item = self.copy_menu.Append(wx.ID_ANY, _("Navigator object"))
+		# Translators: item in the copy image to clipboard submenu that captures the entire screen
+		self.copy_screenshot_item = self.copy_menu.Append(wx.ID_ANY, _("Entire screen"))
+		# Translators: the label for the submenu that copies a captured image to the clipboard without describing it
+		self.AppendSubMenu(self.copy_menu, _("Copy image to clipboard"))
 		# For the face detection submenu
 		self.face_detection_menu = wx.Menu()
 		self.detect_face_item = self.face_detection_menu.Append(wx.ID_ANY, _("Detect face position"))
@@ -202,6 +211,9 @@ class AreaMenu(wx.Menu):
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.screenshot_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.show_ui_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.camera_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.copy_focus_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.copy_navigator_item)
+		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.copy_screenshot_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_item)
 		#gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.detect_face_realtime_item)
 		gui.mainFrame.Bind(wx.EVT_MENU, self.on_menu_selected, self.select_camera_item)
@@ -304,6 +316,14 @@ class GlobalPlugin(GlobalPlugin):
 
 
 	def describe_object(self, focus=False):
+		snap = self.snap_object(focus)
+		if not snap:
+			return
+		file = tempfile.mktemp(suffix=".png")
+		snap.save(file)
+		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
+
+	def snap_object(self, focus=False):
 		if self.is_screen_curtain_running():
 			# Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
 			ui.message(_("Please disable windows screen curtain before using AI content describer."))
@@ -333,9 +353,7 @@ class GlobalPlugin(GlobalPlugin):
 			# Translators: Message spoken when the attempt to take a picture of an object fails
 			ui.message(_("Could not snap an image of the requested object"))
 			return
-		file = tempfile.mktemp(suffix=".png")
-		snap.save(file)
-		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
+		return snap
 
 	def describe_face(self):
 		if not hasattr(self, "detection_interface"):
@@ -352,7 +370,7 @@ class GlobalPlugin(GlobalPlugin):
 				return
 		return threading.Thread(target=self.detection_interface.run).start()
 
-	def describe_screenshot(self):
+	def snap_screen(self):
 		if self.is_screen_curtain_running():
 			# Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
 			ui.message(_("Please disable windows screen curtain before using AI content describer."))
@@ -362,9 +380,43 @@ class GlobalPlugin(GlobalPlugin):
 			# translators: message spoken when grabbing the content of the current window is not possible
 			ui.message(_("Could not get window content"))
 			return
+		return snap
+
+	def describe_screenshot(self):
+		snap = self.snap_screen()
+		if not snap:
+			return
 		file = tempfile.mktemp(suffix=".png")
 		snap.save(file)
 		return threading.Thread(target=self.describe_image, kwargs={"file":file, "delete":True}).start()
+
+	def copy_image_to_clipboard(self, snap):
+		if not snap:
+			return
+		bitmap = wx.Image(snap.width, snap.height, snap.convert("RGB").tobytes()).ConvertToBitmap()
+		copied = False
+		if wx.TheClipboard.Open():
+			try:
+				copied = wx.TheClipboard.SetData(wx.BitmapDataObject(bitmap))
+			finally:
+				wx.TheClipboard.Close()
+		if not copied:
+			tones.beep(200, 150)
+			# Translators: message spoken when a captured image could not be placed on the clipboard
+			ui.message(_("Could not copy the image to the clipboard."))
+			return
+		wx.TheClipboard.Flush()
+		# Translators: message spoken when a captured image was copied to the clipboard
+		ui.message(_("Image copied to clipboard."))
+
+	def copy_focus_object(self):
+		self.copy_image_to_clipboard(self.snap_object(focus=True))
+
+	def copy_navigator_object(self):
+		self.copy_image_to_clipboard(self.snap_object(focus=False))
+
+	def copy_screenshot(self):
+		self.copy_image_to_clipboard(self.snap_screen())
 
 	def describe_camera(self):
 		if not hasattr(self, "detection_interface"):
@@ -498,6 +550,12 @@ class GlobalPlugin(GlobalPlugin):
 			ui_viewer.describe_ui(self, service)
 		elif menu.selection == menu.camera_item:
 			self.describe_camera()
+		elif menu.selection == menu.copy_focus_item:
+			self.copy_focus_object()
+		elif menu.selection == menu.copy_navigator_item:
+			self.copy_navigator_object()
+		elif menu.selection == menu.copy_screenshot_item:
+			self.copy_screenshot()
 		elif menu.selection == menu.detect_face_item:
 			self.describe_face()
 		elif menu.selection == menu.select_camera_item:
@@ -541,6 +599,18 @@ class GlobalPlugin(GlobalPlugin):
 	def script_describe_screenshot(self, gesture):
 		self.describe_screenshot()
 	script_describe_screenshot.__doc__ = _("Take a screenshot, then describe it using AI.")
+
+	def script_copy_focus(self, gesture):
+		self.copy_focus_object()
+	script_copy_focus.__doc__ = _("Takes a screenshot of the current focus object and copies it to the clipboard.")
+
+	def script_copy_navigator(self, gesture):
+		self.copy_navigator_object()
+	script_copy_navigator.__doc__ = _("Takes a screenshot of the current navigator object and copies it to the clipboard.")
+
+	def script_copy_screenshot(self, gesture):
+		self.copy_screenshot()
+	script_copy_screenshot.__doc__ = _("Takes a screenshot of the entire screen and copies it to the clipboard.")
 
 	def script_describe_image(self, gesture):
 		wx.CallAfter(self.show_area_menu)

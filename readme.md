@@ -8,6 +8,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 
 * Describe the focus object, navigator object, entire screen, or snap a photo from the onboard camera
 * Describe any image that has been copied to the clipboard, be it a picture from an email or a path in windows explorer
+* Copy an image of the focus object, navigator object, or entire screen to the clipboard, to paste into other apps
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Use supported models to control the active application with mouse and keyboard actions for potentially inaccessible tasks
 * Free to use by default, optionally add your own API key for more models
@@ -230,12 +231,17 @@ Six hotkeys are bound by default:
 * NVDA+alt+c: Open the AI conversation dialog to ask follow-up questions.
 * NVDA+control+shift+p: Pause or resume an active computer control session.
 
-Four gestures are unbound:
+Seven gestures are unbound:
 
 * Describe the contents of the currently focused item using AI.
 * Take a screenshot, then describe it using AI.
 * Snap a picture using the selected camera, then describe it using AI.
 * Cancel the active computer control session.
+* Take a screenshot of the current focus object and copy it to the clipboard.
+* Take a screenshot of the current navigator object and copy it to the clipboard.
+* Take a screenshot of the entire screen and copy it to the clipboard.
+
+The three copy commands are also in the "Copy image to clipboard" submenu of the NVDA+shift+i menu. They do not send anything to an AI service. Use them to paste a capture into Be My AI or another app that this add-on does not support. The copy replaces what was on the clipboard before.
 
 Don't hesitate to customize these at any time from the input gestures dialog.
 
