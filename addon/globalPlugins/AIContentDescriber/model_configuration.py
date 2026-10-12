@@ -317,13 +317,8 @@ class Gemini2_5ProConfigurationPanel(GeminiConfigurationPanel):
 	title = model.name
 
 
-class Gemini3FlashPreviewConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.Gemini3FlashPreview()
-	title = model.name
-
-
-class Gemini3_1FlashLitePreviewConfigurationPanel(GeminiConfigurationPanel):
-	model = description_service.Gemini3_1FlashLitePreview()
+class Gemini3_1FlashLiteConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3_1FlashLite()
 	title = model.name
 
 
@@ -334,6 +329,26 @@ class Gemini3_1ProPreviewConfigurationPanel(GeminiConfigurationPanel):
 
 class Gemini3_5FlashConfigurationPanel(GeminiConfigurationPanel):
 	model = description_service.Gemini3_5Flash()
+	title = model.name
+
+
+class Gemini3_5FlashLiteConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3_5FlashLite()
+	title = model.name
+
+
+class Gemini3_6FlashConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3_6Flash()
+	title = model.name
+
+
+class Gemini3_7FlashConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3_7Flash()
+	title = model.name
+
+
+class Gemini3_8FlashConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini3_8Flash()
 	title = model.name
 
 
@@ -617,10 +632,13 @@ description_service.GPT55Pro.configurationPanel = GPT55ProConfigurationPanel
 description_service.Gemini2_5Flash.configurationPanel = Gemini2_5FlashConfigurationPanel
 description_service.Gemini2_5FlashLite.configurationPanel = Gemini2_5FlashLiteConfigurationPanel
 description_service.Gemini2_5Pro.configurationPanel = Gemini2_5ProConfigurationPanel
-description_service.Gemini3FlashPreview.configurationPanel = Gemini3FlashPreviewConfigurationPanel
-description_service.Gemini3_1FlashLitePreview.configurationPanel = Gemini3_1FlashLitePreviewConfigurationPanel
+description_service.Gemini3_1FlashLite.configurationPanel = Gemini3_1FlashLiteConfigurationPanel
 description_service.Gemini3_1ProPreview.configurationPanel = Gemini3_1ProPreviewConfigurationPanel
 description_service.Gemini3_5Flash.configurationPanel = Gemini3_5FlashConfigurationPanel
+description_service.Gemini3_5FlashLite.configurationPanel = Gemini3_5FlashLiteConfigurationPanel
+description_service.Gemini3_6Flash.configurationPanel = Gemini3_6FlashConfigurationPanel
+description_service.Gemini3_7Flash.configurationPanel = Gemini3_7FlashConfigurationPanel
+description_service.Gemini3_8Flash.configurationPanel = Gemini3_8FlashConfigurationPanel
 description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationPanel
 description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfigurationPanel # <-- 在这里添加
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel

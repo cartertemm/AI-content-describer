@@ -1026,22 +1026,12 @@ class Gemini2_5Pro(GoogleGemini):
 	about_url = "https://deepmind.google/models/gemini/pro/"
 
 
-class Gemini3FlashPreview(GoogleGemini):
-	name = "Google Gemini 3 Flash Preview"
-	internal_model_name = "gemini-3-flash-preview"
-	# translators: the description for Google's Gemini 3 Flash Preview model, as shown in the configuration dialog.
+class Gemini3_1FlashLite(GoogleGemini):
+	name = "Google Gemini 3.1 Flash-Lite"
+	internal_model_name = "gemini-3.1-flash-lite"
+	# translators: the description for Google's Gemini 3.1 Flash-Lite model, as shown in the configuration dialog.
 	description = _(
-		"Gemini 3 Flash is Google's latest multimodal model with strong vision and agentic capabilities. Supports text, image, video, audio, and PDF input with a 1M token context window."
-	)
-	about_url = "https://deepmind.google/models/gemini/flash/"
-
-
-class Gemini3_1FlashLitePreview(GoogleGemini):
-	name = "Google Gemini 3.1 Flash-Lite Preview"
-	internal_model_name = "gemini-3.1-flash-lite-preview"
-	# translators: the description for Google's Gemini 3.1 Flash-Lite Preview model, as shown in the configuration dialog.
-	description = _(
-		"Gemini 3.1 Flash-Lite is the most cost-efficient model in the Gemini 3 series, designed for high volume tasks."
+		"Gemini 3.1 Flash-Lite is optimized for cost efficiency and low latency in high-frequency tasks."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash-lite/"
 
@@ -1064,6 +1054,46 @@ class Gemini3_5Flash(GoogleGemini):
 		"Gemini 3.5 Flash is Google's latest and most capable Flash model, with faster response times and reduced latency. Ideal for tasks requiring both speed and quality."
 	)
 	about_url = "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash"
+
+
+class Gemini3_5FlashLite(GoogleGemini):
+	name = "Google Gemini 3.5 Flash-Lite"
+	internal_model_name = "gemini-3.5-flash-lite"
+	# translators: the description for Google's Gemini 3.5 Flash-Lite model, as shown in the configuration dialog.
+	description = _(
+		"Gemini 3.5 Flash-Lite provides high throughput and cost efficiency for lightweight multimodal processing."
+	)
+	about_url = "https://deepmind.google/models/gemini/flash-lite/"
+
+
+class Gemini3_6Flash(GoogleGemini):
+	name = "Google Gemini 3.6 Flash"
+	internal_model_name = "gemini-3.6-flash"
+	# translators: the description for Google's Gemini 3.6 Flash model, as shown in the configuration dialog.
+	description = _(
+		"Gemini 3.6 Flash offers balanced speed and accuracy for multimodal understanding and captioning."
+	)
+	about_url = "https://deepmind.google/models/gemini/flash/"
+
+
+class Gemini3_7Flash(GoogleGemini):
+	name = "Google Gemini 3.7 Flash"
+	internal_model_name = "gemini-3.7-flash"
+	# translators: the description for Google's Gemini 3.7 Flash model, as shown in the configuration dialog.
+	description = _(
+		"Gemini 3.7 Flash combines high-speed processing with advanced multimodal capabilities and visual reasoning."
+	)
+	about_url = "https://deepmind.google/models/gemini/flash/"
+
+
+class Gemini3_8Flash(GoogleGemini):
+	name = "Google Gemini 3.8 Flash"
+	internal_model_name = "gemini-3.8-flash"
+	# translators: the description for Google's Gemini 3.8 Flash model, as shown in the configuration dialog.
+	description = _(
+		"Gemini 3.8 Flash delivers high-performance multimodal reasoning with fast response times."
+	)
+	about_url = "https://deepmind.google/models/gemini/flash/"
 
 
 class AnthropicComputerSession:
@@ -2529,10 +2559,13 @@ models = [
 	Gemini2_5Flash(),
 	Gemini2_5FlashLite(),
 	Gemini2_5Pro(),
-	Gemini3FlashPreview(),
-	Gemini3_1FlashLitePreview(),
+	Gemini3_1FlashLite(),
 	Gemini3_1ProPreview(),
 	Gemini3_5Flash(),
+	Gemini3_5FlashLite(),
+	Gemini3_6Flash(),
+	Gemini3_7Flash(),
+	Gemini3_8Flash(),
 	# xAI
 	Grok4FastNonReasoning(),
 	Grok4FastReasoning(),
