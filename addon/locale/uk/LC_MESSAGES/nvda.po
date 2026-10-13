@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2026-07-06 22:43+0300\n"
-"PO-Revision-Date: 2026-07-07 10:11+0300\n"
+"POT-Creation-Date: 2026-08-18 13:18+0300\n"
+"PO-Revision-Date: 2026-08-18 13:24+0300\n"
 "Last-Translator: Heorhii Halas <nvda.translation.uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -594,7 +594,7 @@ msgstr "помилка з’єднання"
 msgid "error, connection refused by target"
 msgstr "помилка, кінцевий адресат відхилив підключення"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:704
+#: addon\globalPlugins\AIContentDescriber\description_service.py:717
 msgid ""
 "The next generation of the original GPT4 vision preview, with enhanced "
 "quality and understanding. This model will soon be deprecated so we "
@@ -604,7 +604,7 @@ msgstr ""
 "розумінням. Ця модель незабаром буде виведена з експлуатації, тому ми "
 "рекомендуємо перейти на GPT-4o."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:716
+#: addon\globalPlugins\AIContentDescriber\description_service.py:729
 msgid ""
 "OpenAI's first fully multimodal model, released in May 2024. This model has "
 "the same high intelligence as GPT4 and GPT4 turbo, but is much more "
@@ -614,7 +614,7 @@ msgstr ""
 "модель має такий самий високий інтелект, як GPT4 і GPT4 turbo, але набагато "
 "ефективніша, здатна генерувати текст удвічі швидше і вдвічі дешевше."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:726
+#: addon\globalPlugins\AIContentDescriber\description_service.py:739
 msgid ""
 "GPT-4.1 excels at instruction following and tool calling, with broad "
 "knowledge across domains. It features a 1M token context window, and low "
@@ -625,7 +625,7 @@ msgstr ""
 "контекстне вікно розміром 1 млн токенів та низьку затримку без етапу "
 "міркування."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:736
+#: addon\globalPlugins\AIContentDescriber\description_service.py:749
 msgid ""
 "A smaller, faster variant of GPT-4.1 with strong instruction following and a "
 "1M token context window at reduced cost."
@@ -634,7 +634,7 @@ msgstr ""
 "виконання інструкцій та контекстним вікном розміром 1 млн токенів за "
 "зниженою ціною."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:746
+#: addon\globalPlugins\AIContentDescriber\description_service.py:759
 msgid ""
 "The smallest and most affordable GPT-4.1 variant, optimized for fast "
 "responses with a 1M token context window."
@@ -642,7 +642,7 @@ msgstr ""
 "Найменший і найдоступніший варіант GPT-4.1, оптимізований для швидких "
 "відповідей із контекстним вікном розміром 1 млн токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:756
+#: addon\globalPlugins\AIContentDescriber\description_service.py:769
 msgid ""
 "OpenAI's frontier model with advanced reasoning, vision, and a 400k token "
 "context window."
@@ -650,7 +650,7 @@ msgstr ""
 "Передова модель OpenAI з розширеними можливостями міркування, розпізнавання "
 "зображень та контекстним вікном на 400 тис. токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:766
+#: addon\globalPlugins\AIContentDescriber\description_service.py:779
 msgid ""
 "A fast, cost-efficient variant of GPT-5 with vision support and a 400k token "
 "context window."
@@ -658,7 +658,7 @@ msgstr ""
 "Швидкий та економічно вигідний варіант GPT-5 із підтримкою обробки зображень "
 "та контекстним вікном розміром 400 тис. токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:776
+#: addon\globalPlugins\AIContentDescriber\description_service.py:789
 msgid ""
 "The smallest GPT-5 variant, offering vision capabilities at the lowest cost."
 msgstr ""
@@ -666,11 +666,11 @@ msgstr ""
 "найнижчою ціною."
 
 #. translators: the description for the GPT‑5 chat model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:785
+#: addon\globalPlugins\AIContentDescriber\description_service.py:798
 msgid "GPT-5 model used in ChatGPT"
 msgstr "Модель GPT-5 використовується в ChatGPT"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:794
+#: addon\globalPlugins\AIContentDescriber\description_service.py:807
 msgid ""
 "OpenAI's latest flagship model with advanced reasoning, vision, and a 400k "
 "token context window."
@@ -678,7 +678,7 @@ msgstr ""
 "Новітня флагманська модель OpenAI з розширеними можливостями міркування, "
 "розпізнавання зображень та контекстним вікном на 400 тис. токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:805
+#: addon\globalPlugins\AIContentDescriber\description_service.py:818
 msgid ""
 "A fast, affordable variant of GPT-5.4 with vision support and a 400k token "
 "context window."
@@ -686,7 +686,7 @@ msgstr ""
 "Швидкий та доступний варіант GPT-5.4 з підтримкою обробки зображень та "
 "контекстним вікном розміром 400 тис. токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:816
+#: addon\globalPlugins\AIContentDescriber\description_service.py:829
 msgid ""
 "The smallest and cheapest GPT-5.4 variant with vision capabilities and a "
 "400k token context window."
@@ -694,7 +694,7 @@ msgstr ""
 "Найменший і найдешевший варіант GPT-5.4 з функціями обробки зображень та "
 "контекстним вікном розміром 400 тис. токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:827
+#: addon\globalPlugins\AIContentDescriber\description_service.py:840
 msgid ""
 "OpenAI's frontier model for complex professional work, with a new class of "
 "intelligence for coding, vision, and agentic tasks. Supports image input and "
@@ -705,7 +705,7 @@ msgstr ""
 "виконання завдань, пов’язаних з діяльністю агентів. Підтримує введення "
 "зображень та контекстне вікно розміром 1 млн токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:838
+#: addon\globalPlugins\AIContentDescriber\description_service.py:851
 msgid ""
 "A higher-compute variant of GPT-5.5 that thinks harder for smarter and more "
 "precise responses on complex, high-stakes workloads. Supports image input "
@@ -716,7 +716,7 @@ msgstr ""
 "завдання, від яких залежить багато. Підтримує введення зображень та "
 "контекстне вікно розміром 1 млн токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:849
+#: addon\globalPlugins\AIContentDescriber\description_service.py:862
 msgid ""
 "Released in April 2025, o3 is a well-rounded and powerful model across "
 "domains. It sets a new standard for math, science, coding, and visual "
@@ -731,7 +731,7 @@ msgstr ""
 "інструкцій. Використовуйте її для вирішення багатоетапних завдань, що "
 "вимагають аналізу тексту, коду та зображень."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:859
+#: addon\globalPlugins\AIContentDescriber\description_service.py:872
 msgid ""
 "Released in June 2025, O3 pro is an upgraded version of O3. It is designed "
 "to think longer and provide the most reliable responses. Because o3-pro has "
@@ -748,7 +748,7 @@ msgstr ""
 "хвилин очікування є виправданим компромісом. Не забудьте налаштувати "
 "параметри часу очікування."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:869
+#: addon\globalPlugins\AIContentDescriber\description_service.py:882
 msgid ""
 "Released in January 2025, this powerful and fast model advances the "
 "boundaries of what small models can achieve, delivering exceptional STEM "
@@ -760,7 +760,7 @@ msgstr ""
 "STEM, зокрема в науці, математиці та програмуванні, при цьому зберігаючи "
 "низьку вартість та низьку затримку, характерні для OpenAI o1-mini."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:879
+#: addon\globalPlugins\AIContentDescriber\description_service.py:892
 msgid ""
 "Released in April 2025, o4-mini is a smaller model optimized for fast, cost-"
 "efficient reasoning. It achieves remarkable performance for its size and "
@@ -778,12 +778,12 @@ msgstr ""
 "пропускною здатністю, де логічне міркування є перевагою. Не забудьте "
 "налаштувати параметр часу очікування."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:934
+#: addon\globalPlugins\AIContentDescriber\description_service.py:947
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "Gemini зіткнувся з помилкою: {code}, {msg}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:948
+#: addon\globalPlugins\AIContentDescriber\description_service.py:961
 msgid ""
 "The model used all available tokens for reasoning and returned no visible "
 "response. Try increasing the max tokens setting."
@@ -791,7 +791,7 @@ msgstr ""
 "Модель використала всі доступні токени для обробки й не повернула видимої "
 "відповіді. Спробуйте збільшити налаштування максимальної кількості токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:982
+#: addon\globalPlugins\AIContentDescriber\description_service.py:995
 msgid ""
 "Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for "
 "tasks like summarization, chat applications, data extraction, and captioning."
@@ -800,7 +800,7 @@ msgstr ""
 "Ідеально підходить для резюмування, чат-додатків, вилучення даних і "
 "створення підписів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:992
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1005
 msgid ""
 "Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while "
 "maintaining strong performance."
@@ -808,7 +808,7 @@ msgstr ""
 "Gemini 2.5 Flash-Lite оптимізовано для економічності та низької затримки, "
 "зберігаючи при цьому високу продуктивність."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1002
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1015
 msgid ""
 "Gemini 2.5 Pro models are capable of reasoning through their thoughts before "
 "responding, resulting in enhanced performance and improved accuracy. Best "
@@ -818,7 +818,7 @@ msgstr ""
 "надати, що забезпечує вищу продуктивність та більшу точність. Найкраще "
 "підходять для програмування та виконання складних завдань."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1012
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1025
 msgid ""
 "Gemini 3 Flash is Google's latest multimodal model with strong vision and "
 "agentic capabilities. Supports text, image, video, audio, and PDF input with "
@@ -829,7 +829,7 @@ msgstr ""
 "функцій. Модель підтримує введення тексту, зображень, відео, аудіо та PDF-"
 "файлів із контекстним вікном розміром 1 млн токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1022
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1035
 msgid ""
 "Gemini 3.1 Flash-Lite is the most cost-efficient model in the Gemini 3 "
 "series, designed for high volume tasks."
@@ -837,7 +837,7 @@ msgstr ""
 "Gemini 3.1 Flash-Lite — це найекономніша модель у серії Gemini 3, призначена "
 "для виконання великих завдань."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1032
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1045
 msgid ""
 "Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic "
 "workflows, with enhanced performance and accuracy."
@@ -846,7 +846,7 @@ msgstr ""
 "міркування, призначена для складних агентних робочих процесів, що "
 "відрізняється підвищеною продуктивністю та точністю."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1042
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1055
 msgid ""
 "Gemini 3.5 Flash is Google's latest and most capable Flash model, with "
 "faster response times and reduced latency. Ideal for tasks requiring both "
@@ -856,12 +856,12 @@ msgstr ""
 "відрізняється швидшою реакцією та меншою затримкою. Ідеально підходить для "
 "завдань, що вимагають як швидкості, так і якості."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1241
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1254
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr "Claude зіткнувся з помилкою. {err}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1279
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1292
 msgid ""
 "Anthropic's high-performance model with exceptional reasoning and "
 "efficiency. Significant upgrade to Claude Sonnet 3.7 with superior coding "
@@ -872,7 +872,7 @@ msgstr ""
 "Claude Sonnet 3.7, що забезпечує вищу якість кодування та покращене "
 "виконання інструкцій."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1289
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1302
 msgid ""
 "Anthropic's most capable and intelligent model yet. Sets new standards in "
 "complex reasoning and advanced coding with sustained performance on long-"
@@ -883,7 +883,7 @@ msgstr ""
 "програмування, демонструючи стабільну продуктивність під час виконання "
 "тривалих завдань, що вимагають зосереджених зусиль."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1299
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1312
 msgid ""
 "Anthropic's enhanced Opus model with improved reasoning, extended thinking, "
 "and a 200k token context window."
@@ -891,7 +891,7 @@ msgstr ""
 "Удосконалена модель Opus від Anthropic із покращеними можливостями "
 "міркування, розширеним мисленням та контекстним вікном на 200 тис. токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1314
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1327
 msgid ""
 "Anthropic's upgraded Sonnet with extended thinking capabilities and a strong "
 "balance of speed and intelligence."
@@ -899,7 +899,7 @@ msgstr ""
 "Оновлений Sonnet від Anthropic із розширеними можливостями мислення та "
 "міцним балансом швидкості та інтелекту."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1329
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1342
 msgid ""
 "Anthropic's advanced Opus model with extended thinking and superior "
 "performance on complex tasks."
@@ -907,7 +907,7 @@ msgstr ""
 "Удосконалена модель Anthropic Opus із розширеним мисленням і чудовою "
 "продуктивністю у складних завданнях."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1344
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1357
 msgid ""
 "Anthropic's fastest model with near-frontier intelligence and extended "
 "thinking support."
@@ -915,7 +915,7 @@ msgstr ""
 "Найшвидша модель компанії Anthropic, що володіє інтелектом, близьким до межі "
 "можливостей, та розширеною підтримкою мислення."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1359
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1372
 msgid ""
 "Anthropic's latest Sonnet model with the best combination of speed and "
 "intelligence. Features a 1M token context window and adaptive thinking."
@@ -924,7 +924,7 @@ msgstr ""
 "швидкості та інтелекту. Має контекстне вікно розміром 1 млн токенів та "
 "адаптивне мислення."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1374
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1387
 msgid ""
 "Anthropic's most intelligent model for building agents and coding. Features "
 "a 1M token context window, extended thinking, and exceptional reasoning."
@@ -933,7 +933,7 @@ msgstr ""
 "програмування. Має контекстне вікно розміром 1 млн токенів, розширені "
 "можливості мислення та виняткову здатність до міркування."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1389
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1402
 msgid ""
 "Anthropic's most capable generally available model. Features high-resolution "
 "vision support up to 3.75MP, adaptive thinking, and a 1M token context "
@@ -943,7 +943,7 @@ msgstr ""
 "зображень з високою роздільною здатністю до 3,75 МП, адаптивне мислення та "
 "контекстне вікно розміром 1 млн токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1474
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1487
 msgid ""
 "MistralAI's multimodal image LLM, achieving state-of-the-art results on "
 "MathVista, DocVQA, VQAv2 and other benchmarks."
@@ -951,7 +951,7 @@ msgstr ""
 "MistralAI - мультимодальний LLM для роботи з зображеннями, що досягає "
 "найсучасніших результатів на MathVista, DocVQA, VQAv2 та інших бенчмарках."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1484
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1497
 msgid ""
 "xAI's flagship multimodal model with advanced reasoning capabilities. Excels "
 "at enterprise tasks like data extraction, programming, and text "
@@ -964,7 +964,7 @@ msgstr ""
 "завдяки глибоким галузевим знанням у сферах фінансів, охорони здоров’я, "
 "права та науки."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1515
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1528
 msgid ""
 "xAI's flagship multimodal reasoning model. Supports image input and excels "
 "at complex reasoning, math, science, and visual tasks."
@@ -973,7 +973,7 @@ msgstr ""
 "введення зображень і демонструє високу ефективність у вирішенні складних "
 "логічних задач, а також у математиці, науці та візуальних завданнях."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1525
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1538
 msgid ""
 "xAI's cost-efficient multimodal reasoning model with a 2M token context "
 "window. Achieves performance comparable to Grok 4 with 40% fewer thinking "
@@ -983,7 +983,7 @@ msgstr ""
 "вікном розміром 2 млн токенів. Забезпечує продуктивність, порівнянну з Grok "
 "4, при цьому в середньому використовуючи на 40 % менше токенів міркування."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1535
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1548
 msgid ""
 "xAI's cost-efficient multimodal model for instant responses without a "
 "reasoning step. Features a 2M token context window."
@@ -991,7 +991,7 @@ msgstr ""
 "Економічна мультимодальна модель xAI для миттєвих відповідей без етапу "
 "міркування. Має контекстне вікно розміром 2 млн токенів."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1545
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1558
 msgid ""
 "xAI's recommended flagship reasoning model with a 1M token context window. "
 "Features always-on chain-of-thought reasoning and support for image input."
@@ -1000,43 +1000,67 @@ msgstr ""
 "розміром 1 млн токенів. Підтримує безперервне міркування за ланцюжком думок "
 "та обробку зображень."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1557
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1579
+msgid ""
+"Moonshot AI's flagship multimodal model, with a 1M token context window and "
+"strong reasoning across text, image, and video."
+msgstr ""
+"Флагманська мультимодальна модель Moonshot AI з контекстним вікном об'ємом 1 "
+"мільйон токенів та переконливим обґрунтуванням для тексту, зображень та "
+"відео."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1589
+msgid ""
+"A capable Kimi multimodal model that understands both image and video input "
+"alongside text."
+msgstr ""
+"Потужна мультимодальна модель Kimi, яка розуміє зображення, відео та текст."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1599
+msgid ""
+"A Kimi multimodal model with image and text understanding, well suited to "
+"describing pictures and reading text within them."
+msgstr ""
+"Мультимодальна модель Kimi з розпізнаванням зображень і тексту, добре "
+"підходить для опису зображень і читання тексту на них."
+
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1611
 msgid "The quickest way to get up and running with large language models."
 msgstr "Найшвидший спосіб розпочати роботу з великими мовними моделями."
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1575
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1629
 msgid "Could not contact the provided base URL. "
 msgstr "Не вдалося зв’язатися із вказаною базовою URL-адресою. "
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1606
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1736
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1660
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1790
 msgid "The response appears to be malformed. "
 msgstr "Відповідь, здається, є неправильною. "
 
 #. translators: the description for the LiteLLM Proxy model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1640
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1694
 msgid "Access multiple AI models through a unified LiteLLM proxy server."
 msgstr ""
 "Отримати доступ до кількох моделей ШІ через уніфікований проксі-сервер "
 "LiteLLM."
 
 #. translators: the message spoken in the LiteLLM configuration dialog when no base URL is provided
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1657
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1711
 msgid "Please provide a base URL first."
 msgstr "Спочатку надайте базову URL-адресу."
 
 #. translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1672
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1726
 msgid "Could not contact the LiteLLM proxy server. "
 msgstr "Не вдалося зв’язатися з проксі-сервером LiteLLM. "
 
 #. translators: the message spoken when the LiteLLM proxy returns an unexpected response format
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1683
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1737
 msgid "Unexpected response format from LiteLLM proxy. "
 msgstr "Неочікуваний формат відповіді від проксі LiteLLM. "
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1777
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1831
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -1054,7 +1078,7 @@ msgstr ""
 "здебільшого є завданням для користувача, який знає, що він робить, ви можете "
 "знайти основні кроки в документації до додатка."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1824
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1878
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -1063,7 +1087,7 @@ msgstr ""
 "Здається, відповідь розпізнавання зображень має неправильний формат.\n"
 "{response}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1857
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1911
 msgid ""
 "A multimodal model from vivo, accessed via NVDA-CN account. This service is "
 "provided by the NVDA Chinese community and requires your nvdacn.com "
@@ -1073,25 +1097,25 @@ msgstr ""
 "запис NVDA-CN. Ця послуга надається китайською спільнотою NVDA і вимагає "
 "введення ваших облікових даних для сайту nvdacn.com."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1932
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1986
 #, python-brace-format
 msgid "API Error: {error}"
 msgstr "Помилка API: {error}"
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1939
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1993
 msgid "The model returned an empty response."
 msgstr "Модель повернула порожню відповідь."
 
 #. This case is a safeguard; post() should raise an exception on failure.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1984
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2038
 msgid "Network request failed unexpectedly."
 msgstr "Несподівана помилка мережевого запиту."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2024
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2078
 msgid "No active conversation. Please describe an image first."
 msgstr "Немає активної розмови. Спочатку опишіть зображення."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2049
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2103
 msgid ""
 "Private, on-device image descriptions using PaliGemma2. No API key or cloud "
 "connection required. Note: this is a captioning model, prompts and follow-up "
@@ -1102,7 +1126,7 @@ msgstr ""
 "суптитрів; підказки та додаткові запитання не підтримуються. Щоб розпочати "
 "роботу, встановіть демон Seer."
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2082
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2136
 msgid ""
 "Seer uses PaliGemma2 which describes images but does not support follow-up "
 "questions."
