@@ -59,6 +59,8 @@ RETRY_BACKOFF_BASE_SECONDS = 1.0
 TYPE_PREVIEW_MAX_CHARS = 40
 # Above this length, paste the text instead of synthesizing a keystroke per character.
 PASTE_TYPE_THRESHOLD_CHARS = 512
+# Anthropic bills images in square patches of this many pixels per side.
+VISUAL_TOKEN_PATCH_PX = 28
 
 # Sent to the model on every computer-use turn.
 # Not currently translated
@@ -107,8 +109,8 @@ def _announce_and_wait(text):
 		synthDriverHandler.synthDoneSpeaking.unregister(_on_done)
 
 
-def _calculate_scale(w, h, max_long_edge=None, max_pixels=None):
-	"""Return the scale factor satisfying both the long-edge and pixel-area limits."""
+def _calculate_scale(w, h, max_long_edge=None, max_pixels=None, max_visual_tokens=None):
+	"""Return the scale factor satisfying the long-edge, pixel-area, and visual-token limits."""
 	scale = 1.0
 	if max_long_edge is not None:
 		long_edge = max(w, h)
@@ -118,7 +120,36 @@ def _calculate_scale(w, h, max_long_edge=None, max_pixels=None):
 		pixels = w * h
 		if pixels > max_pixels:
 			scale = min(scale, math.sqrt(max_pixels / pixels))
+	if max_visual_tokens is not None:
+		scale = _fit_visual_tokens(w, h, scale, max_visual_tokens)
 	return scale
+
+
+def _visual_tokens(w, h):
+	"""Anthropic's image cost: one token per started patch on each axis."""
+	return math.ceil(w / VISUAL_TOKEN_PATCH_PX) * math.ceil(h / VISUAL_TOKEN_PATCH_PX)
+
+
+def _fit_visual_tokens(w, h, scale, max_tokens):
+	"""Return the largest scale up to `scale` whose scaled size costs at most max_tokens.
+
+	Searches on the scaled long edge and sizes each candidate the same way Capture does,
+	so the image we send is never over the limit."""
+
+	def fits(s):
+		return _visual_tokens(max(1, int(w * s)), max(1, int(h * s))) <= max_tokens
+
+	if fits(scale):
+		return scale
+	long_edge = max(w, h)
+	lo, hi = 1, int(long_edge * scale)
+	while lo + 1 < hi:
+		mid = (lo + hi) // 2
+		if fits(mid / long_edge):
+			lo = mid
+		else:
+			hi = mid
+	return lo / long_edge
 
 
 def _focus_metadata(obj, width, height):
@@ -167,10 +198,13 @@ class Capture:
 	`obj` is the
 	NVDA foreground object used for focus metadata, or None on fallback."""
 
-	def __init__(self, resolve_target, max_long_edge=None, max_pixels=None):
+	def __init__(
+		self, resolve_target, max_long_edge=None, max_pixels=None, max_visual_tokens=None
+	):
 		self._resolve_target = resolve_target
 		self._max_long_edge = max_long_edge
 		self._max_pixels = max_pixels
+		self._max_visual_tokens = max_visual_tokens
 		self._scale = 1.0
 		self._win_x = 0
 		self._win_y = 0
@@ -183,7 +217,7 @@ class Capture:
 		cap_h = max(1, rect.bottom - rect.top)
 		self._win_x, self._win_y = winUser.ClientToScreen(hwnd, 0, 0)
 		self._scale = _calculate_scale(
-			cap_w, cap_h, self._max_long_edge, self._max_pixels
+			cap_w, cap_h, self._max_long_edge, self._max_pixels, self._max_visual_tokens
 		)
 		api_w = max(1, int(cap_w * self._scale))
 		api_h = max(1, int(cap_h * self._scale))
@@ -507,6 +541,7 @@ class ComputerUseSession:
 		self._dialog_visible = False
 		self._max_long_edge = getattr(service, "_capture_max_long_edge", None)
 		self._max_pixels = getattr(service, "_capture_max_pixels", None)
+		self._max_visual_tokens = getattr(service, "_capture_max_visual_tokens", None)
 		# Imported lazily (not at module top) to break the computer_use <-> computer_use_dialogs
 		# import cycle: the dialog module imports helpers from this one. By the time a session is
 		# constructed, this module is fully loaded and the dependency path is already expanded.
@@ -624,7 +659,10 @@ class ComputerUseSession:
 
 	def _run_loop(self, task):
 		capture = Capture(
-			self._resolve_capture_target, self._max_long_edge, self._max_pixels
+			self._resolve_capture_target,
+			self._max_long_edge,
+			self._max_pixels,
+			self._max_visual_tokens,
 		)
 		runner = ActionRunner(self._cancel_event, self._pause_event)
 		provider_session = self._service.create_computer_session(task)

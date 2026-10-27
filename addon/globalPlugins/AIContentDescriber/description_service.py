@@ -1068,6 +1068,9 @@ class Gemini3_5Flash(GoogleGemini):
 
 
 ANTHROPIC_COMPUTER_TOOLSET = "computer_toolset_20260801"
+# Visual-token budget for Claude 4.7 and later. The toolset rejects larger screenshots and the
+# computer tool shrinks them, which moves the model's coordinates off our image.
+ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS = 4784
 # Toolset members that ActionRunner can't perform. Disabling them keeps the model from asking.
 ANTHROPIC_TOOLSET_DISABLED_MEMBERS = (
 	"zoom",
@@ -1444,6 +1447,7 @@ class Claude4_7Opus(Anthropic):
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude4_8Opus(Anthropic):
@@ -1460,6 +1464,7 @@ class Claude4_8Opus(Anthropic):
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude5Sonnet(Anthropic):
@@ -1477,6 +1482,7 @@ class Claude5Sonnet(Anthropic):
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude5Opus(Anthropic):
@@ -1494,6 +1500,7 @@ class Claude5Opus(Anthropic):
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude5Fable(Anthropic):
@@ -1511,6 +1518,7 @@ class Claude5Fable(Anthropic):
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude5_1Fable(Anthropic):
@@ -1528,6 +1536,7 @@ class Claude5_1Fable(Anthropic):
 	_computer_use_tool_type = "computer_20251124"
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude5_5Haiku(Anthropic):
@@ -1542,8 +1551,9 @@ class Claude5_5Haiku(Anthropic):
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_thinks_by_default = True
 	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
-	_capture_max_long_edge = 1568
-	_capture_max_pixels = 1_150_000
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude5_5Sonnet(Anthropic):
@@ -1560,6 +1570,7 @@ class Claude5_5Sonnet(Anthropic):
 	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class Claude5_5Opus(Anthropic):
@@ -1576,6 +1587,7 @@ class Claude5_5Opus(Anthropic):
 	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
 class MistralAI(BaseDescriptionService):
