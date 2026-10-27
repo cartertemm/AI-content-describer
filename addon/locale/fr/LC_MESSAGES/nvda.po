@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the AIContentDescriber package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: AIContentDescriber 2024.04.14\n"

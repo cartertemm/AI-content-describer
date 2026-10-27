@@ -4,7 +4,6 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: AIContentDescriber 2025.06.09\n"
