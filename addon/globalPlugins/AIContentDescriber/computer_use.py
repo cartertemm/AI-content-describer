@@ -744,7 +744,7 @@ class ComputerUseSession:
 
 	def _handle_pause(self):
 		# Give keystrokes and focus changes time to apply before the next screenshot
-		time.sleep(0.3)
+		time.sleep(0.5)
 		if not self._wait_while_paused():
 			return None
 		return self._drain_injection()
