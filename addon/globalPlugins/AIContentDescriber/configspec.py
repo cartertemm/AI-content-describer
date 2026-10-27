@@ -143,14 +143,7 @@ max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
-[Google Gemini 3 Flash Preview]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[Google Gemini 3.1 Flash-Lite Preview]
+[Google Gemini 3.1 Flash-Lite]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=512)
@@ -165,6 +158,34 @@ cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
 [Google Gemini 3.5 Flash]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=2048)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Google Gemini 3.5 Flash-Lite]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=512)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Google Gemini 3.6 Flash]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=2048)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Google Gemini 3.7 Flash]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=2048)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=15, min=1)
+
+[Google Gemini 3.8 Flash]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=2048)
