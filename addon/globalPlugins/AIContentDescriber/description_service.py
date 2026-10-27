@@ -1066,11 +1066,59 @@ class Gemini3_5Flash(GoogleGemini):
 	about_url = "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash"
 
 
+ANTHROPIC_COMPUTER_TOOLSET = "computer_toolset_20260801"
+# Toolset members that ActionRunner can't perform. Disabling them keeps the model from asking.
+ANTHROPIC_TOOLSET_DISABLED_MEMBERS = (
+	"zoom",
+	"left_mouse_down",
+	"left_mouse_up",
+	"hold_key",
+	"cursor_position",
+)
+# Screenshot pruning edits earlier messages, which invalidates replayed thinking blocks.
+# This beta lets the API drop those blocks instead of rejecting the request.
+ANTHROPIC_THINKING_BINDING_BETA = "thinking-binding-controls-2026-08-01"
+
+
+def _normalize_anthropic_action(action_type, inp, call_id):
+	"""Convert an Anthropic computer use action to our internal format.
+
+	The computer tool puts the action name in input["action"] and the toolset puts it in the
+	tool_use block's name. Both use the same input fields.
+	"""
+	action = {
+		"type": "move" if action_type == "mouse_move" else action_type,
+		"call_id": call_id,
+		"safety_checks": [],
+	}
+	coord = inp.get("coordinate")
+	if action_type == "left_click_drag":
+		start = inp.get("start_coordinate")
+		if start and coord:
+			action["startX"], action["startY"] = start[0], start[1]
+			action["endX"], action["endY"] = coord[0], coord[1]
+	elif coord:
+		action["x"], action["y"] = coord[0], coord[1]
+	if action_type == "key":
+		action["key"] = inp.get("text", "")
+		action["repeat"] = inp.get("repeat", 1)
+	elif action_type == "type":
+		action["text"] = inp.get("text", "")
+	if action_type == "scroll":
+		action["direction"] = inp.get("scroll_direction", "down")
+		action["amount"] = inp.get("scroll_amount", 3)
+	return action
+
+
 class AnthropicComputerSession:
 	"""Per-task conversation state for Anthropic computer use."""
 
 	# Any more than this number of screenshots will be deleted to save API quota. Models are hungry.
 	KEEP_RECENT_SCREENSHOTS = 3
+
+	@property
+	def _uses_toolset(self):
+		return self._service._computer_use_tool_type == ANTHROPIC_COMPUTER_TOOLSET
 
 	def __init__(self, service, task):
 		self._service = service
@@ -1112,6 +1160,9 @@ class AnthropicComputerSession:
 			}
 			for tr in (tool_results or [])
 		]
+		if self._uses_toolset:
+			for block in content_blocks:
+				block["toolset_name"] = "computer"
 		if focus_text and content_blocks:
 			content_blocks.append({"type": "text", "text": focus_text})
 		if injected_text:
@@ -1137,22 +1188,39 @@ class AnthropicComputerSession:
 		headers = {
 			"x-api-key": self._service.api_key,
 			"anthropic-version": "2023-06-01",
-			"anthropic-beta": self._service._computer_use_beta,
 			"Content-Type": "application/json",
-		}
-		tool_def = {
-			"type": self._service._computer_use_tool_type,
-			"name": "computer",
-			"display_width_px": capture_w,
-			"display_height_px": capture_h,
 		}
 		payload = {
 			"model": self._service.internal_model_name,
 			"max_tokens": 16384 if self._service._thinks_by_default else 4096,
 			"system": SYSTEM_PROMPT,
-			"tools": [tool_def],
 			"messages": messages,
 		}
+		if self._uses_toolset:
+			headers["anthropic-beta"] = ANTHROPIC_THINKING_BINDING_BETA
+			payload["tools"] = [
+				{
+					"type": ANTHROPIC_COMPUTER_TOOLSET,
+					"configs": {
+						member: {"enabled": False}
+						for member in ANTHROPIC_TOOLSET_DISABLED_MEMBERS
+					},
+				}
+			]
+			payload["thinking"] = {
+				"type": "adaptive",
+				"block_binding": {"prefix_mismatch_behavior": "drop_block"},
+			}
+		else:
+			headers["anthropic-beta"] = self._service._computer_use_beta
+			payload["tools"] = [
+				{
+					"type": self._service._computer_use_tool_type,
+					"name": "computer",
+					"display_width_px": capture_w,
+					"display_height_px": capture_h,
+				}
+			]
 		raw = post(
 			url="https://api.anthropic.com/v1/messages",
 			headers=headers,
@@ -1166,26 +1234,21 @@ class AnthropicComputerSession:
 		for block in data.get("content", []):
 			if block.get("type") == "text":
 				text += block.get("text", "")
-			elif block.get("type") == "tool_use" and block.get("name") == "computer":
+			elif block.get("type") != "tool_use":
+				continue
+			elif self._uses_toolset and block.get("toolset_name") == "computer":
+				actions.append(
+					_normalize_anthropic_action(
+						block.get("name", ""), block.get("input", {}), block.get("id", "")
+					)
+				)
+			elif not self._uses_toolset and block.get("name") == "computer":
 				inp = block.get("input", {})
-				action = {
-					"type": inp.get("action", ""),
-					"call_id": block.get("id", ""),
-					"safety_checks": [],
-				}
-				coord = inp.get("coordinate")
-				if coord:
-					action["x"], action["y"] = coord[0], coord[1]
-				start = inp.get("start_coordinate")
-				if start:
-					action["startX"], action["startY"] = start[0], start[1]
-				end = inp.get("end_coordinate")
-				if end:
-					action["endX"], action["endY"] = end[0], end[1]
-				for k in ("text", "key", "direction", "amount"):
-					if k in inp:
-						action[k] = inp[k]
-				actions.append(action)
+				actions.append(
+					_normalize_anthropic_action(
+						inp.get("action", ""), inp, block.get("id", "")
+					)
+				)
 		assistant_turn = {"role": "assistant", "content": data.get("content", [])}
 		is_complete = data.get("stop_reason") == "end_turn" and not actions
 		pending = [t for t in (new_user_turn, assistant_turn) if t]
@@ -1307,7 +1370,7 @@ class Claude4_5Sonnet(Anthropic):
 	name = "Claude 4.5 Sonnet"
 	# translators: the description for the Claude 4.5 Sonnet model in the model configuration dialog
 	description = _(
-		"Anthropic's upgraded Sonnet with extended thinking capabilities and a strong balance of speed and intelligence."
+		"Anthropic's Sonnet model with extended thinking and a balance of speed and intelligence."
 	)
 	about_url = "https://www.anthropic.com/claude/sonnet"
 	internal_model_name = "claude-sonnet-4-5-20250929"
@@ -1322,7 +1385,7 @@ class Claude4_5Opus(Anthropic):
 	name = "Claude 4.5 Opus"
 	# translators: the description for the Claude 4.5 Opus model in the model configuration dialog
 	description = _(
-		"Anthropic's advanced Opus model with extended thinking and superior performance on complex tasks."
+		"Anthropic's Opus model with extended thinking, for complex reasoning and analysis tasks."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-5-20251101"
@@ -1338,7 +1401,7 @@ class Claude4_6Sonnet(Anthropic):
 	name = "Claude 4.6 Sonnet"
 	# translators: the description for the Claude 4.6 Sonnet model in the model configuration dialog
 	description = _(
-		"Anthropic's latest Sonnet model with the best combination of speed and intelligence. Features a 1M token context window and adaptive thinking."
+		"Anthropic's Sonnet model that balances speed and intelligence. Features a 1M token context window and adaptive thinking."
 	)
 	about_url = "https://www.anthropic.com/claude/sonnet"
 	internal_model_name = "claude-sonnet-4-6"
@@ -1354,7 +1417,7 @@ class Claude4_6Opus(Anthropic):
 	name = "Claude 4.6 Opus"
 	# translators: the description for the Claude 4.6 Opus model in the model configuration dialog
 	description = _(
-		"Anthropic's most intelligent model for building agents and coding. Features a 1M token context window, extended thinking, and exceptional reasoning."
+		"Anthropic's Opus model for agents, coding, and complex reasoning. Features a 1M token context window and adaptive thinking."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-6"
@@ -1370,7 +1433,7 @@ class Claude4_7Opus(Anthropic):
 	name = "Claude 4.7 Opus"
 	# translators: the description for the Claude 4.7 Opus model in the model configuration dialog
 	description = _(
-		"Anthropic's most capable generally available model. Features high-resolution vision support up to 3.75MP, adaptive thinking, and a 1M token context window."
+		"Anthropic's Opus model with high-resolution vision support up to 3.75MP, adaptive thinking, and a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-7"
@@ -1419,7 +1482,7 @@ class Claude5Opus(Anthropic):
 	name = "Claude 5 Opus"
 	# translators: the description for the Claude 5 Opus model in the model configuration dialog
 	description = _(
-		"Anthropic's most capable Opus model. Thinks by default, with high-resolution vision and a 1M token context window."
+		"Anthropic's Opus model for complex reasoning and agentic tasks. Thinks by default, with high-resolution vision and a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-5"
@@ -1453,7 +1516,7 @@ class Claude5_1Fable(Anthropic):
 	name = "Claude 5.1 Fable"
 	# translators: the description for the Claude 5.1 Fable model in the model configuration dialog
 	description = _(
-		"Anthropic's most intelligent generally available model, with stronger vision and computer use than Claude 5 Fable. Thinking is always on. Higher cost than Opus."
+		"Anthropic's Fable model above the Opus tier, with stronger vision and computer use than Claude 5 Fable. Thinking is always on. Higher cost than Opus."
 	)
 	about_url = "https://www.anthropic.com/claude/fable"
 	internal_model_name = "claude-fable-5-1"
@@ -1462,6 +1525,54 @@ class Claude5_1Fable(Anthropic):
 	_thinks_by_default = True
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+
+
+class Claude5_5Haiku(Anthropic):
+	name = "Claude 5.5 Haiku"
+	# translators: the description for the Claude 5.5 Haiku model in the model configuration dialog
+	description = _(
+		"Anthropic's fast, low-cost Haiku model for quick descriptions and high-volume tasks. Thinks by default and has a 1M token context window."
+	)
+	about_url = "https://www.anthropic.com/claude/haiku"
+	internal_model_name = "claude-haiku-5-5"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
+	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
+	_capture_max_long_edge = 1568
+	_capture_max_pixels = 1_150_000
+
+
+class Claude5_5Sonnet(Anthropic):
+	name = "Claude 5.5 Sonnet"
+	# translators: the description for the Claude 5.5 Sonnet model in the model configuration dialog
+	description = _(
+		"Anthropic's Sonnet model for everyday vision, coding, and agentic tasks, balancing speed and capability. Thinks by default, with high-resolution vision and a 1M token context window."
+	)
+	about_url = "https://www.anthropic.com/claude/sonnet"
+	internal_model_name = "claude-sonnet-5-5"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
+	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
+	_capture_max_long_edge = 2576
+	_capture_max_pixels = None
+
+
+class Claude5_5Opus(Anthropic):
+	name = "Claude 5.5 Opus"
+	# translators: the description for the Claude 5.5 Opus model in the model configuration dialog
+	description = _(
+		"Anthropic's Opus model for complex reasoning, coding, and agentic tasks, priced below Claude 5 Opus. Thinking is always on, with high-resolution vision and a 1M token context window."
+	)
+	about_url = "https://www.anthropic.com/claude/opus"
+	internal_model_name = "claude-opus-5-5"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
+	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
 	_capture_max_long_edge = 2576
 	_capture_max_pixels = None
 
@@ -2515,14 +2626,17 @@ models = [
 	GPT55Pro(),
 	GPT4Turbo(),
 	# Anthropic
+	Claude5_5Haiku(),
 	Claude4_5Sonnet(),
 	Claude4_6Sonnet(),
 	Claude5Sonnet(),
+	Claude5_5Sonnet(),
 	Claude4_5Opus(),
 	Claude4_6Opus(),
 	Claude4_7Opus(),
 	Claude4_8Opus(),
 	Claude5Opus(),
+	Claude5_5Opus(),
 	Claude5Fable(),
 	Claude5_1Fable(),
 	# Google

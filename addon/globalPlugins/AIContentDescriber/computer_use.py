@@ -343,7 +343,7 @@ class ActionRunner:
 					f"({action['x']}, {action['y']}) {action.get('direction', 'down')} {action.get('amount', 3)}",
 				)
 			elif t == "key":
-				self._key(action["key"])
+				self._repeat_key(action["key"], action.get("repeat", 1))
 				return format_action_result(action, action["key"])
 			elif t == "type":
 				preview = action["text"][:TYPE_PREVIEW_MAX_CHARS]
@@ -397,6 +397,12 @@ class ActionRunner:
 		else:
 			delta = winUser.WHEEL_DELTA * amount * (1 if direction == "right" else -1)
 			winUser.mouse_event(winUser.MOUSEEVENTF_HWHEEL, 0, 0, delta, 0)
+
+	def _repeat_key(self, key, repeat):
+		for _ in range(repeat):
+			if self._aborted():
+				break
+			self._key(key)
 
 	def _key(self, key):
 		parts = key.lower().split("+")

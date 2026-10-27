@@ -5,7 +5,31 @@
 
 from io import StringIO
 
-configspec = StringIO("""[Claude 5.1 Fable]
+configspec = StringIO("""[Claude 5.5 Opus]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=45, min=1)
+
+[Claude 5.5 Sonnet]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=45, min=1)
+
+[Claude 5.5 Haiku]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
+[Claude 5.1 Fable]
 api_key = string(default="")
 prompt = string(default="")
 max_tokens = integer(default=8192)
