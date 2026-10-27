@@ -397,7 +397,8 @@ class OllamaConfigurationPanel(BaseModelSettingsPanel):
 
 class LlamaCPPConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.LlamaCPP()
-	title = model.name + " (unstable)"
+	# Translators: Marks a model as unstable
+	title = model.name + _(" (unstable)")
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.add_about_button(sHelper)

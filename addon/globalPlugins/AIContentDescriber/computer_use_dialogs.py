@@ -99,13 +99,13 @@ class ComputerUseDialog(wx.Dialog):
 		Speak only the model's own messages using announce-and-wait so they are not cut off by the next action announcement.
 		"""
 		prefixes = {
-			"action": "[action] ",
-			"assistant": _("AI: "),
-			"system": "[system] ",
-			"user": _("You: "),
+			"action": "[action]",
+			"assistant": _("AI:"),
+			"system": "[system]",
+			"user": _("You:"),
 		}
-		prefix = prefixes.get(role, f"{role}: ")
-		_on_main_thread(lambda: self.text_ctrl.AppendText(f"{prefix}{text}\n"))
+		prefix = prefixes.get(role, f"{role}:")
+		_on_main_thread(lambda: self.text_ctrl.AppendText(f"{prefix} {text}\n"))
 		if role == "assistant":
 			_announce_and_wait(text)
 

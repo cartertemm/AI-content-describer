@@ -75,18 +75,18 @@ class FaceDetectionInterface:
 		#print(f"x: {x_percent}%, y: {y_percent}%")
 		directions = []
 		if x_percent < 10:
-			# Translators: the following messages correspond to the instructions provided to the user for facial detection. They are chosen and then concatenated together based on certain conditions, so please replicate the whitespace.
-			directions.append(_("far to the left of "))
+			# Translators: the following messages correspond to the instructions provided to the user for facial detection. They are chosen and then joined together with spaces based on certain conditions.
+			directions.append(_("far to the left of"))
 		elif x_percent < 30:
-			directions.append(_("to the left of "))
+			directions.append(_("to the left of"))
 		elif x_percent < 45:
-			directions.append(_("slightly to the left of "))
+			directions.append(_("slightly to the left of"))
 		elif x_percent > 90:
-			directions.append(_("far to the right of "))
+			directions.append(_("far to the right of"))
 		elif x_percent > 70:
-			directions.append(_("to the right of "))
+			directions.append(_("to the right of"))
 		elif x_percent > 55:
-			directions.append(_("slightly to the right of "))
+			directions.append(_("slightly to the right of"))
 		if y_percent < 10:
 			directions.append(_("far below"))
 		elif y_percent < 30:
@@ -101,7 +101,7 @@ class FaceDetectionInterface:
 			directions.append(_("slightly above"))
 		# Translators: Message spoken when the user's face is clearly in view
 		face_in_view_msg = _("Face clearly in view")
-		return _(' and ').join(directions)+" "+_("the center") if directions else face_in_view_msg
+		return (" " + _("and") + " ").join(directions)+" "+_("the center") if directions else face_in_view_msg
 
 	def process_frame(self):
 		ret, frame = self.video_capture.read()

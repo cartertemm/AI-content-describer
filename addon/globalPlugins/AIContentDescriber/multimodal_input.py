@@ -98,7 +98,7 @@ class MultimodalInput(wx.Dialog):
 			content = message["content"]
 			if role == "user":
 				# translators: The text placed before a message sent by you in the conversation dialog's history buffer. This is also spoken upon receipt of a new message.
-				prefix = _("You: ")
+				prefix = _("You:")
 				# Set image field if this is the first user message with an image
 				if message.get("image") and not self.current_image_path:
 					# Try to find the original image path from the conversation ID if it's an image hash
@@ -110,10 +110,10 @@ class MultimodalInput(wx.Dialog):
 						self.image_field.SetValue(_("Image attached"))
 			elif role == "assistant":
 				# translators: The text placed before a message from the AI in the conversation dialog's history buffer. This is also spoken upon receipt of a new message.
-				prefix = _("AI: ")
+				prefix = _("AI:")
 			else:
-				prefix = f"{role.title()}: "
-			self.text_ctrl.AppendText(prefix + content + "\n")
+				prefix = f"{role.title()}:"
+			self.text_ctrl.AppendText(prefix + " " + content + "\n")
 
 	def on_browse_image(self, event):
 		"""Handle browse button click"""
@@ -150,7 +150,7 @@ class MultimodalInput(wx.Dialog):
 
 		# Description flow
 		# Show user message immediately
-		text_entry = _("You: ") + user_input + "\n"
+		text_entry = _("You:") + " " + user_input + "\n"
 		self.text_ctrl.AppendText(text_entry)
 		ui.message(text_entry)
 		# Show thinking indicator
@@ -186,7 +186,7 @@ class MultimodalInput(wx.Dialog):
 			lines = current_text.split('\n')
 			lines = lines[:-2]  # Remove empty line and thinking line
 			self.text_ctrl.SetValue('\n'.join(lines) + '\n')
-		self.text_ctrl.AppendText(_("AI: ") + response + "\n")
+		self.text_ctrl.AppendText(_("AI:") + " " + response + "\n")
 		ui.message(response)
 		self.send_button.Enable(True)
 		self.input_txt.SetFocus()
@@ -196,8 +196,8 @@ class MultimodalInput(wx.Dialog):
 
 	def show_error(self, error_message):
 		"""Show error in the output field"""
-		self.text_ctrl.AppendText(_("Error: ") + error_message + "\n")
-		ui.message(_("Error: ") + error_message)
+		self.text_ctrl.AppendText(_("Error:") + " " + error_message + "\n")
+		ui.message(_("Error:") + " " + error_message)
 		self.send_button.Enable(True)
 		self.input_txt.SetFocus()
 

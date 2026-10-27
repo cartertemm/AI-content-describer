@@ -1796,7 +1796,7 @@ class Ollama(BaseDescriptionService):
 			import ui
 
 			# translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-			ui.message(_("Could not contact the provided base URL. " + str(exc)))
+			ui.message(_("Could not contact the provided base URL. {error}").format(error=exc))
 			return
 		content = json.loads(content)
 		models = [model["model"] for model in content["models"]]
@@ -1827,7 +1827,7 @@ class Ollama(BaseDescriptionService):
 			import ui
 
 			ui.message(
-				_("The response appears to be malformed. " + repr(response_json))
+				_("The response appears to be malformed. {response}").format(response=repr(response_json))
 			)
 			return ""
 		return response_json["message"]["content"]
@@ -1893,7 +1893,7 @@ class LiteLLMProxy(BaseDescriptionService):
 			import ui
 
 			# translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
-			ui.message(_("Could not contact the LiteLLM proxy server. " + str(exc)))
+			ui.message(_("Could not contact the LiteLLM proxy server. {error}").format(error=exc))
 			return
 
 		try:
@@ -1904,7 +1904,7 @@ class LiteLLMProxy(BaseDescriptionService):
 			import ui
 
 			# translators: the message spoken when the LiteLLM proxy returns an unexpected response format
-			ui.message(_("Unexpected response format from LiteLLM proxy. " + str(exc)))
+			ui.message(_("Unexpected response format from LiteLLM proxy. {error}").format(error=exc))
 			return
 
 	def build_conversation_payload(self, messages, **kw):
@@ -1957,7 +1957,7 @@ class LiteLLMProxy(BaseDescriptionService):
 			import ui
 
 			ui.message(
-				_("The response appears to be malformed. " + repr(response_json))
+				_("The response appears to be malformed. {response}").format(response=repr(response_json))
 			)
 			return ""
 		return response_json["choices"][0]["message"]["content"]

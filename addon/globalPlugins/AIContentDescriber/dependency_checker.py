@@ -135,7 +135,7 @@ def prompt_restart():
 		# Translators: Summary for this add-on
 		_("AI Content Describer"),
 		# Translators: Message shown when NVDA is about to restart after the dependencies have been downloaded.
-		_("The dependencies have been downloaded successfully. NVDA will now restart for the changes to take affect")
+		_("The dependencies have been downloaded successfully. NVDA will now restart for the changes to take effect")
 	)
 	core.restart()
 
@@ -166,7 +166,7 @@ def download_failed(error):
 		# Translators: Summary for this add-on
 		_("AI Content Describer"),
 		# Translators: Message shown when dependencies fail to download.
-		_("Unfortunately, there was a problem downloading the dependencies required to run this add-on. Please consult the NVDA log for more details. "+str(error)),
+		_("Unfortunately, there was a problem downloading the dependencies required to run this add-on. Please consult the NVDA log for more details. {error}").format(error=error),
 	)
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AIContentDescriber 2026.05.06\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2026-10-27 11:14-0700\n"
+"POT-Creation-Date: 2026-10-27 11:20-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -204,9 +204,10 @@ msgstr ""
 #. Translators: The message spoken when there was an error with the face detection interface.
 #: addon\globalPlugins\AIContentDescriber\__init__.py:365
 #: addon\globalPlugins\AIContentDescriber\__init__.py:428
+#, python-brace-format
 msgid ""
 "Error initializing the face detection interface. Please consult the NVDA log "
-"for more information. "
+"for more information. {error}"
 msgstr ""
 
 #. Translators: Message spoken when the face detection interface is loading
@@ -445,7 +446,7 @@ msgstr ""
 #: addon\globalPlugins\AIContentDescriber\computer_use_dialogs.py:103
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:113
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:189
-msgid "AI: "
+msgid "AI:"
 msgstr ""
 
 #. translators: The text placed before a message sent by you in the conversation dialog's history buffer. This is also spoken upon receipt of a new message.
@@ -454,7 +455,7 @@ msgstr ""
 #: addon\globalPlugins\AIContentDescriber\computer_use_dialogs.py:105
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:101
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:153
-msgid "You: "
+msgid "You:"
 msgstr ""
 
 #. Translators: logged and spoken when a computer control session ends
@@ -566,7 +567,7 @@ msgstr ""
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:138
 msgid ""
 "The dependencies have been downloaded successfully. NVDA will now restart "
-"for the changes to take affect"
+"for the changes to take effect"
 msgstr ""
 
 #. Translators: Message displayed when the dependency download from the default location failed and we are asking whether to try the mirror.
@@ -588,9 +589,10 @@ msgstr ""
 
 #. Translators: Message shown when dependencies fail to download.
 #: addon\globalPlugins\AIContentDescriber\dependency_checker.py:169
+#, python-brace-format
 msgid ""
 "Unfortunately, there was a problem downloading the dependencies required to "
-"run this add-on. Please consult the NVDA log for more details. "
+"run this add-on. Please consult the NVDA log for more details. {error}"
 msgstr ""
 
 #. translators: error
@@ -935,12 +937,14 @@ msgstr ""
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
 #: addon\globalPlugins\AIContentDescriber\description_service.py:1799
-msgid "Could not contact the provided base URL. "
+#, python-brace-format
+msgid "Could not contact the provided base URL. {error}"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\description_service.py:1830
 #: addon\globalPlugins\AIContentDescriber\description_service.py:1960
-msgid "The response appears to be malformed. "
+#, python-brace-format
+msgid "The response appears to be malformed. {response}"
 msgstr ""
 
 #. translators: the description for the LiteLLM Proxy model, as shown in the configuration dialog
@@ -955,12 +959,14 @@ msgstr ""
 
 #. translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
 #: addon\globalPlugins\AIContentDescriber\description_service.py:1896
-msgid "Could not contact the LiteLLM proxy server. "
+#, python-brace-format
+msgid "Could not contact the LiteLLM proxy server. {error}"
 msgstr ""
 
 #. translators: the message spoken when the LiteLLM proxy returns an unexpected response format
 #: addon\globalPlugins\AIContentDescriber\description_service.py:1907
-msgid "Unexpected response format from LiteLLM proxy. "
+#, python-brace-format
+msgid "Unexpected response format from LiteLLM proxy. {error}"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\description_service.py:2001
@@ -1090,29 +1096,29 @@ msgstr ""
 msgid "Camera selected. You may now trigger the command again."
 msgstr ""
 
-#. Translators: the following messages correspond to the instructions provided to the user for facial detection. They are chosen and then concatenated together based on certain conditions, so please replicate the whitespace.
+#. Translators: the following messages correspond to the instructions provided to the user for facial detection. They are chosen and then joined together with spaces based on certain conditions.
 #: addon\globalPlugins\AIContentDescriber\face_view.py:79
-msgid "far to the left of "
+msgid "far to the left of"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:81
-msgid "to the left of "
+msgid "to the left of"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:83
-msgid "slightly to the left of "
+msgid "slightly to the left of"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:85
-msgid "far to the right of "
+msgid "far to the right of"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:87
-msgid "to the right of "
+msgid "to the right of"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:89
-msgid "slightly to the right of "
+msgid "slightly to the right of"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:91
@@ -1145,7 +1151,7 @@ msgid "Face clearly in view"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:104
-msgid " and "
+msgid "and"
 msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\face_view.py:104
@@ -1300,12 +1306,17 @@ msgstr ""
 
 #. Translators: Requires installation
 #: addon\globalPlugins\AIContentDescriber\model_configuration.py:385
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:414
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:415
 msgid " (requires installation)"
 msgstr ""
 
+#. Translators: Marks a model as unstable
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:401
+msgid " (unstable)"
+msgstr ""
+
 #. Translators: The label for the processing mode chooser for Datalab Chandra 2
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:582
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:583
 msgid "Processing mode"
 msgstr ""
 
@@ -1375,7 +1386,7 @@ msgstr ""
 
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:199
 #: addon\globalPlugins\AIContentDescriber\multimodal_input.py:200
-msgid "Error: "
+msgid "Error:"
 msgstr ""
 
 #. translators: The clear conversation option under options in the conversation dialog.

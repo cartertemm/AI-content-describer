@@ -362,7 +362,7 @@ class GlobalPlugin(GlobalPlugin):
 				# py-3.11: On some machines, it is rare, but cv2 might not work as expected due to a variety of reasons none of which I can reproduce.
 				## In the meantime, establish a catchall exception and report it to the user so they can file an issue
 				# Translators: The message spoken when there was an error with the face detection interface.
-				ui.message(_("Error initializing the face detection interface. Please consult the NVDA log for more information. "+error))
+				ui.message(_("Error initializing the face detection interface. Please consult the NVDA log for more information. {error}").format(error=error))
 				return
 			else:
 				# Translators: Message spoken when the face detection interface is loading
@@ -425,7 +425,7 @@ class GlobalPlugin(GlobalPlugin):
 				# py-3.11: On some machines, it is rare, but cv2 might not work as expected due to a variety of reasons none of which I can reproduce.
 				## In the meantime, establish a catchall exception and report it to the user so they can file an issue
 				# Translators: The message spoken when there was an error with the face detection interface.
-				ui.message(_("Error initializing the face detection interface. Please consult the NVDA log for more information. "+error))
+				ui.message(_("Error initializing the face detection interface. Please consult the NVDA log for more information. {error}").format(error=error))
 				return
 			else:
 				# Translators: Message spoken when the face detection interface is loading
