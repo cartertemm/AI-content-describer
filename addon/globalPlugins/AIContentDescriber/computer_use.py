@@ -179,18 +179,21 @@ class Capture:
 		"""Returns (b64_png_str, api_w, api_h, focus_dict)."""
 		hwnd, obj = self._resolve_target()
 		rect = winUser.getClientRect(hwnd)
-		cap_w = rect.right - rect.left
-		cap_h = rect.bottom - rect.top
+		cap_w = max(1, rect.right - rect.left)
+		cap_h = max(1, rect.bottom - rect.top)
 		self._win_x, self._win_y = winUser.ClientToScreen(hwnd, 0, 0)
 		self._scale = _calculate_scale(
 			cap_w, cap_h, self._max_long_edge, self._max_pixels
 		)
 		api_w = max(1, int(cap_w * self._scale))
 		api_h = max(1, int(cap_h * self._scale))
-		buf = screenBitmap.ScreenBitmap(api_w, api_h).captureImage(
+		# StretchBlt's default mode merges pixels and garbles text, so capture at full size and resize with PIL.
+		buf = screenBitmap.ScreenBitmap(cap_w, cap_h).captureImage(
 			self._win_x, self._win_y, cap_w, cap_h
 		)
-		img = Image.frombuffer("RGB", (api_w, api_h), buf, "raw", "BGRX", 0, 1)
+		img = Image.frombuffer("RGB", (cap_w, cap_h), buf, "raw", "BGRX", 0, 1)
+		if (api_w, api_h) != (cap_w, cap_h):
+			img = img.resize((api_w, api_h), Image.LANCZOS)
 		out = BytesIO()
 		img.save(out, format="PNG")
 		b64 = base64.b64encode(out.getvalue()).decode("ascii")
