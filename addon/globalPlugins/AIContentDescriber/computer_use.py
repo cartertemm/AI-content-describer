@@ -1,4 +1,5 @@
 import base64
+import ctypes
 import logging
 import math
 import queue
@@ -8,6 +9,13 @@ import urllib.error
 from io import BytesIO
 
 log = logging.getLogger(__name__)
+
+import addonHandler
+
+try:
+	addonHandler.initTranslation()
+except addonHandler.AddonError:
+	log.warning("Couldn't initialise translations for computer use.")
 
 import api
 import winUser
@@ -59,6 +67,8 @@ RETRY_BACKOFF_BASE_SECONDS = 1.0
 TYPE_PREVIEW_MAX_CHARS = 40
 # Above this length, paste the text instead of synthesizing a keystroke per character.
 PASTE_TYPE_THRESHOLD_CHARS = 512
+WS_MAXIMIZEBOX = 0x00010000
+SW_MAXIMIZE = 3
 # Anthropic bills images in square patches of this many pixels per side.
 VISUAL_TOKEN_PATCH_PX = 28
 
@@ -87,6 +97,15 @@ def on_control_pause():
 	"""Called after the model has stopped touching the machine while the session is
 	still alive. Either the user paused, or the model wants input."""
 	tones.beep(108, 300)
+
+
+def _maximize_window(hwnd):
+	"""Maximize hwnd if it can be maximized and isn't already. Returns True if it was maximized."""
+	user32 = ctypes.windll.user32
+	if user32.IsZoomed(hwnd) or not winUser.getWindowStyle(hwnd) & WS_MAXIMIZEBOX:
+		return False
+	user32.ShowWindow(hwnd, SW_MAXIMIZE)
+	return True
 
 
 def _announce_and_wait(text):
@@ -575,7 +594,11 @@ class ComputerUseSession:
 		_set_active_session(self)
 		if not self._dialog.IsBeingDeleted():
 			self._dialog.Hide()
+		maximized = _maximize_window(self._hwnd)
 		winUser.setForegroundWindow(self._hwnd)
+		if maximized:
+			# Translators: spoken when computer use maximizes the target window at the start of a session.
+			ui.message(_("Window maximized"))
 		self._dialog_visible = False
 		on_control_start()
 		self._thread = threading.Thread(target=self._run, args=(task,), daemon=True)
