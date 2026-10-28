@@ -157,6 +157,6 @@ Máte návrh na novou funkci? Vytvoøte pro ni také ticket a mùžeme se domluv
 
 Pøeklady uvítám s otevøenou náruèí. Èím více lidí bude mít k této skvìlé technologii pøístup, tím lépe!
 
-Pokud nemáte Github nebo ho radìji nepoužíváte, mùžete mi [poslat e-mail](mailto:cartertemm@gmail.com) - cartertemm (zavináè) gmail (teèka) com (pouze v angliètinì).
+Pokud nemáte Github nebo ho radìji nepoužíváte, mùžete mi [poslat e-mail](mailto:carter@ctemm.me) - carter (zavináè) ctemm (teèka) me (pouze v angliètinì).
 
 Dìkuji za vaši podporu!

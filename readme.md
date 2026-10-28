@@ -352,6 +352,6 @@ Have a suggestion for a new feature? Create a ticket for that as well, and we ca
 
 Translations are welcomed with open arms. The more people that can access this powerful technology, the better!
 
-If you don't have Github, or prefer not to use it, you can [shoot me an email](mailto:cartertemm@gmail.com) - cartertemm (at) gmail (dot) com.
+If you don't have Github, or prefer not to use it, you can [shoot me an email](mailto:carter@ctemm.me) - carter (at) ctemm (dot) me.
 
 Thanks for the support!

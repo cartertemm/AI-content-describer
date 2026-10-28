@@ -174,6 +174,6 @@ Masz sugestię dotyczącą nowej funkcji? Utwórz zgłoszenie, i zobaczymy, co d
 
 Tłumaczenia są mile widziane. Im więcej osób będzie miało dostęp do tej potężnej technologii, tym lepiej!
 
-Jeśli nie masz Githuba lub wolisz go nie używać, możesz [wysłać mi email](mailto:cartertemm@gmail.com) - cartertemm (at) gmail (dot) com.
+Jeśli nie masz Githuba lub wolisz go nie używać, możesz [wysłać mi email](mailto:carter@ctemm.me) - carter (at) ctemm (dot) me.
 
 Dziękuję za wsparcie!

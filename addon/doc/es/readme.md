@@ -267,6 +267,6 @@ Las siguientes personas han trabajado en el complemento.
 
 Las traducciones son muy bienvenidas. Cuantas más personas puedan acceder a esta poderosa tecnología, mejor.
 
-Si no tiene Github, o prefiere no usarlo, puede [enviarme un correo electrónico](mailto:cartertemm@gmail.com) - cartertemm (arroba) gmail (punto) com.
+Si no tiene Github, o prefiere no usarlo, puede [enviarme un correo electrónico](mailto:carter@ctemm.me) - carter (arroba) ctemm (punto) me.
 
 ¡Gracias por el apoyo!

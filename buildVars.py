@@ -30,7 +30,7 @@ By default, usage is free through PollinationsAI with no sign-up or API key requ
 	# version
 	"addon_version": "2026.05.06",
 	# Author(s)
-	"addon_author": "Carter Temm <cartertemm@gmail.com> and various translators",
+	"addon_author": "Carter Temm <carter@ctemm.me> and various translators",
 	# URL for the add-on documentation support
 	"addon_url": None,
 	# URL for the add-on repository where the source code can be found

@@ -153,6 +153,6 @@ Vous avez une suggestion pour une nouvelle fonctionnalité ? Créez également u
 
 Les traductions sont accueillies à bras ouverts. Plus il y a de personnes qui peuvent accéder à cette technologie puissante, mieux c'est !
 
-Si vous n'avez pas Github, ou préférez ne pas l'utiliser, vous pouvez [m'envoyer un courriel](mailto:cartertemm@gmail.com) - cartertemm (at) gmail (dot) com.
+Si vous n'avez pas Github, ou préférez ne pas l'utiliser, vous pouvez [m'envoyer un courriel](mailto:carter@ctemm.me) - carter (at) ctemm (dot) me.
 
 Merci pour votre soutien!

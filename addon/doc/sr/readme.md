@@ -103,6 +103,6 @@ Imate predlog za novu funkciju? Prijavite to na isti način, a zatim možemo da 
 
 Prevodi su dobrodošli.
 
-Ako nemate Github, ili ne želite da ga koristite, možete da mi [napišete e-mail](mailto:cartertemm@gmail.com) - cartertemm (et) gmail (tačka) com.
+Ako nemate Github, ili ne želite da ga koristite, možete da mi [napišete e-mail](mailto:carter@ctemm.me) - carter (et) ctemm (tačka) me.
 
 rHvala na podršci!

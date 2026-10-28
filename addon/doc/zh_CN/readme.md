@@ -228,6 +228,6 @@ scons pot
 
 我们热烈欢迎各种语言的翻译。能让更多人用上这项强大的技术，是再好不过的事了！
 
-如果您没有 GitHub 账户，或不想使用这种方式，可以[给我发邮件](mailto:cartertemm@gmail.com) - cartertemm (at) gmail (dot) com。
+如果您没有 GitHub 账户，或不想使用这种方式，可以[给我发邮件](mailto:carter@ctemm.me) - carter (at) ctemm (dot) me。
 
 感谢您的支持！

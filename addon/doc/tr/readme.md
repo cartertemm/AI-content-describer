@@ -80,5 +80,5 @@ Bir sorun mu buldunuz? Sorunu [sorun izleyiciye](https://github.com/cartertemm/A
 Yeni bir özellik öneriniz mi var? Bunun için de bir Bilet oluşturun, uygulamaya geçirme konusunu konuşabiliriz. İlgili sorunları olmayan çekme istekleri incelenecek, ancak özellikle yeni düzeltmenin veya işlevselliğin farklı çalışması gerektiğine karar verirsem muhtemelen herkes için daha fazla zaman alacaktır.
 
 Çeviriler açık kollarla karşılanır.
-Github'ınız yoksa veya kullanmamayı tercih ediyorsanız, [bana bir e-posta gönderebilirsiniz](mailto:cartertemm@gmail.com) - cartertemm (at) gmail (dot) com.
+Github'ınız yoksa veya kullanmamayı tercih ediyorsanız, [bana bir e-posta gönderebilirsiniz](mailto:carter@ctemm.me) - carter (at) ctemm (dot) me.
 Destek için teşekkürler!
