@@ -367,7 +367,19 @@ class ActionRunner:
 	}
 
 	def execute(self, action):
-		"""Execute one action dict; return a compact result string."""
+		"""Execute one action dict, holding down any modifiers it lists; return a compact result string."""
+		held = []
+		try:
+			for name in action.get("hold_keys", ()):
+				held.append(self._press_held_key(name))
+			return self._execute_action(action)
+		except ValueError as e:
+			return format_action_result(action, "error", e)
+		finally:
+			for vk in reversed(held):
+				winUser.keybd_event(vk, 0, winUser.KEYEVENTF_KEYUP, 0)
+
+	def _execute_action(self, action):
 		t = action.get("type", "")
 		try:
 			if t == "move":
@@ -430,6 +442,14 @@ class ActionRunner:
 				"computer use: action %r failed", action.get("type"), exc_info=True
 			)
 			return format_action_result(action, "error", e)
+
+	def _press_held_key(self, name):
+		"""Press a modifier that stays down for a mouse action. Returns its virtual key code."""
+		vk = self._MOD_MAP.get(name)
+		if vk is None:
+			raise ValueError(f"unknown held key: {name}")
+		winUser.keybd_event(vk, 0, 0, 0)
+		return vk
 
 	def _move(self, x, y):
 		winUser.setCursorPos(x, y)

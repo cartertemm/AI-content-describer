@@ -493,7 +493,7 @@ def _normalize_openai_action(raw):
 
 	OpenAI uses:
 	- "click" type with a "button" field and "coordinate": [x, y]
-	- "key" type with a "keys": [...] array
+	- "keypress" type with a "keys": [...] array; on mouse actions, "keys" lists keys held during the action
 	- "scroll" type with "scroll_x" / "scroll_y" distances, where positive means right or down
 	- "coordinate": [x, y] instead of separate x/y fields
 	- "drag" type with a "path": [[x, y], ...] or [{"x": x, "y": y}, ...] array,
@@ -543,7 +543,12 @@ def _normalize_openai_action(raw):
 		action["type"] = "key"
 	keys = action.pop("keys", None)
 	if keys:
-		action["key"] = "+".join(k.lower() for k in keys)
+		names = [k.lower() for k in keys]
+		# On mouse actions, keys are held down for the duration of the action (e.g. ctrl+click).
+		if action.get("type") == "key":
+			action["key"] = "+".join(names)
+		else:
+			action["hold_keys"] = names
 	_normalize_openai_scroll(action)
 	return action
 
