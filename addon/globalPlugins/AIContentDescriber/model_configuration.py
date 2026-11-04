@@ -269,6 +269,11 @@ class GPT61TerraConfigurationPanel(OpenAIConfigurationPanel):
 	title = model.name
 
 
+class GPT6LunaConfigurationPanel(OpenAIConfigurationPanel):
+	model = description_service.GPT6Luna()
+	title = model.name
+
+
 class O4MiniConfigurationPanel(OpenAIConfigurationPanel):
 	model = description_service.O4Mini()
 	title = model.name
@@ -663,6 +668,7 @@ description_service.GPT55Pro.configurationPanel = GPT55ProConfigurationPanel
 description_service.GPT6Astra.configurationPanel = GPT6AstraConfigurationPanel
 description_service.GPT61Sol.configurationPanel = GPT61SolConfigurationPanel
 description_service.GPT61Terra.configurationPanel = GPT61TerraConfigurationPanel
+description_service.GPT6Luna.configurationPanel = GPT6LunaConfigurationPanel
 description_service.Gemini2_5Flash.configurationPanel = Gemini2_5FlashConfigurationPanel
 description_service.Gemini2_5FlashLite.configurationPanel = Gemini2_5FlashLiteConfigurationPanel
 description_service.Gemini2_5Pro.configurationPanel = Gemini2_5ProConfigurationPanel

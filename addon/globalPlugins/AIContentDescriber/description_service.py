@@ -895,6 +895,17 @@ class GPT61Terra(BaseGPT):
 	supports_computer_use = True
 
 
+class GPT6Luna(BaseGPT):
+	name = "GPT-6 Luna"
+	# translators: the description for the GPT-6 Luna model in the configuration dialog
+	description = _(
+		"OpenAI's lowest cost GPT-6 model, for high-volume work where price matters most. Supports image input and a 1M token context window."
+	)
+	about_url = "https://developers.openai.com/api/docs/models/gpt-6-luna"
+	internal_model_name = "gpt-6-luna"
+	supports_computer_use = True
+
+
 class O3(BaseGPT):
 	name = "OpenAI O3"
 	# translators: the description for the OpenAI O3 model in the model configuration dialog
@@ -2703,6 +2714,7 @@ models = [
 	GPT6Astra(),
 	GPT61Sol(),
 	GPT61Terra(),
+	GPT6Luna(),
 	GPT4Turbo(),
 	# Anthropic
 	Claude5_5Haiku(),
