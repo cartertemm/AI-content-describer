@@ -488,6 +488,8 @@ def cached_description(func):
 OPENAI_SCROLL_DISTANCE_PER_CLICK = 100
 # OpenAI click buttons whose names differ from ours. "back" and "forward" match.
 OPENAI_MOUSE_BUTTONS = {"wheel": "middle"}
+# OpenAI's wait action has no duration. Its reference computer use helpers wait this long.
+OPENAI_WAIT_SECONDS = 2
 
 
 def _normalize_openai_action(raw):
@@ -543,6 +545,8 @@ def _normalize_openai_action(raw):
 		action["endX"], action["endY"] = _point(path[-1])
 	if action.get("type") == "keypress":
 		action["type"] = "key"
+	if action.get("type") == "wait":
+		action.setdefault("duration", OPENAI_WAIT_SECONDS)
 	keys = action.pop("keys", None)
 	if keys:
 		names = [k.lower() for k in keys]

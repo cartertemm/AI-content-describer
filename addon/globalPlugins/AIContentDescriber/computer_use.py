@@ -65,6 +65,8 @@ ANNOUNCE_TIMEOUT_SECONDS = 5
 MAX_REQUEST_ATTEMPTS = 3
 RETRY_BACKOFF_BASE_SECONDS = 1.0
 TYPE_PREVIEW_MAX_CHARS = 40
+# How long a wait action pauses when the action does not give a duration, in seconds.
+DEFAULT_WAIT_SECONDS = 0.5
 # Above this length, paste the text instead of synthesizing a keystroke per character.
 PASTE_TYPE_THRESHOLD_CHARS = 512
 WS_MAXIMIZEBOX = 0x00010000
@@ -434,9 +436,10 @@ class ActionRunner:
 				self._type_text(action["text"])
 				return format_action_result(action, preview)
 			elif t == "wait":
-				time.sleep(0.5)
-				_announce_and_wait("Waiting for 500 MS...")
-				return format_action_result(action, "500ms")
+				wait_ms = round(action.get("duration", DEFAULT_WAIT_SECONDS) * 1000)
+				time.sleep(wait_ms / 1000)
+				_announce_and_wait(f"Waiting for {wait_ms} MS...")
+				return format_action_result(action, f"{wait_ms}ms")
 			elif t == "screenshot":
 				_announce_and_wait("Taking screenshot...")
 				return format_action_result(action, "(handled by loop)")
