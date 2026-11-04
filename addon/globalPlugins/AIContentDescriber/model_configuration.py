@@ -184,51 +184,6 @@ class OpenAIConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
-class GPT4TurboConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT4Turbo()
-	title = model.name
-
-
-class GPT4OConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT4O()
-	title = model.name
-
-
-class GPT41ConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT41()
-	title = model.name
-
-
-class GPT41MiniConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT41Mini()
-	title = model.name
-
-
-class GPT41NanoConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT41Nano()
-	title = model.name
-
-
-class GPT5ConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT5()
-	title = model.name
-
-
-class GPT5MiniConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT5Mini()
-	title = model.name
-
-
-class GPT5NanoConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT5Nano()
-	title = model.name
-
-
-class GPT5ChatConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT5Chat()
-	title = model.name
-
-
 class GPT54ConfigurationPanel(OpenAIConfigurationPanel):
 	model = description_service.GPT54()
 	title = model.name
@@ -236,11 +191,6 @@ class GPT54ConfigurationPanel(OpenAIConfigurationPanel):
 
 class GPT54MiniConfigurationPanel(OpenAIConfigurationPanel):
 	model = description_service.GPT54Mini()
-	title = model.name
-
-
-class GPT54NanoConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.GPT54Nano()
 	title = model.name
 
 
@@ -271,26 +221,6 @@ class GPT61TerraConfigurationPanel(OpenAIConfigurationPanel):
 
 class GPT6LunaConfigurationPanel(OpenAIConfigurationPanel):
 	model = description_service.GPT6Luna()
-	title = model.name
-
-
-class O4MiniConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.O4Mini()
-	title = model.name
-
-
-class O3ConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.O3()
-	title = model.name
-
-
-class O3MiniConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.O3Mini()
-	title = model.name
-
-
-class O3ProConfigurationPanel(OpenAIConfigurationPanel):
-	model = description_service.O3Pro()
 	title = model.name
 
 
@@ -647,22 +577,8 @@ class DatalabChandra2ConfigurationPanel(BaseModelSettingsPanel):
 
 
 description_service.PollinationsAI.configurationPanel = PollinationsAIConfigurationPanel
-description_service.O4Mini.configurationPanel = O4MiniConfigurationPanel
-description_service.O3.configurationPanel = O3ConfigurationPanel
-description_service.O3Mini.configurationPanel = O3MiniConfigurationPanel
-description_service.O3Pro.configurationPanel = O3ProConfigurationPanel
-description_service.GPT4Turbo.configurationPanel = GPT4TurboConfigurationPanel
-description_service.GPT4O.configurationPanel = GPT4OConfigurationPanel
-description_service.GPT41.configurationPanel = GPT41ConfigurationPanel
-description_service.GPT41Mini.configurationPanel = GPT41MiniConfigurationPanel
-description_service.GPT41Nano.configurationPanel = GPT41NanoConfigurationPanel
-description_service.GPT5.configurationPanel = GPT5ConfigurationPanel
-description_service.GPT5Mini.configurationPanel = GPT5MiniConfigurationPanel
-description_service.GPT5Nano.configurationPanel = GPT5NanoConfigurationPanel
-description_service.GPT5Chat.configurationPanel = GPT5ChatConfigurationPanel
 description_service.GPT54.configurationPanel = GPT54ConfigurationPanel
 description_service.GPT54Mini.configurationPanel = GPT54MiniConfigurationPanel
-description_service.GPT54Nano.configurationPanel = GPT54NanoConfigurationPanel
 description_service.GPT55.configurationPanel = GPT55ConfigurationPanel
 description_service.GPT55Pro.configurationPanel = GPT55ProConfigurationPanel
 description_service.GPT6Astra.configurationPanel = GPT6AstraConfigurationPanel

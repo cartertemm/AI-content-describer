@@ -717,96 +717,6 @@ class BaseGPT(BaseDescriptionService):
 		return OpenAIComputerSession(self, task)
 
 
-class GPT4Turbo(BaseGPT):
-	name = "GPT-4 turbo"
-	# translators: the description for the GPT4 turbo model in the model configuration dialog
-	description = _(
-		"The next generation of the original GPT4 vision preview, with enhanced quality and understanding. This model will soon be deprecated so we recommend switching to GPT-4o."
-	)
-	about_url = (
-		"https://help.openai.com/en/articles/8555510-gpt-4-turbo-in-the-openai-api"
-	)
-	internal_model_name = "gpt-4-turbo"
-
-
-class GPT4O(BaseGPT):
-	name = "GPT-4 omni"
-	# translators: the description for the GPT4 omni model in the model configuration dialog
-	description = _(
-		"OpenAI's first fully multimodal model, released in May 2024. This model has the same high intelligence as GPT4 and GPT4 turbo, but is much more efficient, able to generate text at twice the speed and at half the cost."
-	)
-	about_url = "https://openai.com/index/hello-gpt-4o/"
-	internal_model_name = "gpt-4o"
-
-
-class GPT41(BaseGPT):
-	name = "GPT-4.1"
-	# translators: the description for the GPT-4.1 model in the configuration dialog
-	description = _(
-		"GPT-4.1 excels at instruction following and tool calling, with broad knowledge across domains. It features a 1M token context window, and low latency without a reasoning step."
-	)
-	about_url = "https://platform.openai.com/docs/models/gpt-4.1"
-	internal_model_name = "gpt-4.1"
-
-
-class GPT41Mini(BaseGPT):
-	name = "GPT-4.1 mini"
-	# translators: the description for the GPT-4.1 mini model in the configuration dialog
-	description = _(
-		"A smaller, faster variant of GPT-4.1 with strong instruction following and a 1M token context window at reduced cost."
-	)
-	about_url = "https://platform.openai.com/docs/models/gpt-4.1-mini"
-	internal_model_name = "gpt-4.1-mini"
-
-
-class GPT41Nano(BaseGPT):
-	name = "GPT-4.1 nano"
-	# translators: the description for the GPT-4.1 nano model in the configuration dialog
-	description = _(
-		"The smallest and most affordable GPT-4.1 variant, optimized for fast responses with a 1M token context window."
-	)
-	about_url = "https://platform.openai.com/docs/models/gpt-4.1-nano"
-	internal_model_name = "gpt-4.1-nano"
-
-
-class GPT5(BaseGPT):
-	name = "GPT-5"
-	# translators: the description for the GPT-5 model in the configuration dialog
-	description = _(
-		"OpenAI's frontier model with advanced reasoning, vision, and a 400k token context window."
-	)
-	about_url = "https://platform.openai.com/docs/models/gpt-5"
-	internal_model_name = "gpt-5"
-
-
-class GPT5Mini(BaseGPT):
-	name = "GPT-5 mini"
-	# translators: the description for the GPT-5 mini model in the configuration dialog
-	description = _(
-		"A fast, cost-efficient variant of GPT-5 with vision support and a 400k token context window."
-	)
-	about_url = "https://platform.openai.com/docs/models/gpt-5-mini"
-	internal_model_name = "gpt-5-mini"
-
-
-class GPT5Nano(BaseGPT):
-	name = "GPT-5 nano"
-	# translators: the description for the GPT-5 nano model in the configuration dialog
-	description = _(
-		"The smallest GPT-5 variant, offering vision capabilities at the lowest cost."
-	)
-	about_url = "https://platform.openai.com/docs/models/gpt-5-nano"
-	internal_model_name = "gpt-5-nano"
-
-
-class GPT5Chat(BaseGPT):
-	name = "GPT-5 chat"
-	# translators: the description for the GPT‑5 chat model in the configuration dialog
-	description = _("GPT-5 model used in ChatGPT")
-	about_url = "https://platform.openai.com/docs/models/gpt-5-chat-latest"
-	internal_model_name = "gpt-5-chat-latest"
-
-
 class GPT54(BaseGPT):
 	name = "GPT-5.4"
 	# translators: the description for the GPT-5.4 model in the configuration dialog
@@ -826,17 +736,6 @@ class GPT54Mini(BaseGPT):
 	)
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4-mini"
 	internal_model_name = "gpt-5.4-mini"
-	supports_computer_use = True
-
-
-class GPT54Nano(BaseGPT):
-	name = "GPT-5.4 nano"
-	# translators: the description for the GPT-5.4 nano model in the configuration dialog
-	description = _(
-		"The smallest and cheapest GPT-5.4 variant with vision capabilities and a 400k token context window."
-	)
-	about_url = "https://platform.openai.com/docs/models/gpt-5.4-nano"
-	internal_model_name = "gpt-5.4-nano"
 	supports_computer_use = True
 
 
@@ -904,46 +803,6 @@ class GPT6Luna(BaseGPT):
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6-luna"
 	internal_model_name = "gpt-6-luna"
 	supports_computer_use = True
-
-
-class O3(BaseGPT):
-	name = "OpenAI O3"
-	# translators: the description for the OpenAI O3 model in the model configuration dialog
-	description = _(
-		"Released in April 2025, o3 is a well-rounded and powerful model across domains. It sets a new standard for math, science, coding, and visual reasoning tasks. It also excels at technical writing and instruction-following. Use it to think through multi-step problems that involve analysis across text, code, and images."
-	)
-	about_url = "https://openai.com/index/introducing-o3-and-o4-mini/"
-	internal_model_name = "o3"
-
-
-class O3Pro(BaseGPT):
-	name = "OpenAI O3 pro"
-	# translators: the description for the OpenAI O3 pro model in the model configuration dialog
-	description = _(
-		"Released in June 2025, O3 pro is an upgraded version of O3. It is designed to think longer and provide the most reliable responses. Because o3-pro has access to tools, responses typically take longer than o1-pro to complete. We recommend using it for challenging questions where reliability matters more than speed, and waiting a few minutes is worth the tradeoff. Do not forget to tweak the timeout setting."
-	)
-	about_url = "https://help.openai.com/en/articles/9624314-model-release-notes"
-	internal_model_name = "o3-pro"
-
-
-class O3Mini(BaseGPT):
-	name = "OpenAI O3 mini"
-	# translators: the description for the OpenAI O3 mini model in the model configuration dialog
-	description = _(
-		"Released in January 2025, this powerful and fast model advances the boundaries of what small models can achieve, delivering exceptional STEM capabilities with particular strength in science, math, and coding all while maintaining the low cost and reduced latency of OpenAI o1-mini."
-	)
-	about_url = "https://openai.com/index/openai-o3-mini/"
-	internal_model_name = "o3-mini"
-
-
-class O4Mini(BaseGPT):
-	name = "OpenAI O4 mini"
-	# translators: the description for the OpenAI O4 mini model in the model configuration dialog
-	description = _(
-		"Released in April 2025, o4-mini is a smaller model optimized for fast, cost-efficient reasoning. It achieves remarkable performance for its size and cost, particularly in math, coding, and visual tasks. It has been shown to outperform O3 mini and supports significantly higher usage limits than o3, making it a strong high-volume, high-throughput option for questions that benefit from reasoning. Do not forget to tweak the timeout setting."
-	)
-	about_url = "https://openai.com/index/introducing-o3-and-o4-mini/"
-	internal_model_name = "o4-mini"
 
 
 class PollinationsAI(BaseGPT):
@@ -2694,28 +2553,14 @@ class DatalabChandra2(BaseDescriptionService):
 
 models = [
 	# OpenAI
-	GPT4O(),
-	GPT41(),
-	GPT41Mini(),
-	GPT41Nano(),
-	O4Mini(),
-	O3(),
-	O3Mini(),
-	O3Pro(),
-	GPT5(),
-	GPT5Mini(),
-	GPT5Nano(),
-	GPT5Chat(),
 	GPT54(),
 	GPT54Mini(),
-	GPT54Nano(),
 	GPT55(),
 	GPT55Pro(),
 	GPT6Astra(),
 	GPT61Sol(),
 	GPT61Terra(),
 	GPT6Luna(),
-	GPT4Turbo(),
 	# Anthropic
 	Claude5_5Haiku(),
 	Claude4_5Sonnet(),

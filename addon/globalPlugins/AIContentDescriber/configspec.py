@@ -108,20 +108,6 @@ max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
-[GPT-4 turbo]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[GPT-4 omni]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
 [Google Gemini 2.5 Flash]
 api_key = string(default="")
 prompt = string(default="")
@@ -220,83 +206,6 @@ max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=15, min=1)
 
-[OpenAI O3]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[OpenAI O3 pro]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[OpenAI O3 mini]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=20, min=1)
-
-[OpenAI O4 mini]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[GPT-4.1]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[GPT-4.1 mini]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=20, min=1)
-
-[GPT-4.1 nano]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=512)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[GPT-5]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[GPT-5 mini]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=20, min=1)
-
-[GPT-5 nano]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=512)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
-[GPT-5 chat]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
 [GPT-5.4]
 api_key = string(default="")
 prompt = string(default="")
@@ -310,13 +219,6 @@ prompt = string(default="")
 max_tokens = integer(default=1024)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
-
-[GPT-5.4 nano]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=512)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
 
 [GPT-5.5]
 api_key = string(default="")
