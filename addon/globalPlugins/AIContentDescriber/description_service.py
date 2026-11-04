@@ -1063,9 +1063,18 @@ ANTHROPIC_TOOLSET_DISABLED_MEMBERS = (
 	"hold_key",
 	"cursor_position",
 )
-# Screenshot pruning edits earlier messages, which invalidates replayed thinking blocks.
-# This beta lets the API drop those blocks instead of rejecting the request.
+# Editing earlier messages invalidates replayed thinking blocks. History is append-only, but if a
+# request ever differs from the replayed prefix, this beta drops those blocks instead of failing.
 ANTHROPIC_THINKING_BINDING_BETA = "thinking-binding-controls-2026-08-01"
+ANTHROPIC_CONTEXT_MANAGEMENT_BETA = "context-management-2025-06-27"
+# Old screenshots are cleared on the server, never from our history: client-side edits invalidate
+# thinking on Claude 5.1 and later, and server-side clearing does not. Clearing in batches (every
+# 15 tool results, keeping the last 3) follows Anthropic's computer use guidance.
+ANTHROPIC_CLEAR_OLD_SCREENSHOTS = {
+	"type": "clear_tool_uses_20250919",
+	"trigger": {"type": "tool_uses", "value": 15},
+	"keep": {"type": "tool_uses", "value": 3},
+}
 
 
 def _normalize_anthropic_action(action_type, inp, call_id):
@@ -1100,9 +1109,6 @@ def _normalize_anthropic_action(action_type, inp, call_id):
 
 class AnthropicComputerSession:
 	"""Per-task conversation state for Anthropic computer use."""
-
-	# Any more than this number of screenshots will be deleted to save API quota. Models are hungry.
-	KEEP_RECENT_SCREENSHOTS = 3
 
 	@property
 	def _uses_toolset(self):
@@ -1183,9 +1189,12 @@ class AnthropicComputerSession:
 			"max_tokens": 16384 if self._service._thinks_by_default else 4096,
 			"system": SYSTEM_PROMPT,
 			"messages": messages,
+			"context_management": {"edits": [ANTHROPIC_CLEAR_OLD_SCREENSHOTS]},
 		}
 		if self._uses_toolset:
-			headers["anthropic-beta"] = ANTHROPIC_THINKING_BINDING_BETA
+			headers["anthropic-beta"] = ",".join(
+				(ANTHROPIC_THINKING_BINDING_BETA, ANTHROPIC_CONTEXT_MANAGEMENT_BETA)
+			)
 			payload["tools"] = [
 				{
 					"type": ANTHROPIC_COMPUTER_TOOLSET,
@@ -1200,7 +1209,9 @@ class AnthropicComputerSession:
 				"block_binding": {"prefix_mismatch_behavior": "drop_block"},
 			}
 		else:
-			headers["anthropic-beta"] = self._service._computer_use_beta
+			headers["anthropic-beta"] = ",".join(
+				(self._service._computer_use_beta, ANTHROPIC_CONTEXT_MANAGEMENT_BETA)
+			)
 			payload["tools"] = [
 				{
 					"type": self._service._computer_use_tool_type,
@@ -1217,6 +1228,9 @@ class AnthropicComputerSession:
 			quiet=True,
 		)
 		data = json.loads(raw.decode("utf-8"))
+		applied_edits = (data.get("context_management") or {}).get("applied_edits")
+		if applied_edits:
+			log.debug(f"Anthropic computer use cleared old tool results: {applied_edits}")
 		text = ""
 		actions = []
 		for block in data.get("content", []):
@@ -1244,26 +1258,6 @@ class AnthropicComputerSession:
 
 	def save(self, step_result):
 		self._history.extend(step_result.pending)
-		self._trim_history_screenshots(self._history)
-
-	def _trim_history_screenshots(self, history):
-		"""Remove all but the most recent screenshot image blocks from history, including those nested in tool_result blocks."""
-		refs = []
-		for i, msg in enumerate(history):
-			for j, block in enumerate(msg.get("content") or []):
-				if not isinstance(block, dict):
-					continue
-				if block.get("type") == "image":
-					refs.append((i, j, None))
-				elif block.get("type") == "tool_result":
-					for k, inner in enumerate(block.get("content") or []):
-						if isinstance(inner, dict) and inner.get("type") == "image":
-							refs.append((i, j, k))
-		for i, j, k in reversed(refs[: -self.KEEP_RECENT_SCREENSHOTS]):
-			if k is None:
-				history[i]["content"].pop(j)
-			else:
-				history[i]["content"][j]["content"].pop(k)
 
 
 class Anthropic(BaseDescriptionService):
