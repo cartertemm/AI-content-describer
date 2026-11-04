@@ -339,6 +339,13 @@ max_tokens = integer(default=8192)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
+[GPT-6.1 Sol]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=45, min=1)
+
 [Grok 2 vision]
 api_key = string(default="")
 prompt = string(default="")
