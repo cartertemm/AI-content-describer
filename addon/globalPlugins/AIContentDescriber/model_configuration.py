@@ -509,6 +509,11 @@ class Grok4_6ConfigurationPanel(Grok2VisionConfigurationPanel):
 	title = model.name
 
 
+class Grok4_7ConfigurationPanel(Grok2VisionConfigurationPanel):
+	model = description_service.Grok4_7()
+	title = model.name
+
+
 class KimiConfigurationPanel(BaseModelSettingsPanel):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -631,6 +636,7 @@ description_service.Claude5_5Haiku.configurationPanel = Claude5_5HaikuConfigurat
 description_service.Claude5_5Sonnet.configurationPanel = Claude5_5SonnetConfigurationPanel
 description_service.Claude5_5Opus.configurationPanel = Claude5_5OpusConfigurationPanel
 description_service.Grok4_6.configurationPanel = Grok4_6ConfigurationPanel
+description_service.Grok4_7.configurationPanel = Grok4_7ConfigurationPanel
 description_service.KimiK3.configurationPanel = KimiK3ConfigurationPanel
 description_service.KimiK2_6.configurationPanel = KimiK2_6ConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel
