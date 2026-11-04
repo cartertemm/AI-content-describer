@@ -325,10 +325,15 @@ class ActionRunner:
 		"space": winUser.VK_SPACE,
 		"backspace": winUser.VK_BACK,
 		"delete": winUser.VK_DELETE,
+		"del": winUser.VK_DELETE,
 		"up": winUser.VK_UP,
 		"down": winUser.VK_DOWN,
 		"left": winUser.VK_LEFT,
 		"right": winUser.VK_RIGHT,
+		"arrowup": winUser.VK_UP,
+		"arrowdown": winUser.VK_DOWN,
+		"arrowleft": winUser.VK_LEFT,
+		"arrowright": winUser.VK_RIGHT,
 		"home": winUser.VK_HOME,
 		"end": winUser.VK_END,
 		"pageup": winUser.VK_PRIOR,
@@ -353,7 +358,12 @@ class ActionRunner:
 		"control": winUser.VK_CONTROL,
 		"shift": winUser.VK_SHIFT,
 		"alt": winUser.VK_MENU,
+		"option": winUser.VK_MENU,
 		"win": winUser.VK_LWIN,
+		"meta": winUser.VK_LWIN,
+		"cmd": winUser.VK_LWIN,
+		"command": winUser.VK_LWIN,
+		"super": winUser.VK_LWIN,
 	}
 
 	def execute(self, action):
@@ -469,18 +479,22 @@ class ActionRunner:
 		if unknown:
 			raise ValueError(f"unknown modifier(s): {', '.join(unknown)}")
 		modifiers = [self._MOD_MAP[t] for t in mod_tokens]
-		for vk in modifiers:
-			winUser.keybd_event(vk, 0, 0, 0)
-		main_vk = self._VK_MAP.get(main_key)
+		main_vk = self._VK_MAP.get(main_key) or self._MOD_MAP.get(main_key)
 		extra_shift = False
-		if main_vk is None and main_key:
+		if main_vk is None:
+			# Only a single character can be looked up on the keyboard layout. Pressing the first
+			# letter of an unknown name like "pgdn" would type into the target window.
+			if len(main_key) != 1:
+				raise ValueError(f"unknown key: {main_key}")
 			try:
-				shift_state, main_vk = winUser.VkKeyScanEx(main_key[0], 0)
-				if shift_state & 0x01 and self._MOD_MAP["shift"] not in modifiers:
-					extra_shift = True
-					winUser.keybd_event(self._MOD_MAP["shift"], 0, 0, 0)
+				shift_state, main_vk = winUser.VkKeyScanEx(main_key, 0)
+				extra_shift = bool(shift_state & 0x01) and self._MOD_MAP["shift"] not in modifiers
 			except LookupError:
 				pass
+		for vk in modifiers:
+			winUser.keybd_event(vk, 0, 0, 0)
+		if extra_shift:
+			winUser.keybd_event(self._MOD_MAP["shift"], 0, 0, 0)
 		if main_vk is not None:
 			winUser.keybd_event(main_vk, 0, 0, 0)
 			winUser.keybd_event(main_vk, 0, winUser.KEYEVENTF_KEYUP, 0)
