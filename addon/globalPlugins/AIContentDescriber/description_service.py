@@ -1698,24 +1698,6 @@ class PixtralLarge(MistralAI):
 	about_url = "https://mistral.ai/news/pixtral-large/"
 
 
-class Grok2Vision(BaseGPT):
-	name = "Grok 2 vision"
-	# translators: the description for the xAI Grok 2 model in the model configuration dialog
-	description = _(
-		"xAI's flagship multimodal model with advanced reasoning capabilities. Excels at enterprise tasks like data extraction, programming, and text summarization with superior domain knowledge in finance, healthcare, law, and science."
-	)
-	about_url = "https://x.ai/news/grok-2"
-	internal_model_name = "grok-2-vision-latest"
-	openai_url = "https://api.x.ai/v1/chat/completions"
-	supported_formats = [
-		".gif",
-		".jpeg",
-		".jpg",
-		".png",
-		".webp",
-	]
-
-
 class Grok4Base(BaseGPT):
 	openai_url = "https://api.x.ai/v1/chat/completions"
 	supported_formats = [
@@ -1727,36 +1709,6 @@ class Grok4Base(BaseGPT):
 	def _get_completion_token_param_name(self):
 		# Grok 4 reasoning models require max_completion_tokens
 		return "max_completion_tokens"
-
-
-class Grok4(Grok4Base):
-	name = "Grok 4"
-	# translators: the description for the xAI Grok 4 model in the model configuration dialog
-	description = _(
-		"xAI's flagship multimodal reasoning model. Supports image input and excels at complex reasoning, math, science, and visual tasks."
-	)
-	about_url = "https://x.ai/news/grok-4"
-	internal_model_name = "grok-4"
-
-
-class Grok4FastReasoning(Grok4Base):
-	name = "Grok 4 Fast (reasoning)"
-	# translators: the description for the xAI Grok 4 Fast reasoning model in the model configuration dialog
-	description = _(
-		"xAI's cost-efficient multimodal reasoning model with a 2M token context window. Achieves performance comparable to Grok 4 with 40% fewer thinking tokens on average."
-	)
-	about_url = "https://x.ai/news/grok-4-fast"
-	internal_model_name = "grok-4-fast-reasoning"
-
-
-class Grok4FastNonReasoning(Grok4Base):
-	name = "Grok 4 Fast (non-reasoning)"
-	# translators: the description for the xAI Grok 4 Fast non-reasoning model in the model configuration dialog
-	description = _(
-		"xAI's cost-efficient multimodal model for instant responses without a reasoning step. Features a 2M token context window."
-	)
-	about_url = "https://x.ai/news/grok-4-fast"
-	internal_model_name = "grok-4-fast-non-reasoning"
 
 
 class Grok4_3(Grok4Base):
@@ -2722,15 +2674,11 @@ models = [
 	Gemini3_7Flash(),
 	Gemini3_8Flash(),
 	# xAI
-	Grok4FastNonReasoning(),
-	Grok4FastReasoning(),
-	Grok4(),
 	Grok4_20NonReasoning(),
 	Grok4_3(),
 	Grok4_5(),
 	Grok4_6(),
 	Grok4_7(),
-	Grok2Vision(),
 	# Mistral
 	PixtralLarge(),
 	# Moonshot AI (Kimi)

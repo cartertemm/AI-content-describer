@@ -466,9 +466,7 @@ class Claude5_5OpusConfigurationPanel(ClaudeConfigurationPanel):
 	title = model.name
 
 
-class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
-	model = description_service.Grok2Vision()
-	title = model.name
+class GrokConfigurationPanel(BaseModelSettingsPanel):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.add_about_button(sHelper)
@@ -479,42 +477,27 @@ class Grok2VisionConfigurationPanel(BaseModelSettingsPanel):
 		super().makeSettings(settingsSizer)
 
 
-class Grok4ConfigurationPanel(Grok2VisionConfigurationPanel):
-	model = description_service.Grok4()
-	title = model.name
-
-
-class Grok4FastReasoningConfigurationPanel(Grok2VisionConfigurationPanel):
-	model = description_service.Grok4FastReasoning()
-	title = model.name
-
-
-class Grok4FastNonReasoningConfigurationPanel(Grok2VisionConfigurationPanel):
-	model = description_service.Grok4FastNonReasoning()
-	title = model.name
-
-
-class Grok4_3ConfigurationPanel(Grok2VisionConfigurationPanel):
+class Grok4_3ConfigurationPanel(GrokConfigurationPanel):
 	model = description_service.Grok4_3()
 	title = model.name
 
 
-class Grok4_5ConfigurationPanel(Grok2VisionConfigurationPanel):
+class Grok4_5ConfigurationPanel(GrokConfigurationPanel):
 	model = description_service.Grok4_5()
 	title = model.name
 
 
-class Grok4_6ConfigurationPanel(Grok2VisionConfigurationPanel):
+class Grok4_6ConfigurationPanel(GrokConfigurationPanel):
 	model = description_service.Grok4_6()
 	title = model.name
 
 
-class Grok4_7ConfigurationPanel(Grok2VisionConfigurationPanel):
+class Grok4_7ConfigurationPanel(GrokConfigurationPanel):
 	model = description_service.Grok4_7()
 	title = model.name
 
 
-class Grok4_20NonReasoningConfigurationPanel(Grok2VisionConfigurationPanel):
+class Grok4_20NonReasoningConfigurationPanel(GrokConfigurationPanel):
 	model = description_service.Grok4_20NonReasoning()
 	title = model.name
 
@@ -621,12 +604,6 @@ description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationP
 description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfigurationPanel # <-- 在这里添加
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel
-description_service.Grok2Vision.configurationPanel = Grok2VisionConfigurationPanel
-description_service.Grok4.configurationPanel = Grok4ConfigurationPanel
-description_service.Grok4FastReasoning.configurationPanel = Grok4FastReasoningConfigurationPanel
-description_service.Grok4FastNonReasoning.configurationPanel = Grok4FastNonReasoningConfigurationPanel
-description_service.Grok4_3.configurationPanel = Grok4_3ConfigurationPanel
-description_service.Grok4_5.configurationPanel = Grok4_5ConfigurationPanel
 description_service.Claude4_5Sonnet.configurationPanel = Claude4_5SonnetConfigurationPanel
 description_service.Claude4_5Opus.configurationPanel = Claude4_5OpusConfigurationPanel
 description_service.Claude4_6Sonnet.configurationPanel = Claude4_6SonnetConfigurationPanel
@@ -640,9 +617,11 @@ description_service.Claude5_1Fable.configurationPanel = Claude5_1FableConfigurat
 description_service.Claude5_5Haiku.configurationPanel = Claude5_5HaikuConfigurationPanel
 description_service.Claude5_5Sonnet.configurationPanel = Claude5_5SonnetConfigurationPanel
 description_service.Claude5_5Opus.configurationPanel = Claude5_5OpusConfigurationPanel
+description_service.Grok4_20NonReasoning.configurationPanel = Grok4_20NonReasoningConfigurationPanel
+description_service.Grok4_3.configurationPanel = Grok4_3ConfigurationPanel
+description_service.Grok4_5.configurationPanel = Grok4_5ConfigurationPanel
 description_service.Grok4_6.configurationPanel = Grok4_6ConfigurationPanel
 description_service.Grok4_7.configurationPanel = Grok4_7ConfigurationPanel
-description_service.Grok4_20NonReasoning.configurationPanel = Grok4_20NonReasoningConfigurationPanel
 description_service.KimiK3.configurationPanel = KimiK3ConfigurationPanel
 description_service.KimiK2_6.configurationPanel = KimiK2_6ConfigurationPanel
 description_service.LiteLLMProxy.configurationPanel = LiteLLMProxyConfigurationPanel

@@ -270,34 +270,6 @@ effort = option("none", "low", "medium", "high", "xhigh", "max", default="low")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=20, min=1)
 
-[Grok 2 vision]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[Grok 4]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[Grok 4 Fast (reasoning)]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=2048)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=30, min=1)
-
-[Grok 4 Fast (non-reasoning)]
-api_key = string(default="")
-prompt = string(default="")
-max_tokens = integer(default=1024)
-cache_descriptions = boolean(default=False)
-timeout = integer(default=15, min=1)
-
 [Grok 4.3]
 api_key = string(default="")
 prompt = string(default="")
