@@ -862,6 +862,17 @@ class GPT55Pro(BaseGPT):
 	supports_computer_use = True
 
 
+class GPT6Astra(BaseGPT):
+	name = "GPT-6 Astra"
+	# translators: the description for the GPT-6 Astra model in the configuration dialog
+	description = _(
+		"OpenAI's most capable model for the most demanding work, such as complex reasoning, coding, and computer control. Supports image input and a 1M token context window. Costs more than the other GPT-6 models."
+	)
+	about_url = "https://developers.openai.com/api/docs/models/gpt-6-astra"
+	internal_model_name = "gpt-6-astra"
+	supports_computer_use = True
+
+
 class O3(BaseGPT):
 	name = "OpenAI O3"
 	# translators: the description for the OpenAI O3 model in the model configuration dialog
@@ -2667,6 +2678,7 @@ models = [
 	GPT54Nano(),
 	GPT55(),
 	GPT55Pro(),
+	GPT6Astra(),
 	GPT4Turbo(),
 	# Anthropic
 	Claude5_5Haiku(),
