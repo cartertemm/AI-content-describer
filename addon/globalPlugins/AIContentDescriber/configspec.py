@@ -273,7 +273,7 @@ timeout = integer(default=20, min=1)
 [Grok 4.3]
 api_key = string(default="")
 prompt = string(default="")
-max_tokens = integer(default=2048)
+max_tokens = integer(default=8192)
 effort = option("none", "low", "medium", "high", "xhigh", default="low")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
