@@ -1799,6 +1799,16 @@ class Grok4_7(Grok4Base):
 	internal_model_name = "grok-4.7"
 
 
+class Grok4_20NonReasoning(Grok4Base):
+	name = "Grok 4.20 (non-reasoning)"
+	# translators: the description for the xAI Grok 4.20 (non-reasoning) model in the model configuration dialog
+	description = _(
+		"xAI's fast, low-cost model for instant responses without a reasoning step. Supports image input and a 1M token context window."
+	)
+	about_url = "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning"
+	internal_model_name = "grok-4.20-0309-non-reasoning"
+
+
 class Kimi(BaseGPT):
 	openai_url = "https://api.moonshot.ai/v1/chat/completions"
 	supported_formats = [
@@ -2715,6 +2725,7 @@ models = [
 	Grok4FastNonReasoning(),
 	Grok4FastReasoning(),
 	Grok4(),
+	Grok4_20NonReasoning(),
 	Grok4_3(),
 	Grok4_5(),
 	Grok4_6(),
