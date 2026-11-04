@@ -420,15 +420,18 @@ class ActionRunner:
 				)
 			elif t == "scroll":
 				_announce_and_wait("Scrolling...")
+				# Without a coordinate, scroll wherever the mouse already is.
+				x, y = action.get("x"), action.get("y")
 				self._scroll(
-					action["x"],
-					action["y"],
+					x,
+					y,
 					action.get("direction", "down"),
 					action.get("amount", 3),
 				)
+				where = f"({x}, {y})" if x is not None else "(at mouse)"
 				return format_action_result(
 					action,
-					f"({action['x']}, {action['y']}) {action.get('direction', 'down')} {action.get('amount', 3)}",
+					f"{where} {action.get('direction', 'down')} {action.get('amount', 3)}",
 				)
 			elif t == "key":
 				self._repeat_key(action["key"], action.get("repeat", 1))
@@ -440,7 +443,11 @@ class ActionRunner:
 				return format_action_result(action, preview)
 			elif t == "wait":
 				wait_ms = round(action.get("duration", DEFAULT_WAIT_SECONDS) * 1000)
-				time.sleep(wait_ms / 1000)
+				# Claude can ask for up to 300 seconds, so a cancel has to end the wait early.
+				if self._cancel_event is not None:
+					self._cancel_event.wait(wait_ms / 1000)
+				else:
+					time.sleep(wait_ms / 1000)
 				_announce_and_wait(f"Waiting for {wait_ms} MS...")
 				return format_action_result(action, f"{wait_ms}ms")
 			elif t == "screenshot":
@@ -492,7 +499,8 @@ class ActionRunner:
 		winUser.mouse_event(winUser.MOUSEEVENTF_LEFTUP, 0, 0, 0, 0)
 
 	def _scroll(self, x, y, direction, amount):
-		winUser.setCursorPos(x, y)
+		if x is not None and y is not None:
+			winUser.setCursorPos(x, y)
 		if direction in ("up", "down"):
 			delta = winUser.WHEEL_DELTA * amount * (1 if direction == "up" else -1)
 			winUser.mouse_event(winUser.MOUSEEVENTF_WHEEL, 0, 0, delta, 0)

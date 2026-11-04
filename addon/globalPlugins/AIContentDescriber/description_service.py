@@ -1067,6 +1067,17 @@ ANTHROPIC_TOOLSET_DISABLED_MEMBERS = (
 # request ever differs from the replayed prefix, this beta drops those blocks instead of failing.
 ANTHROPIC_THINKING_BINDING_BETA = "thinking-binding-controls-2026-08-01"
 ANTHROPIC_CONTEXT_MANAGEMENT_BETA = "context-management-2025-06-27"
+# Computer use actions that can carry modifier keys to hold down.
+ANTHROPIC_MOUSE_ACTIONS = (
+	"left_click",
+	"right_click",
+	"middle_click",
+	"double_click",
+	"triple_click",
+	"left_click_drag",
+	"mouse_move",
+	"scroll",
+)
 # Old screenshots are cleared on the server, never from our history: client-side edits invalidate
 # thinking on Claude 5.1 and later, and server-side clearing does not. Clearing in batches (every
 # 15 tool results, keeping the last 3) follows Anthropic's computer use guidance.
@@ -1101,6 +1112,14 @@ def _normalize_anthropic_action(action_type, inp, call_id):
 		action["repeat"] = inp.get("repeat", 1)
 	elif action_type == "type":
 		action["text"] = inp.get("text", "")
+	elif action_type in ANTHROPIC_MOUSE_ACTIONS:
+		# Modifiers held during a click, drag, or scroll, such as "ctrl" or "ctrl+shift". The
+		# toolset and computer_20251124 put them in "text"; computer_20250124 clicks use "key".
+		modifiers = inp.get("text") or inp.get("key")
+		if modifiers:
+			action["hold_keys"] = [m.strip().lower() for m in modifiers.split("+") if m.strip()]
+	if "duration" in inp and action_type == "wait":
+		action["duration"] = inp["duration"]
 	if action_type == "scroll":
 		action["direction"] = inp.get("scroll_direction", "down")
 		action["amount"] = inp.get("scroll_amount", 3)
