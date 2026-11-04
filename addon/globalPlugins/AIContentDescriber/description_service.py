@@ -1216,6 +1216,8 @@ class AnthropicComputerSession:
 			"messages": messages,
 			"context_management": {"edits": [ANTHROPIC_CLEAR_OLD_SCREENSHOTS]},
 		}
+		if self._service.effort_levels and self._service.effort:
+			payload["output_config"] = {"effort": self._service.effort}
 		if self._uses_toolset:
 			headers["anthropic-beta"] = ",".join(
 				(ANTHROPIC_THINKING_BINDING_BETA, ANTHROPIC_CONTEXT_MANAGEMENT_BETA)
