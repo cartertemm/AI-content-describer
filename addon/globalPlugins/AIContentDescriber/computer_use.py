@@ -67,6 +67,9 @@ RETRY_BACKOFF_BASE_SECONDS = 1.0
 TYPE_PREVIEW_MAX_CHARS = 40
 # How long a wait action pauses when the action does not give a duration, in seconds.
 DEFAULT_WAIT_SECONDS = 0.5
+# Pause after a batch of actions before the next screenshot, in seconds. Anthropic's reference
+# computer use implementation waits this long so pages and dialogs finish changing.
+SETTLE_BEFORE_SCREENSHOT_SECONDS = 2.0
 # Above this length, paste the text instead of synthesizing a keystroke per character.
 PASTE_TYPE_THRESHOLD_CHARS = 512
 WS_MAXIMIZEBOX = 0x00010000
@@ -854,8 +857,8 @@ class ComputerUseSession:
 		]
 
 	def _handle_pause(self):
-		# Give keystrokes and focus changes time to apply before the next screenshot
-		time.sleep(0.5)
+		# Give keystrokes and focus changes time to apply before the next screenshot. A cancel ends the wait early.
+		self._cancel_event.wait(SETTLE_BEFORE_SCREENSHOT_SECONDS)
 		if not self._wait_while_paused():
 			return None
 		return self._drain_injection()
