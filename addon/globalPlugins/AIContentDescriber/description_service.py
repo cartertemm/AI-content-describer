@@ -486,13 +486,15 @@ def cached_description(func):
 
 # OpenAI's reference computer use helpers turn each 100 units of scroll distance into one wheel click.
 OPENAI_SCROLL_DISTANCE_PER_CLICK = 100
+# OpenAI click buttons whose names differ from ours. "back" and "forward" match.
+OPENAI_MOUSE_BUTTONS = {"wheel": "middle"}
 
 
 def _normalize_openai_action(raw):
 	"""Normalize an OpenAI Responses API computer_call action to our internal format.
 
 	OpenAI uses:
-	- "click" type with a "button" field and "coordinate": [x, y]
+	- "click" type with a "button" field (left, right, wheel, back, forward) and "coordinate": [x, y]
 	- "keypress" type with a "keys": [...] array; on mouse actions, "keys" lists keys held during the action
 	- "scroll" type with "scroll_x" / "scroll_y" distances, where positive means right or down
 	- "coordinate": [x, y] instead of separate x/y fields
@@ -515,7 +517,7 @@ def _normalize_openai_action(raw):
 	t = action.get("type", "")
 	if t == "click":
 		button = action.pop("button", "left")
-		action["type"] = f"{button}_click"
+		action["type"] = f"{OPENAI_MOUSE_BUTTONS.get(button, button)}_click"
 	coord = action.pop("coordinate", None)
 	if coord and len(coord) >= 2:
 		action["x"] = coord[0]

@@ -68,6 +68,11 @@ TYPE_PREVIEW_MAX_CHARS = 40
 # Above this length, paste the text instead of synthesizing a keystroke per character.
 PASTE_TYPE_THRESHOLD_CHARS = 512
 WS_MAXIMIZEBOX = 0x00010000
+# Win32 mouse_event flags and data for the back and forward (X1 and X2) mouse buttons. winUser lacks them.
+MOUSEEVENTF_XDOWN = 0x0080
+MOUSEEVENTF_XUP = 0x0100
+XBUTTON1 = 0x0001
+XBUTTON2 = 0x0002
 SW_MAXIMIZE = 3
 # Anthropic bills images in square patches of this many pixels per side.
 VISUAL_TOKEN_PATCH_PX = 28
@@ -385,7 +390,7 @@ class ActionRunner:
 			if t == "move":
 				self._move(action["x"], action["y"])
 				return format_action_result(action, f"({action['x']}, {action['y']})")
-			elif t in ("left_click", "right_click", "middle_click"):
+			elif t in ("left_click", "right_click", "middle_click", "back_click", "forward_click"):
 				self._click(action["x"], action["y"], t.removesuffix("_click"))
 				return format_action_result(action, f"({action['x']}, {action['y']})")
 			elif t == "double_click":
@@ -459,15 +464,20 @@ class ActionRunner:
 			"left": winUser.MOUSEEVENTF_LEFTDOWN,
 			"right": winUser.MOUSEEVENTF_RIGHTDOWN,
 			"middle": winUser.MOUSEEVENTF_MIDDLEDOWN,
+			"back": MOUSEEVENTF_XDOWN,
+			"forward": MOUSEEVENTF_XDOWN,
 		}
 		up = {
 			"left": winUser.MOUSEEVENTF_LEFTUP,
 			"right": winUser.MOUSEEVENTF_RIGHTUP,
 			"middle": winUser.MOUSEEVENTF_MIDDLEUP,
+			"back": MOUSEEVENTF_XUP,
+			"forward": MOUSEEVENTF_XUP,
 		}
+		data = {"back": XBUTTON1, "forward": XBUTTON2}.get(button, 0)
 		winUser.setCursorPos(x, y)
-		winUser.mouse_event(down[button], 0, 0, 0, 0)
-		winUser.mouse_event(up[button], 0, 0, 0, 0)
+		winUser.mouse_event(down[button], 0, 0, data, 0)
+		winUser.mouse_event(up[button], 0, 0, data, 0)
 
 	def _drag(self, sx, sy, ex, ey):
 		winUser.setCursorPos(sx, sy)
