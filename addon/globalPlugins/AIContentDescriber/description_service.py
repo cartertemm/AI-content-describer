@@ -484,13 +484,17 @@ def cached_description(func):
 	return wrapper
 
 
+# OpenAI's reference computer use helpers turn each 100 units of scroll distance into one wheel click.
+OPENAI_SCROLL_DISTANCE_PER_CLICK = 100
+
+
 def _normalize_openai_action(raw):
 	"""Normalize an OpenAI Responses API computer_call action to our internal format.
 
 	OpenAI uses:
 	- "click" type with a "button" field and "coordinate": [x, y]
 	- "key" type with a "keys": [...] array
-	- "scroll" type with "scroll_direction" / "scroll_distance"
+	- "scroll" type with "scroll_x" / "scroll_y" distances, where positive means right or down
 	- "coordinate": [x, y] instead of separate x/y fields
 	- "drag" type with a "path": [[x, y], ...] or [{"x": x, "y": y}, ...] array,
 	  using only the first and last point since we don't replay intermediate waypoints
@@ -540,11 +544,31 @@ def _normalize_openai_action(raw):
 	keys = action.pop("keys", None)
 	if keys:
 		action["key"] = "+".join(k.lower() for k in keys)
+	_normalize_openai_scroll(action)
+	return action
+
+
+def _normalize_openai_scroll(action):
+	"""Turn scroll fields into a direction and a wheel click count. scroll_x / scroll_y are distances,
+	and ActionRunner scrolls one axis per action, so vertical wins when the model sends both."""
 	if "scroll_direction" in action:
 		action["direction"] = action.pop("scroll_direction")
 	if "scroll_distance" in action:
 		action["amount"] = action.pop("scroll_distance")
-	return action
+	if "scroll_x" not in action and "scroll_y" not in action:
+		return
+	scroll_x = action.pop("scroll_x", None) or 0
+	scroll_y = action.pop("scroll_y", None) or 0
+	if scroll_y:
+		distance = scroll_y
+		action["direction"] = "down" if scroll_y > 0 else "up"
+	elif scroll_x:
+		distance = scroll_x
+		action["direction"] = "right" if scroll_x > 0 else "left"
+	else:
+		action["amount"] = 0
+		return
+	action["amount"] = max(1, round(abs(distance) / OPENAI_SCROLL_DISTANCE_PER_CLICK))
 
 
 class OpenAIComputerSession:
