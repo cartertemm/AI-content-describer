@@ -1719,6 +1719,7 @@ class Grok4_3(Grok4Base):
 	)
 	about_url = "https://docs.x.ai/developers/models"
 	internal_model_name = "grok-4.3"
+	effort_levels = ['none', 'low', 'medium', 'high', 'xhigh']
 
 
 class Grok4_5(Grok4Base):
@@ -1729,6 +1730,7 @@ class Grok4_5(Grok4Base):
 	)
 	about_url = "https://docs.x.ai/developers/models/grok-4.5"
 	internal_model_name = "grok-4.5"
+	effort_levels = ['low', 'medium', 'high']
 
 
 class Grok4_6(Grok4Base):
@@ -1739,6 +1741,7 @@ class Grok4_6(Grok4Base):
 	)
 	about_url = "https://docs.x.ai/developers/models/grok-4.6"
 	internal_model_name = "grok-4.6"
+	effort_levels = ['low', 'medium', 'high', 'xhigh']
 
 
 class Grok4_7(Grok4Base):
@@ -1749,6 +1752,7 @@ class Grok4_7(Grok4Base):
 	)
 	about_url = "https://docs.x.ai/developers/models/grok-4.7"
 	internal_model_name = "grok-4.7"
+	effort_levels = ['low', 'medium', 'high', 'xhigh']
 
 
 class Grok4_20NonReasoning(Grok4Base):
