@@ -1769,6 +1769,16 @@ class Grok4_3(Grok4Base):
 	internal_model_name = "grok-4.3"
 
 
+class Grok4_5(Grok4Base):
+	name = "Grok 4.5"
+	# translators: the description for the xAI Grok 4.5 model in the model configuration dialog
+	description = _(
+		"An xAI reasoning model with image input and a 500k token context window. Reasoning is always on."
+	)
+	about_url = "https://docs.x.ai/developers/models/grok-4.5"
+	internal_model_name = "grok-4.5"
+
+
 class Kimi(BaseGPT):
 	openai_url = "https://api.moonshot.ai/v1/chat/completions"
 	supported_formats = [
@@ -2686,6 +2696,7 @@ models = [
 	Grok4FastReasoning(),
 	Grok4(),
 	Grok4_3(),
+	Grok4_5(),
 	Grok2Vision(),
 	# Mistral
 	PixtralLarge(),

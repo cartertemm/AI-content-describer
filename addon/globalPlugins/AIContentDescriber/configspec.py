@@ -305,6 +305,13 @@ max_tokens = integer(default=2048)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
+[Grok 4.5]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=30, min=1)
+
 [Kimi K3]
 api_key = string(default="")
 prompt = string(default="")
