@@ -1080,11 +1080,13 @@ ANTHROPIC_MOUSE_ACTIONS = (
 )
 # Old screenshots are cleared on the server, never from our history: client-side edits invalidate
 # thinking on Claude 5.1 and later, and server-side clearing does not. Clearing in batches (every
-# 15 tool results, keeping the last 3) follows Anthropic's computer use guidance.
+# 15 tool results, keeping the last 3) follows Anthropic's computer use guidance. Each clear
+# rewrites the prompt cache, so it only runs when it frees at least clear_at_least tokens.
 ANTHROPIC_CLEAR_OLD_SCREENSHOTS = {
 	"type": "clear_tool_uses_20250919",
 	"trigger": {"type": "tool_uses", "value": 15},
 	"keep": {"type": "tool_uses", "value": 3},
+	"clear_at_least": {"type": "input_tokens", "value": 10000},
 }
 
 
@@ -1215,6 +1217,9 @@ class AnthropicComputerSession:
 			"system": SYSTEM_PROMPT,
 			"messages": messages,
 			"context_management": {"edits": [ANTHROPIC_CLEAR_OLD_SCREENSHOTS]},
+			# Each turn resends the whole history, so cache it up to the newest block. History is
+			# append-only, so the next turn reads everything before what it adds.
+			"cache_control": {"type": "ephemeral"},
 		}
 		if self._service.effort_levels and self._service.effort:
 			payload["output_config"] = {"effort": self._service.effort}
@@ -1258,6 +1263,13 @@ class AnthropicComputerSession:
 		applied_edits = (data.get("context_management") or {}).get("applied_edits")
 		if applied_edits:
 			log.debug(f"Anthropic computer use cleared old tool results: {applied_edits}")
+		usage = data.get("usage") or {}
+		log.debug(
+			"Anthropic computer use tokens: input %s, cache read %s, cache write %s",
+			usage.get("input_tokens"),
+			usage.get("cache_read_input_tokens"),
+			usage.get("cache_creation_input_tokens"),
+		)
 		text = ""
 		actions = []
 		for block in data.get("content", []):
