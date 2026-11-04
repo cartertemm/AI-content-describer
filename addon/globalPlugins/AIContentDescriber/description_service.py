@@ -634,6 +634,8 @@ class OpenAIComputerSession:
 		}
 		if self._previous_response_id is not None:
 			payload["previous_response_id"] = self._previous_response_id
+		if self._service.effort_levels and self._service.effort:
+			payload["reasoning"] = {"effort": self._service.effort}
 		raw = post(
 			url=OPENAI_RESPONSES_URL,
 			headers=headers,
@@ -687,6 +689,12 @@ class BaseGPT(BaseDescriptionService):
 	def _get_conversation_url(self):
 		return getattr(self, "openai_url", "https://api.openai.com/v1/chat/completions")
 
+	def build_conversation_payload(self, messages, **kw):
+		payload = super().build_conversation_payload(messages, **kw)
+		if self.effort_levels and self.effort:
+			payload["reasoning_effort"] = self.effort
+		return payload
+
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
@@ -726,6 +734,7 @@ class GPT54(BaseGPT):
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4"
 	internal_model_name = "gpt-5.4"
 	supports_computer_use = True
+	effort_levels = ['none', 'low', 'medium', 'high', 'xhigh']
 
 
 class GPT54Mini(BaseGPT):
@@ -737,6 +746,7 @@ class GPT54Mini(BaseGPT):
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4-mini"
 	internal_model_name = "gpt-5.4-mini"
 	supports_computer_use = True
+	effort_levels = ['none', 'low', 'medium', 'high', 'xhigh']
 
 
 class GPT55(BaseGPT):
@@ -748,6 +758,7 @@ class GPT55(BaseGPT):
 	about_url = "https://platform.openai.com/docs/models/gpt-5.5"
 	internal_model_name = "gpt-5.5"
 	supports_computer_use = True
+	effort_levels = ['none', 'low', 'medium', 'high', 'xhigh']
 
 
 class GPT55Pro(BaseGPT):
@@ -759,6 +770,7 @@ class GPT55Pro(BaseGPT):
 	about_url = "https://platform.openai.com/docs/models/gpt-5.5-pro"
 	internal_model_name = "gpt-5.5-pro"
 	supports_computer_use = True
+	effort_levels = ['medium', 'high', 'xhigh']
 
 
 class GPT6Astra(BaseGPT):
@@ -770,6 +782,7 @@ class GPT6Astra(BaseGPT):
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6-astra"
 	internal_model_name = "gpt-6-astra"
 	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 
 
 class GPT61Sol(BaseGPT):
@@ -781,6 +794,7 @@ class GPT61Sol(BaseGPT):
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
 	internal_model_name = "gpt-6.1-sol"
 	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 
 
 class GPT61Terra(BaseGPT):
@@ -792,6 +806,7 @@ class GPT61Terra(BaseGPT):
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6.1-terra"
 	internal_model_name = "gpt-6.1-terra"
 	supports_computer_use = True
+	effort_levels = ['none', 'low', 'medium', 'high', 'xhigh', 'max']
 
 
 class GPT6Luna(BaseGPT):
@@ -803,6 +818,7 @@ class GPT6Luna(BaseGPT):
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6-luna"
 	internal_model_name = "gpt-6-luna"
 	supports_computer_use = True
+	effort_levels = ['none', 'low', 'medium', 'high', 'xhigh', 'max']
 
 
 class PollinationsAI(BaseGPT):

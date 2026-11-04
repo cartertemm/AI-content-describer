@@ -180,6 +180,8 @@ class OpenAIConfigurationPanel(BaseModelSettingsPanel):
 		self.add_api_key_field(sHelper)
 		self.add_prompt_field(sHelper)
 		self.add_max_tokens_field(sHelper)
+		if self.model.effort_levels:
+			self.add_effort_field(sHelper)
 		self.add_timeout_field(sHelper)
 		super().makeSettings(settingsSizer)
 
