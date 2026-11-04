@@ -293,6 +293,23 @@ def format_action_result(action, detail, status="ok"):
 	return f"{action.get('type', '')} | {detail} | {status}"
 
 
+ACTION_OK = "ok"
+ACTION_FAILED = "failed"
+ACTION_NOT_EXECUTED = "not_executed"
+# Anthropic's documented answer for batch actions skipped after a failure. Claude reads it to replan.
+BATCH_HALT_TEXT = "Not executed: an earlier computer action in this turn failed."
+BATCH_PAUSED_TEXT = "Not executed: the user paused or stopped computer control before this action ran."
+
+
+def _combined_status(statuses):
+	"""Status for a call that groups several actions (OpenAI): ok only if every action ran and succeeded."""
+	if all(s == ACTION_OK for s in statuses):
+		return ACTION_OK
+	if all(s == ACTION_NOT_EXECUTED for s in statuses):
+		return ACTION_NOT_EXECUTED
+	return ACTION_FAILED
+
+
 _active_session = None
 
 
@@ -377,13 +394,16 @@ class ActionRunner:
 	}
 
 	def execute(self, action):
-		"""Execute one action dict, holding down any modifiers it lists; return a compact result string."""
+		"""Execute one action dict, holding down any modifiers it lists; return a compact result string.
+		Sets last_failed when the action raised an error or was skipped."""
+		self.last_failed = False
 		held = []
 		try:
 			for name in action.get("hold_keys", ()):
 				held.append(self._press_held_key(name))
 			return self._execute_action(action)
 		except ValueError as e:
+			self.last_failed = True
 			return format_action_result(action, "error", e)
 		finally:
 			for vk in reversed(held):
@@ -454,11 +474,13 @@ class ActionRunner:
 				_announce_and_wait("Taking screenshot...")
 				return format_action_result(action, "(handled by loop)")
 			else:
+				self.last_failed = True
 				return format_action_result(action, "(unknown)", "skipped")
 		except Exception as e:
 			log.error(
 				"computer use: action %r failed", action.get("type"), exc_info=True
 			)
+			self.last_failed = True
 			return format_action_result(action, "error", e)
 
 	def _press_held_key(self, name):
@@ -818,9 +840,10 @@ class ComputerUseSession:
 			injected_text = self._handle_pause()
 
 	def _execute_actions(self, resp, capture, runner):
-		"""Hand control to the target window, run the model's action batch (asking approval
-		for confirm/flagged actions), and return the tool_results grouped by call_id for the
-		next request. Stops early if the session is cancelled or paused."""
+		"""Hand control to the target window, run the model's action batch in order (asking
+		approval for confirm/flagged actions), and return the tool_results grouped by call_id for
+		the next request. The first failure, pause, or cancel stops the batch, and every action
+		that did not run still gets a result, because the APIs reject a call left unanswered."""
 		# The model is taking control. If our dialog is still up (we were waiting on the
 		# user), hide it and hand the foreground to the target first, so input lands on the
 		# target window and not on the computer control dialog.
@@ -828,15 +851,25 @@ class ComputerUseSession:
 		# Group results by call_id: OpenAI groups multiple actions under one computer_call
 		# item and expects one computer_call_output per call_id.
 		results_by_call_id = {}
+		halt_text = None
 		for action in resp.actions:
-			if self._cancel_event.is_set() or self._pause_event.is_set():
-				break
-			if not self._approve_all and (
+			call_id = action.get("call_id", "")
+			entry = results_by_call_id.setdefault(
+				call_id,
+				{"results": [], "statuses": [], "safety_checks": action.get("safety_checks", [])},
+			)
+			if halt_text is None and (self._cancel_event.is_set() or self._pause_event.is_set()):
+				halt_text = BATCH_PAUSED_TEXT
+			if halt_text is None and not self._approve_all and (
 				action.get("type") == "confirm" or action.get("safety_checks")
 			):
 				if not self._ask_approval(action):
 					self._cancel_event.set()
-					break
+					halt_text = BATCH_PAUSED_TEXT
+			if halt_text is not None:
+				entry["results"].append(halt_text)
+				entry["statuses"].append(ACTION_NOT_EXECUTED)
+				continue
 			scaled = dict(action)
 			if "x" in scaled and "y" in scaled:
 				scaled["x"], scaled["y"] = capture.to_screen(action["x"], action["y"])
@@ -849,16 +882,17 @@ class ComputerUseSession:
 				)
 			compact = runner.execute(scaled)
 			self._dialog.append_message(compact, role="action")
-			call_id = action.get("call_id", "")
-			entry = results_by_call_id.setdefault(
-				call_id,
-				{"results": [], "safety_checks": action.get("safety_checks", [])},
-			)
 			entry["results"].append(compact)
+			if runner.last_failed:
+				entry["statuses"].append(ACTION_FAILED)
+				halt_text = BATCH_HALT_TEXT
+			else:
+				entry["statuses"].append(ACTION_OK)
 		return [
 			{
 				"call_id": cid,
 				"compact_result": "\n".join(entry["results"]),
+				"status": _combined_status(entry["statuses"]),
 				"safety_checks": entry["safety_checks"],
 			}
 			for cid, entry in results_by_call_id.items()

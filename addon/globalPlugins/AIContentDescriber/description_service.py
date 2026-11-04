@@ -30,7 +30,7 @@ except addonHandler.AddonError:
 
 import config_handler as ch
 import cache
-from computer_use import SYSTEM_PROMPT, format_focus_context
+from computer_use import ACTION_OK, SYSTEM_PROMPT, format_focus_context
 
 OPENAI_RESPONSES_URL = "https://api.openai.com/v1/responses"
 
@@ -1155,27 +1155,33 @@ class AnthropicComputerSession:
 			if focus_text:
 				content.insert(1, {"type": "text", "text": focus_text})
 			return {"role": "user", "content": content}
-		content_blocks = [
-			{
-				"type": "tool_result",
-				"tool_use_id": tr["call_id"],
-				"content": [
-					{
-						"type": "image",
-						"source": {
-							"type": "base64",
-							"media_type": "image/png",
-							"data": screenshot_b64,
-						},
-					},
-					{"type": "text", "text": tr["compact_result"]},
-				],
-			}
-			for tr in (tool_results or [])
-		]
-		if self._uses_toolset:
-			for block in content_blocks:
+		screenshot = {
+			"type": "image",
+			"source": {
+				"type": "base64",
+				"media_type": "image/png",
+				"data": screenshot_b64,
+			},
+		}
+		content_blocks = []
+		for tr in tool_results or []:
+			block = {"type": "tool_result", "tool_use_id": tr["call_id"]}
+			if tr.get("status", ACTION_OK) == ACTION_OK:
+				block["content"] = [{"type": "text", "text": tr["compact_result"]}]
+			else:
+				block["is_error"] = True
+				block["content"] = tr["compact_result"]
+			if self._uses_toolset:
 				block["toolset_name"] = "computer"
+			content_blocks.append(block)
+		# One screenshot per turn shows the screen after the whole batch. Anthropic's docs attach it
+		# to the last result; when that result is an error, it goes after the results instead.
+		if content_blocks:
+			last = content_blocks[-1]
+			if last.get("is_error"):
+				content_blocks.append(screenshot)
+			else:
+				last["content"].append(screenshot)
 		if focus_text and content_blocks:
 			content_blocks.append({"type": "text", "text": focus_text})
 		if injected_text:
