@@ -884,6 +884,17 @@ class GPT61Sol(BaseGPT):
 	supports_computer_use = True
 
 
+class GPT61Terra(BaseGPT):
+	name = "GPT-6.1 Terra"
+	# translators: the description for the GPT-6.1 Terra model in the configuration dialog
+	description = _(
+		"A fast, affordable GPT-6.1 model at half the price of GPT-6.1 Sol. Supports image input and a 1M token context window."
+	)
+	about_url = "https://developers.openai.com/api/docs/models/gpt-6.1-terra"
+	internal_model_name = "gpt-6.1-terra"
+	supports_computer_use = True
+
+
 class O3(BaseGPT):
 	name = "OpenAI O3"
 	# translators: the description for the OpenAI O3 model in the model configuration dialog
@@ -2691,6 +2702,7 @@ models = [
 	GPT55Pro(),
 	GPT6Astra(),
 	GPT61Sol(),
+	GPT61Terra(),
 	GPT4Turbo(),
 	# Anthropic
 	Claude5_5Haiku(),
