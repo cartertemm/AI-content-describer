@@ -1429,7 +1429,7 @@ class Claude4_7Opus(Anthropic):
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1446,7 +1446,7 @@ class Claude4_8Opus(Anthropic):
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1464,7 +1464,7 @@ class Claude5Sonnet(Anthropic):
 	_thinks_by_default = True
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1482,7 +1482,7 @@ class Claude5Opus(Anthropic):
 	_thinks_by_default = True
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1500,7 +1500,7 @@ class Claude5Fable(Anthropic):
 	_thinks_by_default = True
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1518,7 +1518,7 @@ class Claude5_1Fable(Anthropic):
 	_thinks_by_default = True
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1535,7 +1535,7 @@ class Claude5_5Haiku(Anthropic):
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_thinks_by_default = True
 	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1552,7 +1552,7 @@ class Claude5_5Sonnet(Anthropic):
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_thinks_by_default = True
 	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
@@ -1569,7 +1569,7 @@ class Claude5_5Opus(Anthropic):
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_thinks_by_default = True
 	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
-	_capture_max_long_edge = 2576
+	_capture_max_long_edge = 1920
 	_capture_max_pixels = None
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
