@@ -1213,7 +1213,9 @@ class AnthropicComputerSession:
 		}
 		payload = {
 			"model": self._service.internal_model_name,
-			"max_tokens": 16384 if self._service._thinks_by_default else 4096,
+			"max_tokens": 16384
+			if self._service._thinks_by_default or self._service._adaptive_thinking_opt_in
+			else 4096,
 			"system": SYSTEM_PROMPT,
 			"messages": messages,
 			"context_management": {"edits": [ANTHROPIC_CLEAR_OLD_SCREENSHOTS]},
@@ -1252,6 +1254,8 @@ class AnthropicComputerSession:
 					"display_height_px": capture_h,
 				}
 			]
+			if self._service._adaptive_thinking_opt_in:
+				payload["thinking"] = {"type": "adaptive"}
 		raw = post(
 			url="https://api.anthropic.com/v1/messages",
 			headers=headers,
@@ -1304,6 +1308,9 @@ class Anthropic(BaseDescriptionService):
 	# Models that run adaptive thinking when the request omits the thinking parameter.
 	# Thinking tokens count against max_tokens, so these need more headroom.
 	_thinks_by_default = False
+	# Models that support adaptive thinking but leave it off unless the request asks for it.
+	# Computer control turns it on, since Anthropic tunes these models for computer use with thinking.
+	_adaptive_thinking_opt_in = False
 
 	def build_conversation_payload(self, messages, **kw):
 		"""Override for Anthropic's message format with content arrays"""
@@ -1427,6 +1434,7 @@ class Claude4_6Sonnet(Anthropic):
 	about_url = "https://www.anthropic.com/claude/sonnet"
 	internal_model_name = "claude-sonnet-4-6"
 	supports_computer_use = True
+	_adaptive_thinking_opt_in = True
 	effort_levels = ['low', 'medium', 'high', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
@@ -1443,6 +1451,7 @@ class Claude4_6Opus(Anthropic):
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-6"
 	supports_computer_use = True
+	_adaptive_thinking_opt_in = True
 	effort_levels = ['low', 'medium', 'high', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
@@ -1459,6 +1468,7 @@ class Claude4_7Opus(Anthropic):
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-7"
 	supports_computer_use = True
+	_adaptive_thinking_opt_in = True
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
@@ -1476,6 +1486,7 @@ class Claude4_8Opus(Anthropic):
 	about_url = "https://www.anthropic.com/claude/opus"
 	internal_model_name = "claude-opus-4-8"
 	supports_computer_use = True
+	_adaptive_thinking_opt_in = True
 	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
 	_computer_use_beta = "computer-use-2025-11-24"
 	_computer_use_tool_type = "computer_20251124"
