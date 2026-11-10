@@ -771,6 +771,9 @@ class ComputerUseSession:
 		provider_session = self._service.create_computer_session(task)
 		tool_results = None
 		injected_text = None
+		# With Windows animations on, the consent dialog fades out and the target window animates
+		# while maximizing. Capturing too early shows the model the consent dialog.
+		self._cancel_event.wait(SETTLE_BEFORE_SCREENSHOT_SECONDS)
 		while not self._cancel_event.is_set():
 			try:
 				b64, cap_w, cap_h, focus = capture.capture()
