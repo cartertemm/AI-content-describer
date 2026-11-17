@@ -17,7 +17,7 @@ S využitím multimodálních schopností pokročilých modelů umělé intelige
 * Volitelné ukládání odpovědí do mezipaměti pro úsporu kvóty API
 * Pro pokročilé použití si můžete nastavit pokyn a počet tokenů tak, abyste získané informace přizpůsobili svým potřebám
 * Možnost klást doplňující otázky a přikládat další obrázky
-* Vykreslování ve formátu Markdown pro snadný přístup ke strukturovaným informacím (stačí zapnout nastavení „otevírat výsledky v procházitelném dialogu“ a na konec svého pokynu uvést např. „odpověz ve formátu Markdown“)
+* Vykreslování ve formátu Markdown pro snadný přístup ke strukturovaným informacím (stačí zapnout nastavení „Otevírat každý výsledek v procházitelném dialogu“ a na konec svého pokynu uvést např. „odpověz ve formátu Markdown“)
 
 ## Možnosti využití
 
@@ -248,7 +248,7 @@ Neváhejte si je kdykoli přizpůsobit v dialogu Klávesové příkazy.
 ### Doplňující otázky k popisu
 
 Někdy odpověď, kterou od AI dostanete, nestačí. Obrázek může mít nízkou kvalitu, může být neúplný nebo obsahovat nežádoucí detaily. Možná se chcete zaměřit jen na určitou část nebo pořídit ostřejší snímek, aniž byste ztratili kontext.
-Po obdržení popisu můžete stisknout NVDA+alt+c nebo v kontextové nabídce Popisu obsahu pomocí AI (NVDA+shift+i) vybrat „Doplňující otázka k předchozímu popisu“. Ve výchozím nastavení je fokus v políčku pro zprávu.
+Po obdržení popisu můžete stisknout NVDA+alt+c nebo v kontextové nabídce Popisu obsahu pomocí AI (NVDA+shift+i) vybrat „Doplňující dotaz k předchozímu popisu“. Ve výchozím nastavení je fokus v políčku pro zprávu.
 Chcete-li přidat další obrázek, nechte okno konverzace otevřené a používejte doplněk jako obvykle. Když pořídíte snímek (ať už z kamery, ovládacího prvku, snímek obrazovky atd.), budete dotázáni, zda ho chcete přiložit k aktuální relaci, nebo zahájit novou.
 
 ### Ovládání počítače
@@ -345,6 +345,7 @@ Na doplňku se podíleli:
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): francouzský překlad
 * [Lukas](https://4sensegaming.cz): český překlad
 * [Michaela](https://technologiebezzraku.sk): slovenský překlad
+* [loginerror](https://github.com/theloginerror): polský překlad
 
 Narazili jste na problém? Popište ho v [issue trackeru](https://github.com/cartertemm/AI-content-describer/issues)
 
