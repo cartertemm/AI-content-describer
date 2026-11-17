@@ -17,7 +17,7 @@ Kroz multimodalne sposobnosti naprednih AI modela i algoritama računarskog vida
 * Opciono pamćenje ili keširanje odgovora kako bi se uštedela API potrošnja
 * Za napredno korišćenje, prilagodite upit i broj tokena kako biste prilagodili informacije vašim potrebama
 * Postavljanje dodatnih pitanja i prilaganje dodatnih slika
-* Prikaz Markdown formata za lakši pristup strukturiranim informacijama (samo omogućite podešavanje za otvaranje rezultata u dijalogu koji se može pregledati i dodajte na primer "odgovori u Markdown formatu" na kraj vaših upita)
+* Prikaz Markdown formata za lakši pristup strukturiranim informacijama (samo omogućite podešavanje "Otvori svaki rezultat u dijalogu koji se može pretraživati" i dodajte na primer "odgovori u Markdown formatu" na kraj vaših upita)
 
 ## Svrha korišćenja
 
@@ -189,7 +189,7 @@ Ovo će pokrenuti proxy server na adresi `http://localhost:4000` koji prosleđuj
 4. U dijalogu NVDA podešavanja, krećite se dole do kategorije AI opisivač sadržaja, a zatim izaberite "upravljaj modelima (alt+m)" i izaberite "LiteLLM Proxy" kao provajdera.
 5. Unesite URL adresu vašeg proxy servera u polje za osnovnu URL adresu (na primer "http://localhost:4000" za lokalni server ili URL adresu vašeg udaljenog servera).
 6. Ako vaš proxy zahteva autentifikaciju, unesite API ključ u polje za API ključ. Ako ne, ostavite ga praznim.
-7. Kliknite na dugme "Lista modela" da preuzmete dostupne modele sa vašeg proxy servera, a zatim izaberite model koji želite da koristite iz padajuće liste.
+7. Kliknite na dugme "Prikaži modele" da preuzmete dostupne modele sa vašeg proxy servera, a zatim izaberite model koji želite da koristite iz padajuće liste.
 8. Prilagodite ostala podešavanja kao što su upit, maksimalan broj tokena i vremensko ograničenje po potrebi, a zatim kliknite na U redu.
 
 Napomena: Dostupni modeli i njihove mogućnosti zavise od podešavanja vašeg LiteLLM proxy servera. Uverite se da je vaš proxy podešen sa modelima koji podržavaju slike kako bi opisivanje slika radilo.
@@ -345,6 +345,7 @@ Sledeće osobe su radile na ovom dodatku.
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): francuski prevod
 * [Lukas](https://4sensegaming.cz): češki prevod
 * [Michaela](https://technologiebezzraku.sk): slovački prevod
+* [loginerror](https://github.com/theloginerror): poljski prevod
 
 Imate problem? Pošaljite ga na Engleskom u [issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
 
