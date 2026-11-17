@@ -17,7 +17,7 @@ En tirant parti des capacités multimodales des modèles IA avancés et des algo
 * Cache optionnellement les réponses pour préserver le quota d'API
 * Pour une utilisation avancée, personnaliser l'invite et le nombre de tokens pour adapter l'information à vos besoins
 * Poser des questions de suivi et joindre des images supplémentaires
-* Rendu Markdown pour accéder facilement aux informations structurées (il suffit d'activer le paramètre "ouvrir les résultats dans une boîte de dialogue navigable" et d'intégrer par exemple "répondre en Markdown" à la fin de vos invites)
+* Rendu Markdown pour accéder facilement aux informations structurées (il suffit d'activer le paramètre "Ouvrir chaque résultat dans une boîte de dialogue consultable" et d'intégrer par exemple "répondre en Markdown" à la fin de vos invites)
 
 ## Cas d'utilisation
 
@@ -227,7 +227,7 @@ Six raccourcis clavier sont liés par défaut :
 * NVDA+shift+i : Ouvre un menu demandant de décrire l'objet de focus actuel, l'objet navigateur, la caméra physique ou l'écran entier, ou de contrôler l'ordinateur avec l'IA.
 * NVDA+shift+u : Décrit le contenu de l'objet navigateur actuel en utilisant l'IA.
 * NVDA+shift+y : Décrit l'image (ou le chemin de fichier vers une image) dans le presse-papiers en utilisant l'IA.
-* NVDA+shift+j : Décrit la position de votre visage dans le cadre de la caméra sélectionnée. Si vous avez plusieurs caméras connectées, naviguez jusqu'au menu Descripteur de Contenu IA (NVDA+shift+i) et choisissez celle que vous souhaitez utiliser avec l'option "sélectionner la caméra" dans le sous-menu de détection de visage.
+* NVDA+shift+j : Décrit la position de votre visage dans le cadre de la caméra sélectionnée. Si vous avez plusieurs caméras connectées, naviguez jusqu'au menu Descripteur de Contenu IA (NVDA+shift+i) et choisissez celle que vous souhaitez utiliser avec l'option "Sélectionnez la caméra" dans le sous-menu de détection de visage.
 * NVDA+alt+c : Ouvre la boîte de dialogue de conversation IA pour poser des questions de suivi.
 * NVDA+control+shift+p : Met en pause ou reprend une session de contrôle de l'ordinateur en cours.
 
@@ -248,7 +248,7 @@ N'hésitez pas à personnaliser ces éléments à tout moment depuis le dialogue
 ### Poser une question de suivi sur une description
 
 Parfois, la réponse de l'IA est insuffisante. L'image est peut-être de mauvaise qualité, incomplète ou contient des détails indésirables. Vous voulez peut-être vous concentrer sur une partie précise ou prendre une photo plus nette sans perdre le contexte.
-Après avoir reçu une description, vous pouvez appuyer sur NVDA+alt+c, ou sélectionner "Poser une question de suivi sur la description précédente" dans le menu contextuel du Descripteur de Contenu IA (NVDA+shift+i). Par défaut, le focus est placé sur le champ du message.
+Après avoir reçu une description, vous pouvez appuyer sur NVDA+alt+c, ou sélectionner "Poursuivre sur la description précédente" dans le menu contextuel du Descripteur de Contenu IA (NVDA+shift+i). Par défaut, le focus est placé sur le champ du message.
 Pour ajouter une image supplémentaire, gardez simplement la fenêtre de conversation ouverte et utilisez l'add-on comme d'habitude. Lorsqu'une image est prise (depuis la caméra, un contrôle du système, une capture d'écran, etc.), il vous sera demandé si vous souhaitez la joindre à la session en cours ou en démarrer une nouvelle.
 
 ### Contrôle de l'ordinateur
@@ -345,6 +345,7 @@ Les personnes suivantes ont travaillé sur l'addon.
 * [Platinum_Hikari](urbain_onces.0r@icloud.com) : traduction française
 * [Lukas](https://4sensegaming.cz) : traduction tchèque
 * [Michaela](https://technologiebezzraku.sk) : traduction slovaque
+* [loginerror](https://github.com/theloginerror) : traduction polonaise
 
 Vous rencontrez un problème ? Soumettez-le au [suivi des problèmes](https://github.com/cartertemm/AI-content-describer/issues)
 
