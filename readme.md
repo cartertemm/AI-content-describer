@@ -12,7 +12,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Use supported models to control the active application with mouse and keyboard actions for potentially inaccessible tasks
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large and Mistral Large 4, Anthropic's Claude, xAI's Grok, Moonshot AI's Kimi, vivo BlueLM Vision via NVDA-CN, Datalab Chandra 2, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
+* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral Large 4, Anthropic's Claude, xAI's Grok, Moonshot AI's Kimi, vivo BlueLM Vision via NVDA-CN, Datalab Chandra 2, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -43,7 +43,6 @@ Now, the possibilities are almost endless. You might:
 * [OpenAI GPT models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes the GPT-5.4 family (5.4 and 5.4 mini), the GPT-5.5 family (5.5 and 5.5 pro), the GPT-6 family (6 Astra and 6 Luna), and the GPT-6.1 family (6.1 Sol and 6.1 Terra). Computer use is supported by the GPT-5.4, GPT-5.5, GPT-6, and GPT-6.1 families.
 * [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3.1 Flash-Lite, 3.1 Pro Preview, 3.5 Flash, 3.5 Flash-Lite, 3.6 Flash, 3.7 Flash, 3.8 Flash, 4 Hydrogen, 4 Argon, and 4 Carbon models.
 * [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4.5 (Sonnet, Opus), 4.6 (Sonnet, Opus), 4.7 Opus, 4.8 Opus, 5 (Sonnet, Opus, Fable), 5.1 Fable, 5.2 Fable, and 5.5 (Haiku, Sonnet, Opus). All of these support computer use.
-* [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [Mistral Large 4](https://docs.mistral.ai/models/mistral-large-4-0)
 * [xAI Grok](https://docs.x.ai/developers/models), including Grok 4.20 (non-reasoning), 4.3, 4.5, 4.6, and 4.7.
 * [Kimi](https://platform.kimi.ai/docs/guide/use-kimi-vision-model), Moonshot AI's multimodal models, including Kimi K3 and Kimi K2.6.
@@ -109,7 +108,7 @@ At the time of this writing, Open-AI issues credits to new developer accounts th
 1. Sign into or create a MistralAI account by going to the [MistralAI login page](https://auth.mistral.ai/ui/login).
 2. If you are creating or logging into an account for the first time, add a workspace as prompted, supplying a name and accepting the terms and conditions.
 3. Once logged in, select "API keys" from the menu.
-4. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Pixtral Large.
+4. Click "create a new key", and copy it to your clipboard. This value is what you will paste into the API key field under the Ai Content Describer category of the NVDA settings dialog -> manage models -> Mistral Large 4.
 5. Fund the account, if applicable.
 
 ### Obtaining an API key from Kimi (Moonshot AI)

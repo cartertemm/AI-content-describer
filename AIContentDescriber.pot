@@ -896,22 +896,15 @@ msgid ""
 "vision and a 1M token context window."
 msgstr ""
 
-#. translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1744
-msgid ""
-"MistralAI's multimodal image LLM, achieving state-of-the-art results on "
-"MathVista, DocVQA, VQAv2 and other benchmarks."
-msgstr ""
-
 #. translators: the description for MistralAI's Mistral Large 4 model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1754
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1744
 msgid ""
 "Mistral's open-weight multimodal flagship model, with a 1M token context "
 "window."
 msgstr ""
 
 #. translators: the description for the xAI Grok 4.3 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1777
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1767
 msgid ""
 "xAI's recommended flagship reasoning model with a 1M token context window. "
 "Features always-on chain-of-thought reasoning and support for image input."
@@ -919,82 +912,82 @@ msgstr ""
 
 #. translators: the description for the xAI Grok 4.5 model in the model configuration dialog
 #. translators: the description for the xAI Grok 4.6 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1788
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1799
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1778
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1789
 msgid ""
 "An xAI reasoning model with image input and a 500k token context window. "
 "Reasoning is always on."
 msgstr ""
 
 #. translators: the description for the xAI Grok 4.7 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1810
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1800
 msgid ""
 "xAI's most capable model, with image input and a 500k token context window. "
 "Reasoning is always on."
 msgstr ""
 
 #. translators: the description for the xAI Grok 4.20 (non-reasoning) model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1821
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1811
 msgid ""
 "xAI's fast, low-cost model for instant responses without a reasoning step. "
 "Supports image input and a 1M token context window."
 msgstr ""
 
 #. translators: the description for Moonshot AI's Kimi K3 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1842
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1832
 msgid ""
 "Moonshot AI's flagship multimodal model, with a 1M token context window and "
 "strong reasoning across text, image, and video."
 msgstr ""
 
 #. translators: the description for Moonshot AI's Kimi K2.6 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1852
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1842
 msgid ""
 "A capable Kimi multimodal model that understands both image and video input "
 "alongside text."
 msgstr ""
 
 #. translators: the description for the Ollama model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1864
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1854
 msgid "The quickest way to get up and running with large language models."
 msgstr ""
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1882
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1872
 #, python-brace-format
 msgid "Could not contact the provided base URL. {error}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1913
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2043
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1903
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2033
 #, python-brace-format
 msgid "The response appears to be malformed. {response}"
 msgstr ""
 
 #. translators: the description for the LiteLLM Proxy model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1947
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1937
 msgid "Access multiple AI models through a unified LiteLLM proxy server."
 msgstr ""
 
 #. translators: the message spoken in the LiteLLM configuration dialog when no base URL is provided
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1964
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1954
 msgid "Please provide a base URL first."
 msgstr ""
 
 #. translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1979
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1969
 #, python-brace-format
 msgid "Could not contact the LiteLLM proxy server. {error}"
 msgstr ""
 
 #. translators: the message spoken when the LiteLLM proxy returns an unexpected response format
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1990
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1980
 #, python-brace-format
 msgid "Unexpected response format from LiteLLM proxy. {error}"
 msgstr ""
 
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2084
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2074
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -1005,7 +998,7 @@ msgid ""
 "doing, you can find basic steps in the add-on documentation."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2131
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2121
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -1013,47 +1006,47 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the vivo BlueLM Vision model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2165
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2155
 msgid ""
 "A multimodal model from vivo, accessed via NVDA-CN account. This service is "
 "provided by the NVDA Chinese community and requires your nvdacn.com "
 "credentials."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2240
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2230
 #, python-brace-format
 msgid "API Error: {error}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2247
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2237
 msgid "The model returned an empty response."
 msgstr ""
 
 #. This case is a safeguard; post() should raise an exception on failure.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2292
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2282
 msgid "Network request failed unexpectedly."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2332
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2322
 msgid "No active conversation. Please describe an image first."
 msgstr ""
 
 #. translators: description of the Seer local vision provider
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2357
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2347
 msgid ""
 "Private, on-device image descriptions using PaliGemma2. No API key or cloud "
 "connection required. Note: this is a captioning model, prompts and follow-up "
 "questions are not supported. Install the Seer daemon to get started."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2390
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2380
 msgid ""
 "Seer uses PaliGemma2 which describes images but does not support follow-up "
 "questions."
 msgstr ""
 
 #. translators: description of the Datalab Chandra 2 vision model
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2420
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2410
 msgid ""
 "Datalab Chandra 2 is a state-of-the-art vision and OCR model specialized in "
 "complex document layouts, tables, forms, handwriting, charts, and math. "
@@ -1063,45 +1056,45 @@ msgstr ""
 
 #. translators: message spoken when an error occurs while contacting the Datalab API
 #. translators: message spoken when checking the status of a Datalab conversion fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2529
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2608
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2615
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2519
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2598
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2605
 #, python-brace-format
 msgid "Datalab API error: {error}"
 msgstr ""
 
 #. translators: message spoken when the Datalab API returns an invalid or non-JSON response
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2539
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2529
 msgid "Invalid response received from Datalab API."
 msgstr ""
 
 #. translators: message spoken when a Datalab conversion request fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2544
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2534
 msgid "Datalab conversion request failed."
 msgstr ""
 
 #. translators: message spoken when Datalab does not return a request check URL
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2555
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2545
 msgid "No request check URL returned by Datalab."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 conversion fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2564
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2630
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2554
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2620
 msgid "Datalab Chandra 2 conversion failed."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 returns an empty response
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2584
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2574
 msgid "No content returned from Datalab Chandra 2."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 conversion times out
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2635
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2625
 msgid "Datalab Chandra 2 conversion timed out."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2694
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2684
 msgid ""
 "Datalab Chandra 2 Convert API is specialized for OCR and document "
 "transcription, and does not support follow-up questions."
@@ -1323,28 +1316,28 @@ msgid "Model:"
 msgstr ""
 
 #. Translators: The label for the NVDA-CN username field.
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:351
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:346
 msgid "NVDA-CN Username"
 msgstr ""
 
 #. Translators: The label for the NVDA-CN password field.
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:353
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:348
 msgid "NVDA-CN Password"
 msgstr ""
 
 #. Translators: Requires installation
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:372
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:402
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:367
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:397
 msgid " (requires installation)"
 msgstr ""
 
 #. Translators: Marks a model as unstable
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:388
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:383
 msgid " (unstable)"
 msgstr ""
 
 #. Translators: The label for the processing mode chooser for Datalab Chandra 2
-#: addon\globalPlugins\AIContentDescriber\model_configuration.py:580
+#: addon\globalPlugins\AIContentDescriber\model_configuration.py:575
 msgid "Processing mode"
 msgstr ""
 
@@ -1469,10 +1462,10 @@ msgstr ""
 msgid ""
 "This add-on makes it possible to describe the focused control, navigator "
 "object, or entire screen using popular AI vision models including OpenAI "
-"GPT, Google Gemini, Anthropic Claude, xAI Grok, Mistral Pixtral, local "
-"options like Ollama/llama.cpp/LiteLLM, and more. It also supports follow-up "
-"questions on any description, camera snapshots, clipboard images, and face "
-"positioning via a connected camera.\n"
+"GPT, Google Gemini, Anthropic Claude, xAI Grok, Mistral, local options like "
+"Ollama/llama.cpp/LiteLLM, and more. It also supports follow-up questions on "
+"any description, camera snapshots, clipboard images, and face positioning "
+"via a connected camera.\n"
 "Content descriptions may not always be completely accurate or reflect real-"
 "world information.\n"
 "Press NVDA+shift+i to pop up a menu for choosing what to describe, "

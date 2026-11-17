@@ -1737,16 +1737,6 @@ class MistralAI(BaseDescriptionService):
 		return content
 
 
-class PixtralLarge(MistralAI):
-	name = "Pixtral Large"
-	description = _(
-		# translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
-		"MistralAI's multimodal image LLM, achieving state-of-the-art results on MathVista, DocVQA, VQAv2 and other benchmarks."
-	)
-	internal_model_name = "pixtral-large-latest"
-	about_url = "https://mistral.ai/news/pixtral-large/"
-
-
 class MistralLarge4(MistralAI):
 	name = "Mistral Large 4"
 	description = _(
@@ -2748,7 +2738,6 @@ models = [
 	Grok4_6(),
 	Grok4_7(),
 	# Mistral
-	PixtralLarge(),
 	MistralLarge4(),
 	# Moonshot AI (Kimi)
 	KimiK3(),
