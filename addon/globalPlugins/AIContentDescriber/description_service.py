@@ -762,8 +762,8 @@ class BaseGPT(BaseDescriptionService):
 
 class GPT54(BaseGPT):
 	name = "GPT-5.4"
-	# translators: the description for the GPT-5.4 model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-5.4 model in the configuration dialog
 		"OpenAI's latest flagship model with advanced reasoning, vision, and a 400k token context window."
 	)
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4"
@@ -774,8 +774,8 @@ class GPT54(BaseGPT):
 
 class GPT54Mini(BaseGPT):
 	name = "GPT-5.4 mini"
-	# translators: the description for the GPT-5.4 mini model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-5.4 mini model in the configuration dialog
 		"A fast, affordable variant of GPT-5.4 with vision support and a 400k token context window."
 	)
 	about_url = "https://platform.openai.com/docs/models/gpt-5.4-mini"
@@ -786,8 +786,8 @@ class GPT54Mini(BaseGPT):
 
 class GPT55(BaseGPT):
 	name = "GPT-5.5"
-	# translators: the description for the GPT-5.5 model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-5.5 model in the configuration dialog
 		"OpenAI's frontier model for complex professional work, with a new class of intelligence for coding, vision, and agentic tasks. Supports image input and a 1M token context window."
 	)
 	about_url = "https://platform.openai.com/docs/models/gpt-5.5"
@@ -798,8 +798,8 @@ class GPT55(BaseGPT):
 
 class GPT55Pro(BaseGPT):
 	name = "GPT-5.5 pro"
-	# translators: the description for the GPT-5.5 pro model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-5.5 pro model in the configuration dialog
 		"A higher-compute variant of GPT-5.5 that thinks harder for smarter and more precise responses on complex, high-stakes workloads. Supports image input and a 1M token context window."
 	)
 	about_url = "https://platform.openai.com/docs/models/gpt-5.5-pro"
@@ -810,8 +810,8 @@ class GPT55Pro(BaseGPT):
 
 class GPT6Astra(BaseGPT):
 	name = "GPT-6 Astra"
-	# translators: the description for the GPT-6 Astra model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-6 Astra model in the configuration dialog
 		"OpenAI's most capable model for the most demanding work, such as complex reasoning, coding, and computer control. Supports image input and a 1M token context window. Costs more than the other GPT-6 models."
 	)
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6-astra"
@@ -822,8 +822,8 @@ class GPT6Astra(BaseGPT):
 
 class GPT61Sol(BaseGPT):
 	name = "GPT-6.1 Sol"
-	# translators: the description for the GPT-6.1 Sol model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-6.1 Sol model in the configuration dialog
 		"Close to GPT-6 Astra on complex work at a lower cost. Supports image input and a 1M token context window."
 	)
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6.1-sol"
@@ -834,8 +834,8 @@ class GPT61Sol(BaseGPT):
 
 class GPT61Terra(BaseGPT):
 	name = "GPT-6.1 Terra"
-	# translators: the description for the GPT-6.1 Terra model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-6.1 Terra model in the configuration dialog
 		"A fast, affordable GPT-6.1 model at half the price of GPT-6.1 Sol. Supports image input and a 1M token context window."
 	)
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6.1-terra"
@@ -846,8 +846,8 @@ class GPT61Terra(BaseGPT):
 
 class GPT6Luna(BaseGPT):
 	name = "GPT-6 Luna"
-	# translators: the description for the GPT-6 Luna model in the configuration dialog
 	description = _(
+		# translators: the description for the GPT-6 Luna model in the configuration dialog
 		"OpenAI's lowest cost GPT-6 model, for high-volume work where price matters most. Supports image input and a 1M token context window."
 	)
 	about_url = "https://developers.openai.com/api/docs/models/gpt-6-luna"
@@ -954,8 +954,8 @@ class GoogleGemini(BaseDescriptionService):
 class Gemini2_5Flash(GoogleGemini):
 	name = "Google Gemini 2.5 Flash"
 	internal_model_name = "gemini-2.5-flash"
-	# translators: the description for Google's Gemini 2.5 Flash model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 2.5 Flash model, as shown in the configuration dialog.
 		"Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for tasks like summarization, chat applications, data extraction, and captioning."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash/"
@@ -964,8 +964,8 @@ class Gemini2_5Flash(GoogleGemini):
 class Gemini2_5FlashLite(GoogleGemini):
 	name = "Google Gemini 2.5 Flash-Lite"
 	internal_model_name = "gemini-2.5-flash-lite"
-	# translators: the description for Google's Gemini 2.5 Flash-Lite model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 2.5 Flash-Lite model, as shown in the configuration dialog.
 		"Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while maintaining strong performance."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash-lite/"
@@ -974,8 +974,8 @@ class Gemini2_5FlashLite(GoogleGemini):
 class Gemini2_5Pro(GoogleGemini):
 	name = "Google Gemini 2.5 Pro"
 	internal_model_name = "gemini-2.5-pro"
-	# translators: the description for Google's Gemini 2.5 Pro model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 2.5 Pro model, as shown in the configuration dialog.
 		"Gemini 2.5 Pro models are capable of reasoning through their thoughts before responding, resulting in enhanced performance and improved accuracy. Best for coding and complex tasks."
 	)
 	about_url = "https://deepmind.google/models/gemini/pro/"
@@ -984,8 +984,8 @@ class Gemini2_5Pro(GoogleGemini):
 class Gemini3_1FlashLite(GoogleGemini):
 	name = "Google Gemini 3.1 Flash-Lite"
 	internal_model_name = "gemini-3.1-flash-lite"
-	# translators: the description for Google's Gemini 3.1 Flash-Lite model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 3.1 Flash-Lite model, as shown in the configuration dialog.
 		"Gemini 3.1 Flash-Lite is optimized for cost efficiency and low latency in high-frequency tasks."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash-lite/"
@@ -994,8 +994,8 @@ class Gemini3_1FlashLite(GoogleGemini):
 class Gemini3_1ProPreview(GoogleGemini):
 	name = "Google Gemini 3.1 Pro Preview"
 	internal_model_name = "gemini-3.1-pro-preview"
-	# translators: the description for Google's Gemini 3.1 Pro Preview model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 3.1 Pro Preview model, as shown in the configuration dialog.
 		"Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic workflows, with enhanced performance and accuracy."
 	)
 	about_url = "https://deepmind.google/models/gemini/pro/"
@@ -1004,8 +1004,8 @@ class Gemini3_1ProPreview(GoogleGemini):
 class Gemini3_5Flash(GoogleGemini):
 	name = "Google Gemini 3.5 Flash"
 	internal_model_name = "gemini-3.5-flash"
-	# translators: the description for Google's Gemini 3.5 Flash model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 3.5 Flash model, as shown in the configuration dialog.
 		"Gemini 3.5 Flash is Google's latest and most capable Flash model, with faster response times and reduced latency. Ideal for tasks requiring both speed and quality."
 	)
 	about_url = "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash"
@@ -1014,8 +1014,8 @@ class Gemini3_5Flash(GoogleGemini):
 class Gemini3_5FlashLite(GoogleGemini):
 	name = "Google Gemini 3.5 Flash-Lite"
 	internal_model_name = "gemini-3.5-flash-lite"
-	# translators: the description for Google's Gemini 3.5 Flash-Lite model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 3.5 Flash-Lite model, as shown in the configuration dialog.
 		"Gemini 3.5 Flash-Lite provides high throughput and cost efficiency for lightweight multimodal processing."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash-lite/"
@@ -1024,8 +1024,8 @@ class Gemini3_5FlashLite(GoogleGemini):
 class Gemini3_6Flash(GoogleGemini):
 	name = "Google Gemini 3.6 Flash"
 	internal_model_name = "gemini-3.6-flash"
-	# translators: the description for Google's Gemini 3.6 Flash model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 3.6 Flash model, as shown in the configuration dialog.
 		"Gemini 3.6 Flash offers balanced speed and accuracy for multimodal understanding and captioning."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash/"
@@ -1034,8 +1034,8 @@ class Gemini3_6Flash(GoogleGemini):
 class Gemini3_7Flash(GoogleGemini):
 	name = "Google Gemini 3.7 Flash"
 	internal_model_name = "gemini-3.7-flash"
-	# translators: the description for Google's Gemini 3.7 Flash model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 3.7 Flash model, as shown in the configuration dialog.
 		"Gemini 3.7 Flash combines high-speed processing with advanced multimodal capabilities and visual reasoning."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash/"
@@ -1044,8 +1044,8 @@ class Gemini3_7Flash(GoogleGemini):
 class Gemini3_8Flash(GoogleGemini):
 	name = "Google Gemini 3.8 Flash"
 	internal_model_name = "gemini-3.8-flash"
-	# translators: the description for Google's Gemini 3.8 Flash model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 3.8 Flash model, as shown in the configuration dialog.
 		"Gemini 3.8 Flash delivers high-performance multimodal reasoning with fast response times."
 	)
 	about_url = "https://deepmind.google/models/gemini/flash/"
@@ -1054,8 +1054,8 @@ class Gemini3_8Flash(GoogleGemini):
 class Gemini4Hydrogen(GoogleGemini):
 	name = "Google Gemini 4 Hydrogen"
 	internal_model_name = "gemini-4-hydrogen"
-	# translators: the description for Google's Gemini 4 Hydrogen model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 4 Hydrogen model, as shown in the configuration dialog.
 		"Gemini 4 Hydrogen is Google's fast, lower-cost Gemini 4 model for everyday tasks, with a 1M token context window."
 	)
 	about_url = "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/"
@@ -1064,8 +1064,8 @@ class Gemini4Hydrogen(GoogleGemini):
 class Gemini4Argon(GoogleGemini):
 	name = "Google Gemini 4 Argon"
 	internal_model_name = "gemini-4-argon"
-	# translators: the description for Google's Gemini 4 Argon model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 4 Argon model, as shown in the configuration dialog.
 		"Gemini 4 Argon is Google's frontier model for complex, multi-step work. It requires the paid tier of the Gemini API."
 	)
 	about_url = "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/"
@@ -1074,8 +1074,8 @@ class Gemini4Argon(GoogleGemini):
 class Gemini4Carbon(GoogleGemini):
 	name = "Google Gemini 4 Carbon"
 	internal_model_name = "gemini-4-carbon"
-	# translators: the description for Google's Gemini 4 Carbon model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for Google's Gemini 4 Carbon model, as shown in the configuration dialog.
 		"Gemini 4 Carbon is Google's most capable model, for hard, multi-step reasoning. It thinks longer than Gemini 4 Argon, so responses are slower."
 	)
 	about_url = "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/"
@@ -1426,8 +1426,8 @@ class Anthropic(BaseDescriptionService):
 
 class Claude4_5Sonnet(Anthropic):
 	name = "Claude 4.5 Sonnet"
-	# translators: the description for the Claude 4.5 Sonnet model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 4.5 Sonnet model in the model configuration dialog
 		"Anthropic's Sonnet model with extended thinking and a balance of speed and intelligence."
 	)
 	about_url = "https://www.anthropic.com/claude/sonnet"
@@ -1441,8 +1441,8 @@ class Claude4_5Sonnet(Anthropic):
 
 class Claude4_5Opus(Anthropic):
 	name = "Claude 4.5 Opus"
-	# translators: the description for the Claude 4.5 Opus model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 4.5 Opus model in the model configuration dialog
 		"Anthropic's Opus model with extended thinking, for complex reasoning and analysis tasks."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
@@ -1457,8 +1457,8 @@ class Claude4_5Opus(Anthropic):
 
 class Claude4_6Sonnet(Anthropic):
 	name = "Claude 4.6 Sonnet"
-	# translators: the description for the Claude 4.6 Sonnet model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 4.6 Sonnet model in the model configuration dialog
 		"Anthropic's Sonnet model that balances speed and intelligence. Features a 1M token context window and adaptive thinking."
 	)
 	about_url = "https://www.anthropic.com/claude/sonnet"
@@ -1474,8 +1474,8 @@ class Claude4_6Sonnet(Anthropic):
 
 class Claude4_6Opus(Anthropic):
 	name = "Claude 4.6 Opus"
-	# translators: the description for the Claude 4.6 Opus model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 4.6 Opus model in the model configuration dialog
 		"Anthropic's Opus model for agents, coding, and complex reasoning. Features a 1M token context window and adaptive thinking."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
@@ -1491,8 +1491,8 @@ class Claude4_6Opus(Anthropic):
 
 class Claude4_7Opus(Anthropic):
 	name = "Claude 4.7 Opus"
-	# translators: the description for the Claude 4.7 Opus model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 4.7 Opus model in the model configuration dialog
 		"Anthropic's Opus model with high-resolution vision support up to 3.75MP, adaptive thinking, and a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
@@ -1509,8 +1509,8 @@ class Claude4_7Opus(Anthropic):
 
 class Claude4_8Opus(Anthropic):
 	name = "Claude 4.8 Opus"
-	# translators: the description for the Claude 4.8 Opus model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 4.8 Opus model in the model configuration dialog
 		"Anthropic's refined Opus model with the same high-resolution vision, adaptive thinking, and 1M token context window as Claude 4.7 Opus."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
@@ -1527,8 +1527,8 @@ class Claude4_8Opus(Anthropic):
 
 class Claude5Sonnet(Anthropic):
 	name = "Claude 5 Sonnet"
-	# translators: the description for the Claude 5 Sonnet model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5 Sonnet model in the model configuration dialog
 		"Anthropic's fast and affordable Sonnet model with high-resolution vision, adaptive thinking, and a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/sonnet"
@@ -1545,8 +1545,8 @@ class Claude5Sonnet(Anthropic):
 
 class Claude5Opus(Anthropic):
 	name = "Claude 5 Opus"
-	# translators: the description for the Claude 5 Opus model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5 Opus model in the model configuration dialog
 		"Anthropic's Opus model for complex reasoning and agentic tasks. Thinks by default, with high-resolution vision and a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
@@ -1563,8 +1563,8 @@ class Claude5Opus(Anthropic):
 
 class Claude5Fable(Anthropic):
 	name = "Claude 5 Fable"
-	# translators: the description for the Claude 5 Fable model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5 Fable model in the model configuration dialog
 		"Anthropic's frontier model above the Opus tier, for the most demanding reasoning and vision tasks. Thinking is always on. Higher cost than Opus."
 	)
 	about_url = "https://www.anthropic.com/claude/fable"
@@ -1581,8 +1581,8 @@ class Claude5Fable(Anthropic):
 
 class Claude5_1Fable(Anthropic):
 	name = "Claude 5.1 Fable"
-	# translators: the description for the Claude 5.1 Fable model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5.1 Fable model in the model configuration dialog
 		"Anthropic's Fable model above the Opus tier, with stronger vision and computer use than Claude 5 Fable. Thinking is always on. Higher cost than Opus."
 	)
 	about_url = "https://www.anthropic.com/claude/fable"
@@ -1599,8 +1599,8 @@ class Claude5_1Fable(Anthropic):
 
 class Claude5_2Fable(Anthropic):
 	name = "Claude 5.2 Fable"
-	# translators: the description for the Claude 5.2 Fable model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5.2 Fable model in the model configuration dialog
 		"Anthropic's most capable Fable model, for the most demanding reasoning and vision tasks. Faster and lower cost than Claude 5.1 Fable. Thinking is always on."
 	)
 	about_url = "https://www.anthropic.com/claude/fable"
@@ -1616,8 +1616,8 @@ class Claude5_2Fable(Anthropic):
 
 class Claude5_5Haiku(Anthropic):
 	name = "Claude 5.5 Haiku"
-	# translators: the description for the Claude 5.5 Haiku model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5.5 Haiku model in the model configuration dialog
 		"Anthropic's fast, low-cost Haiku model for quick descriptions and high-volume tasks. Thinks by default and has a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/haiku"
@@ -1633,8 +1633,8 @@ class Claude5_5Haiku(Anthropic):
 
 class Claude5_5Sonnet(Anthropic):
 	name = "Claude 5.5 Sonnet"
-	# translators: the description for the Claude 5.5 Sonnet model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5.5 Sonnet model in the model configuration dialog
 		"Anthropic's Sonnet model for everyday vision, coding, and agentic tasks, balancing speed and capability. Thinks by default, with high-resolution vision and a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/sonnet"
@@ -1650,8 +1650,8 @@ class Claude5_5Sonnet(Anthropic):
 
 class Claude5_5Opus(Anthropic):
 	name = "Claude 5.5 Opus"
-	# translators: the description for the Claude 5.5 Opus model in the model configuration dialog
 	description = _(
+		# translators: the description for the Claude 5.5 Opus model in the model configuration dialog
 		"Anthropic's Opus model for complex reasoning, coding, and agentic tasks, priced below Claude 5 Opus. Thinking is always on, with high-resolution vision and a 1M token context window."
 	)
 	about_url = "https://www.anthropic.com/claude/opus"
@@ -1737,8 +1737,8 @@ class MistralAI(BaseDescriptionService):
 
 class PixtralLarge(MistralAI):
 	name = "Pixtral Large"
-	# translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
 	description = _(
+		# translators: the description for MistralAI's Pixtral Large model, as shown in the configuration dialog.
 		"MistralAI's multimodal image LLM, achieving state-of-the-art results on MathVista, DocVQA, VQAv2 and other benchmarks."
 	)
 	internal_model_name = "pixtral-large-latest"
@@ -1760,8 +1760,8 @@ class Grok4Base(BaseGPT):
 
 class Grok4_3(Grok4Base):
 	name = "Grok 4.3"
-	# translators: the description for the xAI Grok 4.3 model in the model configuration dialog
 	description = _(
+		# translators: the description for the xAI Grok 4.3 model in the model configuration dialog
 		"xAI's recommended flagship reasoning model with a 1M token context window. Features always-on chain-of-thought reasoning and support for image input."
 	)
 	about_url = "https://docs.x.ai/developers/models"
@@ -1771,8 +1771,8 @@ class Grok4_3(Grok4Base):
 
 class Grok4_5(Grok4Base):
 	name = "Grok 4.5"
-	# translators: the description for the xAI Grok 4.5 model in the model configuration dialog
 	description = _(
+		# translators: the description for the xAI Grok 4.5 model in the model configuration dialog
 		"An xAI reasoning model with image input and a 500k token context window. Reasoning is always on."
 	)
 	about_url = "https://docs.x.ai/developers/models/grok-4.5"
@@ -1782,8 +1782,8 @@ class Grok4_5(Grok4Base):
 
 class Grok4_6(Grok4Base):
 	name = "Grok 4.6"
-	# translators: the description for the xAI Grok 4.6 model in the model configuration dialog
 	description = _(
+		# translators: the description for the xAI Grok 4.6 model in the model configuration dialog
 		"An xAI reasoning model with image input and a 500k token context window. Reasoning is always on."
 	)
 	about_url = "https://docs.x.ai/developers/models/grok-4.6"
@@ -1793,8 +1793,8 @@ class Grok4_6(Grok4Base):
 
 class Grok4_7(Grok4Base):
 	name = "Grok 4.7"
-	# translators: the description for the xAI Grok 4.7 model in the model configuration dialog
 	description = _(
+		# translators: the description for the xAI Grok 4.7 model in the model configuration dialog
 		"xAI's most capable model, with image input and a 500k token context window. Reasoning is always on."
 	)
 	about_url = "https://docs.x.ai/developers/models/grok-4.7"
@@ -1804,8 +1804,8 @@ class Grok4_7(Grok4Base):
 
 class Grok4_20NonReasoning(Grok4Base):
 	name = "Grok 4.20 (non-reasoning)"
-	# translators: the description for the xAI Grok 4.20 (non-reasoning) model in the model configuration dialog
 	description = _(
+		# translators: the description for the xAI Grok 4.20 (non-reasoning) model in the model configuration dialog
 		"xAI's fast, low-cost model for instant responses without a reasoning step. Supports image input and a 1M token context window."
 	)
 	about_url = "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning"
@@ -1825,8 +1825,8 @@ class Kimi(BaseGPT):
 
 class KimiK3(Kimi):
 	name = "Kimi K3"
-	# translators: the description for Moonshot AI's Kimi K3 model in the model configuration dialog
 	description = _(
+		# translators: the description for Moonshot AI's Kimi K3 model in the model configuration dialog
 		"Moonshot AI's flagship multimodal model, with a 1M token context window and strong reasoning across text, image, and video."
 	)
 	about_url = "https://platform.kimi.ai/docs/guide/use-kimi-vision-model"
@@ -1835,8 +1835,8 @@ class KimiK3(Kimi):
 
 class KimiK2_6(Kimi):
 	name = "Kimi K2.6"
-	# translators: the description for Moonshot AI's Kimi K2.6 model in the model configuration dialog
 	description = _(
+		# translators: the description for Moonshot AI's Kimi K2.6 model in the model configuration dialog
 		"A capable Kimi multimodal model that understands both image and video input alongside text."
 	)
 	about_url = "https://platform.kimi.ai/docs/guide/use-kimi-vision-model"
@@ -1847,8 +1847,8 @@ class Ollama(BaseDescriptionService):
 	name = "Ollama"
 	needs_api_key = False
 	needs_base_url = True
-	# translators: the description for the Ollama model, as shown in the configuration dialog
 	description = _(
+		# translators: the description for the Ollama model, as shown in the configuration dialog
 		"The quickest way to get up and running with large language models."
 	)
 	supported_formats = [
@@ -2067,8 +2067,8 @@ class LlamaCPP(BaseDescriptionService):
 		".jpg",
 		".png",
 	]
-	# translators: the description for the llama.cpp option in the model configuration dialog
 	description = _(
+		# translators: the description for the llama.cpp option in the model configuration dialog
 		"""llama.cpp is a state-of-the-art, open-source solution for running large language models locally and in the cloud.
 This add-on integration assumes that you have obtained llama.cpp from Github and an image capable model from Huggingface or another repository, and that a server is currently running to handle requests. Though the process for getting this working is largely a task for the user that knows what they are doing, you can find basic steps in the add-on documentation."""
 	)
@@ -2339,8 +2339,8 @@ class Seer(BaseDescriptionService):
 	name = "Seer"
 	needs_api_key = False
 	needs_base_url = True
-	# translators: description of the Seer local vision provider
 	description = _(
+		# translators: description of the Seer local vision provider
 		"Private, on-device image descriptions using PaliGemma2. "
 		"No API key or cloud connection required. "
 		"Note: this is a captioning model, prompts and follow-up questions are not supported. "
@@ -2402,8 +2402,8 @@ def encode_multipart_formdata(fields, files):
 
 class DatalabChandra2(BaseDescriptionService):
 	name = "Datalab Chandra 2"
-	# translators: description of the Datalab Chandra 2 vision model
 	description = _(
+		# translators: description of the Datalab Chandra 2 vision model
 		"Datalab Chandra 2 is a state-of-the-art vision and OCR model specialized in complex document layouts, "
 		"tables, forms, handwriting, charts, and math. Supports Datalab's Cloud / On-Prem API as well as "
 		"self-hosted OpenAI-compatible vLLM endpoints."
