@@ -4,7 +4,6 @@
 # 'AIContentDescriber' package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2025.06.17'\n"
@@ -109,7 +108,6 @@ msgstr "全屏幕(&S)"
 
 #. translators: menu item to reconstruct the screen as accessible HTML
 #: addon/globalPlugins/AIContentDescriber/__init__.py:164
-#, fuzzy
 msgid "Show UI"
 msgstr "显示界面"
 
@@ -121,14 +119,12 @@ msgstr "拍摄照片(&T)"
 #. Translators: item in the copy image to clipboard submenu that captures the
 #. focus object
 #: addon/globalPlugins/AIContentDescriber/__init__.py:169
-#, fuzzy
 msgid "Focus object"
 msgstr "焦点对象"
 
 #. Translators: the label for the submenu that copies a captured image to the
 #. clipboard without describing it
 #: addon/globalPlugins/AIContentDescriber/__init__.py:175
-#, fuzzy
 msgid "Copy image to clipboard"
 msgstr "复制图像到剪贴板"
 
@@ -165,14 +161,12 @@ msgstr "对先前的描述进行追问(&A)"
 
 #. Translators: area menu item to start an AI computer control session
 #: addon/globalPlugins/AIContentDescriber/__init__.py:203
-#, fuzzy
 msgid "Control computer..."
 msgstr "控制计算机..."
 
 #. Translators: area menu item shown when the selected model does not support
 #. computer control
 #: addon/globalPlugins/AIContentDescriber/__init__.py:206
-#, fuzzy
 msgid "Control computer (not supported by selected model)"
 msgstr "控制计算机（所选模型不支持）"
 
@@ -180,12 +174,11 @@ msgstr "控制计算机（所选模型不支持）"
 #. not
 #. be read
 #: addon/globalPlugins/AIContentDescriber/__init__.py:251
-#, fuzzy
 msgid "AI Content Describer configuration error"
 msgstr "AI 内容描述器配置错误"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:255
-#, python-brace-format, fuzzy
+#, python-brace-format
 msgid ""
 "The AI Content Describer configuration file could not be read: {error}\n"
 "\n"
@@ -202,13 +195,11 @@ msgstr ""
 #. Translators: button that opens the backed up configuration file in a text
 #. editor
 #: addon/globalPlugins/AIContentDescriber/__init__.py:265
-#, fuzzy
 msgid "&Open configuration"
 msgstr "打开配置(&O)"
 
 #. Translators: button that closes the configuration error dialog
 #: addon/globalPlugins/AIContentDescriber/__init__.py:267
-#, fuzzy
 msgid "&Close"
 msgstr "关闭(&C)"
 
@@ -242,7 +233,7 @@ msgstr "无法截取当前对象"
 #. detection interface.
 #: addon/globalPlugins/AIContentDescriber/__init__.py:365
 #: addon/globalPlugins/AIContentDescriber/__init__.py:428
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Error initializing the face detection interface. Please consult the NVDA log"
 " for more information. {error}"
@@ -268,14 +259,12 @@ msgstr "无法获取窗口内容"
 #. the
 #. clipboard
 #: addon/globalPlugins/AIContentDescriber/__init__.py:406
-#, fuzzy
 msgid "Could not copy the image to the clipboard."
 msgstr "无法将图像复制到剪贴板。"
 
 #. Translators: message spoken when a captured image was copied to the
 #. clipboard
 #: addon/globalPlugins/AIContentDescriber/__init__.py:410
-#, fuzzy
 msgid "Image copied to clipboard."
 msgstr "图像已复制到剪贴板。"
 
@@ -298,7 +287,6 @@ msgstr "无法保存照片。"
 #: addon/globalPlugins/AIContentDescriber/__init__.py:454
 #: addon/globalPlugins/AIContentDescriber/__init__.py:480
 #: addon/globalPlugins/AIContentDescriber/__init__.py:621
-#, fuzzy
 msgid "No AI service configured."
 msgstr "未配置 AI 服务。"
 
@@ -352,7 +340,7 @@ msgstr "正在使用 {name} 获取描述..."
 
 #. translators: message spoken when an error occurs while describing an image
 #: addon/globalPlugins/AIContentDescriber/__init__.py:503
-#, python-brace-format, fuzzy
+#, python-brace-format
 msgid "Error describing image: {error}"
 msgstr "描述图像时出错：{error}"
 
@@ -395,21 +383,18 @@ msgid "Take a screenshot, then describe it using AI."
 msgstr "全屏描述。"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:605
-#, fuzzy
 msgid ""
 "Takes a screenshot of the current focus object and copies it to the "
 "clipboard."
 msgstr "截取当前焦点对象并复制到剪贴板。"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:609
-#, fuzzy
 msgid ""
 "Takes a screenshot of the current navigator object and copies it to the "
 "clipboard."
 msgstr "截取当前导航对象并复制到剪贴板。"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:613
-#, fuzzy
 msgid ""
 "Takes a screenshot of the entire screen and copies it to the clipboard."
 msgstr "截取全屏幕并复制到剪贴板。"
@@ -421,12 +406,10 @@ msgid ""
 msgstr "弹出菜单，选择使用 AI 描述当前焦点、导航对象还是全屏幕。"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:624
-#, fuzzy
 msgid "Computer use is not supported by the selected model."
 msgstr "所选模型不支持计算机控制。"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:627
-#, fuzzy
 msgid "Computer control cannot be used while the screen curtain is active."
 msgstr "黑屏开启时无法使用计算机控制。"
 
@@ -434,35 +417,29 @@ msgstr "黑屏开启时无法使用计算机控制。"
 #. running
 #: addon/globalPlugins/AIContentDescriber/__init__.py:641
 #: addon/globalPlugins/AIContentDescriber/__init__.py:657
-#, fuzzy
 msgid "No active computer control session."
 msgstr "没有正在进行的计算机控制会话。"
 
 #. Translators: spoken when a computer control session is resumed
 #: addon/globalPlugins/AIContentDescriber/__init__.py:646
-#, fuzzy
 msgid "Computer control resumed."
 msgstr "计算机控制已恢复。"
 
 #. Translators: spoken when a computer control session is paused
 #: addon/globalPlugins/AIContentDescriber/__init__.py:650
-#, fuzzy
 msgid "Computer control paused."
 msgstr "计算机控制已暂停。"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:652
-#, fuzzy
 msgid "Pause or resume the active computer control session"
 msgstr "暂停或恢复当前的计算机控制会话"
 
 #. Translators: spoken when the user cancels a computer control session
 #: addon/globalPlugins/AIContentDescriber/__init__.py:661
-#, fuzzy
 msgid "Computer control session cancelled."
 msgstr "计算机控制会话已取消。"
 
 #: addon/globalPlugins/AIContentDescriber/__init__.py:663
-#, fuzzy
 msgid "Cancel the active computer control session"
 msgstr "取消当前的计算机控制会话"
 
@@ -479,13 +456,11 @@ msgstr "如果适用，使用所选摄像头描述面部位置。"
 #. Translators: spoken when computer use maximizes the target window at the
 #. start of a session.
 #: addon/globalPlugins/AIContentDescriber/computer_use.py:681
-#, fuzzy
 msgid "Window maximized"
 msgstr "窗口已最大化"
 
 #. Translators: Title for the computer control session dialog
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:52
-#, fuzzy
 msgid "Computer Control Session"
 msgstr "计算机控制会话"
 
@@ -514,7 +489,6 @@ msgstr "发送(&S)"
 
 #. Translators: the Save Output button in the computer control dialog
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:82
-#, fuzzy
 msgid "Save &Output"
 msgstr "保存输出(&O)"
 
@@ -531,7 +505,6 @@ msgstr "关闭(&C)"
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:103
 #: addon/globalPlugins/AIContentDescriber/multimodal_input.py:113
 #: addon/globalPlugins/AIContentDescriber/multimodal_input.py:189
-#, fuzzy
 msgid "AI:"
 msgstr "AI："
 
@@ -543,18 +516,16 @@ msgstr "AI："
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:105
 #: addon/globalPlugins/AIContentDescriber/multimodal_input.py:101
 #: addon/globalPlugins/AIContentDescriber/multimodal_input.py:153
-#, fuzzy
 msgid "You:"
 msgstr "你："
 
 #. Translators: logged and spoken when a computer control session ends
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:141
-#, fuzzy
 msgid "Session ended"
 msgstr "会话已结束"
 
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:171
-#, python-brace-format, fuzzy
+#, python-brace-format
 msgid ""
 "The selected model would like to take control of your computer to perform "
 "the requested task. You will be notified as actions occur, and you can press"
@@ -564,13 +535,11 @@ msgstr "所选模型希望控制您的计算机以执行所请求的任务。执
 #. Translators: spoken when the consent dialog appears, to alert the user to
 #. switch to it
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:179
-#, fuzzy
 msgid "Consent required. Please check the dialog."
 msgstr "需要您的同意。请查看对话框。"
 
 #. Translators: shown in session history when the user declines consent
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:188
-#, fuzzy
 msgid "Session declined by user"
 msgstr "用户已拒绝会话"
 
@@ -601,12 +570,11 @@ msgstr "保存文件时出错"
 
 #. Translators: title of the dialog asking whether to allow a risky AI action
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:218
-#, fuzzy
 msgid "Approve Action"
 msgstr "批准操作"
 
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:223
-#, python-brace-format, fuzzy
+#, python-brace-format
 msgid ""
 "The AI wants to perform a potentially risky action:\n"
 "\n"
@@ -621,26 +589,22 @@ msgstr ""
 "是否允许？"
 
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:230
-#, fuzzy
 msgid "API safety warnings:"
 msgstr "API 安全警告："
 
 #. Translators: button to deny the AI action and stop the session
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:238
-#, fuzzy
 msgid "&Cancel"
 msgstr "取消(&C)"
 
 #. Translators: button to allow this one AI action
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:240
-#, fuzzy
 msgid "Approve &Once"
 msgstr "批准一次(&O)"
 
 #. Translators: button to allow all remaining AI actions without further
 #. prompting
 #: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:242
-#, fuzzy
 msgid "Approve &All"
 msgstr "全部批准(&A)"
 
@@ -675,7 +639,6 @@ msgstr "是否要从配置中删除旧版依赖项？该对话框只会显示一
 #. Translators: Message shown when NVDA is about to restart after the
 #. dependencies have been downloaded.
 #: addon/globalPlugins/AIContentDescriber/dependency_checker.py:138
-#, fuzzy
 msgid ""
 "The dependencies have been downloaded successfully. NVDA will now restart "
 "for the changes to take effect"
@@ -685,7 +648,6 @@ msgstr "依赖项已成功下载。NVDA 将立即重启以使更改生效"
 #. default
 #. location failed and we are asking whether to try the mirror.
 #: addon/globalPlugins/AIContentDescriber/dependency_checker.py:149
-#, fuzzy
 msgid ""
 "There was an error downloading the dependencies required for this add-on to "
 "function. Would you like to try again using the mirror provided by the "
@@ -707,7 +669,7 @@ msgstr ""
 
 #. Translators: Message shown when dependencies fail to download.
 #: addon/globalPlugins/AIContentDescriber/dependency_checker.py:169
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 "Unfortunately, there was a problem downloading the dependencies required to "
 "run this add-on. Please consult the NVDA log for more details. {error}"
@@ -734,7 +696,6 @@ msgstr "错误，连接被目标拒绝"
 #. translators: the description for the GPT-5.4 model in the configuration
 #. dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:770
-#, fuzzy
 msgid ""
 "OpenAI's latest flagship model with advanced reasoning, vision, and a 400k "
 "token context window."
@@ -744,7 +705,6 @@ msgstr "OpenAI 最新的旗舰模型，具备高级推理和视觉能力，上�
 #. configuration
 #. dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:782
-#, fuzzy
 msgid ""
 "A fast, affordable variant of GPT-5.4 with vision support and a 400k token "
 "context window."
@@ -753,7 +713,6 @@ msgstr "GPT-5.4 的快速、实惠版本，支持视觉，上下文窗口为 400
 #. translators: the description for the GPT-5.5 model in the configuration
 #. dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:794
-#, fuzzy
 msgid ""
 "OpenAI's frontier model for complex professional work, with a new class of "
 "intelligence for coding, vision, and agentic tasks. Supports image input and"
@@ -763,7 +722,6 @@ msgstr "OpenAI 面向复杂专业工作的前沿模型，在编程、视觉和�
 #. translators: the description for the GPT-5.5 pro model in the configuration
 #. dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:806
-#, fuzzy
 msgid ""
 "A higher-compute variant of GPT-5.5 that thinks harder for smarter and more "
 "precise responses on complex, high-stakes workloads. Supports image input "
@@ -773,7 +731,6 @@ msgstr "GPT-5.5 的高算力版本，思考更深入，在复杂、高风险的�
 #. translators: the description for the GPT-6 Astra model in the configuration
 #. dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:818
-#, fuzzy
 msgid ""
 "OpenAI's most capable model for the most demanding work, such as complex "
 "reasoning, coding, and computer control. Supports image input and a 1M token"
@@ -785,7 +742,6 @@ msgstr ""
 #. translators: the description for the GPT-6.1 Sol model in the configuration
 #. dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:830
-#, fuzzy
 msgid ""
 "Close to GPT-6 Astra on complex work at a lower cost. Supports image input "
 "and a 1M token context window."
@@ -794,7 +750,6 @@ msgstr "在复杂工作上接近 GPT-6 Astra，但费用更低。支持图像输
 #. translators: the description for the GPT-6.1 Terra model in the
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:842
-#, fuzzy
 msgid ""
 "A fast, affordable GPT-6.1 model at half the price of GPT-6.1 Sol. Supports "
 "image input and a 1M token context window."
@@ -803,7 +758,6 @@ msgstr "快速、实惠的 GPT-6.1 模型，价格为 GPT-6.1 Sol 的一半。�
 #. translators: the description for the GPT-6 Luna model in the configuration
 #. dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:854
-#, fuzzy
 msgid ""
 "OpenAI's lowest cost GPT-6 model, for high-volume work where price matters "
 "most. Supports image input and a 1M token context window."
@@ -812,7 +766,6 @@ msgstr "OpenAI 费用最低的 GPT-6 模型，适用于最看重价格的大批�
 #. translators: The description for the PollinationsAI model with OpenAI
 #. support in the model selection dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:866
-#, fuzzy
 msgid ""
 "Pollinations.AI is an open-source gen AI startup based in Berlin, providing "
 "the most easy-to-use, free text and image generation API available. It "
@@ -827,7 +780,6 @@ msgid "Gemini encountered an error: {code}, {msg}"
 msgstr "Gemini 遇到错误：{code}，{msg}"
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:930
-#, fuzzy
 msgid ""
 "The model used all available tokens for reasoning and returned no visible "
 "response. Try increasing the max tokens setting."
@@ -845,7 +797,6 @@ msgstr "Gemini 2.5 Flash 具备高性能处理复杂任务的能力。非常适�
 #. translators: the description for Google's Gemini 2.5 Flash-Lite model, as
 #. shown in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:974
-#, fuzzy
 msgid ""
 "Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while"
 " maintaining strong performance."
@@ -863,7 +814,6 @@ msgstr "Gemini 2.5 Pro 模型能够在响应前进行思考推理，从而提升
 #. translators: the description for Google's Gemini 3.1 Flash-Lite model, as
 #. shown in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:994
-#, fuzzy
 msgid ""
 "Gemini 3.1 Flash-Lite is optimized for cost efficiency and low latency in "
 "high-frequency tasks."
@@ -872,7 +822,6 @@ msgstr "Gemini 3.1 Flash-Lite 针对高频任务的成本效益和低延迟进�
 #. translators: the description for Google's Gemini 3.1 Pro Preview model, as
 #. shown in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1004
-#, fuzzy
 msgid ""
 "Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic "
 "workflows, with enhanced performance and accuracy."
@@ -881,7 +830,6 @@ msgstr "Gemini 3.1 Pro 是 Google 最新的以推理为先的模型，适用于�
 #. translators: the description for Google's Gemini 3.5 Flash model, as shown
 #. in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1014
-#, fuzzy
 msgid ""
 "Gemini 3.5 Flash is Google's latest and most capable Flash model, with "
 "faster response times and reduced latency. Ideal for tasks requiring both "
@@ -892,7 +840,6 @@ msgstr ""
 #. translators: the description for Google's Gemini 3.5 Flash-Lite model, as
 #. shown in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1024
-#, fuzzy
 msgid ""
 "Gemini 3.5 Flash-Lite provides high throughput and cost efficiency for "
 "lightweight multimodal processing."
@@ -901,7 +848,6 @@ msgstr "Gemini 3.5 Flash-Lite 为轻量级多模态处理提供高吞吐量和�
 #. translators: the description for Google's Gemini 3.6 Flash model, as shown
 #. in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1034
-#, fuzzy
 msgid ""
 "Gemini 3.6 Flash offers balanced speed and accuracy for multimodal "
 "understanding and captioning."
@@ -910,7 +856,6 @@ msgstr "Gemini 3.6 Flash 在多模态理解和图像说明方面兼顾速度与�
 #. translators: the description for Google's Gemini 3.7 Flash model, as shown
 #. in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1044
-#, fuzzy
 msgid ""
 "Gemini 3.7 Flash combines high-speed processing with advanced multimodal "
 "capabilities and visual reasoning."
@@ -919,7 +864,6 @@ msgstr "Gemini 3.7 Flash 将高速处理与先进的多模态能力和视觉推�
 #. translators: the description for Google's Gemini 3.8 Flash model, as shown
 #. in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1054
-#, fuzzy
 msgid ""
 "Gemini 3.8 Flash delivers high-performance multimodal reasoning with fast "
 "response times."
@@ -928,7 +872,6 @@ msgstr "Gemini 3.8 Flash 提供高性能的多模态推理和快速的响应。"
 #. translators: the description for Google's Gemini 4 Hydrogen model, as shown
 #. in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1064
-#, fuzzy
 msgid ""
 "Gemini 4 Hydrogen is Google's fast, lower-cost Gemini 4 model for everyday "
 "tasks, with a 1M token context window."
@@ -937,7 +880,6 @@ msgstr "Gemini 4 Hydrogen 是 Google 快速、低成本的 Gemini 4 模型，适
 #. translators: the description for Google's Gemini 4 Argon model, as shown in
 #. the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1074
-#, fuzzy
 msgid ""
 "Gemini 4 Argon is Google's frontier model for complex, multi-step work. It "
 "requires the paid tier of the Gemini API."
@@ -947,7 +889,6 @@ msgstr "Gemini 4 Argon 是 Google 面向复杂多步骤工作的前沿模型。�
 #. in
 #. the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1084
-#, fuzzy
 msgid ""
 "Gemini 4 Carbon is Google's most capable model, for hard, multi-step "
 "reasoning. It thinks longer than Gemini 4 Argon, so responses are slower."
@@ -963,7 +904,6 @@ msgstr "Claude 遇到错误。{err}"
 #. translators: the description for the Claude 4.5 Sonnet model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1436
-#, fuzzy
 msgid ""
 "Anthropic's Sonnet model with extended thinking and a balance of speed and "
 "intelligence."
@@ -972,7 +912,6 @@ msgstr "Anthropic 的 Sonnet 模型，支持扩展思考，兼顾速度与智能
 #. translators: the description for the Claude 4.5 Opus model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1451
-#, fuzzy
 msgid ""
 "Anthropic's Opus model with extended thinking, for complex reasoning and "
 "analysis tasks."
@@ -981,7 +920,6 @@ msgstr "Anthropic 的 Opus 模型，支持扩展思考，适用于复杂的推�
 #. translators: the description for the Claude 4.6 Sonnet model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1467
-#, fuzzy
 msgid ""
 "Anthropic's Sonnet model that balances speed and intelligence. Features a 1M"
 " token context window and adaptive thinking."
@@ -990,7 +928,6 @@ msgstr "Anthropic 的 Sonnet 模型，兼顾速度与智能。具备 1M 令牌�
 #. translators: the description for the Claude 4.6 Opus model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1484
-#, fuzzy
 msgid ""
 "Anthropic's Opus model for agents, coding, and complex reasoning. Features a"
 " 1M token context window and adaptive thinking."
@@ -999,7 +936,6 @@ msgstr "Anthropic 的 Opus 模型，适用于智能体、编程和复杂推理�
 #. translators: the description for the Claude 4.7 Opus model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1501
-#, fuzzy
 msgid ""
 "Anthropic's Opus model with high-resolution vision support up to 3.75MP, "
 "adaptive thinking, and a 1M token context window."
@@ -1008,7 +944,6 @@ msgstr "Anthropic 的 Opus 模型，支持最高 3.75MP 的高分辨率视觉、
 #. translators: the description for the Claude 4.8 Opus model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1519
-#, fuzzy
 msgid ""
 "Anthropic's refined Opus model with the same high-resolution vision, "
 "adaptive thinking, and 1M token context window as Claude 4.7 Opus."
@@ -1018,7 +953,6 @@ msgstr ""
 #. translators: the description for the Claude 5 Sonnet model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1537
-#, fuzzy
 msgid ""
 "Anthropic's fast and affordable Sonnet model with high-resolution vision, "
 "adaptive thinking, and a 1M token context window."
@@ -1027,7 +961,6 @@ msgstr "Anthropic 快速、实惠的 Sonnet 模型，具备高分辨率视觉、
 #. translators: the description for the Claude 5 Opus model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1555
-#, fuzzy
 msgid ""
 "Anthropic's Opus model for complex reasoning and agentic tasks. Thinks by "
 "default, with high-resolution vision and a 1M token context window."
@@ -1036,7 +969,6 @@ msgstr "Anthropic 的 Opus 模型，适用于复杂推理和智能体任务。�
 #. translators: the description for the Claude 5 Fable model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1573
-#, fuzzy
 msgid ""
 "Anthropic's frontier model above the Opus tier, for the most demanding "
 "reasoning and vision tasks. Thinking is always on. Higher cost than Opus."
@@ -1045,7 +977,6 @@ msgstr "Anthropic 高于 Opus 级别的前沿模型，适用于要求最高的�
 #. translators: the description for the Claude 5.1 Fable model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1591
-#, fuzzy
 msgid ""
 "Anthropic's Fable model above the Opus tier, with stronger vision and "
 "computer use than Claude 5 Fable. Thinking is always on. Higher cost than "
@@ -1056,7 +987,6 @@ msgstr ""
 #. translators: the description for the Claude 5.2 Fable model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1609
-#, fuzzy
 msgid ""
 "Anthropic's most capable Fable model, for the most demanding reasoning and "
 "vision tasks. Faster and lower cost than Claude 5.1 Fable. Thinking is "
@@ -1067,7 +997,6 @@ msgstr ""
 #. translators: the description for the Claude 5.5 Haiku model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1626
-#, fuzzy
 msgid ""
 "Anthropic's fast, low-cost Haiku model for quick descriptions and high-"
 "volume tasks. Thinks by default and has a 1M token context window."
@@ -1076,7 +1005,6 @@ msgstr "Anthropic 快速、低成本的 Haiku 模型，适用于快速描述和�
 #. translators: the description for the Claude 5.5 Sonnet model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1643
-#, fuzzy
 msgid ""
 "Anthropic's Sonnet model for everyday vision, coding, and agentic tasks, "
 "balancing speed and capability. Thinks by default, with high-resolution "
@@ -1087,7 +1015,6 @@ msgstr ""
 #. translators: the description for the Claude 5.5 Opus model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1660
-#, fuzzy
 msgid ""
 "Anthropic's Opus model for complex reasoning, coding, and agentic tasks, "
 "priced below Claude 5 Opus. Thinking is always on, with high-resolution "
@@ -1100,7 +1027,6 @@ msgstr ""
 #. shown
 #. in the configuration dialog.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1754
-#, fuzzy
 msgid ""
 "Mistral's open-weight multimodal flagship model, with a 1M token context "
 "window."
@@ -1109,7 +1035,6 @@ msgstr "Mistral 的开放权重多模态旗舰模型，上下文窗口为 1M 令
 #. translators: the description for the xAI Grok 4.3 model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1777
-#, fuzzy
 msgid ""
 "xAI's recommended flagship reasoning model with a 1M token context window. "
 "Features always-on chain-of-thought reasoning and support for image input."
@@ -1121,7 +1046,6 @@ msgstr "xAI 推荐的旗舰推理模型，上下文窗口为 1M 令牌。始终�
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1788
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1799
-#, fuzzy
 msgid ""
 "An xAI reasoning model with image input and a 500k token context window. "
 "Reasoning is always on."
@@ -1130,7 +1054,6 @@ msgstr "xAI 的推理模型，支持图像输入，上下文窗口为 500k 令�
 #. translators: the description for the xAI Grok 4.7 model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1810
-#, fuzzy
 msgid ""
 "xAI's most capable model, with image input and a 500k token context window. "
 "Reasoning is always on."
@@ -1139,7 +1062,6 @@ msgstr "xAI 能力最强的模型，支持图像输入，上下文窗口为 500k
 #. translators: the description for the xAI Grok 4.20 (non-reasoning) model in
 #. the model configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1821
-#, fuzzy
 msgid ""
 "xAI's fast, low-cost model for instant responses without a reasoning step. "
 "Supports image input and a 1M token context window."
@@ -1148,7 +1070,6 @@ msgstr "xAI 快速、低成本的模型，无需推理步骤即可即时响应�
 #. translators: the description for Moonshot AI's Kimi K3 model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1842
-#, fuzzy
 msgid ""
 "Moonshot AI's flagship multimodal model, with a 1M token context window and "
 "strong reasoning across text, image, and video."
@@ -1157,7 +1078,6 @@ msgstr "Moonshot AI 的旗舰多模态模型，上下文窗口为 1M 令牌，�
 #. translators: the description for Moonshot AI's Kimi K2.6 model in the model
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1852
-#, fuzzy
 msgid ""
 "A capable Kimi multimodal model that understands both image and video input "
 "alongside text."
@@ -1172,34 +1092,32 @@ msgstr "开始和运行大语言模型的最快方式。"
 #. translators: the message spoken in the Ollama configuration dialog upon
 #. pressing "list models", when the base URL cannot be contacted.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1882
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not contact the provided base URL. {error}"
 msgstr "无法连接到提供的基础 URL。{error}"
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1913
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2043
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "The response appears to be malformed. {response}"
 msgstr "响应格式似乎有误。{response}"
 
 #. translators: the description for the LiteLLM Proxy model, as shown in the
 #. configuration dialog
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1947
-#, fuzzy
 msgid "Access multiple AI models through a unified LiteLLM proxy server."
 msgstr "通过统一的 LiteLLM 代理服务器访问多个 AI 模型。"
 
 #. translators: the message spoken in the LiteLLM configuration dialog when no
 #. base URL is provided
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1964
-#, fuzzy
 msgid "Please provide a base URL first."
 msgstr "请先提供基础 URL。"
 
 #. translators: the message spoken in the LiteLLM configuration dialog upon
 #. pressing "list models", when the proxy cannot be contacted.
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1979
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Could not contact the LiteLLM proxy server. {error}"
 msgstr "无法连接到 LiteLLM 代理服务器。{error}"
 
@@ -1207,7 +1125,7 @@ msgstr "无法连接到 LiteLLM 代理服务器。{error}"
 #. unexpected
 #. response format
 #: addon/globalPlugins/AIContentDescriber/description_service.py:1990
-#, python-brace-format, fuzzy
+#, python-brace-format
 msgid "Unexpected response format from LiteLLM proxy. {error}"
 msgstr "LiteLLM 代理返回了意外的响应格式。{error}"
 
@@ -1260,7 +1178,6 @@ msgstr "未激活对话。请先描述一张图片。"
 
 #. translators: description of the Seer local vision provider
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2357
-#, fuzzy
 msgid ""
 "Private, on-device image descriptions using PaliGemma2. No API key or cloud "
 "connection required. Note: this is a captioning model, prompts and follow-up"
@@ -1270,7 +1187,6 @@ msgstr ""
 "Seer 守护进程以开始使用。"
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2390
-#, fuzzy
 msgid ""
 "Seer uses PaliGemma2 which describes images but does not support follow-up "
 "questions."
@@ -1278,7 +1194,6 @@ msgstr "Seer 使用 PaliGemma2，可以描述图像，但不支持追问。"
 
 #. translators: description of the Datalab Chandra 2 vision model
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2420
-#, fuzzy
 msgid ""
 "Datalab Chandra 2 is a state-of-the-art vision and OCR model specialized in "
 "complex document layouts, tables, forms, handwriting, charts, and math. "
@@ -1296,52 +1211,45 @@ msgstr ""
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2529
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2608
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2615
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Datalab API error: {error}"
 msgstr "Datalab API 错误：{error}"
 
 #. translators: message spoken when the Datalab API returns an invalid or
 #. non-JSON response
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2539
-#, fuzzy
 msgid "Invalid response received from Datalab API."
 msgstr "从 Datalab API 收到无效的响应。"
 
 #. translators: message spoken when a Datalab conversion request fails
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2544
-#, fuzzy
 msgid "Datalab conversion request failed."
 msgstr "Datalab 转换请求失败。"
 
 #. translators: message spoken when Datalab does not return a request check
 #. URL
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2555
-#, fuzzy
 msgid "No request check URL returned by Datalab."
 msgstr "Datalab 未返回请求检查 URL。"
 
 #. translators: message spoken when Datalab Chandra 2 conversion fails
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2564
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2630
-#, fuzzy
 msgid "Datalab Chandra 2 conversion failed."
 msgstr "Datalab Chandra 2 转换失败。"
 
 #. translators: message spoken when Datalab Chandra 2 returns an empty
 #. response
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2584
-#, fuzzy
 msgid "No content returned from Datalab Chandra 2."
 msgstr "Datalab Chandra 2 未返回任何内容。"
 
 #. translators: message spoken when Datalab Chandra 2 conversion times out
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2635
-#, fuzzy
 msgid "Datalab Chandra 2 conversion timed out."
 msgstr "Datalab Chandra 2 转换超时。"
 
 #: addon/globalPlugins/AIContentDescriber/description_service.py:2694
-#, fuzzy
 msgid ""
 "Datalab Chandra 2 Convert API is specialized for OCR and document "
 "transcription, and does not support follow-up questions."
@@ -1371,32 +1279,26 @@ msgstr "已选择摄像头。您现在可以再次尝试。"
 #. to the user for facial detection. They are chosen and then joined together
 #. with spaces based on certain conditions.
 #: addon/globalPlugins/AIContentDescriber/face_view.py:79
-#, fuzzy
 msgid "far to the left of"
 msgstr "大幅右移"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:81
-#, fuzzy
 msgid "to the left of"
 msgstr "右移"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:83
-#, fuzzy
 msgid "slightly to the left of"
 msgstr "略微右移"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:85
-#, fuzzy
 msgid "far to the right of"
 msgstr "大幅左移"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:87
-#, fuzzy
 msgid "to the right of"
 msgstr "左移"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:89
-#, fuzzy
 msgid "slightly to the right of"
 msgstr "略微左移"
 
@@ -1430,7 +1332,6 @@ msgid "Face clearly in view"
 msgstr "面部居中且清晰可见"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:104
-#, fuzzy
 msgid "and"
 msgstr "然后"
 
@@ -1490,7 +1391,7 @@ msgstr "您的系统上未找到摄像头。请连接一个并重试。"
 #. translators: message spoken when the camera that was being used before has
 #. disconnected
 #: addon/globalPlugins/AIContentDescriber/face_view.py:164
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "{} is no longer available. Switching to the other on the system."
 msgstr "{} 已不可用。正在切换到系统上的另一个摄像头。"
 
@@ -1569,7 +1470,6 @@ msgstr "最大 token 数"
 #. Translators: The label for the effort chooser in the model configuration
 #. dialog. Effort controls how much the model thinks before answering.
 #: addon/globalPlugins/AIContentDescriber/model_configuration.py:62
-#, fuzzy
 msgid "Effort"
 msgstr "思考强度"
 
@@ -1616,14 +1516,12 @@ msgstr "（需要安装）"
 
 #. Translators: Marks a model as unstable
 #: addon/globalPlugins/AIContentDescriber/model_configuration.py:383
-#, fuzzy
 msgid " (unstable)"
 msgstr " （不稳定）"
 
 #. Translators: The label for the processing mode chooser for Datalab Chandra
 #. 2
 #: addon/globalPlugins/AIContentDescriber/model_configuration.py:575
-#, fuzzy
 msgid "Processing mode"
 msgstr "处理模式"
 
@@ -1701,7 +1599,6 @@ msgstr "没有激活的对话。请重启对话框。"
 
 #: addon/globalPlugins/AIContentDescriber/multimodal_input.py:199
 #: addon/globalPlugins/AIContentDescriber/multimodal_input.py:200
-#, fuzzy
 msgid "Error:"
 msgstr "错误："
 
@@ -1738,26 +1635,23 @@ msgstr "附加图像"
 
 #. Translators: message spoken when fetching a UI description
 #: addon/globalPlugins/AIContentDescriber/ui_viewer.py:77
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Retrieving UI description using {name}..."
 msgstr "正在使用 {name} 获取界面描述..."
 
 #. Translators: title of the browseable message showing reconstructed UI
 #. controls
 #: addon/globalPlugins/AIContentDescriber/ui_viewer.py:84
-#, fuzzy
 msgid "UI Controls"
 msgstr "界面控件"
 
 #. Translators: message spoken when no UI description is returned
 #: addon/globalPlugins/AIContentDescriber/ui_viewer.py:87
-#, fuzzy
 msgid "No UI description returned"
 msgstr "未返回界面描述"
 
 #. Translators: message spoken when an error occurs while describing the UI
 #: addon/globalPlugins/AIContentDescriber/ui_viewer.py:94
-#, fuzzy
 msgid "Error describing UI"
 msgstr "描述界面时出错"
 
@@ -1765,7 +1659,6 @@ msgstr "描述界面时出错"
 #. Translators: Long description to be shown for this add-on on add-on
 #. information from add-ons manager
 #: buildVars.py:26
-#, fuzzy
 msgid ""
 "This add-on makes it possible to describe the focused control, navigator object, or entire screen using popular AI vision models including OpenAI GPT, Google Gemini, Anthropic Claude, xAI Grok, Mistral, local options like Ollama/llama.cpp/LiteLLM, and more. It also supports follow-up questions on any description, camera snapshots, clipboard images, and face positioning via a connected camera.\n"
 "Content descriptions may not always be completely accurate or reflect real-world information.\n"
