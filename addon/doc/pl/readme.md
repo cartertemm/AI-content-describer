@@ -17,7 +17,7 @@ Wykorzystując możliwości multimodalne zaawansowanych modeli AI oraz algorytmy
 * Opcjonalne buforowanie odpowiedzi w celu oszczędzania limitów API.
 * Zaawansowane funkcje, takie jak dostosowywanie zapytań (promptów) i liczby tokenów, aby dostosować informacje do potrzeb użytkownika.
 * Zadawaj pytania uzupełniające i dołączaj dodatkowe obrazy.
-* Renderowanie Markdown do łatwego przeglądania ustrukturyzowanych informacji (wystarczy włączyć ustawienie otwierania wyników w przeglądalnym oknie dialogowym i dodać np. „odpowiedz w Markdown” na końcu zapytania).
+* Renderowanie Markdown do łatwego przeglądania ustrukturyzowanych informacji (wystarczy włączyć ustawienie „Otwórz każdy wynik w oknie dialogowym z możliwością przeglądania” i dodać np. „odpowiedz w Markdown” na końcu zapytania).
 
 ## Przykłady użycia
 
