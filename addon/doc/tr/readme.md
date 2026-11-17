@@ -17,7 +17,7 @@ Gelişmiş yapay zeka modellerinin çok modlu yeteneklerinden ve bilgisayarlı g
 * API kotasını korumak için isteğe bağlı olarak yanıtları önbelleğe alır
 * Gelişmiş kullanım için bilgileri ihtiyaçlara göre uyarlamak amacıyla istemi ve jeton sayısını özelleştirebilme
 * Ek sorular sorma ve ek görseller iliştirme
-* Yapılandırılmış bilgilere kolayca erişmek için Markdown işleme (yalnızca "sonuçları göz atılabilir bir iletişim kutusunda aç" ayarını etkinleştirin ve isteminizin sonuna örneğin "Markdown ile yanıt ver" ekleyin)
+* Yapılandırılmış bilgilere kolayca erişmek için Markdown işleme (yalnızca "Her sonucu göz atılabilir bir iletişim kutusunda aç" ayarını etkinleştirin ve isteminizin sonuna örneğin "Markdown ile yanıt ver" ekleyin)
 
 ## Kullanım örneği
 
@@ -171,7 +171,7 @@ Farklı bir grafik kartıyla çalışma adımları bu belgenin kapsamı dışın
 ```
 server.exe -m llava-v1.6-vicuna-7b.Q4_K_M.gguf --mmproj mmproj-model-f16.gguf
 ```
-6. NVDA ayarları iletişim kutusunda Yapay Zeka İçerik Betimleyici kategorisine ilerleyin, ardından "modelleri yönet (alt+m)" seçeneğini seçin, sağlayıcı olarak "llama.cpp"yi seçin, Tab ile temel URL alanına gidin ve konsolda gösterilen uç noktayı girin (varsayılan "http://localhost:8080").
+6. NVDA ayarları iletişim kutusunda Yapay Zeka İçerik Betimleyici kategorisine ilerleyin, ardından "modelleri yönet (alt+m)" seçeneğini seçin, sağlayıcı olarak "llama.cpp"yi seçin, Tab ile "Ana URL" alanına gidin ve konsolda gösterilen uç noktayı girin (varsayılan "http://localhost:8080").
 7. Alternatif olarak bu adımlardan bazılarını atlayıp llama.cpp'yi yerel makinenizden daha güçlü bir uzak sunucuda çalıştırabilir, ardından o uç noktayı girebilirsiniz.
 
 ### LiteLLM Proxy'yi kurma
@@ -187,9 +187,9 @@ litellm --model gpt-4o
 Bu komut, istekleri OpenAI'nin GPT-4o modeline ileten bir proxy sunucusunu `http://localhost:4000` adresinde başlatır.
 3. Üretim ortamında kullanım için birden çok modeli ve kimlik doğrulamayı yapılandırmak üzere bir `config.yaml` dosyası oluşturun. Ayrıntılar için [LiteLLM yapılandırma kılavuzuna](https://docs.litellm.ai/docs/proxy/configs) bakın.
 4. NVDA ayarları iletişim kutusunda Yapay Zeka İçerik Betimleyici kategorisine ilerleyin, ardından "modelleri yönet (alt+m)" seçeneğini seçin ve sağlayıcı olarak "LiteLLM Proxy"yi seçin.
-5. Proxy sunucunuzun URL'sini temel URL alanına girin (örneğin yerel kurulum için "http://localhost:4000" veya uzak sunucunuzun URL'si).
+5. Proxy sunucunuzun URL'sini "Ana URL" alanına girin (örneğin yerel kurulum için "http://localhost:4000" veya uzak sunucunuzun URL'si).
 6. Proxy'niz kimlik doğrulama gerektiriyorsa API anahtarını API anahtarı alanına girin. Gerektirmiyorsa boş bırakın.
-7. Proxy'nizdeki kullanılabilir modelleri getirmek için "Modelleri listele" düğmesine tıklayın, ardından açılır listeden kullanmak istediğiniz modeli seçin.
+7. Proxy'nizdeki kullanılabilir modelleri getirmek için "Model Listesi" düğmesine tıklayın, ardından açılır listeden kullanmak istediğiniz modeli seçin.
 8. İstem, maksimum jeton ve zaman aşımı gibi diğer ayarları gerektiği gibi düzenleyin, ardından Tamam'a tıklayın.
 
 Not: Kullanılabilir modeller ve yetenekleri LiteLLM proxy yapılandırmanıza bağlıdır. Görsel betimleme için proxy'nizin görü yetenekli modellerle yapılandırıldığından emin olun.
@@ -200,7 +200,7 @@ Seer, PaliGemma2'yi API anahtarı veya bulut bağlantısı gerektirmeden kendi m
 
 1. [Seer arka plan hizmetini](https://github.com/recursia-lab/Seer) kurun. Windows (.bat) ve Linux/macOS (.sh) için tek komutluk bir yükleyici sağlanır.
 2. NVDA ayarları iletişim kutusunda Yapay Zeka İçerik Betimleyici kategorisine gidin, "modelleri yönet (alt+m)" seçeneğini seçin ve "Seer (kurulum gerektirir)" seçeneğini seçin.
-3. Temel URL varsayılan olarak `http://127.0.0.1:11435` şeklindedir. Hizmetin bağlantı noktasını değiştirmediyseniz olduğu gibi bırakın.
+3. Ana URL varsayılan olarak `http://127.0.0.1:11435` şeklindedir. Hizmetin bağlantı noktasını değiştirmediyseniz olduğu gibi bırakın.
 4. Tamam'a tıklayın. Betimleme istemeden önce arka plan hizmetinin çalışıyor olması gerekir.
 
 ### Datalab Chandra 2'yi kurma
@@ -212,12 +212,12 @@ Datalab Chandra 2; karmaşık düzenler, tablolar, formlar, el yazısı, grafikl
 2. [API anahtarları sayfasını](https://www.datalab.to/app/keys) ziyaret edin ve bir API anahtarı oluşturun.
 3. NVDA ayarları iletişim kutusunda Yapay Zeka İçerik Betimleyici kategorisine gidin, "modelleri yönet (alt+m)" seçeneğini seçin ve "Datalab Chandra 2"yi seçin.
 4. API anahtarınızı "API anahtarı" alanına girin.
-5. Temel URL varsayılan olarak `https://www.datalab.to/api/v1/convert` şeklinde yapılandırılmıştır. İşleme modunu (`fast`, `balanced` veya `accurate`) ihtiyaçlarınıza göre ayarlayabilirsiniz.
+5. Ana URL varsayılan olarak `https://www.datalab.to/api/v1/convert` şeklinde yapılandırılmıştır. İşleme modunu (`fast`, `balanced` veya `accurate`) ihtiyaçlarınıza göre ayarlayabilirsiniz.
 6. Tamam'a tıklayın. Model artık Yapay Zeka İçerik Betimleyici menüsünde kullanılabilir olacaktır.
 
 #### Seçenek B: vLLM ile kendi sunucunuzda barındırma
 1. Yerel vLLM sunucunuzu Chandra 2 ile başlatın (örneğin `chandra_vllm` veya `vllm serve datalab-to/chandra-ocr-2` kullanarak). Sunucu varsayılan olarak `http://localhost:8000/v1` adresinde çalışır.
-2. NVDA ayarları -> Yapay Zeka İçerik Betimleyici -> Modelleri yönet -> "Datalab Chandra 2" bölümünde, yerel uç noktanızı "Temel URL" alanına girin (örneğin `http://localhost:8000/v1`).
+2. NVDA ayarları -> Yapay Zeka İçerik Betimleyici -> Modelleri yönet -> "Datalab Chandra 2" bölümünde, yerel uç noktanızı "Ana URL" alanına girin (örneğin `http://localhost:8000/v1`).
 3. Model adı varsayılandan (`datalab-to/chandra-ocr-2`) farklıysa model adını girin, API anahtarını boş bırakın (veya kimlik doğrulama etkinse bir bearer belirteci girin) ve Tamam'a tıklayın.
 
 ## Kullanma
@@ -248,7 +248,7 @@ Bunları istediğiniz zaman girdi hareketleri iletişim kutusundan özelleştirm
 ### Bir betimlemeyle ilgili ek soru sorma
 
 Bazen yapay zekadan aldığınız yanıt yetersiz kalır. Belki görüntü düşük kalitelidir, eksiktir veya istenmeyen ayrıntılar içerir. Belki yalnızca belirli bir bölüme odaklanmak ya da bağlamı kaybetmeden daha net bir fotoğraf çekmek istersiniz.
-Bir betimleme aldıktan sonra NVDA+alt+c tuşlarına basabilir veya Yapay Zeka İçerik Betimleyici bağlam menüsünden (NVDA+shift+i) "Önceki betimleme hakkında ek soru sor" seçeneğini seçebilirsiniz. Varsayılan olarak odak mesaj alanındadır.
+Bir betimleme aldıktan sonra NVDA+alt+c tuşlarına basabilir veya Yapay Zeka İçerik Betimleyici bağlam menüsünden (NVDA+shift+i) "Önceki betimlemenin devamı" seçeneğini seçebilirsiniz. Varsayılan olarak odak mesaj alanındadır.
 Ek bir görüntü eklemek için sohbet penceresini açık tutun ve eklentiyi normalde yaptığınız gibi kullanın. Bir görüntü alındığında (kameradan, sistem kontrolünden, ekran görüntüsünden vb.) bunu mevcut oturuma eklemek mi yoksa yeni bir oturum başlatmak mı istediğiniz sorulur.
 
 ### Bilgisayar kontrolü
@@ -345,6 +345,7 @@ Aşağıdaki kişiler eklenti üzerinde çalışmıştır.
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): Fransızca çeviri
 * [Lukas](https://4sensegaming.cz): Çekçe çeviri
 * [Michaela](https://technologiebezzraku.sk): Slovakça çeviri
+* [loginerror](https://github.com/theloginerror): Lehçe çeviri
 
 Bir sorun mu buldunuz? Sorunu [sorun izleyiciye](https://github.com/cartertemm/AI-content-describer/issues) gönderin
 
