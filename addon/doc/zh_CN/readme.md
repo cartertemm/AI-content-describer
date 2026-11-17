@@ -17,7 +17,7 @@
 *   可选择缓存识别结果，以节省 API 调用额度。
 *   对于高级用户，可以自定义提示词和 token 数量，以满足个性化需求。
 *   支持在获得描述后，继续追问或附加其他图片。
-*   支持 Markdown 渲染，方便您访问结构化信息（只需在设置中启用“在可浏览的对话框中打开结果”，并在提示词末尾加入“以 Markdown 格式回答”等指令即可）。
+*   支持 Markdown 渲染，方便您访问结构化信息（只需在设置中启用“在浏览模式中显示结果”，并在提示词末尾加入“以 Markdown 格式回答”等指令即可）。
 
 ## 应用场景
 
@@ -241,7 +241,7 @@ Datalab Chandra 2 是一款先进的文档智能与 OCR 模型，擅长处理复
 *   截取当前导航对象的图像并复制到剪贴板。
 *   截取全屏幕的图像并复制到剪贴板。
 
-这三条复制命令也位于 NVDA+shift+i 菜单的“将图像复制到剪贴板”子菜单中。它们不会向任何 AI 服务发送内容。您可以用它们将截图粘贴到 Be My AI 或本插件不支持的其他应用中。复制操作会覆盖剪贴板中原有的内容。
+这三条复制命令也位于 NVDA+shift+i 菜单的“复制图像到剪贴板”子菜单中。它们不会向任何 AI 服务发送内容。您可以用它们将截图粘贴到 Be My AI 或本插件不支持的其他应用中。复制操作会覆盖剪贴板中原有的内容。
 
 您可以随时在“按键与手势”对话框中自定义这些快捷键。
 
@@ -345,6 +345,7 @@ scons pot
 *   [Platinum_Hikari](urbain_onces.0r@icloud.com)：法语翻译
 *   [Lukas](https://4sensegaming.cz)：捷克语翻译
 *   [Michaela](https://technologiebezzraku.sk)：斯洛伐克语翻译
+*   [loginerror](https://github.com/theloginerror)：波兰语翻译
 
 遇到问题？请在 [GitHub Issue](https://github.com/cartertemm/AI-content-describer/issues) 中提交。
 
