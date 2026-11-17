@@ -345,6 +345,7 @@ The following people have worked on the addon.
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): French translation
 * [Lukas](https://4sensegaming.cz): Czech translation
 * [Michaela](https://technologiebezzraku.sk): Slovak translation
+* [loginerror](https://github.com/theloginerror): Polish translation
 
 Facing a problem? Submit it to the [issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
 
