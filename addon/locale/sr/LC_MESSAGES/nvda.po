@@ -1,24 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2023 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 'AIContentDescriber' '2023.11.23'\n"
 "Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
-"POT-Creation-Date: 2023-12-03 17:36+0100\n"
-"PO-Revision-Date: 2023-12-03 17:42+0100\n"
-"Last-Translator: Nikola Jović <wwenikola123@gmail.com>\n"
+"POT-Creation-Date: 2026-11-17 10:34-0700\n"
+"PO-Revision-Date: 2026-11-17 17:40+0000\n"
+"Last-Translator: Carter Temm <carter@ctemm.me>\n"
 "Language-Team: \n"
 "Language: sr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Generated-By: Babel 2.18.0\n"
 
-#. Translators: The message displayed if during installation, there is an incompatible version already installed
-#: addon\installTasks.py:18
+#. Translators: The message displayed if during installation, there is an
+#. incompatible version already installed
+#: addon/installTasks.py:21
 msgid ""
 "There appears to be an older version of this add-on installed that is "
 "incompatible with future versions because the name has changed. It will be "
@@ -28,225 +30,2020 @@ msgstr ""
 "nekompatibilna sa budućim verzijama zato što je ime promenjeno. Ta verzija "
 "će biti uklonjena sledeći put kada se NVDA ponovo pokrene."
 
-#. Translators: The title of the message dialog when the user is installing the add-on
+#. Translators: The title of the message dialog when the user is installing
+#. the
+#. add-on
 #. Translators: The label for the category in NVDA settings
-#. Add-on summary, usually the user visible name of the addon.
+#. Translators: title of the computer control consent dialog
 #. Translators: Summary for this add-on
-#. to be shown on installation and add-on information found in Add-ons Manager.
-#: addon\installTasks.py:20
-#: addon\globalPlugins\AIContentDescriber\__init__.py:48
-#: addon\globalPlugins\AIContentDescriber\__init__.py:117 buildVars.py:23
+#. Add-on summary, usually the user visible name of the addon.
+#. to be shown on installation and add-on information found in Add-ons
+#. Manager.
+#: addon/globalPlugins/AIContentDescriber/__init__.py:98
+#: addon/globalPlugins/AIContentDescriber/__init__.py:288
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:174
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:106
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:116
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:126
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:136
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:147
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:157
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:167
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:241
+#: addon/installTasks.py:23 buildVars.py:23
 msgid "AI Content Describer"
 msgstr "AI opisivač sadržaja"
 
-#. Translators: The label for the API key field in in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:53
-msgid "OpenAI API key"
-msgstr "OpenAI API kljjuč"
+#. translators: the button in the settings dialog to open the model manager
+#: addon/globalPlugins/AIContentDescriber/__init__.py:103
+#, fuzzy
+msgid "Manage &models"
+msgstr "Upravljaj &modelima"
 
-#. Translators: The label for the prompt field in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:55
-msgid "Prompt"
-msgstr "Upit"
+#. translators: the label for the dropdown that lists the currently available
+#. models
+#: addon/globalPlugins/AIContentDescriber/__init__.py:105
+#, fuzzy
+msgid ""
+"Model (configure more in the manage models dialog, defaults to last used):"
+msgstr ""
+"Model (podesite više u dijalogu za upravljanje modelima, podrazumevano je "
+"poslednji korišćen):"
 
-#. Translators: The label for the button that resets the prompt to its default in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:57
-msgid "Reset prompt to default"
-msgstr "Vrati upit na podrazumevani"
+#. Translators: The label for the option to open results in browsable dialogs
+#: addon/globalPlugins/AIContentDescriber/__init__.py:107
+#, fuzzy
+msgid ""
+"Open each result in a browsable dialog; Markdown will be rendered if "
+"possible"
+msgstr ""
+"Otvori svaki rezultat u dijalogu koji se može pretraživati; Markdown će biti"
+" prikazan ako je moguće"
 
-#. Translators: The label for the maximum tokens chooser in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:59
-msgid "Maximum tokens"
-msgstr "Maksimalan broj tokena"
-
-#. Translators: The label for the option to open results in browseable dialogs
-#: addon\globalPlugins\AIContentDescriber\__init__.py:61
-msgid "Open each result in a browseable dialog"
-msgstr "Otvori svaki rezultat u dijalogu koji se može pretraživati"
-
-#. Translators: The label for the checkbox to cash images and their descriptions in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:63
+#. Translators: The label for the checkbox to cache images and their
+#. descriptions in the settings dialog
+#: addon/globalPlugins/AIContentDescriber/__init__.py:109
 msgid "Remember/cache descriptions of each item to save API quota"
-msgstr "Pamti ili keširaj opise svake stavke kako bi se smanjila API potrošnja"
+msgstr ""
+"Pamti ili keširaj opise svake stavke kako bi se smanjila API potrošnja"
 
-#. Translators: The label for the timeout chooser in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:65
-msgid "Seconds to wait for a response before timing out"
-msgstr "Vreme čekanja na odgovor u sekundama pre isteka"
-
-#. Translators: The label for the checkbox that controls whether to optimize image uploads for size in the settings dialog
-#: addon\globalPlugins\AIContentDescriber\__init__.py:67
+#. Translators: The label for the checkbox that controls whether to optimize
+#. image uploads for size in the settings dialog
+#: addon/globalPlugins/AIContentDescriber/__init__.py:111
 msgid ""
 "Optimize images for size, may speed up detection in some situations "
 "(experimental)"
 msgstr ""
-"Optimizuj slike u zavisnosti od veličine, može ubrzati prepoznavanje u nekim "
-"situacijama (eksperimentalno)"
+"Optimizuj slike u zavisnosti od veličine, može ubrzati prepoznavanje u nekim"
+" situacijama (eksperimentalno)"
 
 #. translators: current focus
-#: addon\globalPlugins\AIContentDescriber\__init__.py:103
+#: addon/globalPlugins/AIContentDescriber/__init__.py:158
 msgid "Current focus"
 msgstr "Trenutni fokus"
 
 #. translators: navigator object
-#: addon\globalPlugins\AIContentDescriber\__init__.py:105
+#. Translators: item in the copy image to clipboard submenu that captures the
+#. navigator object
+#: addon/globalPlugins/AIContentDescriber/__init__.py:160
+#: addon/globalPlugins/AIContentDescriber/__init__.py:171
 msgid "Navigator object"
 msgstr "Navigacioni objekat"
 
 #. translators: screenshot of entire window menu item
-#: addon\globalPlugins\AIContentDescriber\__init__.py:107
+#. Translators: item in the copy image to clipboard submenu that captures the
+#. entire screen
+#: addon/globalPlugins/AIContentDescriber/__init__.py:162
+#: addon/globalPlugins/AIContentDescriber/__init__.py:173
 msgid "Entire screen"
 msgstr "Ceo ekran"
 
-#. Translators: message spoken when there is an attempt to recognize an object, but the screen curtain is running
-#: addon\globalPlugins\AIContentDescriber\__init__.py:145
+#. translators: menu item to reconstruct the screen as accessible HTML
+#: addon/globalPlugins/AIContentDescriber/__init__.py:164
+#, fuzzy
+msgid "Show UI"
+msgstr "Prikaži korisnički interfejs"
+
+#. translators: picture from the local camera menu item
+#: addon/globalPlugins/AIContentDescriber/__init__.py:166
+#, fuzzy
+msgid "Take a picture"
+msgstr "Slikaj"
+
+#. Translators: item in the copy image to clipboard submenu that captures the
+#. focus object
+#: addon/globalPlugins/AIContentDescriber/__init__.py:169
+#, fuzzy
+msgid "Focus object"
+msgstr "Fokusirani objekat"
+
+#. Translators: the label for the submenu that copies a captured image to the
+#. clipboard without describing it
+#: addon/globalPlugins/AIContentDescriber/__init__.py:175
+#, fuzzy
+msgid "Copy image to clipboard"
+msgstr "Kopiraj sliku u privremenu memoriju"
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:178
+#, fuzzy
+msgid "Detect face position"
+msgstr "Prepoznaj položaj lica"
+
+#. self.detect_face_realtime_item = self.face_detection_menu.Append(wx.ID_ANY,
+#. _("Real-time face guidance"))
+#: addon/globalPlugins/AIContentDescriber/__init__.py:180
+#, fuzzy
+msgid "Select camera"
+msgstr "Izaberi kameru"
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:181
+#, fuzzy
+msgid "Release the camera to make it usable by other applications"
+msgstr "Oslobodi kameru kako bi je druge aplikacije mogle koristiti"
+
+#. translators: the label for the submenu that contains the options for face
+#. detection. Also informs the user that this feature does not require API
+#. access.
+#: addon/globalPlugins/AIContentDescriber/__init__.py:183
+#, fuzzy
+msgid "Face Detection (no API required)"
+msgstr "Prepoznavanje lica (nije potreban API)"
+
+#. translators: the name of the submenu used to select a model.
+#: addon/globalPlugins/AIContentDescriber/__init__.py:194
+#, fuzzy
+msgid "Model"
+msgstr "Model"
+
+#. translators: the label for the item to follow-up on the last description
+#: addon/globalPlugins/AIContentDescriber/__init__.py:197
+#, fuzzy
+msgid "Follow-up on previous description"
+msgstr "Dodatna pitanja o prethodnom opisu"
+
+#. Translators: area menu item to start an AI computer control session
+#: addon/globalPlugins/AIContentDescriber/__init__.py:203
+#, fuzzy
+msgid "Control computer..."
+msgstr "Upravljaj računarom..."
+
+#. Translators: area menu item shown when the selected model does not support
+#. computer control
+#: addon/globalPlugins/AIContentDescriber/__init__.py:206
+#, fuzzy
+msgid "Control computer (not supported by selected model)"
+msgstr "Upravljaj računarom (izabrani model ne podržava)"
+
+#. Translators: title of the dialog shown when the configuration file could
+#. not
+#. be read
+#: addon/globalPlugins/AIContentDescriber/__init__.py:251
+#, fuzzy
+msgid "AI Content Describer configuration error"
+msgstr "Greška u podešavanjima dodatka AI opisivač sadržaja"
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:255
+#, python-brace-format, fuzzy
+msgid ""
+"The AI Content Describer configuration file could not be read: {error}\n"
+"\n"
+"Your settings were backed up to {backup} and the add-on is now using default settings.\n"
+"\n"
+"To restore your settings, choose Open configuration, correct the problem and save. Then replace {config} with the corrected file and restart NVDA."
+msgstr ""
+"Datoteka podešavanja dodatka AI opisivač sadržaja nije mogla da se pročita: {error}\n"
+"\n"
+"Vaša podešavanja su sačuvana kao rezervna kopija u {backup} i dodatak sada koristi podrazumevana podešavanja.\n"
+"\n"
+"Da biste vratili svoja podešavanja, izaberite Otvori podešavanja, ispravite problem i sačuvajte. Zatim zamenite {config} ispravljenom datotekom i ponovo pokrenite NVDA."
+
+#. Translators: button that opens the backed up configuration file in a text
+#. editor
+#: addon/globalPlugins/AIContentDescriber/__init__.py:265
+#, fuzzy
+msgid "&Open configuration"
+msgstr "&Otvori podešavanja"
+
+#. Translators: button that closes the configuration error dialog
+#: addon/globalPlugins/AIContentDescriber/__init__.py:267
+#, fuzzy
+msgid "&Close"
+msgstr "&Zatvori"
+
+#. Translators: message spoken when there is an attempt to recognize an
+#. object,
+#. but the screen curtain is running
+#. Translators: message spoken when the screen curtain is active and the user
+#. attempts to describe the UI
+#: addon/globalPlugins/AIContentDescriber/__init__.py:329
+#: addon/globalPlugins/AIContentDescriber/__init__.py:376
+#: addon/globalPlugins/AIContentDescriber/ui_viewer.py:103
 msgid ""
 "Please disable windows screen curtain before using AI content describer."
 msgstr ""
 "Molimo onemogućite Windows zatamnjivanje ekrana pre nego što koristite AI "
 "opisivač sadržaja."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:159
+#: addon/globalPlugins/AIContentDescriber/__init__.py:343
 msgid "Content is not visible"
 msgstr "Sadržaj nije vidljiv"
 
-#. Translators: Message spoken when the attempt to take a picture of an object fails
-#: addon\globalPlugins\AIContentDescriber\__init__.py:170
+#. Translators: Message spoken when the attempt to take a picture of an object
+#. fails
+#: addon/globalPlugins/AIContentDescriber/__init__.py:354
 msgid "Could not snap an image of the requested object"
 msgstr "Nije moguće snimiti sliku zahtevanog objekta"
 
-#. translators: message spoken when grabbing the content of the current window is not possible
-#: addon\globalPlugins\AIContentDescriber\__init__.py:180
+#. py-3.11: On some machines, it is rare, but cv2 might not work as expected
+#. due to a variety of reasons none of which I can reproduce.
+#. # In the meantime, establish a catchall exception and report it to the user
+#. so they can file an issue
+#. Translators: The message spoken when there was an error with the face
+#. detection interface.
+#: addon/globalPlugins/AIContentDescriber/__init__.py:365
+#: addon/globalPlugins/AIContentDescriber/__init__.py:428
+#, python-brace-format, fuzzy
+msgid ""
+"Error initializing the face detection interface. Please consult the NVDA log"
+" for more information. {error}"
+msgstr ""
+"Greška pri pokretanju interfejsa za prepoznavanje lica. Molimo pogledajte "
+"NVDA dnevnik za više informacija. {error}"
+
+#. Translators: Message spoken when the face detection interface is loading
+#: addon/globalPlugins/AIContentDescriber/__init__.py:369
+#: addon/globalPlugins/AIContentDescriber/__init__.py:432
+#, fuzzy
+msgid ""
+"Face detection interface is loading. Please try this command again after a "
+"couple seconds."
+msgstr ""
+"Interfejs za prepoznavanje lica se učitava. Molimo pokušajte ponovo ovu "
+"komandu za nekoliko sekundi."
+
+#. translators: message spoken when grabbing the content of the current window
+#. is not possible
+#. Translators: message spoken when capturing the screen fails
+#: addon/globalPlugins/AIContentDescriber/__init__.py:381
+#: addon/globalPlugins/AIContentDescriber/ui_viewer.py:112
 msgid "Could not get window content"
 msgstr "Nije moguće preuzeti sadržaj prozora"
 
-#. Translators: Message spoken when the item copied to the clipboard is not an image
-#: addon\globalPlugins\AIContentDescriber\__init__.py:191
-#: addon\globalPlugins\AIContentDescriber\__init__.py:202
+#. Translators: message spoken when a captured image could not be placed on
+#. the
+#. clipboard
+#: addon/globalPlugins/AIContentDescriber/__init__.py:406
+#, fuzzy
+msgid "Could not copy the image to the clipboard."
+msgstr "Nije moguće kopirati sliku u privremenu memoriju."
+
+#. Translators: message spoken when a captured image was copied to the
+#. clipboard
+#: addon/globalPlugins/AIContentDescriber/__init__.py:410
+#, fuzzy
+msgid "Image copied to clipboard."
+msgstr "Slika je kopirana u privremenu memoriju."
+
+#. translators: message spoken when the picture could not be taken due to an
+#. unknown error
+#: addon/globalPlugins/AIContentDescriber/__init__.py:439
+#: addon/globalPlugins/AIContentDescriber/__init__.py:449
+#, fuzzy
+msgid ""
+"The picture could not be taken. Please ensure that your camera is not in use"
+" by another application and try again."
+msgstr ""
+"Slika nije mogla da se snimi. Molimo uverite se da kameru ne koristi druga "
+"aplikacija i pokušajte ponovo."
+
+#. Translators: the message spoken when the picture is taken but the file
+#. could
+#. not be written.
+#: addon/globalPlugins/AIContentDescriber/__init__.py:444
+#, fuzzy
+msgid "The picture could not be saved."
+msgstr "Slika nije mogla da se sačuva."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:454
+#: addon/globalPlugins/AIContentDescriber/__init__.py:480
+#: addon/globalPlugins/AIContentDescriber/__init__.py:621
+#, fuzzy
+msgid "No AI service configured."
+msgstr "Nijedna AI usluga nije podešena."
+
+#. Translators: Message spoken when the item copied to the clipboard is not an
+#. image
+#: addon/globalPlugins/AIContentDescriber/__init__.py:460
+#: addon/globalPlugins/AIContentDescriber/__init__.py:471
 msgid "The item on the clipboard is not an image."
 msgstr "Stavka u privremenoj memoriji nije slika."
 
-#. Translators: Message spoken when the image on the clipboard is not a format supported by the current description service
-#: addon\globalPlugins\AIContentDescriber\__init__.py:196
+#. Translators: Message spoken when the image on the clipboard is not a format
+#. supported by the current description service
+#: addon/globalPlugins/AIContentDescriber/__init__.py:465
+#, fuzzy, python-brace-format
 msgid ""
 "Unsupported image format. Please copy another file to the clipboard that is "
-"{''.join(service.supported_formats)}"
+"{formats}"
 msgstr ""
-"Format slike nije podržan. Molimo kopirajte drugu datoteku u privremenu "
-"memoriju koja je {''.join(service.supported_formats)}"
+"Format slike nije podržan. Molimo kopirajte u privremenu memoriju drugu "
+"datoteku koja je {formats}"
 
-#. Translators: Message spoken when the user attempts to describe something but they haven't yet provided an API key
-#: addon\globalPlugins\AIContentDescriber\__init__.py:212
+#. Translators: Message spoken when the user attempts to describe something
+#. but
+#. they haven't yet provided an API key or base URL
+#. Translators: message spoken when no service is available for UI description
+#: addon/globalPlugins/AIContentDescriber/__init__.py:484
+#: addon/globalPlugins/AIContentDescriber/ui_viewer.py:107
+#, fuzzy
 msgid ""
-"To describe content, you must provide an API key in the AI image describer "
-"category of the NVDA settings dialog. Please consult add-on help for more "
-"information"
+"To describe content, you must provide an API key or base URL in the AI image"
+" describer category of the NVDA settings dialog. Please consult add-on help "
+"for more information"
 msgstr ""
-"Da biste dobili opise sadržaja, morate da unesete API ključ u kategoriji AI "
-"opisivač sadržaja dijaloga NVDA podešavanja. Molimo pročitajte pomoć dodatka "
-"za više informacija"
+"Da biste dobili opise sadržaja, morate da unesete API ključ ili osnovnu URL "
+"adresu u kategoriji AI opisivač sadržaja dijaloga NVDA podešavanja. Molimo "
+"pročitajte pomoć dodatka za više informacija"
 
-#. Translators: Message spoken when a user attempts to describe something, but they haven't provided a prompt
-#: addon\globalPlugins\AIContentDescriber\__init__.py:216
+#. Translators: Message spoken when a user attempts to describe something, but
+#. they haven't provided a prompt
+#: addon/globalPlugins/AIContentDescriber/__init__.py:488
 msgid ""
 "To describe content, you must define a prompt by navigating to the AI image "
 "describer category of the NVDA settings dialog. Please consult add-on help "
 "for more information"
 msgstr ""
 "Da biste dobili opise sadržaja, morate da odredite upit tako što ćete ući u "
-"kategoriju AI opisivač sadržaja dijaloga NVDA podešavanja. Molimo pročitajte "
-"pomoć dodatka za više informacija"
+"kategoriju AI opisivač sadržaja dijaloga NVDA podešavanja. Molimo pročitajte"
+" pomoć dodatka za više informacija"
 
-#. Translators: Message spoken after the beep - when we have started fetching the description
-#: addon\globalPlugins\AIContentDescriber\__init__.py:220
-msgid "Retrieving description..."
-msgstr "Preuzimanje opisa..."
+#. Translators: Message spoken after the beep - when we have started fetching
+#. the description
+#: addon/globalPlugins/AIContentDescriber/__init__.py:497
+#, fuzzy, python-brace-format
+msgid "Retrieving description using {name}..."
+msgstr "Preuzimanje opisa korišćenjem {name}..."
+
+#. translators: message spoken when an error occurs while describing an image
+#: addon/globalPlugins/AIContentDescriber/__init__.py:503
+#, python-brace-format, fuzzy
+msgid "Error describing image: {error}"
+msgstr "Greška pri opisivanju slike: {error}"
 
 #. Translators: Title of the browseable message
-#: addon\globalPlugins\AIContentDescriber\__init__.py:224
+#: addon/globalPlugins/AIContentDescriber/__init__.py:514
 msgid "Image description"
 msgstr "Opis slike"
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:255
+#. translators: message spoken after the camera has been released successfully
+#: addon/globalPlugins/AIContentDescriber/__init__.py:566
+#, fuzzy
+msgid "Success"
+msgstr "Uspeh"
+
+#. translators: The message spoken when the user attempts to show the
+#. conversation dialog, but no service is available.
+#: addon/globalPlugins/AIContentDescriber/__init__.py:579
+#, fuzzy
+msgid "No AI service or conversation available."
+msgstr "Nema dostupne AI usluge ili razgovora."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:585
+#, fuzzy
+msgid ""
+"Open the AI conversation dialog for follow-up questions and multimodal chat."
+msgstr ""
+"Otvori dijalog AI razgovora za dodatna pitanja i multimodalni razgovor."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:589
 msgid ""
 "Describe the image (or file path to an image) on the clipboard using AI."
 msgstr ""
 "Opiši sliku (ili putanju do datoteke sa slikom) u privremenoj memoriji "
 "korišćenjem veštačke inteligencije."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:259
+#: addon/globalPlugins/AIContentDescriber/__init__.py:593
 msgid "Describe the contents of the current navigator object using AI."
 msgstr ""
 "Opiši sadržaj trenutnog navigacionog objekta korišćenjem veštačke "
 "inteligencije."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:263
+#: addon/globalPlugins/AIContentDescriber/__init__.py:597
 msgid "Describe the contents of the currently focused item using AI."
 msgstr ""
 "Opiši sadržaj trenutno fokusirane stavke korišćenjem veštačke inteligencije."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:267
+#: addon/globalPlugins/AIContentDescriber/__init__.py:601
 msgid "Take a screenshot, then describe it using AI."
 msgstr "Slikaj ekran, a zatim ga opiši korišćenjem veštačke inteligencije."
 
-#: addon\globalPlugins\AIContentDescriber\__init__.py:271
+#: addon/globalPlugins/AIContentDescriber/__init__.py:605
+#, fuzzy
+msgid ""
+"Takes a screenshot of the current focus object and copies it to the "
+"clipboard."
+msgstr ""
+"Slika trenutno fokusirani objekat i kopira sliku u privremenu memoriju."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:609
+#, fuzzy
+msgid ""
+"Takes a screenshot of the current navigator object and copies it to the "
+"clipboard."
+msgstr ""
+"Slika trenutni navigacioni objekat i kopira sliku u privremenu memoriju."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:613
+#, fuzzy
+msgid ""
+"Takes a screenshot of the entire screen and copies it to the clipboard."
+msgstr "Slika ceo ekran i kopira sliku u privremenu memoriju."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:617
 msgid ""
 "Pop up a menu asking whether to describe the current focus, navigator "
 "object, or entire screen with AI."
 msgstr ""
-"Prikaži meni koji pita da li opisati trenutni fokus, navigacioni objekat ili "
-"ceo ekran veštačkom inteligencijom."
+"Prikaži meni koji pita da li opisati trenutni fokus, navigacioni objekat ili"
+" ceo ekran veštačkom inteligencijom."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:624
+#, fuzzy
+msgid "Computer use is not supported by the selected model."
+msgstr "Izabrani model ne podržava upravljanje računarom."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:627
+#, fuzzy
+msgid "Computer control cannot be used while the screen curtain is active."
+msgstr ""
+"Upravljanje računarom nije moguće koristiti dok je zatamnjivanje ekrana "
+"aktivno."
+
+#. Translators: spoken when the pause gesture is pressed but no session is
+#. running
+#: addon/globalPlugins/AIContentDescriber/__init__.py:641
+#: addon/globalPlugins/AIContentDescriber/__init__.py:657
+#, fuzzy
+msgid "No active computer control session."
+msgstr "Nema aktivne sesije upravljanja računarom."
+
+#. Translators: spoken when a computer control session is resumed
+#: addon/globalPlugins/AIContentDescriber/__init__.py:646
+#, fuzzy
+msgid "Computer control resumed."
+msgstr "Upravljanje računarom je nastavljeno."
+
+#. Translators: spoken when a computer control session is paused
+#: addon/globalPlugins/AIContentDescriber/__init__.py:650
+#, fuzzy
+msgid "Computer control paused."
+msgstr "Upravljanje računarom je pauzirano."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:652
+#, fuzzy
+msgid "Pause or resume the active computer control session"
+msgstr "Pauziraj ili nastavi aktivnu sesiju upravljanja računarom"
+
+#. Translators: spoken when the user cancels a computer control session
+#: addon/globalPlugins/AIContentDescriber/__init__.py:661
+#, fuzzy
+msgid "Computer control session cancelled."
+msgstr "Sesija upravljanja računarom je otkazana."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:663
+#, fuzzy
+msgid "Cancel the active computer control session"
+msgstr "Otkaži aktivnu sesiju upravljanja računarom"
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:667
+#, fuzzy
+msgid "Snap a picture using the selected camera, then describe it using AI."
+msgstr ""
+"Slikaj izabranom kamerom, a zatim opiši sliku korišćenjem veštačke "
+"inteligencije."
+
+#: addon/globalPlugins/AIContentDescriber/__init__.py:671
+#, fuzzy
+msgid ""
+"Describe the position of the face in the frame using the selected camera, if"
+" applicable."
+msgstr ""
+"Opiši položaj lica u kadru korišćenjem izabrane kamere, ako je moguće."
+
+#. Translators: spoken when computer use maximizes the target window at the
+#. start of a session.
+#: addon/globalPlugins/AIContentDescriber/computer_use.py:681
+#, fuzzy
+msgid "Window maximized"
+msgstr "Prozor je maksimizovan"
+
+#. Translators: Title for the computer control session dialog
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:52
+#, fuzzy
+msgid "Computer Control Session"
+msgstr "Sesija upravljanja računarom"
+
+#. Translators: label of the read-only history field in the computer control
+#. dialog
+#. translators: The label of the read-only multi-line history field in the
+#. conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:64
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:60
+#, fuzzy
+msgid "&History:"
+msgstr "&Istorija:"
+
+#. Translators: label of the message field in the computer control dialog
+#. translators: The label of the message field in the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:69
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:65
+#, fuzzy
+msgid "Enter Your Message:"
+msgstr "Unesite svoju poruku:"
+
+#. Translators: the Send button in the computer control dialog
+#. translators: The label of the Send button in the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:78
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:78
+#, fuzzy
+msgid "&Send"
+msgstr "&Pošalji"
+
+#. Translators: the Save Output button in the computer control dialog
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:82
+#, fuzzy
+msgid "Save &Output"
+msgstr "Sačuvaj &izlaz"
+
+#. Translators: the Close button in the computer control dialog
+#. Translators: The label of the Close button in the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:86
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:82
+#, fuzzy
+msgid "Close"
+msgstr "Zatvori"
+
+#. translators: The text placed before a message from the AI in the
+#. conversation dialog's history buffer. This is also spoken upon receipt of a
+#. new message.
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:103
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:113
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:189
+#, fuzzy
+msgid "AI:"
+msgstr "AI:"
+
+#. translators: The text placed before a message sent by you in the
+#. conversation dialog's history buffer. This is also spoken upon receipt of a
+#. new message.
+#. Description flow
+#. Show user message immediately
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:105
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:101
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:153
+#, fuzzy
+msgid "You:"
+msgstr "Vi:"
+
+#. Translators: logged and spoken when a computer control session ends
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:141
+#, fuzzy
+msgid "Session ended"
+msgstr "Sesija je završena"
+
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:171
+#, python-brace-format, fuzzy
+msgid ""
+"The selected model would like to take control of your computer to perform "
+"the requested task. You will be notified as actions occur, and you can press"
+" {keystroke} any time to pause the session. Would you like to allow this?"
+msgstr ""
+"Izabrani model želi da preuzme kontrolu nad vašim računarom kako bi izvršio "
+"zahtevani zadatak. Bićete obavešteni o radnjama dok se izvršavaju, a u bilo "
+"kom trenutku možete pritisnuti {keystroke} da pauzirate sesiju. Da li želite"
+" da ovo dozvolite?"
+
+#. Translators: spoken when the consent dialog appears, to alert the user to
+#. switch to it
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:179
+#, fuzzy
+msgid "Consent required. Please check the dialog."
+msgstr "Potrebna je saglasnost. Molimo proverite dijalog."
+
+#. Translators: shown in session history when the user declines consent
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:188
+#, fuzzy
+msgid "Session declined by user"
+msgstr "Korisnik je odbio sesiju"
+
+#. Translators: prompt in the save file dialog
+#. translators: The prompt in the save file dialog.
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:194
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:229
+#, fuzzy
+msgid "Save conversation"
+msgstr "Sačuvaj razgovor"
+
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:195
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:230
+#, fuzzy
+msgid "Text files (*.txt)|*.txt"
+msgstr "Tekstualne datoteke (*.txt)|*.txt"
+
+#. Translators: spoken when the session log is saved
+#. translators: The message spoken when a conversation has been saved to disk
+#. from the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:204
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:240
+#, fuzzy
+msgid "Conversation saved"
+msgstr "Razgovor je sačuvan"
+
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:206
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:242
+#, fuzzy
+msgid "Error saving file"
+msgstr "Greška pri čuvanju datoteke"
+
+#. Translators: title of the dialog asking whether to allow a risky AI action
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:218
+#, fuzzy
+msgid "Approve Action"
+msgstr "Odobri radnju"
+
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:223
+#, python-brace-format, fuzzy
+msgid ""
+"The AI wants to perform a potentially risky action:\n"
+"\n"
+"{action}\n"
+"\n"
+"Allow it?"
+msgstr ""
+"AI želi da izvrši potencijalno rizičnu radnju:\n"
+"\n"
+"{action}\n"
+"\n"
+"Da li da je dozvolim?"
+
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:230
+#, fuzzy
+msgid "API safety warnings:"
+msgstr "API bezbednosna upozorenja:"
+
+#. Translators: button to deny the AI action and stop the session
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:238
+#, fuzzy
+msgid "&Cancel"
+msgstr "&Otkaži"
+
+#. Translators: button to allow this one AI action
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:240
+#, fuzzy
+msgid "Approve &Once"
+msgstr "Odobri &jednom"
+
+#. Translators: button to allow all remaining AI actions without further
+#. prompting
+#: addon/globalPlugins/AIContentDescriber/computer_use_dialogs.py:242
+#, fuzzy
+msgid "Approve &All"
+msgstr "Odobri &sve"
+
+#. Translators: the message shown when required dependencies were not found
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:108
+#, fuzzy
+msgid ""
+"Some of the dependencies required for this NVDA add-on to run are not "
+"available on your computer. Would you like to download them now? NVDA will "
+"need to be restarted when this process completes."
+msgstr ""
+"Neke od zavisnosti potrebnih za rad ovog NVDA dodatka nisu dostupne na vašem"
+" računaru. Da li želite da ih sada preuzmete? NVDA će morati ponovo da se "
+"pokrene kada se ovaj proces završi."
+
+#. Translators: the message shown when the wrong dependency versions were
+#. found
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:118
+#, fuzzy
+msgid ""
+"Some of the dependencies required for this NVDA add-on to run are outdated. "
+"Would you like to try to install them now? NVDA will need to be restarted "
+"when complete."
+msgstr ""
+"Neke od zavisnosti potrebnih za rad ovog NVDA dodatka su zastarele. Da li "
+"želite da pokušate da ih sada instalirate? NVDA će morati ponovo da se "
+"pokrene kada se proces završi."
+
+#. Translators: the message shown when the addon has successfully retrieved
+#. the
+#. new dependencies, asking the user whether they would like to delete the old
+#. ones
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:128
+#, fuzzy
+msgid ""
+"Would you like to delete the old dependencies from the configuration? This "
+"question will be asked once. If you are running multiple versions of NVDA "
+"interchangeably, select no."
+msgstr ""
+"Da li želite da obrišete stare zavisnosti iz podešavanja? Ovo pitanje će "
+"biti postavljeno samo jednom. Ako naizmenično koristite više verzija "
+"programa NVDA, izaberite ne."
+
+#. Translators: Message shown when NVDA is about to restart after the
+#. dependencies have been downloaded.
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:138
+#, fuzzy
+msgid ""
+"The dependencies have been downloaded successfully. NVDA will now restart "
+"for the changes to take effect"
+msgstr ""
+"Zavisnosti su uspešno preuzete. NVDA će se sada ponovo pokrenuti kako bi "
+"promene stupile na snagu"
+
+#. Translators: Message displayed when the dependency download from the
+#. default
+#. location failed and we are asking whether to try the mirror.
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:149
+#, fuzzy
+msgid ""
+"There was an error downloading the dependencies required for this add-on to "
+"function. Would you like to try again using the mirror provided by the "
+"Chinese NVDA community?"
+msgstr ""
+"Došlo je do greške pri preuzimanju zavisnosti potrebnih za rad ovog dodatka."
+" Da li želite da pokušate ponovo korišćenjem servera koji obezbeđuje kineska"
+" NVDA zajednica?"
+
+#. Translators: Message displayed when there isn't yet libraries to support
+#. the
+#. running version of NVDA.
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:159
+#, fuzzy
+msgid ""
+"Unfortunately, there doesn't yet seem to be dependencies available for the "
+"running version of NVDA. Please submit an issue in our bug tracker or "
+"contact the developers. In the meantime, you may wish to disable the add-on "
+"to  surpress this  message on startup."
+msgstr ""
+"Nažalost, izgleda da još uvek nema dostupnih zavisnosti za verziju programa "
+"NVDA koju koristite. Molimo prijavite problem u našem sistemu za praćenje "
+"grešaka ili kontaktirajte programere. U međuvremenu, možete onemogućiti "
+"dodatak kako se ova poruka ne bi prikazivala pri pokretanju."
+
+#. Translators: Message shown when dependencies fail to download.
+#: addon/globalPlugins/AIContentDescriber/dependency_checker.py:169
+#, python-brace-format, fuzzy
+msgid ""
+"Unfortunately, there was a problem downloading the dependencies required to "
+"run this add-on. Please consult the NVDA log for more details. {error}"
+msgstr ""
+"Nažalost, došlo je do problema pri preuzimanju zavisnosti potrebnih za rad "
+"ovog dodatka. Molimo pogledajte NVDA dnevnik za više detalja. {error}"
 
 #. translators: error
-#: addon\globalPlugins\AIContentDescriber\description_service.py:33
-#: addon\globalPlugins\AIContentDescriber\description_service.py:71
+#: addon/globalPlugins/AIContentDescriber/description_service.py:86
+#: addon/globalPlugins/AIContentDescriber/description_service.py:150
 msgid "error"
 msgstr "greška"
 
 #. translators: message spoken when we can't connect (error with connection)
-#: addon\globalPlugins\AIContentDescriber\description_service.py:39
-#: addon\globalPlugins\AIContentDescriber\description_service.py:84
+#: addon/globalPlugins/AIContentDescriber/description_service.py:92
+#: addon/globalPlugins/AIContentDescriber/description_service.py:168
 msgid "error making connection"
 msgstr "greška pri povezivanju"
 
 #. translators: message spoken when the connection is refused by our target
-#: addon\globalPlugins\AIContentDescriber\description_service.py:46
-#: addon\globalPlugins\AIContentDescriber\description_service.py:91
+#: addon/globalPlugins/AIContentDescriber/description_service.py:99
+#: addon/globalPlugins/AIContentDescriber/description_service.py:173
 msgid "error, connection refused by target"
 msgstr "greška, povezivanje odbijeno od strane odredišta"
 
-#. Add-on description
-#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
-#: buildVars.py:26
+#. translators: the description for the GPT-5.4 model in the configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:770
+#, fuzzy
 msgid ""
-"This add-on makes it possible to describe the focus object, navigator "
-"object, or screen using the popular GPT4 vision artificial intelligence "
-"LLM.\n"
-"Though content descriptions are quite detailed, they may not always be "
-"completely accurate or reflect real world information.\n"
-"To begin, head to https://platform.openai.com/account/api-keys and create an "
-"account, then create a key for interacting with the API. See add-on "
-"documentation for more information on this.\n"
-"Then, choose the \"AI content describer\" category from NVDA's settings "
-"dialog and enter your API key.\n"
-"Press NVDA+shift+i to pop up a menu asking how you wish to describe based on "
-"the current position, or NVDA+shift+u to describe the navigator object, or "
-"NVDA+shift+y for an image that has been copied to the clipboard such as in "
-"windows explorer. Other keystrokes are customizable from the input gestures "
-"dialog."
+"OpenAI's latest flagship model with advanced reasoning, vision, and a 400k "
+"token context window."
 msgstr ""
-"Ovaj dodatak omogućava opisivanje fokusiranog objekta, navigacionog objekta, "
-"ili ekrana korišćenjem popularnog LLM modela GPT4 vision veštačke "
-"inteligencije.\n"
-"Iako su opisi sadržaja poprilično detaljni, možda neće uvek biti potpuno "
-"precizni ili bidi u skladu sa informacijama u realnosti.\n"
-"Da biste počeli, posetite https://platform.openai.com/account/api-keys i "
-"napravite nalog, a zatim napravite ključ za API interakciju. Pogledajte "
-"dokumentaciju dodatka za više informacija o ovome.\n"
-"Zatim, izaberite kategoriju \"AI opisivač sadržaja\" u dijalogu NVDA "
-"podešavanja i upišite vaš API ključ.\n"
-"Pritisnite NVDA+šift+i da otvorite meni koji će vas upitati kako želite da "
-"dobijete opis u zavisnosti od trenutne pozicije, ili NVDA+šift+u da dobijete "
-"opis za navigacioni objekat i NVDA+šift+y za sliku koja je kopirana u "
-"privremenu memoriju nna primer iz Windows istraživača datoteka. Druge "
-"prečice se mogu prilagoditi iz dijaloga ulaznih komandi."
+"Najnoviji vodeći OpenAI model sa naprednim rezonovanjem, podrškom za slike i"
+" kontekstnim prozorom od 400 hiljada tokena."
+
+#. translators: the description for the GPT-5.4 mini model in the
+#. configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:782
+#, fuzzy
+msgid ""
+"A fast, affordable variant of GPT-5.4 with vision support and a 400k token "
+"context window."
+msgstr ""
+"Brza i povoljna varijanta modela GPT-5.4 sa podrškom za slike i kontekstnim "
+"prozorom od 400 hiljada tokena."
+
+#. translators: the description for the GPT-5.5 model in the configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:794
+#, fuzzy
+msgid ""
+"OpenAI's frontier model for complex professional work, with a new class of "
+"intelligence for coding, vision, and agentic tasks. Supports image input and"
+" a 1M token context window."
+msgstr ""
+"Najnapredniji OpenAI model za složen profesionalni rad, sa novom klasom "
+"inteligencije za programiranje, analizu slika i agentske zadatke. Podržava "
+"slike kao ulaz i kontekstni prozor od milion tokena."
+
+#. translators: the description for the GPT-5.5 pro model in the configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:806
+#, fuzzy
+msgid ""
+"A higher-compute variant of GPT-5.5 that thinks harder for smarter and more "
+"precise responses on complex, high-stakes workloads. Supports image input "
+"and a 1M token context window."
+msgstr ""
+"Varijanta modela GPT-5.5 sa više računarske snage koja duže razmišlja kako "
+"bi dala pametnije i preciznije odgovore na složenim i važnim zadacima. "
+"Podržava slike kao ulaz i kontekstni prozor od milion tokena."
+
+#. translators: the description for the GPT-6 Astra model in the configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:818
+#, fuzzy
+msgid ""
+"OpenAI's most capable model for the most demanding work, such as complex "
+"reasoning, coding, and computer control. Supports image input and a 1M token"
+" context window. Costs more than the other GPT-6 models."
+msgstr ""
+"Najsposobniji OpenAI model za najzahtevniji rad, kao što su složeno "
+"rezonovanje, programiranje i upravljanje računarom. Podržava slike kao ulaz "
+"i kontekstni prozor od milion tokena. Skuplji je od ostalih GPT-6 modela."
+
+#. translators: the description for the GPT-6.1 Sol model in the configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:830
+#, fuzzy
+msgid ""
+"Close to GPT-6 Astra on complex work at a lower cost. Supports image input "
+"and a 1M token context window."
+msgstr ""
+"Blizu modela GPT-6 Astra na složenim zadacima, uz nižu cenu. Podržava slike "
+"kao ulaz i kontekstni prozor od milion tokena."
+
+#. translators: the description for the GPT-6.1 Terra model in the
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:842
+#, fuzzy
+msgid ""
+"A fast, affordable GPT-6.1 model at half the price of GPT-6.1 Sol. Supports "
+"image input and a 1M token context window."
+msgstr ""
+"Brz i povoljan GPT-6.1 model po upola nižoj ceni od modela GPT-6.1 Sol. "
+"Podržava slike kao ulaz i kontekstni prozor od milion tokena."
+
+#. translators: the description for the GPT-6 Luna model in the configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:854
+#, fuzzy
+msgid ""
+"OpenAI's lowest cost GPT-6 model, for high-volume work where price matters "
+"most. Supports image input and a 1M token context window."
+msgstr ""
+"Najjeftiniji OpenAI GPT-6 model, za rad velikog obima gde je cena "
+"najvažnija. Podržava slike kao ulaz i kontekstni prozor od milion tokena."
+
+#. translators: The description for the PollinationsAI model with OpenAI
+#. support in the model selection dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:866
+#, fuzzy
+msgid ""
+"Pollinations.AI is an open-source gen AI startup based in Berlin, providing "
+"the most easy-to-use, free text and image generation API available. It "
+"integrates with state-of-the-art models, no signups or API keys required."
+msgstr ""
+"Pollinations.AI je startap otvorenog koda iz Berlina koji se bavi "
+"generativnom veštačkom inteligencijom i pruža najjednostavniji besplatan API"
+" za generisanje teksta i slika. Integriše se sa najsavremenijim modelima, "
+"bez registracije ili API ključeva."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:916
+#, python-brace-format, fuzzy
+msgid "Gemini encountered an error: {code}, {msg}"
+msgstr "Gemini je naišao na grešku: {code}, {msg}"
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:930
+#, fuzzy
+msgid ""
+"The model used all available tokens for reasoning and returned no visible "
+"response. Try increasing the max tokens setting."
+msgstr ""
+"Model je iskoristio sve dostupne tokene za rezonovanje i nije vratio vidljiv"
+" odgovor. Pokušajte da povećate podešavanje maksimalnog broja tokena."
+
+#. translators: the description for Google's Gemini 2.5 Flash model, as shown
+#. in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:964
+#, fuzzy
+msgid ""
+"Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for "
+"tasks like summarization, chat applications, data extraction, and "
+"captioning."
+msgstr ""
+"Gemini 2.5 Flash pruža brze performanse za složene zadatke. Idealan za "
+"zadatke kao što su sažimanje, aplikacije za ćaskanje, izdvajanje podataka i "
+"pisanje opisa slika."
+
+#. translators: the description for Google's Gemini 2.5 Flash-Lite model, as
+#. shown in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:974
+#, fuzzy
+msgid ""
+"Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while"
+" maintaining strong performance."
+msgstr ""
+"Gemini 2.5 Flash-Lite je optimizovan za nisku cenu i malo kašnjenje, uz "
+"zadržavanje dobrih performansi."
+
+#. translators: the description for Google's Gemini 2.5 Pro model, as shown in
+#. the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:984
+#, fuzzy
+msgid ""
+"Gemini 2.5 Pro models are capable of reasoning through their thoughts before"
+" responding, resulting in enhanced performance and improved accuracy. Best "
+"for coding and complex tasks."
+msgstr ""
+"Gemini 2.5 Pro modeli mogu da razmisle pre nego što odgovore, što daje bolje"
+" performanse i veću tačnost. Najbolji za programiranje i složene zadatke."
+
+#. translators: the description for Google's Gemini 3.1 Flash-Lite model, as
+#. shown in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:994
+#, fuzzy
+msgid ""
+"Gemini 3.1 Flash-Lite is optimized for cost efficiency and low latency in "
+"high-frequency tasks."
+msgstr ""
+"Gemini 3.1 Flash-Lite je optimizovan za nisku cenu i malo kašnjenje u "
+"zadacima koji se često ponavljaju."
+
+#. translators: the description for Google's Gemini 3.1 Pro Preview model, as
+#. shown in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1004
+#, fuzzy
+msgid ""
+"Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic "
+"workflows, with enhanced performance and accuracy."
+msgstr ""
+"Gemini 3.1 Pro je najnoviji Google model usmeren na rezonovanje, za složene "
+"agentske tokove rada, sa boljim performansama i tačnošću."
+
+#. translators: the description for Google's Gemini 3.5 Flash model, as shown
+#. in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1014
+#, fuzzy
+msgid ""
+"Gemini 3.5 Flash is Google's latest and most capable Flash model, with "
+"faster response times and reduced latency. Ideal for tasks requiring both "
+"speed and quality."
+msgstr ""
+"Gemini 3.5 Flash je najnoviji i najsposobniji Google Flash model, sa bržim "
+"odzivom i manjim kašnjenjem. Idealan za zadatke koji zahtevaju i brzinu i "
+"kvalitet."
+
+#. translators: the description for Google's Gemini 3.5 Flash-Lite model, as
+#. shown in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1024
+#, fuzzy
+msgid ""
+"Gemini 3.5 Flash-Lite provides high throughput and cost efficiency for "
+"lightweight multimodal processing."
+msgstr ""
+"Gemini 3.5 Flash-Lite pruža veliku propusnost i nisku cenu za jednostavnu "
+"multimodalnu obradu."
+
+#. translators: the description for Google's Gemini 3.6 Flash model, as shown
+#. in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1034
+#, fuzzy
+msgid ""
+"Gemini 3.6 Flash offers balanced speed and accuracy for multimodal "
+"understanding and captioning."
+msgstr ""
+"Gemini 3.6 Flash nudi uravnoteženu brzinu i tačnost za multimodalno "
+"razumevanje i pisanje opisa slika."
+
+#. translators: the description for Google's Gemini 3.7 Flash model, as shown
+#. in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1044
+#, fuzzy
+msgid ""
+"Gemini 3.7 Flash combines high-speed processing with advanced multimodal "
+"capabilities and visual reasoning."
+msgstr ""
+"Gemini 3.7 Flash kombinuje brzu obradu sa naprednim multimodalnim "
+"mogućnostima i vizuelnim rezonovanjem."
+
+#. translators: the description for Google's Gemini 3.8 Flash model, as shown
+#. in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1054
+#, fuzzy
+msgid ""
+"Gemini 3.8 Flash delivers high-performance multimodal reasoning with fast "
+"response times."
+msgstr "Gemini 3.8 Flash pruža moćno multimodalno rezonovanje uz brz odziv."
+
+#. translators: the description for Google's Gemini 4 Hydrogen model, as shown
+#. in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1064
+#, fuzzy
+msgid ""
+"Gemini 4 Hydrogen is Google's fast, lower-cost Gemini 4 model for everyday "
+"tasks, with a 1M token context window."
+msgstr ""
+"Gemini 4 Hydrogen je brz i jeftiniji Google Gemini 4 model za svakodnevne "
+"zadatke, sa kontekstnim prozorom od milion tokena."
+
+#. translators: the description for Google's Gemini 4 Argon model, as shown in
+#. the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1074
+#, fuzzy
+msgid ""
+"Gemini 4 Argon is Google's frontier model for complex, multi-step work. It "
+"requires the paid tier of the Gemini API."
+msgstr ""
+"Gemini 4 Argon je najnapredniji Google model za složen rad u više koraka. "
+"Zahteva plaćeni nivo Gemini API-ja."
+
+#. translators: the description for Google's Gemini 4 Carbon model, as shown
+#. in
+#. the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1084
+#, fuzzy
+msgid ""
+"Gemini 4 Carbon is Google's most capable model, for hard, multi-step "
+"reasoning. It thinks longer than Gemini 4 Argon, so responses are slower."
+msgstr ""
+"Gemini 4 Carbon je najsposobniji Google model, za teško rezonovanje u više "
+"koraka. Razmišlja duže od modela Gemini 4 Argon, pa su odgovori sporiji."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1395
+#, python-brace-format, fuzzy
+msgid "Claude encountered an error. {err}"
+msgstr "Claude je naišao na grešku. {err}"
+
+#. translators: the description for the Claude 4.5 Sonnet model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1436
+#, fuzzy
+msgid ""
+"Anthropic's Sonnet model with extended thinking and a balance of speed and "
+"intelligence."
+msgstr ""
+"Anthropic Sonnet model sa proširenim razmišljanjem i ravnotežom između "
+"brzine i inteligencije."
+
+#. translators: the description for the Claude 4.5 Opus model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1451
+#, fuzzy
+msgid ""
+"Anthropic's Opus model with extended thinking, for complex reasoning and "
+"analysis tasks."
+msgstr ""
+"Anthropic Opus model sa proširenim razmišljanjem, za složeno rezonovanje i "
+"analizu."
+
+#. translators: the description for the Claude 4.6 Sonnet model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1467
+#, fuzzy
+msgid ""
+"Anthropic's Sonnet model that balances speed and intelligence. Features a 1M"
+" token context window and adaptive thinking."
+msgstr ""
+"Anthropic Sonnet model koji uravnotežuje brzinu i inteligenciju. Ima "
+"kontekstni prozor od milion tokena i prilagodljivo razmišljanje."
+
+#. translators: the description for the Claude 4.6 Opus model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1484
+#, fuzzy
+msgid ""
+"Anthropic's Opus model for agents, coding, and complex reasoning. Features a"
+" 1M token context window and adaptive thinking."
+msgstr ""
+"Anthropic Opus model za agente, programiranje i složeno rezonovanje. Ima "
+"kontekstni prozor od milion tokena i prilagodljivo razmišljanje."
+
+#. translators: the description for the Claude 4.7 Opus model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1501
+#, fuzzy
+msgid ""
+"Anthropic's Opus model with high-resolution vision support up to 3.75MP, "
+"adaptive thinking, and a 1M token context window."
+msgstr ""
+"Anthropic Opus model sa podrškom za slike visoke rezolucije do 3,75 MP, "
+"prilagodljivim razmišljanjem i kontekstnim prozorom od milion tokena."
+
+#. translators: the description for the Claude 4.8 Opus model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1519
+#, fuzzy
+msgid ""
+"Anthropic's refined Opus model with the same high-resolution vision, "
+"adaptive thinking, and 1M token context window as Claude 4.7 Opus."
+msgstr ""
+"Poboljšani Anthropic Opus model sa istom podrškom za slike visoke "
+"rezolucije, prilagodljivim razmišljanjem i kontekstnim prozorom od milion "
+"tokena kao Claude 4.7 Opus."
+
+#. translators: the description for the Claude 5 Sonnet model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1537
+#, fuzzy
+msgid ""
+"Anthropic's fast and affordable Sonnet model with high-resolution vision, "
+"adaptive thinking, and a 1M token context window."
+msgstr ""
+"Brz i povoljan Anthropic Sonnet model sa podrškom za slike visoke "
+"rezolucije, prilagodljivim razmišljanjem i kontekstnim prozorom od milion "
+"tokena."
+
+#. translators: the description for the Claude 5 Opus model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1555
+#, fuzzy
+msgid ""
+"Anthropic's Opus model for complex reasoning and agentic tasks. Thinks by "
+"default, with high-resolution vision and a 1M token context window."
+msgstr ""
+"Anthropic Opus model za složeno rezonovanje i agentske zadatke. "
+"Podrazumevano razmišlja, podržava slike visoke rezolucije i ima kontekstni "
+"prozor od milion tokena."
+
+#. translators: the description for the Claude 5 Fable model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1573
+#, fuzzy
+msgid ""
+"Anthropic's frontier model above the Opus tier, for the most demanding "
+"reasoning and vision tasks. Thinking is always on. Higher cost than Opus."
+msgstr ""
+"Najnapredniji Anthropic model, iznad nivoa Opus, za najzahtevnije zadatke "
+"rezonovanja i analize slika. Razmišljanje je uvek uključeno. Skuplji od "
+"modela Opus."
+
+#. translators: the description for the Claude 5.1 Fable model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1591
+#, fuzzy
+msgid ""
+"Anthropic's Fable model above the Opus tier, with stronger vision and "
+"computer use than Claude 5 Fable. Thinking is always on. Higher cost than "
+"Opus."
+msgstr ""
+"Anthropic Fable model iznad nivoa Opus, sa boljom analizom slika i "
+"upravljanjem računarom od modela Claude 5 Fable. Razmišljanje je uvek "
+"uključeno. Skuplji od modela Opus."
+
+#. translators: the description for the Claude 5.2 Fable model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1609
+#, fuzzy
+msgid ""
+"Anthropic's most capable Fable model, for the most demanding reasoning and "
+"vision tasks. Faster and lower cost than Claude 5.1 Fable. Thinking is "
+"always on."
+msgstr ""
+"Najsposobniji Anthropic Fable model, za najzahtevnije zadatke rezonovanja i "
+"analize slika. Brži i jeftiniji od modela Claude 5.1 Fable. Razmišljanje je "
+"uvek uključeno."
+
+#. translators: the description for the Claude 5.5 Haiku model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1626
+#, fuzzy
+msgid ""
+"Anthropic's fast, low-cost Haiku model for quick descriptions and high-"
+"volume tasks. Thinks by default and has a 1M token context window."
+msgstr ""
+"Brz i jeftin Anthropic Haiku model za kratke opise i zadatke velikog obima. "
+"Podrazumevano razmišlja i ima kontekstni prozor od milion tokena."
+
+#. translators: the description for the Claude 5.5 Sonnet model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1643
+#, fuzzy
+msgid ""
+"Anthropic's Sonnet model for everyday vision, coding, and agentic tasks, "
+"balancing speed and capability. Thinks by default, with high-resolution "
+"vision and a 1M token context window."
+msgstr ""
+"Anthropic Sonnet model za svakodnevnu analizu slika, programiranje i "
+"agentske zadatke, koji uravnotežuje brzinu i mogućnosti. Podrazumevano "
+"razmišlja, podržava slike visoke rezolucije i ima kontekstni prozor od "
+"milion tokena."
+
+#. translators: the description for the Claude 5.5 Opus model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1660
+#, fuzzy
+msgid ""
+"Anthropic's Opus model for complex reasoning, coding, and agentic tasks, "
+"priced below Claude 5 Opus. Thinking is always on, with high-resolution "
+"vision and a 1M token context window."
+msgstr ""
+"Anthropic Opus model za složeno rezonovanje, programiranje i agentske "
+"zadatke, jeftiniji od modela Claude 5 Opus. Razmišljanje je uvek uključeno, "
+"podržava slike visoke rezolucije i ima kontekstni prozor od milion tokena."
+
+#. translators: the description for MistralAI's Mistral Large 4 model, as
+#. shown
+#. in the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1754
+#, fuzzy
+msgid ""
+"Mistral's open-weight multimodal flagship model, with a 1M token context "
+"window."
+msgstr ""
+"Vodeći multimodalni Mistral model sa otvorenim težinama i kontekstnim "
+"prozorom od milion tokena."
+
+#. translators: the description for the xAI Grok 4.3 model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1777
+#, fuzzy
+msgid ""
+"xAI's recommended flagship reasoning model with a 1M token context window. "
+"Features always-on chain-of-thought reasoning and support for image input."
+msgstr ""
+"Preporučeni vodeći xAI model za rezonovanje sa kontekstnim prozorom od "
+"milion tokena. Ima uvek uključeno rezonovanje u lancu misli i podršku za "
+"slike kao ulaz."
+
+#. translators: the description for the xAI Grok 4.5 model in the model
+#. configuration dialog
+#. translators: the description for the xAI Grok 4.6 model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1788
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1799
+#, fuzzy
+msgid ""
+"An xAI reasoning model with image input and a 500k token context window. "
+"Reasoning is always on."
+msgstr ""
+"xAI model za rezonovanje sa podrškom za slike kao ulaz i kontekstnim "
+"prozorom od 500 hiljada tokena. Rezonovanje je uvek uključeno."
+
+#. translators: the description for the xAI Grok 4.7 model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1810
+#, fuzzy
+msgid ""
+"xAI's most capable model, with image input and a 500k token context window. "
+"Reasoning is always on."
+msgstr ""
+"Najsposobniji xAI model, sa podrškom za slike kao ulaz i kontekstnim "
+"prozorom od 500 hiljada tokena. Rezonovanje je uvek uključeno."
+
+#. translators: the description for the xAI Grok 4.20 (non-reasoning) model in
+#. the model configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1821
+#, fuzzy
+msgid ""
+"xAI's fast, low-cost model for instant responses without a reasoning step. "
+"Supports image input and a 1M token context window."
+msgstr ""
+"Brz i jeftin xAI model za trenutne odgovore bez koraka rezonovanja. Podržava"
+" slike kao ulaz i kontekstni prozor od milion tokena."
+
+#. translators: the description for Moonshot AI's Kimi K3 model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1842
+#, fuzzy
+msgid ""
+"Moonshot AI's flagship multimodal model, with a 1M token context window and "
+"strong reasoning across text, image, and video."
+msgstr ""
+"Vodeći multimodalni Moonshot AI model, sa kontekstnim prozorom od milion "
+"tokena i snažnim rezonovanjem nad tekstom, slikama i videom."
+
+#. translators: the description for Moonshot AI's Kimi K2.6 model in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1852
+#, fuzzy
+msgid ""
+"A capable Kimi multimodal model that understands both image and video input "
+"alongside text."
+msgstr "Sposoban multimodalni Kimi model koji razume slike i video uz tekst."
+
+#. translators: the description for the Ollama model, as shown in the
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1864
+#, fuzzy
+msgid "The quickest way to get up and running with large language models."
+msgstr "Najbrži način da počnete da radite sa velikim jezičkim modelima."
+
+#. translators: the message spoken in the Ollama configuration dialog upon
+#. pressing "list models", when the base URL cannot be contacted.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1882
+#, python-brace-format, fuzzy
+msgid "Could not contact the provided base URL. {error}"
+msgstr "Nije moguće povezati se sa navedenom osnovnom URL adresom. {error}"
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1913
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2043
+#, python-brace-format, fuzzy
+msgid "The response appears to be malformed. {response}"
+msgstr "Izgleda da je odgovor neispravan. {response}"
+
+#. translators: the description for the LiteLLM Proxy model, as shown in the
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1947
+#, fuzzy
+msgid "Access multiple AI models through a unified LiteLLM proxy server."
+msgstr ""
+"Pristupite većem broju AI modela preko jedinstvenog LiteLLM proxy servera."
+
+#. translators: the message spoken in the LiteLLM configuration dialog when no
+#. base URL is provided
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1964
+#, fuzzy
+msgid "Please provide a base URL first."
+msgstr "Molimo prvo unesite osnovnu URL adresu."
+
+#. translators: the message spoken in the LiteLLM configuration dialog upon
+#. pressing "list models", when the proxy cannot be contacted.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1979
+#, python-brace-format, fuzzy
+msgid "Could not contact the LiteLLM proxy server. {error}"
+msgstr "Nije moguće povezati se sa LiteLLM proxy serverom. {error}"
+
+#. translators: the message spoken when the LiteLLM proxy returns an
+#. unexpected
+#. response format
+#: addon/globalPlugins/AIContentDescriber/description_service.py:1990
+#, python-brace-format, fuzzy
+msgid "Unexpected response format from LiteLLM proxy. {error}"
+msgstr "Neočekivan format odgovora od LiteLLM proxy servera. {error}"
+
+#. translators: the description for the llama.cpp option in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2084
+#, fuzzy
+msgid ""
+"llama.cpp is a state-of-the-art, open-source solution for running large language models locally and in the cloud.\n"
+"This add-on integration assumes that you have obtained llama.cpp from Github and an image capable model from Huggingface or another repository, and that a server is currently running to handle requests. Though the process for getting this working is largely a task for the user that knows what they are doing, you can find basic steps in the add-on documentation."
+msgstr ""
+"llama.cpp je savremeno rešenje otvorenog koda za pokretanje velikih jezičkih modela lokalno i u oblaku.\n"
+"Ova integracija dodatka pretpostavlja da ste preuzeli llama.cpp sa GitHuba i model koji podržava slike sa Huggingfacea ili drugog repozitorijuma, i da je server trenutno pokrenut i obrađuje zahteve. Iako je podešavanje uglavnom zadatak za korisnika koji zna šta radi, osnovne korake možete pronaći u dokumentaciji dodatka."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2131
+#, python-brace-format, fuzzy
+msgid ""
+"Image recognition response appears to be malformed.\n"
+"{response}"
+msgstr ""
+"Izgleda da je odgovor prepoznavanja slike neispravan.\n"
+"{response}"
+
+#. translators: the description for the vivo BlueLM Vision model, as shown in
+#. the configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2165
+#, fuzzy
+msgid ""
+"A multimodal model from vivo, accessed via NVDA-CN account. This service is "
+"provided by the NVDA Chinese community and requires your nvdacn.com "
+"credentials."
+msgstr ""
+"Multimodalni model kompanije vivo, kojem se pristupa preko NVDA-CN naloga. "
+"Ovu uslugu pruža kineska NVDA zajednica i zahteva vaše nvdacn.com podatke za"
+" prijavu."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2240
+#, python-brace-format, fuzzy
+msgid "API Error: {error}"
+msgstr "API greška: {error}"
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2247
+#, fuzzy
+msgid "The model returned an empty response."
+msgstr "Model je vratio prazan odgovor."
+
+#. This case is a safeguard; post() should raise an exception on failure.
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2292
+#, fuzzy
+msgid "Network request failed unexpectedly."
+msgstr "Mrežni zahtev neočekivano nije uspeo."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2332
+#, fuzzy
+msgid "No active conversation. Please describe an image first."
+msgstr "Nema aktivnog razgovora. Molimo prvo opišite sliku."
+
+#. translators: description of the Seer local vision provider
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2357
+#, fuzzy
+msgid ""
+"Private, on-device image descriptions using PaliGemma2. No API key or cloud "
+"connection required. Note: this is a captioning model, prompts and follow-up"
+" questions are not supported. Install the Seer daemon to get started."
+msgstr ""
+"Privatni opisi slika na samom uređaju korišćenjem modela PaliGemma2. Nisu "
+"potrebni API ključ ni veza sa oblakom. Napomena: ovo je model za pisanje "
+"opisa slika, upiti i dodatna pitanja nisu podržani. Instalirajte Seer servis"
+" da biste počeli."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2390
+#, fuzzy
+msgid ""
+"Seer uses PaliGemma2 which describes images but does not support follow-up "
+"questions."
+msgstr ""
+"Seer koristi PaliGemma2 koji opisuje slike, ali ne podržava dodatna pitanja."
+
+#. translators: description of the Datalab Chandra 2 vision model
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2420
+#, fuzzy
+msgid ""
+"Datalab Chandra 2 is a state-of-the-art vision and OCR model specialized in "
+"complex document layouts, tables, forms, handwriting, charts, and math. "
+"Supports Datalab's Cloud / On-Prem API as well as self-hosted OpenAI-"
+"compatible vLLM endpoints."
+msgstr ""
+"Datalab Chandra 2 je savremeni model za analizu slika i OCR, specijalizovan "
+"za složene rasporede dokumenata, tabele, obrasce, rukopis, grafikone i "
+"matematiku. Podržava Datalab Cloud / On-Prem API, kao i samostalno hostovane"
+" vLLM krajnje tačke kompatibilne sa OpenAI."
+
+#. translators: message spoken when an error occurs while contacting the
+#. Datalab API
+#. translators: message spoken when checking the status of a Datalab
+#. conversion
+#. fails
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2529
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2608
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2615
+#, python-brace-format, fuzzy
+msgid "Datalab API error: {error}"
+msgstr "Datalab API greška: {error}"
+
+#. translators: message spoken when the Datalab API returns an invalid or
+#. non-JSON response
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2539
+#, fuzzy
+msgid "Invalid response received from Datalab API."
+msgstr "Primljen je neispravan odgovor od Datalab API-ja."
+
+#. translators: message spoken when a Datalab conversion request fails
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2544
+#, fuzzy
+msgid "Datalab conversion request failed."
+msgstr "Datalab zahtev za konverziju nije uspeo."
+
+#. translators: message spoken when Datalab does not return a request check
+#. URL
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2555
+#, fuzzy
+msgid "No request check URL returned by Datalab."
+msgstr "Datalab nije vratio URL adresu za proveru zahteva."
+
+#. translators: message spoken when Datalab Chandra 2 conversion fails
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2564
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2630
+#, fuzzy
+msgid "Datalab Chandra 2 conversion failed."
+msgstr "Datalab Chandra 2 konverzija nije uspela."
+
+#. translators: message spoken when Datalab Chandra 2 returns an empty
+#. response
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2584
+#, fuzzy
+msgid "No content returned from Datalab Chandra 2."
+msgstr "Datalab Chandra 2 nije vratio nikakav sadržaj."
+
+#. translators: message spoken when Datalab Chandra 2 conversion times out
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2635
+#, fuzzy
+msgid "Datalab Chandra 2 conversion timed out."
+msgstr "Vreme za Datalab Chandra 2 konverziju je isteklo."
+
+#: addon/globalPlugins/AIContentDescriber/description_service.py:2694
+#, fuzzy
+msgid ""
+"Datalab Chandra 2 Convert API is specialized for OCR and document "
+"transcription, and does not support follow-up questions."
+msgstr ""
+"Datalab Chandra 2 Convert API je specijalizovan za OCR i prepisivanje "
+"dokumenata i ne podržava dodatna pitanja."
+
+#. translators: the title for the dialog that selects the camera
+#: addon/globalPlugins/AIContentDescriber/face_view.py:24
+#, fuzzy
+msgid "Choose a camera"
+msgstr "Izaberite kameru"
+
+#. translators: the label for the available cameras combo box
+#: addon/globalPlugins/AIContentDescriber/face_view.py:34
+#, fuzzy
+msgid "&Available cameras"
+msgstr "&Dostupne kamere"
+
+#. translators: the message spoken to prompt the user to trigger the command
+#. again, after the camera has been chosen
+#. # annoying behavior, this is a limitation of the way we're doing the UI.
+#. Yay
+#. for rapid prototyping!
+#. release the old capture object (if one exists)
+#: addon/globalPlugins/AIContentDescriber/face_view.py:42
+#, fuzzy
+msgid "Camera selected. You may now trigger the command again."
+msgstr "Kamera je izabrana. Sada možete ponovo pokrenuti komandu."
+
+#. Translators: the following messages correspond to the instructions provided
+#. to the user for facial detection. They are chosen and then joined together
+#. with spaces based on certain conditions.
+#: addon/globalPlugins/AIContentDescriber/face_view.py:79
+#, fuzzy
+msgid "far to the left of"
+msgstr "daleko levo od"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:81
+#, fuzzy
+msgid "to the left of"
+msgstr "levo od"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:83
+#, fuzzy
+msgid "slightly to the left of"
+msgstr "malo levo od"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:85
+#, fuzzy
+msgid "far to the right of"
+msgstr "daleko desno od"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:87
+#, fuzzy
+msgid "to the right of"
+msgstr "desno od"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:89
+#, fuzzy
+msgid "slightly to the right of"
+msgstr "malo desno od"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:91
+#, fuzzy
+msgid "far below"
+msgstr "daleko ispod"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:93
+#, fuzzy
+msgid "below"
+msgstr "ispod"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:95
+#, fuzzy
+msgid "slightly below"
+msgstr "malo ispod"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:97
+#, fuzzy
+msgid "far above"
+msgstr "daleko iznad"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:99
+#, fuzzy
+msgid "above"
+msgstr "iznad"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:101
+#, fuzzy
+msgid "slightly above"
+msgstr "malo iznad"
+
+#. Translators: Message spoken when the user's face is clearly in view
+#: addon/globalPlugins/AIContentDescriber/face_view.py:103
+#, fuzzy
+msgid "Face clearly in view"
+msgstr "Lice je jasno vidljivo"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:104
+#, fuzzy
+msgid "and"
+msgstr "i"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:104
+#, fuzzy
+msgid "the center"
+msgstr "centra"
+
+#. translators: the message spoken when footage could not be captured from the
+#. camera during facial detection
+#: addon/globalPlugins/AIContentDescriber/face_view.py:110
+#, fuzzy
+msgid ""
+"Failed to interface with the camera. Please ensure it is not in use by "
+"another application, then try again."
+msgstr ""
+"Povezivanje sa kamerom nije uspelo. Molimo uverite se da je ne koristi druga"
+" aplikacija, a zatim pokušajte ponovo."
+
+#. translators: message spoken when the face detection failed because we are
+#. on
+#. the desktop - a rarely encountered windows bug
+#: addon/globalPlugins/AIContentDescriber/face_view.py:124
+#, fuzzy
+msgid ""
+"The footage from the camera is too blurry. Try switching your focus away "
+"from the desktop, then try this command again."
+msgstr ""
+"Snimak sa kamere je previše mutan. Pokušajte da premestite fokus sa radne "
+"površine, a zatim ponovo pokrenite ovu komandu."
+
+#. translators: message spoken when the face detection fails because the
+#. camera
+#. encountered a blurry image
+#: addon/globalPlugins/AIContentDescriber/face_view.py:127
+#, python-brace-format, fuzzy
+msgid ""
+"The footage from the camera is too blurry. Please ensure that it is not "
+"covered up and that your surroundings have proper lighting. {}"
+msgstr ""
+"Snimak sa kamere je previše mutan. Molimo uverite se da kamera nije "
+"prekrivena i da je okruženje dobro osvetljeno. {}"
+
+#. translators: the message spoken when there was no face found in the frame
+#: addon/globalPlugins/AIContentDescriber/face_view.py:132
+#, fuzzy
+msgid ""
+"No face detected. Please ensure your face is in the frame and that your "
+"camera is not covered up."
+msgstr ""
+"Nije prepoznato nijedno lice. Molimo uverite se da je vaše lice u kadru i da"
+" kamera nije prekrivena."
+
+#. translators: the message spoken when more than one face was detected
+#: addon/globalPlugins/AIContentDescriber/face_view.py:135
+#, python-brace-format, fuzzy
+msgid ""
+"{} faces detected near the frame. Please try for another angle with fewer "
+"background objects."
+msgstr ""
+"Broj prepoznatih lica u blizini kadra: {}. Molimo pokušajte iz drugog ugla "
+"sa manje predmeta u pozadini."
+
+#. translators: the message that gets spoken when facial detection cannot find
+#. any cameras
+#: addon/globalPlugins/AIContentDescriber/face_view.py:153
+#: addon/globalPlugins/AIContentDescriber/face_view.py:174
+#, fuzzy
+msgid "No camera found on your system. Please connect one and try again."
+msgstr ""
+"Na vašem sistemu nije pronađena nijedna kamera. Molimo povežite kameru i "
+"pokušajte ponovo."
+
+#. translators: message spoken when the camera that was being used before has
+#. disconnected
+#: addon/globalPlugins/AIContentDescriber/face_view.py:164
+#, python-brace-format, fuzzy
+msgid "{} is no longer available. Switching to the other on the system."
+msgstr "{} više nije dostupna. Prebacivanje na drugu kameru na sistemu."
+
+#. translators: message spoken when the camera becomes unavailable between the
+#. user selecting it and triggering it again
+#: addon/globalPlugins/AIContentDescriber/face_view.py:185
+#, fuzzy
+msgid "Camera unavailable. Please try selecting another"
+msgstr "Kamera nije dostupna. Molimo pokušajte da izaberete drugu"
+
+#: addon/globalPlugins/AIContentDescriber/face_view.py:188
+#, fuzzy
+msgid ""
+"Starting the face detection interface. This may take a few seconds. Please "
+"wait."
+msgstr ""
+"Pokretanje interfejsa za prepoznavanje lica. Ovo može potrajati nekoliko "
+"sekundi. Molimo sačekajte."
+
+#. translators: message spoken when we could not interface with the chosen
+#. camera
+#: addon/globalPlugins/AIContentDescriber/face_view.py:192
+#, fuzzy
+msgid "Failed to interface with the chosen camera"
+msgstr "Povezivanje sa izabranom kamerom nije uspelo"
+
+#. translators: the title of the model configuration dialog.
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:19
+#, fuzzy
+msgid "Model configuration"
+msgstr "Podešavanja modela"
+
+#. translators: the button in the model configuration dialog that provides
+#. information on the selected model
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:32
+#, fuzzy
+msgid "About this model"
+msgstr "O ovom modelu"
+
+#. Translators: The label for the API key field in the model configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:36
+#, fuzzy
+msgid "API key"
+msgstr "API ključ"
+
+#. Translators: The label for the base URL field in the model configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:40
+#, fuzzy
+msgid "Base URL"
+msgstr "Osnovna URL adresa"
+
+#. Translators: The label for the model name field in the model configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:44
+#, fuzzy
+msgid "Model name"
+msgstr "Ime modela"
+
+#. Translators: The label for the list models button in the model
+#. configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:48
+#, fuzzy
+msgid "List models"
+msgstr "Prikaži modele"
+
+#. Translators: The label for the prompt field in the model configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:52
+msgid "Prompt"
+msgstr "Upit"
+
+#. Translators: The label for the button that resets the prompt to its default
+#. in the settings dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:54
+msgid "Reset prompt to default"
+msgstr "Vrati upit na podrazumevani"
+
+#. Translators: The label for the maximum tokens chooser in the model
+#. configuration dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:58
+msgid "Maximum tokens"
+msgstr "Maksimalan broj tokena"
+
+#. Translators: The label for the effort chooser in the model configuration
+#. dialog. Effort controls how much the model thinks before answering.
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:62
+#, fuzzy
+msgid "Effort"
+msgstr "Napor"
+
+#. Translators: The label for the timeout chooser in the model configuration
+#. dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:66
+msgid "Seconds to wait for a response before timing out"
+msgstr "Vreme čekanja na odgovor u sekundama pre isteka"
+
+#. translators: the title for the about model message box
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:118
+#, fuzzy
+msgid "About model"
+msgstr "O modelu"
+
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:135
+#, fuzzy
+msgid "No models were found. Please install one, then try again."
+msgstr ""
+"Nijedan model nije pronađen. Molimo instalirajte neki, a zatim pokušajte "
+"ponovo."
+
+#. Translators: the label for the list models dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:144
+#, fuzzy
+msgid "Select a model"
+msgstr "Izaberite model"
+
+#. Translators: Label of the model combo box in the choose model dialog
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:152
+#, fuzzy
+msgid "Model:"
+msgstr "Model:"
+
+#. Translators: The label for the NVDA-CN username field.
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:346
+#, fuzzy
+msgid "NVDA-CN Username"
+msgstr "NVDA-CN korisničko ime"
+
+#. Translators: The label for the NVDA-CN password field.
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:348
+#, fuzzy
+msgid "NVDA-CN Password"
+msgstr "NVDA-CN lozinka"
+
+#. Translators: Requires installation
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:367
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:397
+#, fuzzy
+msgid " (requires installation)"
+msgstr " (zahteva instalaciju)"
+
+#. Translators: Marks a model as unstable
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:383
+#, fuzzy
+msgid " (unstable)"
+msgstr " (nestabilno)"
+
+#. Translators: The label for the processing mode chooser for Datalab Chandra
+#. 2
+#: addon/globalPlugins/AIContentDescriber/model_configuration.py:575
+#, fuzzy
+msgid "Processing mode"
+msgstr "Režim obrade"
+
+#. Translators: Default title for the multimodal conversation dialog
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:22
+#, python-brace-format, fuzzy
+msgid "AI Conversation - {model}"
+msgstr "AI razgovor - {model}"
+
+#. translators: The label of the read-only image field in the conversation
+#. dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:37
+#, fuzzy
+msgid "Image:"
+msgstr "Slika:"
+
+#. translators: The label of the Browse button in the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:46
+#, fuzzy
+msgid "&Browse"
+msgstr "&Pretraži"
+
+#. translators: The label of the Delete button in the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:50
+#, fuzzy
+msgid "&Delete"
+msgstr "&Obriši"
+
+#. Translators: the include original image checkbox in the conversation
+#. dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:55
+#, fuzzy
+msgid "Include original image in context"
+msgstr "Uključi originalnu sliku u kontekst"
+
+#. translators: The label of the options button in the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:74
+#, fuzzy
+msgid "&Options"
+msgstr "&Opcije"
+
+#. translators: Value placed in the read-only image field when the original
+#. image has been added to the chat in the conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:107
+#, fuzzy
+msgid "Original image (from initial description)"
+msgstr "Originalna slika (iz početnog opisa)"
+
+#. translators: Value placed in the read-only image field of the conversation
+#. dialog when a new image has been attached.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:110
+#, fuzzy
+msgid "Image attached"
+msgstr "Slika je priložena"
+
+#. translators: The prompt to choose an image in the file dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:123
+#, fuzzy
+msgid "Choose an image"
+msgstr "Izaberite sliku"
+
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:124
+#, fuzzy
+msgid ""
+"Image files "
+"(*.jpg;*.jpeg;*.png;*.gif;*.webp)|*.jpg;*.jpeg;*.png;*.gif;*.webp"
+msgstr ""
+"Datoteke slika "
+"(*.jpg;*.jpeg;*.png;*.gif;*.webp)|*.jpg;*.jpeg;*.png;*.gif;*.webp"
+
+#. Show thinking indicator
+#. translators: The message shown in the multi-line read-only history field
+#. when the AI is processing the user's input.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:158
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:185
+#, fuzzy
+msgid "AI: (thinking...)"
+msgstr "AI: (razmišlja...)"
+
+#. This shouldn't happen, but handle gracefully
+#. translators: Message spoken when there is no active conversation in the
+#. conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:170
+#, fuzzy
+msgid "No active conversation. Please restart the dialog."
+msgstr "Nema aktivnog razgovora. Molimo ponovo otvorite dijalog."
+
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:199
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:200
+#, fuzzy
+msgid "Error:"
+msgstr "Greška:"
+
+#. translators: The clear conversation option under options in the
+#. conversation
+#. dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:208
+#, fuzzy
+msgid "&Clear Conversation"
+msgstr "&Obriši razgovor"
+
+#. translators: The save output to file option under options in the
+#. conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:211
+#, fuzzy
+msgid "&Save Output to File"
+msgstr "&Sačuvaj izlaz u datoteku"
+
+#. translators: Message spoken when the conversation has been cleared in the
+#. conversation dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:222
+#, fuzzy
+msgid "Conversation cleared"
+msgstr "Razgovor je obrisan"
+
+#. translators: The body of the yes/no dialog asking the user whether they
+#. would like to attach the image they just described to the open
+#. conversation.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:262
+#, fuzzy
+msgid "Would you like to attach this image to the current conversation?"
+msgstr "Da li želite da priložite ovu sliku trenutnom razgovoru?"
+
+#. translators: The title of the attach image yes/no dialog.
+#: addon/globalPlugins/AIContentDescriber/multimodal_input.py:264
+#, fuzzy
+msgid "Attach Image"
+msgstr "Priloži sliku"
+
+#. Translators: message spoken when fetching a UI description
+#: addon/globalPlugins/AIContentDescriber/ui_viewer.py:77
+#, fuzzy, python-brace-format
+msgid "Retrieving UI description using {name}..."
+msgstr "Preuzimanje opisa korisničkog interfejsa korišćenjem {name}..."
+
+#. Translators: title of the browseable message showing reconstructed UI
+#. controls
+#: addon/globalPlugins/AIContentDescriber/ui_viewer.py:84
+#, fuzzy
+msgid "UI Controls"
+msgstr "Kontrole korisničkog interfejsa"
+
+#. Translators: message spoken when no UI description is returned
+#: addon/globalPlugins/AIContentDescriber/ui_viewer.py:87
+#, fuzzy
+msgid "No UI description returned"
+msgstr "Nije vraćen opis korisničkog interfejsa"
+
+#. Translators: message spoken when an error occurs while describing the UI
+#: addon/globalPlugins/AIContentDescriber/ui_viewer.py:94
+#, fuzzy
+msgid "Error describing UI"
+msgstr "Greška pri opisivanju korisničkog interfejsa"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on
+#. information from add-ons manager
+#: buildVars.py:26
+#, fuzzy
+msgid ""
+"This add-on makes it possible to describe the focused control, navigator object, or entire screen using popular AI vision models including OpenAI GPT, Google Gemini, Anthropic Claude, xAI Grok, Mistral, local options like Ollama/llama.cpp/LiteLLM, and more. It also supports follow-up questions on any description, camera snapshots, clipboard images, and face positioning via a connected camera.\n"
+"Content descriptions may not always be completely accurate or reflect real-world information.\n"
+"Press NVDA+shift+i to pop up a menu for choosing what to describe, NVDA+shift+u to describe the navigator object, NVDA+shift+y for an image on the clipboard, or NVDA+alt+c to ask follow-up questions about the last description. Other keystrokes are available from the input gestures dialog.\n"
+"By default, usage is free through PollinationsAI with no sign-up or API key required. To use other models, visit the provider's website to obtain an API key, then enter it under the AI Content Describer category in NVDA's settings dialog. See the add-on documentation for more information."
+msgstr ""
+"Ovaj dodatak omogućava opisivanje fokusirane kontrole, navigacionog objekta ili celog ekrana korišćenjem popularnih AI modela za analizu slika, uključujući OpenAI GPT, Google Gemini, Anthropic Claude, xAI Grok, Mistral, lokalne opcije kao što su Ollama/llama.cpp/LiteLLM i druge. Takođe podržava dodatna pitanja o svakom opisu, slike sa kamere, slike iz privremene memorije i određivanje položaja lica pomoću povezane kamere.\n"
+"Opisi sadržaja ne moraju uvek biti potpuno tačni niti odražavati stvarne informacije.\n"
+"Pritisnite NVDA+shift+i da otvorite meni za izbor onoga što želite da opišete, NVDA+shift+u da opišete navigacioni objekat, NVDA+shift+y za sliku u privremenoj memoriji ili NVDA+alt+c da postavite dodatna pitanja o poslednjem opisu. Ostale prečice su dostupne u dijalogu ulaznih komandi.\n"
+"Podrazumevano, korišćenje je besplatno preko usluge PollinationsAI, bez registracije i bez API ključa. Da biste koristili druge modele, posetite veb sajt dobavljača da biste dobili API ključ, a zatim ga unesite u kategoriji AI opisivač sadržaja dijaloga NVDA podešavanja. Pogledajte dokumentaciju dodatka za više informacija."
+
+#~ msgid ""
+#~ "This add-on makes it possible to describe the focus object, navigator object, or screen using the popular GPT4 vision artificial intelligence LLM.\n"
+#~ "Though content descriptions are quite detailed, they may not always be completely accurate or reflect real world information.\n"
+#~ "To begin, head to https://platform.openai.com/account/api-keys and create an account, then create a key for interacting with the API. See add-on documentation for more information on this.\n"
+#~ "Then, choose the \"AI content describer\" category from NVDA's settings dialog and enter your API key.\n"
+#~ "Press NVDA+shift+i to pop up a menu asking how you wish to describe based on the current position, or NVDA+shift+u to describe the navigator object, or NVDA+shift+y for an image that has been copied to the clipboard such as in windows explorer. Other keystrokes are customizable from the input gestures dialog."
+#~ msgstr ""
+#~ "Ovaj dodatak omogućava opisivanje fokusiranog objekta, navigacionog objekta, ili ekrana korišćenjem popularnog LLM modela GPT4 vision veštačke inteligencije.\n"
+#~ "Iako su opisi sadržaja poprilično detaljni, možda neće uvek biti potpuno precizni ili bidi u skladu sa informacijama u realnosti.\n"
+#~ "Da biste počeli, posetite https://platform.openai.com/account/api-keys i napravite nalog, a zatim napravite ključ za API interakciju. Pogledajte dokumentaciju dodatka za više informacija o ovome.\n"
+#~ "Zatim, izaberite kategoriju \"AI opisivač sadržaja\" u dijalogu NVDA podešavanja i upišite vaš API ključ.\n"
+#~ "Pritisnite NVDA+šift+i da otvorite meni koji će vas upitati kako želite da dobijete opis u zavisnosti od trenutne pozicije, ili NVDA+šift+u da dobijete opis za navigacioni objekat i NVDA+šift+y za sliku koja je kopirana u privremenu memoriju nna primer iz Windows istraživača datoteka. Druge prečice se mogu prilagoditi iz dijaloga ulaznih komandi."
