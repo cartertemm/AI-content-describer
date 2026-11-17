@@ -200,6 +200,13 @@ max_tokens = integer(default=8192)
 cache_descriptions = boolean(default=False)
 timeout = integer(default=60, min=1)
 
+[Google Gemini 4 Carbon]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+cache_descriptions = boolean(default=False)
+timeout = integer(default=60, min=1)
+
 [Ollama]
 base_url = string(default="http://localhost:11434")
 prompt = string(default="")

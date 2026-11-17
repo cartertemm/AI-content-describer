@@ -314,6 +314,11 @@ class Gemini4ArgonConfigurationPanel(GeminiConfigurationPanel):
 	title = model.name
 
 
+class Gemini4CarbonConfigurationPanel(GeminiConfigurationPanel):
+	model = description_service.Gemini4Carbon()
+	title = model.name
+
+
 class MistralAIConfigurationPanel(BaseModelSettingsPanel):
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -619,6 +624,7 @@ description_service.Gemini3_7Flash.configurationPanel = Gemini3_7FlashConfigurat
 description_service.Gemini3_8Flash.configurationPanel = Gemini3_8FlashConfigurationPanel
 description_service.Gemini4Hydrogen.configurationPanel = Gemini4HydrogenConfigurationPanel
 description_service.Gemini4Argon.configurationPanel = Gemini4ArgonConfigurationPanel
+description_service.Gemini4Carbon.configurationPanel = Gemini4CarbonConfigurationPanel
 description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationPanel
 description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfigurationPanel # <-- 在这里添加
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel
