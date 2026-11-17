@@ -451,6 +451,11 @@ class Claude5_1FableConfigurationPanel(ClaudeConfigurationPanel):
 	title = model.name
 
 
+class Claude5_2FableConfigurationPanel(ClaudeConfigurationPanel):
+	model = description_service.Claude5_2Fable()
+	title = model.name
+
+
 class Claude5_5HaikuConfigurationPanel(ClaudeConfigurationPanel):
 	model = description_service.Claude5_5Haiku()
 	title = model.name
@@ -616,6 +621,7 @@ description_service.Claude5Sonnet.configurationPanel = Claude5SonnetConfiguratio
 description_service.Claude5Opus.configurationPanel = Claude5OpusConfigurationPanel
 description_service.Claude5Fable.configurationPanel = Claude5FableConfigurationPanel
 description_service.Claude5_1Fable.configurationPanel = Claude5_1FableConfigurationPanel
+description_service.Claude5_2Fable.configurationPanel = Claude5_2FableConfigurationPanel
 description_service.Claude5_5Haiku.configurationPanel = Claude5_5HaikuConfigurationPanel
 description_service.Claude5_5Sonnet.configurationPanel = Claude5_5SonnetConfigurationPanel
 description_service.Claude5_5Opus.configurationPanel = Claude5_5OpusConfigurationPanel

@@ -29,6 +29,14 @@ effort = option("low", "medium", "high", "xhigh", "max", default="low")
 cache_descriptions = boolean(default=False)
 timeout = integer(default=30, min=1)
 
+[Claude 5.2 Fable]
+api_key = string(default="")
+prompt = string(default="")
+max_tokens = integer(default=8192)
+effort = option("low", "medium", "high", "xhigh", "max", default="low")
+cache_descriptions = boolean(default=False)
+timeout = integer(default=60, min=1)
+
 [Claude 5.1 Fable]
 api_key = string(default="")
 prompt = string(default="")

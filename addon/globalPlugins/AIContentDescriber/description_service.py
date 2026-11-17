@@ -1567,6 +1567,23 @@ class Claude5_1Fable(Anthropic):
 	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
 
 
+class Claude5_2Fable(Anthropic):
+	name = "Claude 5.2 Fable"
+	# translators: the description for the Claude 5.2 Fable model in the model configuration dialog
+	description = _(
+		"Anthropic's most capable Fable model, for the most demanding reasoning and vision tasks. Faster and lower cost than Claude 5.1 Fable. Thinking is always on."
+	)
+	about_url = "https://www.anthropic.com/claude/fable"
+	internal_model_name = "claude-fable-5-2"
+	supports_computer_use = True
+	effort_levels = ['low', 'medium', 'high', 'xhigh', 'max']
+	_thinks_by_default = True
+	_computer_use_tool_type = ANTHROPIC_COMPUTER_TOOLSET
+	_capture_max_long_edge = 1920
+	_capture_max_pixels = None
+	_capture_max_visual_tokens = ANTHROPIC_HIGH_RES_MAX_VISUAL_TOKENS
+
+
 class Claude5_5Haiku(Anthropic):
 	name = "Claude 5.5 Haiku"
 	# translators: the description for the Claude 5.5 Haiku model in the model configuration dialog
@@ -2666,6 +2683,7 @@ models = [
 	Claude5_5Opus(),
 	Claude5Fable(),
 	Claude5_1Fable(),
+	Claude5_2Fable(),
 	# Google
 	Gemini2_5Flash(),
 	Gemini2_5FlashLite(),
