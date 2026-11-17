@@ -1558,32 +1558,32 @@ msgstr "Fotocamera selezionata. Ora puoi attivare di nuovo il comando."
 #: addon/globalPlugins/AIContentDescriber/face_view.py:79
 #, fuzzy
 msgid "far to the left of"
-msgstr "molto a sinistra di"
+msgstr "molto a sinistra"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:81
 #, fuzzy
 msgid "to the left of"
-msgstr "a sinistra di"
+msgstr "a sinistra"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:83
 #, fuzzy
 msgid "slightly to the left of"
-msgstr "leggermente a sinistra di"
+msgstr "leggermente a sinistra"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:85
 #, fuzzy
 msgid "far to the right of"
-msgstr "molto a destra di"
+msgstr "molto a destra"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:87
 #, fuzzy
 msgid "to the right of"
-msgstr "a destra di"
+msgstr "a destra"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:89
 #, fuzzy
 msgid "slightly to the right of"
-msgstr "leggermente a destra di"
+msgstr "leggermente a destra"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:91
 msgid "far below"
@@ -1621,7 +1621,7 @@ msgstr "e"
 
 #: addon/globalPlugins/AIContentDescriber/face_view.py:104
 msgid "the center"
-msgstr "il centro"
+msgstr "rispetto al centro"
 
 #. translators: the message spoken when footage could not be captured from the
 #. camera during facial detection
