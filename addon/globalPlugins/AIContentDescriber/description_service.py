@@ -1713,6 +1713,13 @@ class MistralAI(BaseDescriptionService):
 			payload["max_tokens"] = effective_max
 		return payload
 
+	def _extract_conversation_response(self, response_json):
+		content = super()._extract_conversation_response(response_json)
+		# Reasoning models reply with a list of chunks: a "thinking" chunk, then the answer as "text" chunks.
+		if isinstance(content, list):
+			return "".join(chunk.get("text", "") for chunk in content if chunk.get("type") == "text")
+		return content
+
 	@cached_description
 	def process(self, image_path, **kw):
 		base64_image = encode_image(image_path)
