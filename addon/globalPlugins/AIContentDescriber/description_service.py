@@ -858,8 +858,10 @@ class GPT6Luna(BaseGPT):
 
 class PollinationsAI(BaseGPT):
 	name = "Pollinations (OpenAI)"
-	# translators: The description for the PollinationsAI model with OpenAI support in the model selection dialog.
-	description = "Pollinations.AI is an open-source gen AI startup based in Berlin, providing the most easy-to-use, free text and image generation API available. It integrates with state-of-the-art models, no signups or API keys required."
+	description = _(
+		# translators: The description for the PollinationsAI model with OpenAI support in the model selection dialog.
+		"Pollinations.AI is an open-source gen AI startup based in Berlin, providing the most easy-to-use, free text and image generation API available. It integrates with state-of-the-art models, no signups or API keys required."
+	)
 	needs_api_key = False
 	openai_url = "https://text.pollinations.ai/openai"
 	internal_model_name = "openai"
