@@ -127,7 +127,9 @@ def _describe_request_error(error):
 	try:
 		body = fp.read()
 		log.debug(body)
-		err = json.loads(body.decode("utf-8")).get("error")
+		data = json.loads(body.decode("utf-8"))
+		# Most APIs nest the message under "error". Some, like Mistral, put it at the top level.
+		err = data.get("error") or data.get("message") or data.get("detail")
 	except Exception:
 		return detail
 	if isinstance(err, dict):
@@ -170,8 +172,9 @@ def post(**kwargs):
 			# translators: message spoken when the connection is refused by our target
 			ui.message(_("error, connection refused by target"))
 		else:
-			ui.message(error + ": " + _describe_request_error(i))
-			raise
+			detail = _describe_request_error(i)
+			ui.message(error + ": " + detail)
+			raise IOError(detail) from i
 		return
 	except Exception as i:
 		if quiet:
