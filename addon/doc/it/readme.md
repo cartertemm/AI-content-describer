@@ -17,7 +17,7 @@ Sfruttando le capacità multimodali di modelli di IA avanzati e di algoritmi di 
 * Memorizza facoltativamente le risposte nella cache per risparmiare la quota API
 * Per un uso avanzato, è possibile personalizzare il prompt e il numero di token per adattare le informazioni alle proprie esigenze
 * Fare domande di approfondimento e allegare altre immagini
-* Rendering Markdown per accedere facilmente alle informazioni strutturate (basta attivare l'impostazione "apri i risultati in una finestra navigabile" e aggiungere, ad esempio, "rispondi in Markdown" alla fine dei prompt)
+* Rendering Markdown per accedere facilmente alle informazioni strutturate (basta attivare l'impostazione "Apri ogni risultato in una finestra navigabile" e aggiungere, ad esempio, "rispondi in Markdown" alla fine dei prompt)
 
 ## Casi d'uso
 
@@ -189,7 +189,7 @@ Questo avvia un server proxy su `http://localhost:4000` che inoltra le richieste
 4. Nella finestra delle impostazioni di NVDA, scorri fino alla categoria AI Content Describer, scegli "gestisci modelli (alt+m)" e seleziona "LiteLLM Proxy" come provider.
 5. Inserisci l'URL del server proxy nel campo dell'URL di base (ad esempio "http://localhost:4000" in locale, oppure l'URL del tuo server remoto).
 6. Se il proxy richiede l'autenticazione, inserisci la chiave API nel campo della chiave API. Altrimenti lascialo vuoto.
-7. Fai clic sul pulsante "Elenca modelli" per recuperare i modelli disponibili dal proxy, poi seleziona dall'elenco a discesa il modello che vuoi usare.
+7. Fai clic sul pulsante "Elenco modelli" per recuperare i modelli disponibili dal proxy, poi seleziona dall'elenco a discesa il modello che vuoi usare.
 8. Regola le altre impostazioni, come il prompt, il numero massimo di token e il timeout, secondo le tue esigenze, poi fai clic su OK.
 
 Nota: i modelli disponibili e le loro capacità dipendono dalla configurazione del proxy LiteLLM. Assicurati che il proxy sia configurato con modelli dotati di capacità visive per la descrizione delle immagini.
@@ -248,7 +248,7 @@ Puoi personalizzarli in qualsiasi momento dalla finestra dei gesti e tasti di im
 ### Fare domande di approfondimento su una descrizione
 
 A volte la risposta dell'IA non basta. Forse l'immagine è di bassa qualità, incompleta o contiene dettagli indesiderati. Forse vuoi concentrarti solo su una certa parte o scattare una foto più nitida senza perdere il contesto.
-Dopo aver ricevuto una descrizione, puoi premere NVDA+alt+c o selezionare "Approfondisci la descrizione precedente" dal menu contestuale di AI Content Describer (NVDA+shift+i). Per impostazione predefinita, il focus si trova nel campo del messaggio.
+Dopo aver ricevuto una descrizione, puoi premere NVDA+alt+c o selezionare "Continua con la descrizione precedente" dal menu contestuale di AI Content Describer (NVDA+shift+i). Per impostazione predefinita, il focus si trova nel campo del messaggio.
 Per aggiungere un'altra immagine, lascia aperta la finestra della conversazione e usa l'add-on come fai di solito. Quando viene acquisita un'immagine (dalla fotocamera, da un controllo di sistema, da uno screenshot e così via), ti verrà chiesto se vuoi allegarla alla sessione corrente o avviarne una nuova.
 
 ### Controllo del computer
@@ -345,6 +345,7 @@ Le seguenti persone hanno lavorato all'add-on.
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): traduzione francese
 * [Lukas](https://4sensegaming.cz): traduzione ceca
 * [Michaela](https://technologiebezzraku.sk): traduzione slovacca
+* [loginerror](https://github.com/theloginerror): traduzione polacca
 
 Hai un problema? Segnalalo nell'[issue tracker](https://github.com/cartertemm/AI-content-describer/issues)
 
