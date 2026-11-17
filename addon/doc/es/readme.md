@@ -17,7 +17,7 @@ Aprovechando las capacidades multimodales de modelos de IA avanzados y algoritmo
 * Opcionalmente almacena en caché las respuestas para preservar la cuota de API
 * Para uso avanzado, personalice el prompt y el recuento de tokens para adaptar la información a sus necesidades
 * Haga preguntas de seguimiento y adjunte imágenes adicionales
-* Renderizado de Markdown para acceder fácilmente a información estructurada (simplemente active la opción "abrir resultados en un diálogo navegable" e incluya, por ejemplo, "responde en Markdown" al final de sus prompts)
+* Renderizado de Markdown para acceder fácilmente a información estructurada (simplemente active la opción "Abrir cada resultado en un diálogo navegable" e incluya, por ejemplo, "responde en Markdown" al final de sus prompts)
 
 ## Caso de uso
 
@@ -345,6 +345,7 @@ Las siguientes personas han trabajado en el complemento.
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): traducción al francés
 * [Lukas](https://4sensegaming.cz): traducción al checo
 * [Michaela](https://technologiebezzraku.sk): traducción al eslovaco
+* [loginerror](https://github.com/theloginerror): traducción al polaco
 
 ¿Tiene un problema? Envíelo al [rastreador de problemas](https://github.com/cartertemm/AI-content-describer/issues)
 
