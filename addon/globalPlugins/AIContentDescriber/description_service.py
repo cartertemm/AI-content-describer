@@ -1746,7 +1746,7 @@ class MistralLarge4(MistralAI):
 		# translators: the description for MistralAI's Mistral Large 4 model, as shown in the configuration dialog.
 		"Mistral's open-weight multimodal flagship model, with a 1M token context window."
 	)
-	internal_model_name = "mistral-large-4"
+	internal_model_name = "mistral-large-4-0"
 	about_url = "https://docs.mistral.ai/models/mistral-large-4-0"
 
 
