@@ -31,6 +31,15 @@ XGETTEXT_COMMON_ARGS = (
 )
 
 
+def _set_pot_charset(target, source, env):
+	"""xgettext writes charset=CHARSET when every string is ASCII. Translation tools expect UTF-8."""
+	path = str(target[0])
+	with open(path, encoding="utf-8", newline="") as f:
+		text = f.read()
+	with open(path, "w", encoding="utf-8", newline="") as f:
+		f.write(text.replace("charset=CHARSET", "charset=UTF-8", 1))
+
+
 def generate(env):
 	env.SetDefault(gettext_package_bugs_address="example@example.com")
 	env.SetDefault(gettext_package_name="")
@@ -43,7 +52,10 @@ def generate(env):
 	)
 
 	env['BUILDERS']['gettextPotFile'] = env.Builder(
-		action=Action("xgettext " + XGETTEXT_COMMON_ARGS, "Generating pot file $TARGET"),
+		action=[
+			Action("xgettext " + XGETTEXT_COMMON_ARGS, "Generating pot file $TARGET"),
+			Action(_set_pot_charset, None),
+		],
 		suffix=".pot")
 
 	env['BUILDERS']['gettextMergePotFile'] = env.Builder(
