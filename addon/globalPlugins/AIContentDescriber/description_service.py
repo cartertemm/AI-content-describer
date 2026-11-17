@@ -1051,6 +1051,16 @@ class Gemini3_8Flash(GoogleGemini):
 	about_url = "https://deepmind.google/models/gemini/flash/"
 
 
+class Gemini4Hydrogen(GoogleGemini):
+	name = "Google Gemini 4 Hydrogen"
+	internal_model_name = "gemini-4-hydrogen"
+	# translators: the description for Google's Gemini 4 Hydrogen model, as shown in the configuration dialog.
+	description = _(
+		"Gemini 4 Hydrogen is Google's fast, lower-cost Gemini 4 model for everyday tasks, with a 1M token context window."
+	)
+	about_url = "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/"
+
+
 ANTHROPIC_COMPUTER_TOOLSET = "computer_toolset_20260801"
 # Visual-token budget for Claude 4.7 and later. The toolset rejects larger screenshots and the
 # computer tool shrinks them, which moves the model's coordinates off our image.
@@ -2695,6 +2705,7 @@ models = [
 	Gemini3_6Flash(),
 	Gemini3_7Flash(),
 	Gemini3_8Flash(),
+	Gemini4Hydrogen(),
 	# xAI
 	Grok4_20NonReasoning(),
 	Grok4_3(),

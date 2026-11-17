@@ -41,7 +41,7 @@ Now, the possibilities are almost endless. You might:
 
 * [Pollinations](https://pollinations.ai/): The team behind Pollinations.AI generously sponsors free GPT4 access for this project, so users do not need to supply their own API key. Note that the service has been observed to be buggy, and we highly recommend using your own keys to realize the full benefits of this project.
 * [OpenAI GPT models](https://platform.openai.com/docs/models): Requires an OpenAI API key. Includes the GPT-5.4 family (5.4 and 5.4 mini), the GPT-5.5 family (5.5 and 5.5 pro), the GPT-6 family (6 Astra and 6 Luna), and the GPT-6.1 family (6.1 Sol and 6.1 Terra). Computer use is supported by the GPT-5.4, GPT-5.5, GPT-6, and GPT-6.1 families.
-* [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3.1 Flash-Lite, 3.1 Pro Preview, 3.5 Flash, 3.5 Flash-Lite, 3.6 Flash, 3.7 Flash, and 3.8 Flash models.
+* [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3.1 Flash-Lite, 3.1 Pro Preview, 3.5 Flash, 3.5 Flash-Lite, 3.6 Flash, 3.7 Flash, 3.8 Flash, and 4 Hydrogen models.
 * [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4.5 (Sonnet, Opus), 4.6 (Sonnet, Opus), 4.7 Opus, 4.8 Opus, 5 (Sonnet, Opus, Fable), 5.1 Fable, 5.2 Fable, and 5.5 (Haiku, Sonnet, Opus). All of these support computer use.
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
 * [xAI Grok](https://docs.x.ai/developers/models), including Grok 4.20 (non-reasoning), 4.3, 4.5, 4.6, and 4.7.
