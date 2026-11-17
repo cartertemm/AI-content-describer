@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AIContentDescriber 2026.05.06\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2026-11-16 23:59-0700\n"
+"POT-Creation-Date: 2026-11-17 00:00-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1005,47 +1005,48 @@ msgid ""
 "{response}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2154
+#. translators: the description for the vivo BlueLM Vision model, as shown in the configuration dialog.
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2155
 msgid ""
 "A multimodal model from vivo, accessed via NVDA-CN account. This service is "
 "provided by the NVDA Chinese community and requires your nvdacn.com "
 "credentials."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2229
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2230
 #, python-brace-format
 msgid "API Error: {error}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2236
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2237
 msgid "The model returned an empty response."
 msgstr ""
 
 #. This case is a safeguard; post() should raise an exception on failure.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2281
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2282
 msgid "Network request failed unexpectedly."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2321
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2322
 msgid "No active conversation. Please describe an image first."
 msgstr ""
 
 #. translators: description of the Seer local vision provider
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2346
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2347
 msgid ""
 "Private, on-device image descriptions using PaliGemma2. No API key or cloud "
 "connection required. Note: this is a captioning model, prompts and follow-up "
 "questions are not supported. Install the Seer daemon to get started."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2379
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2380
 msgid ""
 "Seer uses PaliGemma2 which describes images but does not support follow-up "
 "questions."
 msgstr ""
 
 #. translators: description of the Datalab Chandra 2 vision model
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2409
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2410
 msgid ""
 "Datalab Chandra 2 is a state-of-the-art vision and OCR model specialized in "
 "complex document layouts, tables, forms, handwriting, charts, and math. "
@@ -1055,45 +1056,45 @@ msgstr ""
 
 #. translators: message spoken when an error occurs while contacting the Datalab API
 #. translators: message spoken when checking the status of a Datalab conversion fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2518
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2597
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2604
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2519
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2598
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2605
 #, python-brace-format
 msgid "Datalab API error: {error}"
 msgstr ""
 
 #. translators: message spoken when the Datalab API returns an invalid or non-JSON response
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2528
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2529
 msgid "Invalid response received from Datalab API."
 msgstr ""
 
 #. translators: message spoken when a Datalab conversion request fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2533
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2534
 msgid "Datalab conversion request failed."
 msgstr ""
 
 #. translators: message spoken when Datalab does not return a request check URL
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2544
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2545
 msgid "No request check URL returned by Datalab."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 conversion fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2553
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2619
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2554
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2620
 msgid "Datalab Chandra 2 conversion failed."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 returns an empty response
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2573
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2574
 msgid "No content returned from Datalab Chandra 2."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 conversion times out
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2624
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2625
 msgid "Datalab Chandra 2 conversion timed out."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2683
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2684
 msgid ""
 "Datalab Chandra 2 Convert API is specialized for OCR and document "
 "transcription, and does not support follow-up questions."

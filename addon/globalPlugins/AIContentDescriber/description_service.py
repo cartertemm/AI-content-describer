@@ -2151,6 +2151,7 @@ This add-on integration assumes that you have obtained llama.cpp from Github and
 class VivoBlueLMVision(BaseDescriptionService):
 	name = "vivo BlueLM Vision (NVDA-CN)"
 	description = _(
+		# translators: the description for the vivo BlueLM Vision model, as shown in the configuration dialog.
 		"A multimodal model from vivo, accessed via NVDA-CN account. This service is provided by the NVDA Chinese community and requires your nvdacn.com credentials."
 	)
 	about_url = "https://nvdacn.com/"
