@@ -1747,6 +1747,16 @@ class PixtralLarge(MistralAI):
 	about_url = "https://mistral.ai/news/pixtral-large/"
 
 
+class MistralLarge4(MistralAI):
+	name = "Mistral Large 4"
+	description = _(
+		# translators: the description for MistralAI's Mistral Large 4 model, as shown in the configuration dialog.
+		"Mistral's open-weight multimodal flagship model, with a 1M token context window."
+	)
+	internal_model_name = "mistral-large-4"
+	about_url = "https://docs.mistral.ai/models/mistral-large-4-0"
+
+
 class Grok4Base(BaseGPT):
 	openai_url = "https://api.x.ai/v1/chat/completions"
 	supported_formats = [
@@ -2739,6 +2749,7 @@ models = [
 	Grok4_7(),
 	# Mistral
 	PixtralLarge(),
+	MistralLarge4(),
 	# Moonshot AI (Kimi)
 	KimiK3(),
 	KimiK2_6(),

@@ -335,6 +335,11 @@ class PixtralLargeConfigurationPanel(MistralAIConfigurationPanel):
 	title = model.name
 
 
+class MistralLarge4ConfigurationPanel(MistralAIConfigurationPanel):
+	model = description_service.MistralLarge4()
+	title = model.name
+
+
 class VivoBlueLMVisionConfigurationPanel(BaseModelSettingsPanel):
 	model = description_service.VivoBlueLMVision()
 	title = model.name
@@ -626,6 +631,7 @@ description_service.Gemini4Hydrogen.configurationPanel = Gemini4HydrogenConfigur
 description_service.Gemini4Argon.configurationPanel = Gemini4ArgonConfigurationPanel
 description_service.Gemini4Carbon.configurationPanel = Gemini4CarbonConfigurationPanel
 description_service.PixtralLarge.configurationPanel = PixtralLargeConfigurationPanel
+description_service.MistralLarge4.configurationPanel = MistralLarge4ConfigurationPanel
 description_service.VivoBlueLMVision.configurationPanel = VivoBlueLMVisionConfigurationPanel # <-- 在这里添加
 description_service.Ollama.configurationPanel = OllamaConfigurationPanel
 description_service.LlamaCPP.configurationPanel = LlamaCPPConfigurationPanel

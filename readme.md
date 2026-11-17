@@ -12,7 +12,7 @@ Leveraging the multimodal capabilities of advanced AI models and computer vision
 * Indicate whether the user's face is positioned at the center of the frame using computer vision algorithms (does not require paid API access)
 * Use supported models to control the active application with mouse and keyboard actions for potentially inaccessible tasks
 * Free to use by default, optionally add your own API key for more models
-* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large, Anthropic's Claude, xAI's Grok, Moonshot AI's Kimi, vivo BlueLM Vision via NVDA-CN, Datalab Chandra 2, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
+* Supports multiple providers (OpenAI's GPT and the free Pollinations tier, Google's Gemini, Mistral's Pixtral Large and Mistral Large 4, Anthropic's Claude, xAI's Grok, Moonshot AI's Kimi, vivo BlueLM Vision via NVDA-CN, Datalab Chandra 2, Ollama, llama.cpp, LiteLLM Proxy, and Seer)
 * Supports a wide variety of formats including PNG (.png), JPEG (.jpeg and .jpg), WEBP (.webp), and non-animated GIF (.gif)
 * Optionally caches responses to preserve API quota
 * For advanced use, customize the prompt and token count to tailor information to your needs
@@ -44,6 +44,7 @@ Now, the possibilities are almost endless. You might:
 * [Google Gemini](https://deepmind.google/models/gemini/), including 2.5 Flash, 2.5 Flash-Lite, 2.5 Pro, 3.1 Flash-Lite, 3.1 Pro Preview, 3.5 Flash, 3.5 Flash-Lite, 3.6 Flash, 3.7 Flash, 3.8 Flash, 4 Hydrogen, 4 Argon, and 4 Carbon models.
 * [Anthropic Claude](https://docs.anthropic.com/claude/docs/vision), including Claude 4.5 (Sonnet, Opus), 4.6 (Sonnet, Opus), 4.7 Opus, 4.8 Opus, 5 (Sonnet, Opus, Fable), 5.1 Fable, 5.2 Fable, and 5.5 (Haiku, Sonnet, Opus). All of these support computer use.
 * [Pixtral Large](https://mistral.ai/en/news/pixtral-large)
+* [Mistral Large 4](https://docs.mistral.ai/models/mistral-large-4-0)
 * [xAI Grok](https://docs.x.ai/developers/models), including Grok 4.20 (non-reasoning), 4.3, 4.5, 4.6, and 4.7.
 * [Kimi](https://platform.kimi.ai/docs/guide/use-kimi-vision-model), Moonshot AI's multimodal models, including Kimi K3 and Kimi K2.6.
 * vivo BlueLM Vision: a multimodal model from vivo, accessed via a free NVDA-CN account. See the setup section below.
