@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AIContentDescriber 2026.05.06\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2026-11-17 00:13-0700\n"
+"POT-Creation-Date: 2026-11-17 10:34-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -602,38 +602,38 @@ msgstr ""
 
 #. translators: error
 #: addon\globalPlugins\AIContentDescriber\description_service.py:86
-#: addon\globalPlugins\AIContentDescriber\description_service.py:148
+#: addon\globalPlugins\AIContentDescriber\description_service.py:150
 msgid "error"
 msgstr ""
 
 #. translators: message spoken when we can't connect (error with connection)
 #: addon\globalPlugins\AIContentDescriber\description_service.py:92
-#: addon\globalPlugins\AIContentDescriber\description_service.py:166
+#: addon\globalPlugins\AIContentDescriber\description_service.py:168
 msgid "error making connection"
 msgstr ""
 
 #. translators: message spoken when the connection is refused by our target
 #: addon\globalPlugins\AIContentDescriber\description_service.py:99
-#: addon\globalPlugins\AIContentDescriber\description_service.py:171
+#: addon\globalPlugins\AIContentDescriber\description_service.py:173
 msgid "error, connection refused by target"
 msgstr ""
 
 #. translators: the description for the GPT-5.4 model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:767
+#: addon\globalPlugins\AIContentDescriber\description_service.py:770
 msgid ""
 "OpenAI's latest flagship model with advanced reasoning, vision, and a 400k "
 "token context window."
 msgstr ""
 
 #. translators: the description for the GPT-5.4 mini model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:779
+#: addon\globalPlugins\AIContentDescriber\description_service.py:782
 msgid ""
 "A fast, affordable variant of GPT-5.4 with vision support and a 400k token "
 "context window."
 msgstr ""
 
 #. translators: the description for the GPT-5.5 model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:791
+#: addon\globalPlugins\AIContentDescriber\description_service.py:794
 msgid ""
 "OpenAI's frontier model for complex professional work, with a new class of "
 "intelligence for coding, vision, and agentic tasks. Supports image input and "
@@ -641,7 +641,7 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the GPT-5.5 pro model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:803
+#: addon\globalPlugins\AIContentDescriber\description_service.py:806
 msgid ""
 "A higher-compute variant of GPT-5.5 that thinks harder for smarter and more "
 "precise responses on complex, high-stakes workloads. Supports image input "
@@ -649,7 +649,7 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the GPT-6 Astra model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:815
+#: addon\globalPlugins\AIContentDescriber\description_service.py:818
 msgid ""
 "OpenAI's most capable model for the most demanding work, such as complex "
 "reasoning, coding, and computer control. Supports image input and a 1M token "
@@ -657,61 +657,61 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the GPT-6.1 Sol model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:827
+#: addon\globalPlugins\AIContentDescriber\description_service.py:830
 msgid ""
 "Close to GPT-6 Astra on complex work at a lower cost. Supports image input "
 "and a 1M token context window."
 msgstr ""
 
 #. translators: the description for the GPT-6.1 Terra model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:839
+#: addon\globalPlugins\AIContentDescriber\description_service.py:842
 msgid ""
 "A fast, affordable GPT-6.1 model at half the price of GPT-6.1 Sol. Supports "
 "image input and a 1M token context window."
 msgstr ""
 
 #. translators: the description for the GPT-6 Luna model in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:851
+#: addon\globalPlugins\AIContentDescriber\description_service.py:854
 msgid ""
 "OpenAI's lowest cost GPT-6 model, for high-volume work where price matters "
 "most. Supports image input and a 1M token context window."
 msgstr ""
 
 #. translators: The description for the PollinationsAI model with OpenAI support in the model selection dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:863
+#: addon\globalPlugins\AIContentDescriber\description_service.py:866
 msgid ""
 "Pollinations.AI is an open-source gen AI startup based in Berlin, providing "
 "the most easy-to-use, free text and image generation API available. It "
 "integrates with state-of-the-art models, no signups or API keys required."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:913
+#: addon\globalPlugins\AIContentDescriber\description_service.py:916
 #, python-brace-format
 msgid "Gemini encountered an error: {code}, {msg}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:927
+#: addon\globalPlugins\AIContentDescriber\description_service.py:930
 msgid ""
 "The model used all available tokens for reasoning and returned no visible "
 "response. Try increasing the max tokens setting."
 msgstr ""
 
 #. translators: the description for Google's Gemini 2.5 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:961
+#: addon\globalPlugins\AIContentDescriber\description_service.py:964
 msgid ""
 "Gemini 2.5 Flash delivers fast performance for complex tasks. Ideal for "
 "tasks like summarization, chat applications, data extraction, and captioning."
 msgstr ""
 
 #. translators: the description for Google's Gemini 2.5 Flash-Lite model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:971
+#: addon\globalPlugins\AIContentDescriber\description_service.py:974
 msgid ""
 "Gemini 2.5 Flash-Lite is optimized for cost efficiency and low latency while "
 "maintaining strong performance."
 msgstr ""
 
 #. translators: the description for Google's Gemini 2.5 Pro model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:981
+#: addon\globalPlugins\AIContentDescriber\description_service.py:984
 msgid ""
 "Gemini 2.5 Pro models are capable of reasoning through their thoughts before "
 "responding, resulting in enhanced performance and improved accuracy. Best "
@@ -719,21 +719,21 @@ msgid ""
 msgstr ""
 
 #. translators: the description for Google's Gemini 3.1 Flash-Lite model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:991
+#: addon\globalPlugins\AIContentDescriber\description_service.py:994
 msgid ""
 "Gemini 3.1 Flash-Lite is optimized for cost efficiency and low latency in "
 "high-frequency tasks."
 msgstr ""
 
 #. translators: the description for Google's Gemini 3.1 Pro Preview model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1001
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1004
 msgid ""
 "Gemini 3.1 Pro is Google's latest reasoning-first model for complex agentic "
 "workflows, with enhanced performance and accuracy."
 msgstr ""
 
 #. translators: the description for Google's Gemini 3.5 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1011
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1014
 msgid ""
 "Gemini 3.5 Flash is Google's latest and most capable Flash model, with "
 "faster response times and reduced latency. Ideal for tasks requiring both "
@@ -741,124 +741,124 @@ msgid ""
 msgstr ""
 
 #. translators: the description for Google's Gemini 3.5 Flash-Lite model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1021
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1024
 msgid ""
 "Gemini 3.5 Flash-Lite provides high throughput and cost efficiency for "
 "lightweight multimodal processing."
 msgstr ""
 
 #. translators: the description for Google's Gemini 3.6 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1031
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1034
 msgid ""
 "Gemini 3.6 Flash offers balanced speed and accuracy for multimodal "
 "understanding and captioning."
 msgstr ""
 
 #. translators: the description for Google's Gemini 3.7 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1041
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1044
 msgid ""
 "Gemini 3.7 Flash combines high-speed processing with advanced multimodal "
 "capabilities and visual reasoning."
 msgstr ""
 
 #. translators: the description for Google's Gemini 3.8 Flash model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1051
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1054
 msgid ""
 "Gemini 3.8 Flash delivers high-performance multimodal reasoning with fast "
 "response times."
 msgstr ""
 
 #. translators: the description for Google's Gemini 4 Hydrogen model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1061
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1064
 msgid ""
 "Gemini 4 Hydrogen is Google's fast, lower-cost Gemini 4 model for everyday "
 "tasks, with a 1M token context window."
 msgstr ""
 
 #. translators: the description for Google's Gemini 4 Argon model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1071
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1074
 msgid ""
 "Gemini 4 Argon is Google's frontier model for complex, multi-step work. It "
 "requires the paid tier of the Gemini API."
 msgstr ""
 
 #. translators: the description for Google's Gemini 4 Carbon model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1081
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1084
 msgid ""
 "Gemini 4 Carbon is Google's most capable model, for hard, multi-step "
 "reasoning. It thinks longer than Gemini 4 Argon, so responses are slower."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1392
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1395
 #, python-brace-format
 msgid "Claude encountered an error. {err}"
 msgstr ""
 
 #. translators: the description for the Claude 4.5 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1433
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1436
 msgid ""
 "Anthropic's Sonnet model with extended thinking and a balance of speed and "
 "intelligence."
 msgstr ""
 
 #. translators: the description for the Claude 4.5 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1448
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1451
 msgid ""
 "Anthropic's Opus model with extended thinking, for complex reasoning and "
 "analysis tasks."
 msgstr ""
 
 #. translators: the description for the Claude 4.6 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1464
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1467
 msgid ""
 "Anthropic's Sonnet model that balances speed and intelligence. Features a 1M "
 "token context window and adaptive thinking."
 msgstr ""
 
 #. translators: the description for the Claude 4.6 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1481
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1484
 msgid ""
 "Anthropic's Opus model for agents, coding, and complex reasoning. Features a "
 "1M token context window and adaptive thinking."
 msgstr ""
 
 #. translators: the description for the Claude 4.7 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1498
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1501
 msgid ""
 "Anthropic's Opus model with high-resolution vision support up to 3.75MP, "
 "adaptive thinking, and a 1M token context window."
 msgstr ""
 
 #. translators: the description for the Claude 4.8 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1516
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1519
 msgid ""
 "Anthropic's refined Opus model with the same high-resolution vision, "
 "adaptive thinking, and 1M token context window as Claude 4.7 Opus."
 msgstr ""
 
 #. translators: the description for the Claude 5 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1534
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1537
 msgid ""
 "Anthropic's fast and affordable Sonnet model with high-resolution vision, "
 "adaptive thinking, and a 1M token context window."
 msgstr ""
 
 #. translators: the description for the Claude 5 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1552
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1555
 msgid ""
 "Anthropic's Opus model for complex reasoning and agentic tasks. Thinks by "
 "default, with high-resolution vision and a 1M token context window."
 msgstr ""
 
 #. translators: the description for the Claude 5 Fable model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1570
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1573
 msgid ""
 "Anthropic's frontier model above the Opus tier, for the most demanding "
 "reasoning and vision tasks. Thinking is always on. Higher cost than Opus."
 msgstr ""
 
 #. translators: the description for the Claude 5.1 Fable model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1588
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1591
 msgid ""
 "Anthropic's Fable model above the Opus tier, with stronger vision and "
 "computer use than Claude 5 Fable. Thinking is always on. Higher cost than "
@@ -866,7 +866,7 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the Claude 5.2 Fable model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1606
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1609
 msgid ""
 "Anthropic's most capable Fable model, for the most demanding reasoning and "
 "vision tasks. Faster and lower cost than Claude 5.1 Fable. Thinking is "
@@ -874,14 +874,14 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the Claude 5.5 Haiku model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1623
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1626
 msgid ""
 "Anthropic's fast, low-cost Haiku model for quick descriptions and high-"
 "volume tasks. Thinks by default and has a 1M token context window."
 msgstr ""
 
 #. translators: the description for the Claude 5.5 Sonnet model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1640
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1643
 msgid ""
 "Anthropic's Sonnet model for everyday vision, coding, and agentic tasks, "
 "balancing speed and capability. Thinks by default, with high-resolution "
@@ -889,7 +889,7 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the Claude 5.5 Opus model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1657
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1660
 msgid ""
 "Anthropic's Opus model for complex reasoning, coding, and agentic tasks, "
 "priced below Claude 5 Opus. Thinking is always on, with high-resolution "
@@ -897,14 +897,14 @@ msgid ""
 msgstr ""
 
 #. translators: the description for MistralAI's Mistral Large 4 model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1744
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1754
 msgid ""
 "Mistral's open-weight multimodal flagship model, with a 1M token context "
 "window."
 msgstr ""
 
 #. translators: the description for the xAI Grok 4.3 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1767
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1777
 msgid ""
 "xAI's recommended flagship reasoning model with a 1M token context window. "
 "Features always-on chain-of-thought reasoning and support for image input."
@@ -912,82 +912,82 @@ msgstr ""
 
 #. translators: the description for the xAI Grok 4.5 model in the model configuration dialog
 #. translators: the description for the xAI Grok 4.6 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1778
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1789
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1788
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1799
 msgid ""
 "An xAI reasoning model with image input and a 500k token context window. "
 "Reasoning is always on."
 msgstr ""
 
 #. translators: the description for the xAI Grok 4.7 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1800
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1810
 msgid ""
 "xAI's most capable model, with image input and a 500k token context window. "
 "Reasoning is always on."
 msgstr ""
 
 #. translators: the description for the xAI Grok 4.20 (non-reasoning) model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1811
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1821
 msgid ""
 "xAI's fast, low-cost model for instant responses without a reasoning step. "
 "Supports image input and a 1M token context window."
 msgstr ""
 
 #. translators: the description for Moonshot AI's Kimi K3 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1832
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1842
 msgid ""
 "Moonshot AI's flagship multimodal model, with a 1M token context window and "
 "strong reasoning across text, image, and video."
 msgstr ""
 
 #. translators: the description for Moonshot AI's Kimi K2.6 model in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1842
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1852
 msgid ""
 "A capable Kimi multimodal model that understands both image and video input "
 "alongside text."
 msgstr ""
 
 #. translators: the description for the Ollama model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1854
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1864
 msgid "The quickest way to get up and running with large language models."
 msgstr ""
 
 #. translators: the message spoken in the Ollama configuration dialog upon pressing "list models", when the base URL cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1872
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1882
 #, python-brace-format
 msgid "Could not contact the provided base URL. {error}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1903
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2033
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1913
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2043
 #, python-brace-format
 msgid "The response appears to be malformed. {response}"
 msgstr ""
 
 #. translators: the description for the LiteLLM Proxy model, as shown in the configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1937
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1947
 msgid "Access multiple AI models through a unified LiteLLM proxy server."
 msgstr ""
 
 #. translators: the message spoken in the LiteLLM configuration dialog when no base URL is provided
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1954
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1964
 msgid "Please provide a base URL first."
 msgstr ""
 
 #. translators: the message spoken in the LiteLLM configuration dialog upon pressing "list models", when the proxy cannot be contacted.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1969
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1979
 #, python-brace-format
 msgid "Could not contact the LiteLLM proxy server. {error}"
 msgstr ""
 
 #. translators: the message spoken when the LiteLLM proxy returns an unexpected response format
-#: addon\globalPlugins\AIContentDescriber\description_service.py:1980
+#: addon\globalPlugins\AIContentDescriber\description_service.py:1990
 #, python-brace-format
 msgid "Unexpected response format from LiteLLM proxy. {error}"
 msgstr ""
 
 #. translators: the description for the llama.cpp option in the model configuration dialog
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2074
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2084
 msgid ""
 "llama.cpp is a state-of-the-art, open-source solution for running large "
 "language models locally and in the cloud.\n"
@@ -998,7 +998,7 @@ msgid ""
 "doing, you can find basic steps in the add-on documentation."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2121
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2131
 #, python-brace-format
 msgid ""
 "Image recognition response appears to be malformed.\n"
@@ -1006,47 +1006,47 @@ msgid ""
 msgstr ""
 
 #. translators: the description for the vivo BlueLM Vision model, as shown in the configuration dialog.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2155
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2165
 msgid ""
 "A multimodal model from vivo, accessed via NVDA-CN account. This service is "
 "provided by the NVDA Chinese community and requires your nvdacn.com "
 "credentials."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2230
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2240
 #, python-brace-format
 msgid "API Error: {error}"
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2237
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2247
 msgid "The model returned an empty response."
 msgstr ""
 
 #. This case is a safeguard; post() should raise an exception on failure.
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2282
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2292
 msgid "Network request failed unexpectedly."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2322
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2332
 msgid "No active conversation. Please describe an image first."
 msgstr ""
 
 #. translators: description of the Seer local vision provider
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2347
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2357
 msgid ""
 "Private, on-device image descriptions using PaliGemma2. No API key or cloud "
 "connection required. Note: this is a captioning model, prompts and follow-up "
 "questions are not supported. Install the Seer daemon to get started."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2380
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2390
 msgid ""
 "Seer uses PaliGemma2 which describes images but does not support follow-up "
 "questions."
 msgstr ""
 
 #. translators: description of the Datalab Chandra 2 vision model
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2410
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2420
 msgid ""
 "Datalab Chandra 2 is a state-of-the-art vision and OCR model specialized in "
 "complex document layouts, tables, forms, handwriting, charts, and math. "
@@ -1056,45 +1056,45 @@ msgstr ""
 
 #. translators: message spoken when an error occurs while contacting the Datalab API
 #. translators: message spoken when checking the status of a Datalab conversion fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2519
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2598
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2605
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2529
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2608
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2615
 #, python-brace-format
 msgid "Datalab API error: {error}"
 msgstr ""
 
 #. translators: message spoken when the Datalab API returns an invalid or non-JSON response
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2529
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2539
 msgid "Invalid response received from Datalab API."
 msgstr ""
 
 #. translators: message spoken when a Datalab conversion request fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2534
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2544
 msgid "Datalab conversion request failed."
 msgstr ""
 
 #. translators: message spoken when Datalab does not return a request check URL
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2545
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2555
 msgid "No request check URL returned by Datalab."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 conversion fails
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2554
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2620
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2564
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2630
 msgid "Datalab Chandra 2 conversion failed."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 returns an empty response
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2574
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2584
 msgid "No content returned from Datalab Chandra 2."
 msgstr ""
 
 #. translators: message spoken when Datalab Chandra 2 conversion times out
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2625
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2635
 msgid "Datalab Chandra 2 conversion timed out."
 msgstr ""
 
-#: addon\globalPlugins\AIContentDescriber\description_service.py:2684
+#: addon\globalPlugins\AIContentDescriber\description_service.py:2694
 msgid ""
 "Datalab Chandra 2 Convert API is specialized for OCR and document "
 "transcription, and does not support follow-up questions."
