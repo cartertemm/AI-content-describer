@@ -1061,6 +1061,16 @@ class Gemini4Hydrogen(GoogleGemini):
 	about_url = "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/"
 
 
+class Gemini4Argon(GoogleGemini):
+	name = "Google Gemini 4 Argon"
+	internal_model_name = "gemini-4-argon"
+	# translators: the description for Google's Gemini 4 Argon model, as shown in the configuration dialog.
+	description = _(
+		"Gemini 4 Argon is Google's frontier model for complex, multi-step work. It requires the paid tier of the Gemini API."
+	)
+	about_url = "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/"
+
+
 ANTHROPIC_COMPUTER_TOOLSET = "computer_toolset_20260801"
 # Visual-token budget for Claude 4.7 and later. The toolset rejects larger screenshots and the
 # computer tool shrinks them, which moves the model's coordinates off our image.
@@ -2706,6 +2716,7 @@ models = [
 	Gemini3_7Flash(),
 	Gemini3_8Flash(),
 	Gemini4Hydrogen(),
+	Gemini4Argon(),
 	# xAI
 	Grok4_20NonReasoning(),
 	Grok4_3(),
