@@ -17,7 +17,7 @@ S využitím multimodálnych schopností pokročilých modelov umelej inteligenc
 * Voliteľné ukladanie odpovedí do medzipamäte pre úsporu kvóty API
 * Pre pokročilé použitie si môžete nastaviť pokyn a počet tokenov tak, aby ste získané informácie prispôsobili svojim potrebám
 * Možnosť klásť doplňujúce otázky a prikladať ďalšie obrázky
-* Vykresľovanie vo formáte Markdown pre ľahký prístup k štruktúrovaným informáciám (stačí zapnúť nastavenie „otvárať výsledky v prehľadávateľnom dialógu“ a na koniec svojho pokynu uviesť napr. „odpovedz vo formáte Markdown“)
+* Vykresľovanie vo formáte Markdown pre ľahký prístup k štruktúrovaným informáciám (stačí zapnúť nastavenie „Otvárať každý výsledok v prehliadateľnom dialógu“ a na koniec svojho pokynu uviesť napr. „odpovedz vo formáte Markdown“)
 
 ## Možnosti využitia
 
@@ -189,7 +189,7 @@ Tým sa na adrese `http://localhost:4000` spustí proxy server, ktorý preposiel
 4. V dialógovom okne nastavenia NVDA prejdite do kategórie Popis obsahu pomocou AI, potom zvoľte „Spravovať modely (alt+m)“ a ako poskytovateľa vyberte „LiteLLM Proxy“.
 5. Do políčka Adresa URL zadajte adresu svojho proxy servera (napr. „http://localhost:4000“ pre lokálnu prevádzku alebo adresu vášho vzdialeného servera).
 6. Ak proxy vyžaduje overenie, zadajte kľúč do políčka API kľúč. Ak nie, nechajte políčko prázdne.
-7. Kliknutím na tlačidlo „Vypísať modely“ načítajte dostupné modely z proxy a potom v rozbaľovacom zozname vyberte model, ktorý chcete použiť.
+7. Kliknutím na tlačidlo „Zobraziť modely“ načítajte dostupné modely z proxy a potom v rozbaľovacom zozname vyberte model, ktorý chcete použiť.
 8. Podľa potreby upravte ďalšie nastavenia, ako je pokyn, maximálny počet tokenov a časový limit, a potom kliknite na OK.
 
 Poznámka: Dostupné modely a ich schopnosti závisia od konfigurácie vašej LiteLLM proxy. Na popisy obrázkov sa uistite, že je proxy nakonfigurovaná s modelmi, ktoré podporujú prácu s obrazom.
@@ -345,6 +345,7 @@ Na doplnku sa podieľali:
 * [Platinum_Hikari](urbain_onces.0r@icloud.com): francúzsky preklad
 * [Lukas](https://4sensegaming.cz): český preklad
 * [Michaela](https://technologiebezzraku.sk): slovenský preklad
+* [loginerror](https://github.com/theloginerror): poľský preklad
 
 Narazili ste na problém? Popíšte ho v [issue trackeri](https://github.com/cartertemm/AI-content-describer/issues)
 
